@@ -181,7 +181,7 @@ case(alu_control_input)
     BLT:
     begin
          //alu_result = ((opA < opB) ? 1 : 0); 
-        less_flag = (opA < opB) ? 1 : 0; 
+        less_flag = (opA_signed < opB_signed) ? 1 : 0; 
            //less_flag = 1'b0;
          eq_flag = 1'b0;
          err_flag =1'b0; 
@@ -190,7 +190,7 @@ case(alu_control_input)
     BGE:
     begin
          //alu_result = ((opA >= opB) ? 1 : 0); 
-        less_flag = (opA > opB) ? 0 : 1;
+        less_flag = (opA_signed > opB_signed) ? 0 : 1;
         eq_flag = (opA == opB) ? 1 : 0;  
         // less_flag = 1'b0;
          //eq_flag = 1'b0;
