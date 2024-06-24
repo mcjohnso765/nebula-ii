@@ -73,7 +73,7 @@ module tb_register_file;
         #(0.5);
 
         ////////////////////////////
-        // Test 0: Power on Reset //
+        // Test : addr2 //
         ////////////////////////////
 
         tb_test_num += 1;
@@ -104,11 +104,110 @@ module tb_register_file;
         exp_read2 = 32'b1;
         check_output(exp_read1, exp_read2);
 
-        toggle_rst();
+        addr2;
 
-        exp_read1 = 32'b0;
-        exp_read2 = 32'b1; //still being written too
+        ////////////////////////////
+        // Test : addi //
+        ////////////////////////////
+
+        tb_test_num += 1;
+        tb_test_name = "Power on Reset";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        toggle_rst;
+
+        rd = 5'b1;
+        write_data = 32'b1;
+        rs1 = 5'b0;
+        rs2 = 5'b0;
+        writeEnable = 1'b1;
+
+        rs1 = 5'b1;
+        rs2 = 5'b0;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b0;
         check_output(exp_read1, exp_read2);
+
+        rd = 5'b00010;
+        write_data = 32'b1;
+        writeEnable = 1'b1;
+
+        rs2 = 5'b00010;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b1;
+        check_output(exp_read1, exp_read2);
+
+        addi;
+
+        ////////////////////////////
+        // Test : subr2 //
+        ////////////////////////////
+
+        tb_test_num += 1;
+        tb_test_name = "Power on Reset";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        toggle_rst;
+
+        rd = 5'b1;
+        write_data = 32'b1;
+        rs1 = 5'b0;
+        rs2 = 5'b0;
+        writeEnable = 1'b1;
+
+        rs1 = 5'b1;
+        rs2 = 5'b0;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b0;
+        check_output(exp_read1, exp_read2);
+
+        rd = 5'b00010;
+        write_data = 32'b1;
+        writeEnable = 1'b1;
+
+        rs2 = 5'b00010;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b1;
+        check_output(exp_read1, exp_read2);
+
+        subr2;
+
+        ////////////////////////////
+        // Test : subi //
+        ////////////////////////////
+
+        tb_test_num += 1;
+        tb_test_name = "Power on Reset";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        toggle_rst;
+
+        rd = 5'b1;
+        write_data = 32'b1;
+        rs1 = 5'b0;
+        rs2 = 5'b0;
+        writeEnable = 1'b1;
+
+        rs1 = 5'b1;
+        rs2 = 5'b0;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b0;
+        check_output(exp_read1, exp_read2);
+
+        rd = 5'b00010;
+        write_data = 32'b1;
+        writeEnable = 1'b1;
+
+        rs2 = 5'b00010;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b1;
+        check_output(exp_read1, exp_read2);
+
+        subi;
+
 
     end
 
@@ -199,6 +298,16 @@ module tb_register_file;
         funct7 = 7'b0100000;
         #5;
         ck_diff(32'b1);
+    endtask
+
+    task subi;
+        rst_immR;
+        funct3 = 3'b000;
+        funct7 = 7'b0100000;
+        reg1 = 32'b1;
+        immediate = 32'b1;
+        #5;
+        ck_diff(32'b0);
     endtask
 
     task XORr2;
@@ -375,7 +484,7 @@ module tb_register_file;
     endtask
 
     task ck_shift(input [31:0] exp_shift);
-        if(res != exp_shift) $display("Incorrect result. Expected shift: %b, actual result(shift): %b", exp_shift, res);
+        if(result != exp_shift) $display("Incorrect result. Expected shift: %b, actual result(shift): %b", exp_shift, result);
     endtask
 
     task ck_branch(input exp_branch);
