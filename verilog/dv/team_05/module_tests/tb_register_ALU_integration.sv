@@ -53,7 +53,7 @@ module tb_register_file;
 
     initial begin
 
-        $dumpfile("sim.vcd");
+        $dumpfile("tb_register_ALU_integration.vcd");
         $dumpvars(0, tb_register_ALU_integration);
 
         tb_test_num = -1;
@@ -77,7 +77,7 @@ module tb_register_file;
         ////////////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "Power on Reset";
+        tb_test_name = "addr2";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -111,7 +111,7 @@ module tb_register_file;
         ////////////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "Power on Reset";
+        tb_test_name = "addi";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -145,7 +145,7 @@ module tb_register_file;
         ////////////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "Power on Reset";
+        tb_test_name = "subr2";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -179,7 +179,7 @@ module tb_register_file;
         ////////////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "Power on Reset";
+        tb_test_name = "subi";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -208,6 +208,209 @@ module tb_register_file;
 
         subi;
 
+        ////////////////////////////
+        // Test : XORr2 //
+        ////////////////////////////
+
+        tb_test_num += 1;
+        tb_test_name = "XORr2";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        toggle_rst;
+
+        rd = 5'b1;
+        write_data = 32'b1;
+        rs1 = 5'b0;
+        rs2 = 5'b0;
+        writeEnable = 1'b1;
+
+        rs1 = 5'b1;
+        rs2 = 5'b0;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b0;
+        check_output(exp_read1, exp_read2);
+
+        rd = 5'b00010;
+        write_data = 32'b1;
+        writeEnable = 1'b1;
+
+        rs2 = 5'b00010;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b1;
+        check_output(exp_read1, exp_read2);
+
+        XORr2;
+
+        ////////////////////////////
+        // Test : XORi //
+        ////////////////////////////
+
+        tb_test_num += 1;
+        tb_test_name = "XORi";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        toggle_rst;
+
+        rd = 5'b1;
+        write_data = 32'b1;
+        rs1 = 5'b0;
+        rs2 = 5'b0;
+        writeEnable = 1'b1;
+
+        rs1 = 5'b1;
+        rs2 = 5'b0;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b0;
+        check_output(exp_read1, exp_read2);
+
+        rd = 5'b00010;
+        write_data = 32'b1;
+        writeEnable = 1'b1;
+
+        rs2 = 5'b00010;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b1;
+        check_output(exp_read1, exp_read2);
+
+        XORi;
+
+        ////////////////////////////
+        // Test : ORr2 //
+        ////////////////////////////
+
+        tb_test_num += 1;
+        tb_test_name = "ORr2";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        toggle_rst;
+
+        rd = 5'b1;
+        write_data = 32'b1;
+        rs1 = 5'b0;
+        rs2 = 5'b0;
+        writeEnable = 1'b1;
+
+        rs1 = 5'b1;
+        rs2 = 5'b0;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b0;
+        check_output(exp_read1, exp_read2);
+
+        rd = 5'b00010;
+        write_data = 32'b1;
+        writeEnable = 1'b1;
+
+        rs2 = 5'b00010;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b1;
+        check_output(exp_read1, exp_read2);
+
+        ORr2;
+
+        ////////////////////////////
+        // Test : ORi //
+        ////////////////////////////
+
+        tb_test_num += 1;
+        tb_test_name = "ORi";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        toggle_rst;
+
+        rd = 5'b1;
+        write_data = 32'b1;
+        rs1 = 5'b0;
+        rs2 = 5'b0;
+        writeEnable = 1'b1;
+
+        rs1 = 5'b1;
+        rs2 = 5'b0;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b0;
+        check_output(exp_read1, exp_read2);
+
+        rd = 5'b00010;
+        write_data = 32'b1;
+        writeEnable = 1'b1;
+
+        rs2 = 5'b00010;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b1;
+        check_output(exp_read1, exp_read2);
+
+        ORi;
+
+        ////////////////////////////
+        // Test : ANDr2 //
+        ////////////////////////////
+
+        tb_test_num += 1;
+        tb_test_name = "ANDr2";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        toggle_rst;
+
+        rd = 5'b1;
+        write_data = 32'b1;
+        rs1 = 5'b0;
+        rs2 = 5'b0;
+        writeEnable = 1'b1;
+
+        rs1 = 5'b1;
+        rs2 = 5'b0;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b0;
+        check_output(exp_read1, exp_read2);
+
+        rd = 5'b00010;
+        write_data = 32'b1;
+        writeEnable = 1'b1;
+
+        rs2 = 5'b00010;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b1;
+        check_output(exp_read1, exp_read2);
+
+        ANDr2;
+
+        ////////////////////////////
+        // Test : ANDi //
+        ////////////////////////////
+
+        tb_test_num += 1;
+        tb_test_name = "ANDi";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        toggle_rst;
+
+        rd = 5'b1;
+        write_data = 32'b1;
+        rs1 = 5'b0;
+        rs2 = 5'b0;
+        writeEnable = 1'b1;
+
+        rs1 = 5'b1;
+        rs2 = 5'b0;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b0;
+        check_output(exp_read1, exp_read2);
+
+        rd = 5'b00010;
+        write_data = 32'b1;
+        writeEnable = 1'b1;
+
+        rs2 = 5'b00010;
+
+        exp_read1 = 32'b1;
+        exp_read2 = 32'b1;
+        check_output(exp_read1, exp_read2);
+
+        ANDi;
 
     end
 
