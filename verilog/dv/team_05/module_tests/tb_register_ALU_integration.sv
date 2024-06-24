@@ -72,12 +72,12 @@ module tb_register_file;
 
         #(0.5);
 
-        ////////////////////////////
-        // Test : addr2 //
-        ////////////////////////////
+        ///////////////////////
+        // Test : addr2 test //
+        ///////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "addr2";
+        tb_test_name = "addr2 test";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -106,12 +106,12 @@ module tb_register_file;
 
         addr2;
 
-        ////////////////////////////
-        // Test : addi //
-        ////////////////////////////
+        //////////////////////
+        // Test : addi test //
+        //////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "addi";
+        tb_test_name = "addi test";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -140,12 +140,12 @@ module tb_register_file;
 
         addi;
 
-        ////////////////////////////
-        // Test : subr2 //
-        ////////////////////////////
+        ///////////////////////
+        // Test : subr2 test //
+        ///////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "subr2";
+        tb_test_name = "subr2 test";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -174,12 +174,12 @@ module tb_register_file;
 
         subr2;
 
-        ////////////////////////////
-        // Test : subi //
-        ////////////////////////////
+        //////////////////////
+        // Test : subi test //
+        //////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "subi";
+        tb_test_name = "subi test";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -208,12 +208,12 @@ module tb_register_file;
 
         subi;
 
-        ////////////////////////////
-        // Test : XORr2 //
-        ////////////////////////////
+        ///////////////////////
+        // Test : XORr2 test //
+        ///////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "XORr2";
+        tb_test_name = "XORr2 test";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -242,12 +242,12 @@ module tb_register_file;
 
         XORr2;
 
-        ////////////////////////////
-        // Test : XORi //
-        ////////////////////////////
+        //////////////////////
+        // Test : XORi test //
+        //////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "XORi";
+        tb_test_name = "XORi test";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -276,12 +276,12 @@ module tb_register_file;
 
         XORi;
 
-        ////////////////////////////
-        // Test : ORr2 //
-        ////////////////////////////
+        //////////////////////
+        // Test : ORr2 test //
+        //////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "ORr2";
+        tb_test_name = "ORr2 test";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -310,12 +310,12 @@ module tb_register_file;
 
         ORr2;
 
-        ////////////////////////////
-        // Test : ORi //
-        ////////////////////////////
+        /////////////////////
+        // Test : ORi test //
+        /////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "ORi";
+        tb_test_name = "ORi test";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -344,12 +344,12 @@ module tb_register_file;
 
         ORi;
 
-        ////////////////////////////
-        // Test : ANDr2 //
-        ////////////////////////////
+        ///////////////////////
+        // Test : ANDr2 test //
+        ///////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "ANDr2";
+        tb_test_name = "ANDr2 test";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
@@ -378,12 +378,12 @@ module tb_register_file;
 
         ANDr2;
 
-        ////////////////////////////
-        // Test : ANDi //
-        ////////////////////////////
+        //////////////////////
+        // Test : ANDi test //
+        //////////////////////
 
         tb_test_num += 1;
-        tb_test_name = "ANDi";
+        tb_test_name = "ANDi test";
         $display("\nTest %d: %s", tb_test_num, tb_test_name);
         toggle_rst;
 
