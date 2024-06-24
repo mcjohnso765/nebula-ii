@@ -1,14 +1,15 @@
 # STARS 2024 Design Final Project
 
 ## TEAM NAME
-* Team Member 1 Name
-* Team Member 2 Name
-* Team Member 3 Name
-* Team Member 4 Name
-* Peer Mentor Name
+* Ainsley Strothkamp
+* Alex Tauriainen
+* Berin Celik
+* Medha Shinde
+* Shrienidhi Gopalakrishnan
+* Pranav Wadhwa
 
 ## Project Type
-Short (2-3 sentences) project description
+Our project was to create a 32-bit RISC-V CPU
 
 ## Pin Layout
 Note that on the final chip, there are 38 gpio of which you have access to 4.
