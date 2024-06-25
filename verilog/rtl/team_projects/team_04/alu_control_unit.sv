@@ -1,12 +1,10 @@
 `default_nettype none
 
 //FIXME: comment following typedef when using tb_alu
-typedef enum logic [3:0] {
-    ADD=0, SUB=1, SLL=2, SLT=3, SLTU=4, XOR=5, SRL=6, SRA=7,OR=8, AND=9,
-    //ADDI=10, XORI=13, ORI=14, ANDI=15, SLLI=16, SLTI=11, SRLI=17, SRAI=18, SLTIU=12, 
-    BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR = 4'bxxxx
-    //LB=16, LH=17, LW=18, LBU=19, LHU=20, LW=21, SB=22, SH=23, SW=24 (just add)
-    } operation_t;
+// typedef enum logic [3:0] {
+    // ADD=0, SUB=1, SLL=2, SLT=3, SLTU=4, XOR=5, SRL=6, SRA=7,OR=8, AND=9,
+    // BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR = 4'bxxxx
+    // } operation_t;
 
 module alu_control_unit(
 input logic [6:0] opcode,
@@ -15,7 +13,6 @@ input logic [6:0] func7,
 output logic ctrl_err, 
 output operation_t alu_control_input
 );
-//operation_t x;   //??(will this value be 0 by default?)
 always_comb begin
     alu_control_input = ERR;
     ctrl_err = 1'b0;
@@ -31,14 +28,12 @@ always_comb begin
             begin
                 alu_control_input = SUB;
             end
-            else //FIXME
+            else
             begin
-                alu_control_input = ERR;//invalid operation;
+                alu_control_input = ERR; //invalid operation;
                 ctrl_err = 1'b1;
             end
-
         end //alu_op
-
         else if (alu_op == 3'b001)
         begin
             alu_control_input = SLL;
@@ -65,12 +60,11 @@ always_comb begin
             begin
                 alu_control_input = SRA;
             end
-            else //FIXME
+            else
             begin
-                alu_control_input = ERR;//invalid operation;
+                alu_control_input = ERR; //invalid operation;
                 ctrl_err = 1'b1;
             end
-
         end //alu_op
         else if (alu_op == 3'b110)
         begin
@@ -80,12 +74,11 @@ always_comb begin
         begin
             alu_control_input = AND;
         end
-        else //FIXME
+        else
         begin
-            alu_control_input = ERR;//invalid operation;
+            alu_control_input = ERR; //invalid operation;
             ctrl_err = 1'b1;
         end
-
     end //opcode
     else if (opcode  == 7'b0010011) //I-type
     begin
@@ -127,13 +120,13 @@ always_comb begin
             begin
                 alu_control_input = SRA;
             end
-            else //FIXME
+            else 
             begin
                 alu_control_input = ERR;//invalid operation;
                 ctrl_err = 1'b1;
             end
         end //alu_op
-        else //FIXME
+        else 
         begin
             alu_control_input = ERR;//invalid operation;
             ctrl_err = 1'b1;
@@ -166,7 +159,7 @@ always_comb begin
         begin
             alu_control_input = BGEU;
         end
-        else //FIXME
+        else 
         begin
             alu_control_input = ERR;//invalid operation;
             ctrl_err = 1'b1;
@@ -174,21 +167,9 @@ always_comb begin
 
     end //opcode
         
-    else if (opcode  == 7'b0100011) //S-type
+  else if (opcode  == 7'b0100011) //S-type(store)
     begin
         alu_control_input = ADD; //optimizing?
-        // if (alu_op == 3'b000)
-        // begin
-        //     alu_control_input = ADD; 
-        // end
-        // else if (alu_op == 3'b010)
-        // begin
-        //     alu_control_input = ADD;
-        // end
-        // else if (alu_op == 3'b001)
-        // begin
-        //     alu_control_input = ADD;
-        // end
     end //opcode
 
     else if (opcode  == 7'b0000011) //I-type(load)
@@ -196,7 +177,7 @@ always_comb begin
         alu_control_input = ADD; //optimizing?
     end
 
-    else //FIXME
+    else 
     begin
         alu_control_input = ERR;//invalid operation;
         ctrl_err = 1'b1;
