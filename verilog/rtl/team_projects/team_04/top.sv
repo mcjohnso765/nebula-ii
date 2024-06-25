@@ -10,8 +10,6 @@ module top (
     output logic [31:0] reg_window [31:0],
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
     output logic zero_flag, //ALU flag whenever output == 0
-    eq_flag, //ALU branch flag used for beq, bge, and bgeu
-    less_flag, //ALU flag used for blt, bltu
     err_flag //ALU flag invalid operation, from ALU
     
 );
@@ -44,7 +42,7 @@ logic [31:0] DataWrite;
 logic [31:0] regA, regB;
 
 //from Mem Handler
-logic [31:0] MemData, addr_to_mem;
+logic [31:0] MemData, addr_to_mem, data_to_mem;
 
 //instantiation of modules
 
@@ -137,6 +135,7 @@ memory_handler mem (
     .select(),//fixme to wishbone/request unit
     .data_to_reg(MemData),
     .addr_to_mem(addr_to_mem),
+    .data_to_mem(data_to_mem),
     .mem_read(),
     .mem_write()
     );
