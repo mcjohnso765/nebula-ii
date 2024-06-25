@@ -12,8 +12,8 @@ input logic [6:0] func7,
 input logic [31:0] opA,
 input logic [31:0] opB,
 output logic [31:0] alu_result,
-output logic zero_flag, err_flag,     //send out doCondJump instead
-output logic doCondJump  //send out doCondJump instead of less_flag and eq_flag
+output logic zero_flag, err_flag,     //send out condJumpValue instead
+output logic condJumpValue  //send out condJumpValue instead of less_flag and eq_flag
 );
 
 logic signed [31:0] opA_signed;
@@ -41,62 +41,62 @@ case(alu_control_input)
     begin
          alu_result = (opA + opB); //overflow bits are discarded (RISCV ISA)
          err_flag =1'b0;
-         doCondJump = 1'b0;
+         condJumpValue = 1'b0;
     end
     SUB:
     begin
          alu_result = (opA - opB);
          err_flag =1'b0;
-         doCondJump = 1'b0;
+         condJumpValue = 1'b0;
     end
     SLL: 
     begin
          alu_result = (opA << opB[4:0]); //DEFINE opB TO BE THE LEAST SIGNIFICANT 5 BITS OF rs2
          err_flag =1'b0;  
-        doCondJump = 1'b0;      
+        condJumpValue = 1'b0;      
     end
     SLT: //taking the signed integer value of opA and opB for comparision
     begin
          alu_result = ((opA_signed < opB_signed) ? 32'b1 : 32'b0); 
          err_flag =1'b0;
-        doCondJump = 1'b0;
+        condJumpValue = 1'b0;
     end
     SLTU: //taking the unsigned value of opA and opB for comparision
     begin
          alu_result = ((opA < opB) ? 32'b1 : 32'b0); 
          err_flag =1'b0; 
-      doCondJump = 1'b0;
+      condJumpValue = 1'b0;
     end
     XOR:
     begin
          alu_result = (opA ^ opB); 
          err_flag =1'b0; 
-      doCondJump = 1'b0;
+      condJumpValue = 1'b0;
     end
     SRL: 
     begin
         alu_result = (opA >> opB[4:0]); 
          err_flag =1'b0; 
-      doCondJump = 1'b0;
+      condJumpValue = 1'b0;
     end
     SRA: 
     begin
 
          alu_result = (opA_signed >>> opB[4:0]); 
          err_flag =1'b0; 
-      doCondJump = 1'b0;
+      condJumpValue = 1'b0;
     end
     OR:
     begin
          alu_result = (opA | opB); 
          err_flag =1'b0; 
-      doCondJump = 1'b0;
+      condJumpValue = 1'b0;
     end
     AND:
     begin
          alu_result = (opA & opB); 
          err_flag =1'b0; 
-      doCondJump = 1'b0;
+      condJumpValue = 1'b0;
     end
 
     //B-type
@@ -104,37 +104,37 @@ case(alu_control_input)
     begin
          err_flag =1'b0; 
          alu_result=32'bx;  //needed here cause alu_result is a don't care
-      doCondJump = (opA == opB) ? 1 : 0;
+      condJumpValue = (opA == opB) ? 1 : 0;
     end
     BNE:
     begin
          err_flag =1'b0; 
          alu_result=32'bx;
-        doCondJump = (opA != opB) ? 1 : 0;
+        condJumpValue = (opA != opB) ? 1 : 0;
     end
     BLT:
     begin
          err_flag =1'b0; 
          alu_result=32'bx;
-         doCondJump = (opA_signed < opB_signed) ? 1 : 0;
+         condJumpValue = (opA_signed < opB_signed) ? 1 : 0;
     end
     BGE:
     begin
          err_flag =1'b0; 
          alu_result=32'bx;
-      doCondJump = (opA_signed >= opB_signed) ? 1 : 0;
+      condJumpValue = (opA_signed >= opB_signed) ? 1 : 0;
     end
     BLTU:
     begin
          err_flag =1'b0; 
          alu_result=32'bx;
-      doCondJump = (opA < opB) ? 1 : 0;
+      condJumpValue = (opA < opB) ? 1 : 0;
     end
     BGEU:
     begin
          err_flag =1'b0;
          alu_result=32'bx; 
-      doCondJump = (opA >= opB) ? 1 : 0;
+      condJumpValue = (opA >= opB) ? 1 : 0;
     end
 
     default:
@@ -142,7 +142,7 @@ case(alu_control_input)
         alu_result=32'bx; //(invalid/no operations);
         err_flag = 1'b1;
         zero_flag = 1'b0;
-        doCondJump = 1'b0;
+        condJumpValue = 1'b0;
     end
 endcase
 
