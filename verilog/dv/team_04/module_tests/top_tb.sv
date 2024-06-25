@@ -20,7 +20,7 @@ module tb_top ();
     logic [31:0] reg_window [31:0]; //array of register values
     logic condJumpValue; //branch calculation result
     logic [31:0] addr_to_mem, data_to_mem;
-    
+
     top CPU(.instruction(instruction), .zero_flag(zero_flag), .alu_result(alu_result), .err_flag(err_flag), .clk(tb_clk), .nrst(nrst), .reg_window(reg_window), .condJumpValue(condJumpValue), .addr_to_mem(addr_to_mem), .data_to_mem(data_to_mem));
 
 
@@ -51,20 +51,22 @@ module tb_top ();
         reset_dut;
 
         //load 5 into x1
-        instruction = 32'b00000000010100001000000010010011; //addi x1, x1, 5
+        instruction = 32'b00000000010100000000000010010011; //addi x1, x0, 5
 
-        #(CLK_PERIOD * 2.0);
-        
+        @(negedge tb_clk);
+        @(posedge tb_clk);
+
         $display("ALU Result: %b", alu_result);
 
         ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////
         
         //load 5 into x2
-        instruction = 32'b00000000010100010000000100010011; // addi x2, x2, 5
+        instruction = 32'b00000000010100000000000010010011; // addi x2, x0, 5
 
-        #(CLK_PERIOD * 2.0);
-
+        @(negedge tb_clk);
+        @(posedge tb_clk);
+        
         $display("ALU Result: %b", alu_result);
 
         ////////////////////////////////////////////////////
@@ -73,7 +75,8 @@ module tb_top ();
         //add x1 & x2
         instruction = 32'b00000000001000001000000110110011; //add x3, x1, x2
 
-        #(CLK_PERIOD * 2.0);
+        @(negedge tb_clk);
+        @(posedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
 
@@ -83,15 +86,18 @@ module tb_top ();
         //branch if x1 == x2
         instruction = 32'b00111110001000001000010001100011; //beq x1, x2, 1000
 
-        #(CLK_PERIOD * 2.0);
+        @(negedge tb_clk);
+        @(posedge tb_clk);
 
         $display("Branch Condition: %b", condJumpValue);
 
 
         ////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////
+        ////////////////////////////////////////////////////
 
+        //
 
+        // $finish;
     end
     
 endmodule
