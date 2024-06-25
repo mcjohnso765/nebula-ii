@@ -402,7 +402,7 @@ always_comb begin
 
     7'b1100011: begin //(B-Type):
         RegWrite = 0;
-        ALUSrc = 1;
+        ALUSrc = 0;
         RegWriteSource = 2'b00;
         MemWrite = 0;
         MemRead = 0;
