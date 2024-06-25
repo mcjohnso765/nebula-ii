@@ -2,7 +2,7 @@
 
 // typedef enum logic [3:0] {
 //     ADD=0, SUB=1, SLL=2, SLT=3, SLTU=4, XOR=5, SRL=6, SRA=7,OR=8, AND=9, 
-//     BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR=4'bx
+//     BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR=4'b
 //     } operation_t;
 
 module alu (
@@ -103,43 +103,43 @@ case(alu_control_input)
     BEQ:
     begin
          err_flag =1'b0; 
-         alu_result=32'bx;  //needed here cause alu_result is a don't care
+         alu_result=32'b0;  //needed here cause alu_result is a don't care
       condJumpValue = (opA == opB) ? 1 : 0;
     end
     BNE:
     begin
          err_flag =1'b0; 
-         alu_result=32'bx;
+         alu_result=32'b0;
         condJumpValue = (opA != opB) ? 1 : 0;
     end
     BLT:
     begin
          err_flag =1'b0; 
-         alu_result=32'bx;
+         alu_result=32'b0;
          condJumpValue = (opA_signed < opB_signed) ? 1 : 0;
     end
     BGE:
     begin
          err_flag =1'b0; 
-         alu_result=32'bx;
+         alu_result=32'b0;
       condJumpValue = (opA_signed >= opB_signed) ? 1 : 0;
     end
     BLTU:
     begin
          err_flag =1'b0; 
-         alu_result=32'bx;
+         alu_result=32'b0;
       condJumpValue = (opA < opB) ? 1 : 0;
     end
     BGEU:
     begin
          err_flag =1'b0;
-         alu_result=32'bx; 
+         alu_result=32'b0; 
       condJumpValue = (opA >= opB) ? 1 : 0;
     end
 
     default:
     begin
-        alu_result=32'bx; //(invalid/no operations);
+        alu_result=32'b0; //(invalid/no operations);
         err_flag = 1'b1;
         zero_flag = 1'b0;
         condJumpValue = 1'b0;
