@@ -51,17 +51,17 @@ module tb_top ();
         reset_dut;
 
         @(posedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
         @(posedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
 
         //load 5 into x1
         instruction = 32'h00500093; //addi x1, x0, 5
 
         @(posedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
         @(posedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
 
@@ -72,9 +72,9 @@ module tb_top ();
         instruction = 32'h00500113; // addi x2, x0, 5
 
         @(posedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
         @(posedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
 
@@ -85,9 +85,9 @@ module tb_top ();
         instruction = 32'h002081b3; //add x3, x1, x2
 
         @(posedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
         @(posedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
 
@@ -98,9 +98,9 @@ module tb_top ();
         instruction = 32'h3e208463; //beq x1, x2, 1000
 
         @(posedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
         @(posedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
 
         $display("Branch Condition: %b", condJumpValue);
 
