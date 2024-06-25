@@ -54,7 +54,7 @@ module tb_top ();
         @(negedge tb_clk);
 
         //load 5 into x1
-        instruction = 32'b00000000010100000000000010010011; //addi x1, x0, 5
+        instruction = 32'h00500093; //addi x1, x0, 5
 
         @(posedge tb_clk);
         @(negedge tb_clk);
@@ -65,7 +65,7 @@ module tb_top ();
         ////////////////////////////////////////////////////
         
         //load 5 into x2
-        instruction = 32'b00000000010100000000000100010011; // addi x2, x0, 5
+        instruction = 32'h00510093; // addi x2, x0, 5
 
         @(posedge tb_clk);
         @(negedge tb_clk);
