@@ -71,7 +71,7 @@ module tb_top ();
         //load 5 into x2
         instruction = 32'h00500113; // addi x2, x0, 5
 
-        @(posedge tb_clk);
+        @(negedge tb_clk);
         // @(negedge tb_clk);
         // @(posedge tb_clk);
         // @(negedge tb_clk);
@@ -84,7 +84,7 @@ module tb_top ();
         //add x1 & x2
         instruction = 32'h002081b3; //add x3, x1, x2
 
-        @(posedge tb_clk);
+        @(negedge tb_clk);
         // @(negedge tb_clk);
         // @(posedge tb_clk);
         // @(negedge tb_clk);
@@ -97,7 +97,7 @@ module tb_top ();
         //branch if x1 == x2
         instruction = 32'h00208163; //beq x1, x2, 2
 
-        @(posedge tb_clk);
+        @(negedge tb_clk);
         // @(negedge tb_clk);
         // @(posedge tb_clk);
         // @(negedge tb_clk);
@@ -893,13 +893,13 @@ module register_file(
         end
     end
 
-        //combinational read block
-        always_comb begin
-            read_data_1 = reg_file[read_addr_1];
-            read_data_2 = reg_file[read_addr_2];
-        end
-        // assign read_data_1 = reg_file[read_addr_1];
-        // assign read_data_2 = reg_file[read_addr_2];
+    //combinational read block
+    always_comb begin
+        read_data_1 = reg_file[read_addr_1];
+        read_data_2 = reg_file[read_addr_2];
+    end
+    // assign read_data_1 = reg_file[read_addr_1];
+    // assign read_data_2 = reg_file[read_addr_2];
 endmodule
 
 
