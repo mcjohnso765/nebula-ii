@@ -97,7 +97,7 @@ module tb_top ();
 
         //
 
-        // $finish;
+        $finish;
     end
     
 endmodule
