@@ -598,8 +598,8 @@ case(alu_control_input)
     BEQ:
     begin
          err_flag =1'b0; 
-         alu_result=32'b0;  //needed here cause alu_result is a don't care
-      condJumpValue = (opA == opB) ? 1 : 0;
+         alu_result= {32{opA==opB}};  //needed here cause alu_result is a don't care
+      condJumpValue = alu_result[0];
     end
     BNE:
     begin
