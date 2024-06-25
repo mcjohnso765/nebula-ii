@@ -52,10 +52,14 @@ module tb_top ();
 
         @(posedge tb_clk);
         @(negedge tb_clk);
+        @(posedge tb_clk);
+        @(negedge tb_clk);
 
         //load 5 into x1
         instruction = 32'h00500093; //addi x1, x0, 5
 
+        @(posedge tb_clk);
+        @(negedge tb_clk);
         @(posedge tb_clk);
         @(negedge tb_clk);
 
@@ -69,7 +73,9 @@ module tb_top ();
 
         @(posedge tb_clk);
         @(negedge tb_clk);
-        
+        @(posedge tb_clk);
+        @(negedge tb_clk);
+
         $display("ALU Result: %b", alu_result);
 
         ////////////////////////////////////////////////////
@@ -78,6 +84,8 @@ module tb_top ();
         //add x1 & x2
         instruction = 32'h002081b3; //add x3, x1, x2
 
+        @(posedge tb_clk);
+        @(negedge tb_clk);
         @(posedge tb_clk);
         @(negedge tb_clk);
 
@@ -89,6 +97,8 @@ module tb_top ();
         //branch if x1 == x2
         instruction = 32'b00111110001000001000010001100011; //beq x1, x2, 1000
 
+        @(posedge tb_clk);
+        @(negedge tb_clk);
         @(posedge tb_clk);
         @(negedge tb_clk);
 
