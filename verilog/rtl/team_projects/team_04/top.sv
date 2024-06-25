@@ -34,6 +34,7 @@ logic [31:0] opB;
 
 //from ALU
 logic [31:0] alu_result_wire;
+logic condJumpValue;
 
 //from RegWrite mux
 logic [31:0] DataWrite;
@@ -44,38 +45,85 @@ logic [31:0] regA, regB;
 
 
 //instantiation of modules
+
+//decode data and addresses withing instruction
 decode decoder (
-    .instruction(instruction),
-    .rs1(rs1),
-    .rs2(rs2),
-    .rd(rd),
-    .opcode(opcode),
-    .ALUOp(func3),
-    .func7(func7)
+    .instruction(instruction), //32-bit instruction
+    .rs1(rs1), //address of source register 1
+    .rs2(rs2), //address of source register 2
+    .rd(rd), //address of destination register
+    .opcode(opcode), //7-bit Opcode (decoded from intrsuction)
+    .ALUOp(func3), //3-bit function code (decoded from intrsuction)
+    .func7(func7) //7-bit function code (decoded from intrsuction)
 );
 
-imm_gen make_imm (.instruction(instruction), .imm(imm), .flag());
+//genrate immediate value based on instruction format and values
+imm_gen make_imm (
+    .instruction(instruction), //32-bit instruction
+    .imm(imm), //32-bit genrated immediate value (signed)
+    .flag() //error flag (ignore, used for tb)
+    );
 
-control_unit cntrl (.opcode(opcode),
-    .RegWriteSource(RegWriteSrc),
-    .ALUSrc(ALUSrc),
-    .RegWrite(RegWrite),
-    .Jump(Jump),
-    .Branch(Branch),
-    .MemWrite(MemWrite),
-    .MemRead(MemRead),
-    .Error(Error)
+//generate control signals based on Opcode
+control_unit cntrl (
+    .opcode(opcode), //7-bit Opcode (decoded from intrsuction)
+    .RegWriteSource(RegWriteSrc), //2-bit control signal specifiying what is writing to the regs
+    .ALUSrc(ALUSrc), //control signal indicating use of immediate
+    .RegWrite(RegWrite), //control signal indicating writing to destination reg
+    .Jump(Jump), //control signal indicating a Jump will take place
+    .Branch(Branch), //control signal indicating a Branch, (conditional jump)
+    .MemWrite(MemWrite), //control signal indicating Memory will be written to 
+    .MemRead(MemRead), //control signal indicating memory will be read from
+    .Error(Error) //testing signal indicating invalid Opcode
 );
 
+//decide whether a register value or immediate is used as the second operand in an operation
+aluop_mux ALUOpB(
+    .regB(regB), //value from register
+    .imm(imm), //immediate value
+    .alu_src(ALUSrc), //control signal
+    .opB(opB) //resulting second operand
+); 
 
-aluop_mux ALUOpB(.regB(regB), .imm(imm), .alu_src(ALUSrc), .opB(opB)); 
+//perform arithmetic and logical operation
+alu ALU (
+    .opcode(opcode), //control signals
+    .alu_op(func3), 
+    .func7(func7), 
+    .opB(opB), //operands
+    .opA(regA), 
+    .alu_result(alu_result_wire), //results and flags
+    .zero_flag(zero_flag), //indicate result == 0
+    .err_flag(err_flag), //indicate invalid operation
+    .condJumpValue(condJumpValue) //indicate branching condition is true
+    );
 
-alu ALU (.opcode(opcode), .alu_op(func3), .func7(func7), .opB(opB), .opA(regA), .alu_result(alu_result_wire), .zero_flag(zero_flag), .eq_flag(eq_flag), .less_flag(less_flag), .err_flag(err_flag));
+//allow for easier display of alu result
 assign alu_result = alu_result_wire;
 
-reg_write_mux reg_write_control (.immData(imm), .ALUData(alu_result_wire), .MemData(32'b0), .PCData(32'b0), .DataWrite(DataWrite), .RegWriteSrc(RegWriteSrc));
+//determine register write source
+reg_write_mux reg_write_control (
+    .immData(imm), //immediate value
+    .ALUData(alu_result_wire), //ALU result value
+    .MemData(32'b0), //memory value
+    .PCData(32'b0), //program counter value
+    .DataWrite(DataWrite), //chosen value
+    .RegWriteSrc(RegWriteSrc) //control signal
+    );
 
-register_file regs (.read_addr_1(rs1), .read_addr_2(rs2), .write_addr(rd), .reg_enable_write(RegWrite), .read_data_1(regA), .read_data_2(regB), .write_data(DataWrite), .clk(clk), .nrst(nrst), .reg_file(reg_window));
+//read to and write from registers
+register_file regs (
+    .read_addr_1(rs1), //read addresses
+    .read_addr_2(rs2), 
+    .write_addr(rd), //write address
+    .reg_enable_write(RegWrite), //control signal enabling write
+    .read_data_1(regA), //read values
+    .read_data_2(regB), 
+    .write_data(DataWrite), //value tobe written
+    .clk(clk), 
+    .nrst(nrst), 
+    .reg_file(reg_window) //testbenching array
+    );
 
 endmodule
 
