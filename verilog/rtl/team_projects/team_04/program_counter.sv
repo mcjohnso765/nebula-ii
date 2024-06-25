@@ -189,7 +189,7 @@
 module program_counter (
   input logic nRst, enable, clk,
   input logic [31:0] immJumpValue, regJumpValue,
-  input logic doForceJump, doCondJump, condJumpValue, doRegJump, sendLink,
+  input logic doForceJump, doCondJump, condJumpValue, doRegJump,
   output logic [31:0] instructionAddress, linkAddress,
   output logic next //REMOVE
 

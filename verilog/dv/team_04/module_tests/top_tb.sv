@@ -19,8 +19,9 @@ module tb_top ();
         err_flag; //ALU flag invalid operation, from ALU
     logic [31:0] reg_window [31:0]; //array of register values
     logic condJumpValue; //branch calculation result
-
-    top CPU(.instruction(instruction), .zero_flag(zero_flag), .alu_result(alu_result), .err_flag(err_flag), .clk(tb_clk), .nrst(nrst), .reg_window(), .condJumpValue());
+    logic [31:0] addr_to_mem, data_to_mem;
+    
+    top CPU(.instruction(instruction), .zero_flag(zero_flag), .alu_result(alu_result), .err_flag(err_flag), .clk(tb_clk), .nrst(nrst), .reg_window(reg_window), .condJumpValue(condJumpValue), .addr_to_mem(addr_to_mem), .data_to_mem(data_to_mem));
 
 
     // Clock generation block
@@ -58,7 +59,6 @@ module tb_top ();
 
         ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////
         
         //load 5 into x2
         instruction = 32'b00000000010100010000000100010011; // addi x2, x2, 5
@@ -69,7 +69,6 @@ module tb_top ();
 
         ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////
 
         //add x1 & x2
         instruction = 32'b00000000001000001000000110110011; //add x3, x1, x2
@@ -77,6 +76,21 @@ module tb_top ();
         #(CLK_PERIOD * 2.0);
 
         $display("ALU Result: %b", alu_result);
+
+        ////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////
+
+        //branch if x1 == x2
+        instruction = 32'b00111110001000001000010001100011; //beq x1, x2, 1000
+
+        #(CLK_PERIOD * 2.0);
+
+        $display("Branch Condition: %b", condJumpValue);
+
+
+        ////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////
+
 
     end
     
@@ -95,7 +109,9 @@ module top (
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
     output logic zero_flag, //ALU flag whenever output == 0
     err_flag, //ALU flag invalid operation, from ALU
-    condJumpValue
+    condJumpValue,
+    output logic [31:0] addr_to_mem, data_to_mem
+    
 );
 
 //wires 
@@ -116,16 +132,17 @@ logic [31:0] opB;
 
 //from ALU
 logic [31:0] alu_result_wire;
-//logic condJumpValue;
+// logic condJumpValue;
 
 //from RegWrite mux
 logic [31:0] DataWrite;
+
 
 //from Regs
 logic [31:0] regA, regB;
 
 //from Mem Handler
-logic [31:0] MemData, addr_to_mem, data_to_mem;
+logic [31:0] MemData;
 
 //instantiation of modules
 
@@ -224,6 +241,7 @@ memory_handler mem (
     );
 
 endmodule
+
 
 //decode instruction into register addresses and Opcode
 module decode (

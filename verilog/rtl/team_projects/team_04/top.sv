@@ -10,7 +10,8 @@ module top (
     output logic [31:0] reg_window [31:0],
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
     output logic zero_flag, //ALU flag whenever output == 0
-    err_flag //ALU flag invalid operation, from ALU
+    err_flag, //ALU flag invalid operation, from ALU
+    output logic [31:0] addr_to_mem, data_to_mem
     
 );
 
@@ -42,7 +43,7 @@ logic [31:0] DataWrite;
 logic [31:0] regA, regB;
 
 //from Mem Handler
-logic [31:0] MemData, addr_to_mem, data_to_mem;
+logic [31:0] MemData;
 
 //instantiation of modules
 
