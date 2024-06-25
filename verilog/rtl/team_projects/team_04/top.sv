@@ -139,8 +139,7 @@ memory_handler mem (
     .addr_to_mem(addr_to_mem),
     .mem_read(),
     .mem_write()
-    )
-
+    );
 
 endmodule
 
