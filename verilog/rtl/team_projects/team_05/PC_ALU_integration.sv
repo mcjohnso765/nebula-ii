@@ -4,7 +4,7 @@ module PC_ALU_integration(
     input logic [2:0] funct3,
     input logic [6:0] funct7,
     input logic [31:0] data, imm_val, reg1, reg2,
-    output logic [31:0] pc_val, read_ad, write_ad, result,  
+    output logic [31:0] pc_val, read_ad, write_ad, result  
 );
 
     logic branch;
