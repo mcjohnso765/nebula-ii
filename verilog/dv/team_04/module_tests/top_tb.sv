@@ -18,8 +18,9 @@ module tb_top ();
         less_flag, //ALU flag used for blt, bltu
         err_flag; //ALU flag invalid operation, from ALU
     logic [31:0] reg_window [31:0]; //array of register values
+    logic condJumpValue; //branch calculation result
 
-    top CPU(.instruction(instruction), .zero_flag(zero_flag), .alu_result(alu_result), .eq_flag(eq_flag), .less_flag(less_flag), .err_flag(err_flag), .clk(tb_clk), .nrst(nrst), .reg_window());
+    top CPU(.instruction(instruction), .zero_flag(zero_flag), .alu_result(alu_result), .err_flag(err_flag), .clk(tb_clk), .nrst(nrst), .reg_window(), .condJumpValue());
 
 
     // Clock generation block
