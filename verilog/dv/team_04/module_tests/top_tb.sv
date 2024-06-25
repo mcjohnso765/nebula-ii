@@ -52,7 +52,7 @@ module tb_top ();
 
         @(posedge tb_clk);
         // @(negedge tb_clk);
-        // @(posedge tb_clk);
+        @(posedge tb_clk);
         // @(negedge tb_clk);
 
         //load 5 into x1
@@ -888,7 +888,7 @@ module register_file(
             for (integer i = 0; i < 32; i++) begin //
                 reg_file[i] <= 32'b0;
             end
-        end else if (write_addr != 5'd0 & reg_enable_write) begin //ensure x0 never written to (maintain value of 0)
+        end else if (write_addr != 5'd0 && reg_enable_write) begin //ensure x0 never written to (maintain value of 0)
             reg_file[write_addr] <= write_data;
         end
     end
