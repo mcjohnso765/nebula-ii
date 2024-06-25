@@ -8,9 +8,9 @@ module pc(
     logic [31:0] jump_ad;
     logic [31:0] next_pc;
     logic branch_choice;
-    logic imm;
+    logic [31:0] imm;
 
-    imm = imm_val * 32'd4;
+    assign imm = imm_val * 32'd4;
 
     // Register 
     always_ff @(posedge clk, negedge clr) begin
