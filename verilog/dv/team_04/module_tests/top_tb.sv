@@ -69,7 +69,7 @@ module tb_top ();
         ////////////////////////////////////////////////////
         
         //load 5 into x2
-        instruction = 32'h00510093; // addi x2, x0, 5
+        instruction = 32'h00500113; // addi x2, x0, 5
 
         @(posedge tb_clk);
         @(negedge tb_clk);
