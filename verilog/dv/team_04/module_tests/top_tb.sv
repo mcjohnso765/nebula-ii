@@ -16,9 +16,9 @@ module tb_top ();
     logic err_flag; //ALU flag invalid operation, from ALU
     reg [31:0]  [31:0] reg_window; //array of register values
     logic condJumpValue; //branch calculation result
-    logic [31:0] addr_to_mem, data_to_mem;
+    logic [31:0] addr_to_mem, data_to_mem, nextInstruction;
 
-    top CPU(.instruction(instruction), .alu_result(alu_result), .err_flag(err_flag), .clk(tb_clk), .nrst(nrst), .reg_window(reg_window),  .addr_to_mem(addr_to_mem), .data_to_mem(data_to_mem));
+    top CPU(.instruction(instruction), .alu_result(alu_result), .err_flag(err_flag), .clk(tb_clk), .nrst(nrst), .reg_window(reg_window),  .addr_to_mem(addr_to_mem), .data_to_mem(data_to_mem), .nextInstruction(nextInstruction));
 
 
     // Clock generation block
@@ -100,12 +100,26 @@ module tb_top ();
         // @(negedge tb_clk);
 
         $display("Branch Condition: %b", condJumpValue);
-
+        $display("Next Instruction Address: %b", nextInstruction);
 
         ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////
 
+        instruction = 32'h0020f263; //bgeu x1, x2, 4
 
+        @(negedge tb_clk);
+
+        $display("Branch Condition: %b", condJumpValue);
+        $display("Next Instruction Address: %b", nextInstruction);
+
+        @(negedge tb_clk);
+
+        instruction = 32'h005188e7; //jalr x17, 5(x3)
+
+        @(negedge tb_clk);
+
+        $display("Branch Condition: %b", condJumpValue);
+        $display("Next Instruction Address: %b", nextInstruction);
 
         $finish;
     end
@@ -124,7 +138,8 @@ module top (
     output reg [31:0] [31:0] reg_window,
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
     output logic err_flag, //ALU flag invalid operation, from ALU
-    output logic [31:0] addr_to_mem, data_to_mem
+    output logic [31:0] addr_to_mem, data_to_mem, //signals from memory handler to mem
+    output logic [31:0] nextInstruction //next instruction address from PC
     
 );
 
@@ -159,7 +174,8 @@ logic [31:0] regA, regB;
 logic [31:0] MemData;
 
 //from PC
-logic [31:0] nextInstruction, PCData;
+logic [31:0]  PCData;
+// nextInstruction,;
 
 //instantiation of modules
 
@@ -253,14 +269,14 @@ memory_handler mem (
     .data_to_reg(MemData),
     .addr_to_mem(addr_to_mem),
     .data_to_mem(data_to_mem),
-    .mem_read(),
-    .mem_write()
+    .mem_read(), //fixme
+    .mem_write() //fixme
     );
 
 
 program_counter PC (
     .nRst(nrst),
-    .enable(1'b1), //global enable from busy signal of wishbone
+    .enable(1'b1), //global enable from busy signal of wishbone fixme
     .clk(clk),
     .immJumpValue(imm),
     .regJumpValue(regA),
