@@ -21,7 +21,11 @@ module register_file(
     end
 
         //combinational read block
-        assign read_data_1 = reg_file[read_addr_1];
-        assign read_data_2 = reg_file[read_addr_2];
+        always_comb begin
+            read_data_1 = reg_file[read_addr_1];
+            read_data_2 = reg_file[read_addr_2];
+        end
+        // assign read_data_1 = reg_file[read_addr_1];
+        // assign read_data_2 = reg_file[read_addr_2];
 endmodule
 
