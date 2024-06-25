@@ -283,7 +283,7 @@ program_counter PC (
     .doForceJump(Jump),
     .doCondJump(Branch),
     .condJumpValue(condJumpValue),
-    .doRegJump(opcode[3]),
+    .doRegJump(~opcode[3]),
     .instructionAddress(nextInstruction), //to Instruction memory
     .linkAddress(PCData)
 
