@@ -17,7 +17,7 @@ module tb_top ();
         eq_flag, //ALU branch flag used for beq, bge, and bgeu
         less_flag, //ALU flag used for blt, bltu
         err_flag; //ALU flag invalid operation, from ALU
-    logic [31:0] reg_window [31:0]; //array of register values
+    reg [31:0]  [31:0] reg_window; //array of register values
     logic condJumpValue; //branch calculation result
     logic [31:0] addr_to_mem, data_to_mem;
 
@@ -124,7 +124,7 @@ module top (
     input logic [31:0] instruction, //instruction to CPU
     input logic clk, nrst, //timing & reset signals
     output logic [31:0] alu_result,  //numerical/logical output of ALU
-    output logic [31:0] reg_window [31:0],
+    output reg [31:0] [31:0] reg_window,
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
     output logic zero_flag, //ALU flag whenever output == 0
     err_flag, //ALU flag invalid operation, from ALU
@@ -497,7 +497,7 @@ endmodule
 
 // typedef enum logic [3:0] {
 //     ADD=0, SUB=1, SLL=2, SLT=3, SLTU=4, XOR=5, SRL=6, SRA=7,OR=8, AND=9, 
-//     BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR=4'bx
+//     BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR=4'b
 //     } operation_t;
 
 module alu (
@@ -598,43 +598,43 @@ case(alu_control_input)
     BEQ:
     begin
          err_flag =1'b0; 
-         alu_result=32'bx;  //needed here cause alu_result is a don't care
+         alu_result=32'b0;  //needed here cause alu_result is a don't care
       condJumpValue = (opA == opB) ? 1 : 0;
     end
     BNE:
     begin
          err_flag =1'b0; 
-         alu_result=32'bx;
+         alu_result=32'b0;
         condJumpValue = (opA != opB) ? 1 : 0;
     end
     BLT:
     begin
          err_flag =1'b0; 
-         alu_result=32'bx;
+         alu_result=32'b0;
          condJumpValue = (opA_signed < opB_signed) ? 1 : 0;
     end
     BGE:
     begin
          err_flag =1'b0; 
-         alu_result=32'bx;
+         alu_result=32'b0;
       condJumpValue = (opA_signed >= opB_signed) ? 1 : 0;
     end
     BLTU:
     begin
          err_flag =1'b0; 
-         alu_result=32'bx;
+         alu_result=32'b0;
       condJumpValue = (opA < opB) ? 1 : 0;
     end
     BGEU:
     begin
          err_flag =1'b0;
-         alu_result=32'bx; 
+         alu_result=32'b0; 
       condJumpValue = (opA >= opB) ? 1 : 0;
     end
 
     default:
     begin
-        alu_result=32'bx; //(invalid/no operations);
+        alu_result=32'b0; //(invalid/no operations);
         err_flag = 1'b1;
         zero_flag = 1'b0;
         condJumpValue = 1'b0;
@@ -876,28 +876,32 @@ module register_file(
     input logic clk, nrst, reg_enable_write,
     input logic [31:0] write_data,
     output logic [31:0]  read_data_1, read_data_2,
-    output logic [31:0] reg_file [31:0]
+    output reg [31:0]  [31:0] reg_file
 );
-    logic [4:0] i;
+    // logic [4:0] i;
 
     //assign reg_file[0] = 0;
 
+
     always_ff @(posedge clk, negedge nrst) begin
         if (~nrst) begin 
-            for (integer i = 0; i < 32; i++) begin 
+            for (integer i = 0; i < 32; i++) begin //
                 reg_file[i] <= 32'b0;
             end
-        end else if (write_addr != 5'd0) begin //ensure x0 never written to (maintain value of 0)
-            if (reg_enable_write) begin
+        end else if (write_addr != 5'd0 & reg_enable_write) begin //ensure x0 never written to (maintain value of 0)
             reg_file[write_addr] <= write_data;
-            end 
         end
-
-        read_data_1 <= reg_file[read_addr_1];
-        read_data_2 <= reg_file[read_addr_2];
     end
 
+        //combinational read block
+        always_comb begin
+            read_data_1 = reg_file[read_addr_1];
+            read_data_2 = reg_file[read_addr_2];
+        end
+        // assign read_data_1 = reg_file[read_addr_1];
+        // assign read_data_2 = reg_file[read_addr_2];
 endmodule
+
 
 module memory_handler(
   input logic [31:0] addr, read_data_2, data_from_mem,
