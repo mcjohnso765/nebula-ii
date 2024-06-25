@@ -60,7 +60,7 @@ module tb_top ();
 
         @(posedge tb_clk);
         // @(negedge tb_clk);
-        // @(posedge tb_clk);
+        @(posedge tb_clk);
         // @(negedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
