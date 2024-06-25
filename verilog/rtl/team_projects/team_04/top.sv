@@ -43,6 +43,8 @@ logic [31:0] DataWrite;
 //from Regs
 logic [31:0] regA, regB;
 
+//from Mem Handler
+logic [31:0] MemData, addr_to_mem;
 
 //instantiation of modules
 
@@ -124,6 +126,21 @@ register_file regs (
     .nrst(nrst), 
     .reg_file(reg_window) //testbenching array
     );
+
+memory_handler mem (
+    .addr(alu_result_wire), //alu result, used as address
+    .read_data_2(regB), 
+    .data_from_mem(32'd99), 
+    .en_read(MemRead), 
+    .en_write(MemWrite), 
+    .size(func3), 
+    .select(),//fixme to wishbone/request unit
+    .data_to_reg(MemData),
+    .addr_to_mem(addr_to_mem),
+    .mem_read(),
+    .mem_write()
+    )
+
 
 endmodule
 
