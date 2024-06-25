@@ -9,11 +9,12 @@ module register_file(
 
     //assign reg_file[0] = 0;
 
-    always_ff @(posedge clk, negedge nrst)
+    always_ff @(posedge clk, negedge nrst) begin 
     if (~nrst) begin 
        for (i = 0; i < 32; i++) begin 
         reg_file[i] <= 32'b0;
        end
+    end
     end
 
     else if (write_addr != 5'd0) begin 
