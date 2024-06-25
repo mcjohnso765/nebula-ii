@@ -13,15 +13,12 @@ module tb_top ();
 
     logic [31:0] instruction; //instruction to CPU
     logic [31:0] alu_result;  //numerical/logical output of ALU
-    logic zero_flag, //ALU flag whenever output == 0
-        eq_flag, //ALU branch flag used for beq, bge, and bgeu
-        less_flag, //ALU flag used for blt, bltu
-        err_flag; //ALU flag invalid operation, from ALU
+    logic err_flag; //ALU flag invalid operation, from ALU
     reg [31:0]  [31:0] reg_window; //array of register values
     logic condJumpValue; //branch calculation result
     logic [31:0] addr_to_mem, data_to_mem;
 
-    top CPU(.instruction(instruction), .zero_flag(zero_flag), .alu_result(alu_result), .err_flag(err_flag), .clk(tb_clk), .nrst(nrst), .reg_window(reg_window), .condJumpValue(condJumpValue), .addr_to_mem(addr_to_mem), .data_to_mem(data_to_mem));
+    top CPU(.instruction(instruction), .alu_result(alu_result), .err_flag(err_flag), .clk(tb_clk), .nrst(nrst), .reg_window(reg_window),  .addr_to_mem(addr_to_mem), .data_to_mem(data_to_mem));
 
 
     // Clock generation block
@@ -126,9 +123,7 @@ module top (
     output logic [31:0] alu_result,  //numerical/logical output of ALU
     output reg [31:0] [31:0] reg_window,
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
-    output logic zero_flag, //ALU flag whenever output == 0
-    err_flag, //ALU flag invalid operation, from ALU
-    condJumpValue,
+    output logic err_flag, //ALU flag invalid operation, from ALU
     output logic [31:0] addr_to_mem, data_to_mem
     
 );
@@ -151,7 +146,7 @@ logic [31:0] opB;
 
 //from ALU
 logic [31:0] alu_result_wire;
-// logic condJumpValue;
+logic condJumpValue;
 
 //from RegWrite mux
 logic [31:0] DataWrite;
@@ -162,6 +157,9 @@ logic [31:0] regA, regB;
 
 //from Mem Handler
 logic [31:0] MemData;
+
+//from PC
+logic [31:0] nextInstruction, PCData;
 
 //instantiation of modules
 
@@ -212,7 +210,7 @@ alu ALU (
     .opB(opB), //operands
     .opA(regA), 
     .alu_result(alu_result_wire), //results and flags
-    .zero_flag(zero_flag), //indicate result == 0
+    .zero_flag(), //indicate result == 0
     .err_flag(err_flag), //indicate invalid operation
     .condJumpValue(condJumpValue) //indicate branching condition is true
     );
@@ -225,7 +223,7 @@ reg_write_mux reg_write_control (
     .immData(imm), //immediate value
     .ALUData(alu_result_wire), //ALU result value
     .MemData(32'b0), //memory value
-    .PCData(32'b0), //program counter value
+    .PCData(PCData), //program counter value
     .DataWrite(DataWrite), //chosen value
     .RegWriteSrc(RegWriteSrc) //control signal
     );
@@ -259,6 +257,21 @@ memory_handler mem (
     .mem_write()
     );
 
+
+program_counter PC (
+    .nRst(nrst),
+    .enable(1'b1), //global enable from busy signal of wishbone
+    .clk(clk),
+    .immJumpValue(imm),
+    .regJumpValue(regA),
+    .doForceJump(Jump),
+    .doCondJump(Branch),
+    .condJumpValue(condJumpValue),
+    .doRegJump(opcode[3]),
+    .instructionAddress(nextInstruction), //to Instruction memory
+    .linkAddress(PCData)
+
+);  
 endmodule
 
 
@@ -970,5 +983,44 @@ always_comb begin
       endcase  
     end
 end
+
+endmodule
+
+module program_counter (
+  input logic nRst, enable, clk,
+  input logic [31:0] immJumpValue, regJumpValue,
+  input logic doForceJump, doCondJump, condJumpValue, doRegJump,
+  output logic [31:0] instructionAddress, linkAddress
+
+);
+  
+  always_ff @( negedge clk, negedge nRst ) begin
+    if(~nRst) begin
+      instructionAddress <= 32'd0;
+      linkAddress <= 32'd0;
+    end else begin
+      if (enable) begin
+        if (doForceJump) begin //link
+          linkAddress <= instructionAddress + 32'd4;
+        end else begin
+          linkAddress <= 32'd0;
+        end
+
+        if (doForceJump | (doCondJump & condJumpValue)) begin
+          if (doRegJump) begin 
+            instructionAddress <= regJumpValue + immJumpValue;
+          end else begin
+            instructionAddress <= instructionAddress + immJumpValue;
+          end
+        end else begin
+          instructionAddress <= instructionAddress + 32'd4;
+        end
+      end else begin
+        instructionAddress <= instructionAddress;
+        linkAddress <= 32'd0;
+      end
+    end
+  end
+
 
 endmodule

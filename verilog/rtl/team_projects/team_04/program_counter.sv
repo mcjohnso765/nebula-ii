@@ -190,27 +190,24 @@ module program_counter (
   input logic nRst, enable, clk,
   input logic [31:0] immJumpValue, regJumpValue,
   input logic doForceJump, doCondJump, condJumpValue, doRegJump,
-  output logic [31:0] instructionAddress, linkAddress,
-  output logic next //REMOVE
+  output logic [31:0] instructionAddress, linkAddress
 
 );
   
-  always_ff @( posedge clk, negedge nRst ) begin
+  always_ff @( negedge clk, negedge nRst ) begin
     if(~nRst) begin
       instructionAddress <= 32'd0;
       linkAddress <= 32'd0;
-
-      next <= 0; //REMOVE
     end else begin
       if (enable) begin
-        if (sendLink) begin
+        if (doForceJump) begin
           linkAddress <= instructionAddress + 32'd4;
         end else begin
           linkAddress <= 32'd0;
         end
 
         if (doForceJump | (doCondJump & condJumpValue)) begin
-          if (doRegJump) begin
+          if (doForceJump) begin
             instructionAddress <= regJumpValue + immJumpValue;
           end else begin
             instructionAddress <= instructionAddress + immJumpValue;
@@ -218,13 +215,9 @@ module program_counter (
         end else begin
           instructionAddress <= instructionAddress + 32'd4;
         end
-
-        next <= 1; //REMOVE
       end else begin
         instructionAddress <= instructionAddress;
         linkAddress <= 32'd0;
-
-        next <= 0; //REMOVE
       end
     end
   end
