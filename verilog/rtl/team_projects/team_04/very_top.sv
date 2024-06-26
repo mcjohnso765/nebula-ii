@@ -27,7 +27,7 @@ module top (
 
     VGA_out vga(
         .SRAM_data_in(vga_mem_data_read),
-        .SRAM_busy(),
+        .SRAM_busy(0),
         
         .clk(clk),
         .nrst(nRst),
