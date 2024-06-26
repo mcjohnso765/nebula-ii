@@ -27,13 +27,13 @@ module tb_top ();
             .nextInstruction(nextInstruction));
 
 
-    reg [31:0] [31:0] instructions;
-    //load 5 into x1
-    assign instructions[0] = 32'h00500093; //addi x1, x0, 5
-    //load 5 into x2
-    assign instructions[1] = 32'h00500113; // addi x2, x0, 5
-    //add x1 & x2
-    assign instructions[2] = 32'h002081b3; //add x3, x1, x2
+    // reg [31:0] [31:0] instructions;
+    // //load 5 into x1
+    // assign instructions[0] = 32'h00500093; //addi x1, x0, 5
+    // //load 5 into x2
+    // assign instructions[1] = 32'h00500113; // addi x2, x0, 5
+    // //add x1 & x2
+    // assign instructions[2] = 32'h002081b3; //add x3, x1, x2
 
 
     // Clock generation block
@@ -109,7 +109,7 @@ module tb_top ();
         ////////////////////////////////////////////////////
 
         //branch if x1 == x2
-        instruction = 32'h00208163; //beq x1, x2, 2
+        instruction = 32'hfe208ce3; //beq x1, x2, -8
 
         @(negedge tb_clk);
         // @(negedge tb_clk);
@@ -119,27 +119,27 @@ module tb_top ();
         $display("Branch Condition: %b", condJumpValue);
         $display("Next Instruction Address: %b", nextInstruction);
 
-        ////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////
 
-        instruction = 32'h0020f263; //bgeu x1, x2, 4
+        // instruction = 32'h0020f263; //bgeu x1, x2, 4
 
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
 
-        $display("Branch Condition: %b", condJumpValue);
-        $display("Next Instruction Address: %b", nextInstruction);
+        // $display("Branch Condition: %b", condJumpValue);
+        // $display("Next Instruction Address: %b", nextInstruction);
 
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
 
-        instruction = 32'h005188e7; //jalr x17, 5(x3)
+        // instruction = 32'h005188e7; //jalr x17, 5(x3)
 
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
 
-        $display("Branch Condition: %b", condJumpValue);
-        $display("Next Instruction Address: %b", nextInstruction);
+        // $display("Branch Condition: %b", condJumpValue);
+        // $display("Next Instruction Address: %b", nextInstruction);
 
-        @(negedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
+        // @(negedge tb_clk);
         
         $finish;
     end
