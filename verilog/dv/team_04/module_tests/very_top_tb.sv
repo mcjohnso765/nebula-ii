@@ -82,7 +82,7 @@ module very_top_tb (
     );
 
     //create mem
-    reg [31:0] instrMem [15:0];
+    reg [15:0][31:0] instrMem ;
     assign instrMem[0][31:0] = 32'h17f00513;
     assign instrMem[1][31:0] = 32'h0010059b;
     assign instrMem[2][31:0] = 32'h02059593;
