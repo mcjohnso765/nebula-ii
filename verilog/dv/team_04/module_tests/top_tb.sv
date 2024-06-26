@@ -120,26 +120,25 @@ module tb_top ();
         $display("Next Instruction Address: %b", nextInstruction);
 
         @(negedge tb_clk);
+
+        // ////////////////////////////////////////////////////
+        // ////////////////////////////////////////////////////
+
+        instruction = 32'h0020f263; //bgeu x1, x2, 4
+
         @(negedge tb_clk);
 
-        // ////////////////////////////////////////////////////
-        // ////////////////////////////////////////////////////
-
-        // instruction = 32'h0020f263; //bgeu x1, x2, 4
+        $display("Branch Condition: %b", condJumpValue);
+        $display("Next Instruction Address: %b", nextInstruction);
 
         // @(negedge tb_clk);
 
-        // $display("Branch Condition: %b", condJumpValue);
-        // $display("Next Instruction Address: %b", nextInstruction);
+        instruction = 32'h005188e7; //jalr x17, 5(x3)
 
-        // @(negedge tb_clk);
+        @(negedge tb_clk);
 
-        // instruction = 32'h005188e7; //jalr x17, 5(x3)
-
-        // @(negedge tb_clk);
-
-        // $display("Branch Condition: %b", condJumpValue);
-        // $display("Next Instruction Address: %b", nextInstruction);
+        $display("Branch Condition: %b", condJumpValue);
+        $display("Next Instruction Address: %b", nextInstruction);
 
         // @(negedge tb_clk);
         // @(negedge tb_clk);
