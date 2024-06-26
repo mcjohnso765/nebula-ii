@@ -65,18 +65,18 @@ module tb_top ();
 
 
 
-        @(posedge tb_clk);
-        // @(negedge tb_clk);
-        @(posedge tb_clk);
-        // @(negedge tb_clk);
+        // @(posedge tb_clk);
+        @(negedge tb_clk);
+        // @(posedge tb_clk);
+        @(negedge tb_clk);
 
         //load 5 into x1
         instruction = 32'h00500093; //addi x1, x0, 5
 
-        @(posedge tb_clk);
-        // @(negedge tb_clk);
-        @(posedge tb_clk);
-        // @(negedge tb_clk);
+        // @(posedge tb_clk);
+        @(negedge tb_clk);
+        // @(posedge tb_clk);
+        @(negedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
 
@@ -170,10 +170,10 @@ module tb_top ();
         // @(negedge tb_clk);
 
 
-        @(negedge tb_clk);
-        @(negedge tb_clk);
+        // @(negedge tb_clk);
+        // @(negedge tb_clk);
 
-        $display("Next Instruction Address: %b", nextInstruction);
+        // $display("Next Instruction Address: %b", nextInstruction);
 	    
         
         $finish;
