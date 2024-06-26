@@ -11,6 +11,7 @@ module top (
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
     output logic zero_flag, //ALU flag whenever output == 0
     err_flag, //ALU flag invalid operation, from ALU
+    input logic [31:0] data_from_mem,
     output logic [31:0] addr_to_mem, data_to_mem
     
 );
@@ -106,7 +107,7 @@ assign alu_result = alu_result_wire;
 reg_write_mux reg_write_control (
     .immData(imm), //immediate value
     .ALUData(alu_result_wire), //ALU result value
-    .MemData(32'b0), //memory value
+    .MemData(MemData), //memory value
     .PCData(32'b0), //program counter value
     .DataWrite(DataWrite), //chosen value
     .RegWriteSrc(RegWriteSrc) //control signal
@@ -129,7 +130,7 @@ register_file regs (
 memory_handler mem (
     .addr(alu_result_wire), //alu result, used as address
     .read_data_2(regB), 
-    .data_from_mem(32'd99), 
+    .data_from_mem(data_from_mem), 
     .en_read(MemRead), 
     .en_write(MemWrite), 
     .size(func3), 
