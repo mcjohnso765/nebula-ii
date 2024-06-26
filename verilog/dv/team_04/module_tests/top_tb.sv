@@ -110,6 +110,9 @@ module tb_top ();
         // @(negedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
+        $display("addr to mem: %b", addr_to_mem);
+        $display("data to mem: %b", data_to_mem);
+        $display("data to reg: %b", data_to_reg);
 
         ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////
@@ -123,7 +126,9 @@ module tb_top ();
         // @(negedge tb_clk);
 
         $display("Next Instruction Address: %b", nextInstruction);
-
+        $display("addr to mem: %b", addr_to_mem);
+        $display("data to mem: %b", data_to_mem);
+        $display("data to reg: %b", data_to_reg);
         @(negedge tb_clk);
 
         // ////////////////////////////////////////////////////
@@ -134,7 +139,9 @@ module tb_top ();
         @(negedge tb_clk);
 
         $display("Next Instruction Address: %b", nextInstruction);
-
+        $display("addr to mem: %b", addr_to_mem);
+        $display("data to mem: %b", data_to_mem);
+        $display("data to reg: %b", data_to_reg);
         // @(negedge tb_clk);
 
         instruction = 32'h005188e7; //jalr x17, 5(x3)
@@ -143,7 +150,9 @@ module tb_top ();
         @(negedge tb_clk);
 
         $display("Next Instruction Address: %b", nextInstruction);
-
+        $display("addr to mem: %b", addr_to_mem);
+        $display("data to mem: %b", data_to_mem);
+        $display("data to reg: %b", data_to_reg);
         // @(negedge tb_clk);
         // @(negedge tb_clk);
         
