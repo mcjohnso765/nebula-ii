@@ -119,6 +119,9 @@ module tb_top ();
         $display("Branch Condition: %b", condJumpValue);
         $display("Next Instruction Address: %b", nextInstruction);
 
+        @(negedge tb_clk);
+        @(negedge tb_clk);
+
         // ////////////////////////////////////////////////////
         // ////////////////////////////////////////////////////
 
