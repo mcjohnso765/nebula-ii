@@ -109,7 +109,7 @@ module tb_top ();
         ////////////////////////////////////////////////////
 
         //branch if x1 == x2
-        instruction = 32'hfe208ce3; //beq x1, x2, -8
+        instruction = 32'h02208463; //beq x1, x2, 40
 
         @(negedge tb_clk);
         // @(negedge tb_clk);
