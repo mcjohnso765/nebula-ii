@@ -30,7 +30,7 @@ module top (
         .SRAM_busy(),
         
         .clk(clk),
-        .nrst(nrst),
+        .nrst(nRst),
 
         .data_en(),
         .h_out(h_out), //VGA Connect
