@@ -25,7 +25,7 @@ module tb_top ();
             .addr_to_mem(addr_to_mem), 
             .data_to_mem(data_to_mem), 
             .nextInstruction(nextInstruction),
-	    .data_from_mem(data_from_mem));
+	    .data_from_mem(32'd99));
 
 
     // reg [31:0] [31:0] instructions;
@@ -126,7 +126,7 @@ module tb_top ();
 	$display("addr to mem: %b", addr_to_mem); // 0x810
 
 	//load 810 into reg x12                       //need to instantiate mem module
-	instruction = 32'h00a92603; // x12 x3, 10(x18)
+	instruction = 32'h00a92603; //lw x12 x3, 10(x18)
 	@(negedge tb_clk);
         //@(negedge tb_clk);
 
@@ -189,16 +189,17 @@ typedef enum logic [3:0] {
 module top (
     input logic [31:0] instruction, //instruction to CPU
     input logic clk, nrst, //timing & reset signals
+    input logic [31:0] data_from_mem,
     output logic [31:0] alu_result,  //numerical/logical output of ALU
     output reg [31:0] [31:0] reg_window,
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
     output logic err_flag, //ALU flag invalid operation, from ALU
-    output logic [31:0] addr_to_mem, data_to_mem,data_to_reg,//signals from memory handler to mem
+    output logic [31:0] addr_to_mem, data_to_mem,//signals from memory handler to mem
     output logic [31:0] nextInstruction //next instruction address from PC
     
 );
 
-//wires 
+//wires name
 //from decoder
 logic [4:0] rs1, rs2, rd; 
 logic [6:0] opcode, func7;
@@ -293,7 +294,7 @@ assign alu_result = alu_result_wire;
 reg_write_mux reg_write_control (
     .immData(imm), //immediate value
     .ALUData(alu_result_wire), //ALU result value
-    .MemData(32'b0), //memory value
+    .MemData(MemData), //memory value
     .PCData(PCData), //program counter value
     .DataWrite(DataWrite), //chosen value
     .RegWriteSrc(RegWriteSrc) //control signal
