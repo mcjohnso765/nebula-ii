@@ -16,7 +16,7 @@ module tb_top ();
     logic err_flag; //ALU flag invalid operation, from ALU
     reg [31:0]  [31:0] reg_window; //array of register values
     logic condJumpValue; //branch calculation result
-    logic [31:0] addr_to_mem, data_to_mem, nextInstruction;
+    logic [31:0] addr_to_mem, data_to_mem, nextInstruction, data_to_reg;
 
     top CPU(.instruction(instruction), 
             .alu_result(alu_result), 
@@ -24,7 +24,8 @@ module tb_top ();
             .nrst(nrst), .reg_window(reg_window),  
             .addr_to_mem(addr_to_mem), 
             .data_to_mem(data_to_mem), 
-            .nextInstruction(nextInstruction));
+            .nextInstruction(nextInstruction),
+            .data_to_reg(data_to_reg));
 
 
     // reg [31:0] [31:0] instructions;
@@ -78,7 +79,9 @@ module tb_top ();
         // @(negedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
-
+        $display("addr to mem: %b", addr_to_mem);
+        $display("data to mem: %b", data_to_mem);
+        $display("data to reg: %b", data_to_reg);
         ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////
         
@@ -91,6 +94,9 @@ module tb_top ();
         // @(negedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
+        $display("addr to mem: %b", addr_to_mem);
+        $display("data to mem: %b", data_to_mem);
+        $display("data to reg: %b", data_to_reg);
 
         ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////
@@ -116,7 +122,6 @@ module tb_top ();
         // @(posedge tb_clk);
         // @(negedge tb_clk);
 
-        $display("Branch Condition: %b", condJumpValue);
         $display("Next Instruction Address: %b", nextInstruction);
 
         @(negedge tb_clk);
@@ -128,7 +133,6 @@ module tb_top ();
 
         @(negedge tb_clk);
 
-        $display("Branch Condition: %b", condJumpValue);
         $display("Next Instruction Address: %b", nextInstruction);
 
         // @(negedge tb_clk);
@@ -137,7 +141,7 @@ module tb_top ();
 
         @(negedge tb_clk);
         @(negedge tb_clk);
-        $display("Branch Condition: %b", condJumpValue);
+
         $display("Next Instruction Address: %b", nextInstruction);
 
         // @(negedge tb_clk);
@@ -160,7 +164,7 @@ module top (
     output reg [31:0] [31:0] reg_window,
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
     output logic err_flag, //ALU flag invalid operation, from ALU
-    output logic [31:0] addr_to_mem, data_to_mem, //signals from memory handler to mem
+    output logic [31:0] addr_to_mem, data_to_mem,data_to_reg,//signals from memory handler to mem
     output logic [31:0] nextInstruction //next instruction address from PC
     
 );
@@ -283,7 +287,7 @@ register_file regs (
 memory_handler mem (
     .addr(alu_result_wire), //alu result, used as address
     .read_data_2(regB), 
-    .data_from_mem(32'd99), 
+    .data_from_mem(32'd99), //requested data from memory
     .en_read(MemRead), 
     .en_write(MemWrite), 
     .size(func3), 
@@ -970,28 +974,27 @@ always_comb begin
       mem_read = 1;
       mem_write = 0;
       case(size)
-        3'b100: begin 
+        3'b100: begin //lbu
           addr_to_mem = addr;
           select = 4'b1111;
-          //data_from_mem <= {24'b0, data_to_memory[7:0]};
           data_to_reg = {24'b0, data_from_mem[7:0]};
         end
-        3'b000: begin
+        3'b000: begin//lb
           addr_to_mem = addr;
           select = 4'b1111;
           data_to_reg = {{24{data_from_mem[7]}}, data_from_mem[7:0]};
         end
-        3'b101: begin 
+        3'b101: begin //lhu
           addr_to_mem = addr;
           select = 4'b1111;
           data_to_reg = {16'b0, data_from_mem[15:0]};
         end
-        3'b001: begin 
+        3'b001: begin //lh
           addr_to_mem = addr;
           select = 4'b1111;
           data_to_reg = {{16{data_from_mem[16]}}, data_from_mem[15:0]};
         end
-        3'b010: begin 
+        3'b010: begin //lw
           addr_to_mem = addr;
           select = 4'b1111;
           data_to_reg = data_from_mem;
@@ -1003,17 +1006,17 @@ always_comb begin
       mem_read = 0;
       mem_write = 1;
       case(size)
-        3'b100: begin 
+        3'b000: begin //sb
           addr_to_mem = addr;
           data_to_mem[7:0] = read_data_2[7:0];
           select = 4'b0001;
         end
-        3'b101: begin 
+        3'b001: begin //sh
           addr_to_mem = addr;
           data_to_mem[15:0] = read_data_2[15:0];
           select = 4'b0011;
         end
-        3'b010: begin 
+        3'b010: begin //sw
           addr_to_mem = addr;
           data_to_mem = read_data_2;
           select = 4'b1111;
