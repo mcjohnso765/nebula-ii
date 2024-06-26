@@ -136,7 +136,7 @@ module tb_top ();
         instruction = 32'h005188e7; //jalr x17, 5(x3)
 
         @(negedge tb_clk);
-
+        @(negedge tb_clk);
         $display("Branch Condition: %b", condJumpValue);
         $display("Next Instruction Address: %b", nextInstruction);
 
