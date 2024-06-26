@@ -82,7 +82,11 @@ module very_top_tb (
     );
 
     //create mem
-    reg [15:0][31:0] instrMem ;
+    logic [15:0][31:0] instrMem;
+    // assign  instrMem = '{'{32'h17f00513}, '{32'h0010059b}, '{32'h02059593}, '{32'hfff58593}, '{32'h18002083},
+    //                     '{32'h00104663}, '{32'h00008e63}, '{32'hff5ff0ef}, '{32'h00000113}, '{32'h00b12023}
+    // };
+
     assign instrMem[0][31:0] = 32'h17f00513;
     assign instrMem[1][31:0] = 32'h0010059b;
     assign instrMem[2][31:0] = 32'h02059593;
