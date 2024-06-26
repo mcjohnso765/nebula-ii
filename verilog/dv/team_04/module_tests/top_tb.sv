@@ -1049,7 +1049,7 @@ module program_counter (
 
         if (doForceJump | (doCondJump & condJumpValue)) begin
 
-          if (doRegJump) begin
+          if (doRegJump & !doCondJump) begin
             instructionAddress <= regJumpValue + immJumpValue;
           end else begin
             instructionAddress <= instructionAddress + immJumpValue;
