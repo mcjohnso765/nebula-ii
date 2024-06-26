@@ -3,7 +3,7 @@ typedef enum logic [3:0] {
     BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15
     } operation_t;
 
-module top (
+module CPU (
     input logic [31:0] instruction, //instruction to CPU
     input logic clk, nrst, //timing & reset signals
     output logic [31:0] alu_result,  //numerical/logical output of ALU
