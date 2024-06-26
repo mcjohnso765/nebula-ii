@@ -1023,9 +1023,7 @@ always_comb begin
         default:
           data_to_reg = 0;
       endcase
-    end
-
-    if (en_write) begin 
+    end else if (en_write) begin 
       mem_read = 0;
       mem_write = 1;
       addr_to_mem = addr;
@@ -1048,6 +1046,10 @@ always_comb begin
         end
         
       endcase  
+    end else begin
+      select = 0;
+      data_to_mem = 0;
+      data_to_reg = 0;
     end
 end
 
