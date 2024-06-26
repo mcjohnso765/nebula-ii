@@ -16,7 +16,7 @@ module tb_top ();
     logic err_flag; //ALU flag invalid operation, from ALU
     reg [31:0]  [31:0] reg_window; //array of register values
     logic condJumpValue; //branch calculation result
-    logic [31:0] addr_to_mem, data_to_mem, nextInstruction, data_to_reg;
+	logic [31:0] addr_to_mem, data_to_mem, nextInstruction, data_from_mem;
 
     top CPU(.instruction(instruction), 
             .alu_result(alu_result), 
@@ -25,7 +25,7 @@ module tb_top ();
             .addr_to_mem(addr_to_mem), 
             .data_to_mem(data_to_mem), 
             .nextInstruction(nextInstruction),
-            .data_to_reg(data_to_reg));
+	    .data_from_mem(data_from_mem));
 
 
     // reg [31:0] [31:0] instructions;
@@ -79,9 +79,7 @@ module tb_top ();
         // @(negedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
-        $display("addr to mem: %b", addr_to_mem);
-        $display("data to mem: %b", data_to_mem);
-        $display("data to reg: %b", data_to_reg);
+
         ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////
         
@@ -94,9 +92,6 @@ module tb_top ();
         // @(negedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
-        $display("addr to mem: %b", addr_to_mem);
-        $display("data to mem: %b", data_to_mem);
-        $display("data to reg: %b", data_to_reg);
 
         ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////
@@ -110,10 +105,34 @@ module tb_top ();
         // @(negedge tb_clk);
 
         $display("ALU Result: %b", alu_result);
-        $display("addr to mem: %b", addr_to_mem);
-        $display("data to mem: %b", data_to_mem);
-        $display("data to reg: %b", data_to_reg);
 
+	////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////
+	//for mem handler
+	    
+	//load 800 into x18   
+	instruction = 32'h32000913; // addi x18, x0, 800
+	@(negedge tb_clk);
+        //@(negedge tb_clk);
+
+        $display("ALU Result: %b", alu_result);
+
+	//store x3 into mem loc 810
+	instruction = 32'h00392523; // sw x3, 10(x18)
+	@(negedge tb_clk);
+        //@(negedge tb_clk);
+
+	$display("data to mem: %b", data_to_mem); // 'd10/'ha
+	$display("addr to mem: %b", addr_to_mem); // 0x810
+
+	//load 810 into reg x12                       //need to instantiate mem module
+	instruction = 32'h00a92603; // x12 x3, 10(x18)
+	@(negedge tb_clk);
+        //@(negedge tb_clk);
+
+	$display("data from mem: %b", data_from_mem); // 'd10/'ha
+
+	    
         ////////////////////////////////////////////////////
         ////////////////////////////////////////////////////
 
@@ -126,9 +145,7 @@ module tb_top ();
         // @(negedge tb_clk);
 
         $display("Next Instruction Address: %b", nextInstruction);
-        $display("addr to mem: %b", addr_to_mem);
-        $display("data to mem: %b", data_to_mem);
-        $display("data to reg: %b", data_to_reg);
+
         @(negedge tb_clk);
 
         // ////////////////////////////////////////////////////
@@ -139,9 +156,7 @@ module tb_top ();
         @(negedge tb_clk);
 
         $display("Next Instruction Address: %b", nextInstruction);
-        $display("addr to mem: %b", addr_to_mem);
-        $display("data to mem: %b", data_to_mem);
-        $display("data to reg: %b", data_to_reg);
+
         // @(negedge tb_clk);
 
         instruction = 32'h005188e7; //jalr x17, 5(x3)
@@ -150,11 +165,16 @@ module tb_top ();
         @(negedge tb_clk);
 
         $display("Next Instruction Address: %b", nextInstruction);
-        $display("addr to mem: %b", addr_to_mem);
-        $display("data to mem: %b", data_to_mem);
-        $display("data to reg: %b", data_to_reg);
+
         // @(negedge tb_clk);
         // @(negedge tb_clk);
+
+
+        @(negedge tb_clk);
+        @(negedge tb_clk);
+
+        $display("Next Instruction Address: %b", nextInstruction);
+	    
         
         $finish;
     end
