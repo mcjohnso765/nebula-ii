@@ -83,9 +83,26 @@ module very_top_tb (
 
     //create mem
     reg [31:0] instrMem [99:0];
-    initial begin
-        $readmemh("instrList.txt", instrMem);
-    end
+    assign instrMem[0] = 32'h17f00513;
+    assign instrMem[1] = 32'h0010059b;
+    assign instrMem[2] = 32'h02059593;
+    assign instrMem[3] = 32'hfff58593;
+    assign instrMem[4] = 32'h18002083;
+    assign instrMem[5] = 32'h00104663;
+    assign instrMem[6] = 32'h00008e63;
+    assign instrMem[7] = 32'hff5ff0ef;
+    assign instrMem[8] = 32'h00000113;
+    assign instrMem[9] = 32'h00b12023;
+    assign instrMem[10] = 32'h00410113;
+    assign instrMem[11] = 32'hfea14ce3;
+    assign instrMem[12] = 32'hfe1ff0ef;
+    assign instrMem[13] = 32'h00000113;
+    assign instrMem[15] = 32'h00012023;
+
+    
+    // initial begin
+    //     $readmemh("instrList.txt", instrMem);
+    // end
 
     /*CPU_request_unit cpuru(
         .clk(clk),
