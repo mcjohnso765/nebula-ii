@@ -82,31 +82,26 @@ module very_top_tb (
     );
 
     //create mem
-    logic [15:0][31:0] instrMem;
-    // assign  instrMem = '{'{32'h17f00513}, '{32'h0010059b}, '{32'h02059593}, '{32'hfff58593}, '{32'h18002083},
-    //                     '{32'h00104663}, '{32'h00008e63}, '{32'hff5ff0ef}, '{32'h00000113}, '{32'h00b12023}
-    // };
-
-    assign instrMem[0][31:0] = 32'h17f00513;
-    assign instrMem[1][31:0] = 32'h0010059b;
-    assign instrMem[2][31:0] = 32'h02059593;
-    assign instrMem[3][31:0] = 32'hfff58593;
-    assign instrMem[4][31:0] = 32'h18002083;
-    assign instrMem[5][31:0] = 32'h00104663;
-    assign instrMem[6][31:0] = 32'h00008e63;
-    assign instrMem[7][31:0] = 32'hff5ff0ef;
-    assign instrMem[8][31:0] = 32'h00000113;
-    assign instrMem[9][31:0] = 32'h00b12023;
-    assign instrMem[10][31:0] = 32'h00410113;
-    assign instrMem[11][31:0] = 32'hfea14ce3;
-    assign instrMem[12][31:0] = 32'hfe1ff0ef;
-    assign instrMem[13][31:0] = 32'h00000113;
-    assign instrMem[15][31:0] = 32'h00012023;
-
+    reg [31:0] instrMem [14:0];
     
-    // initial begin
-    //     $readmemh("instrList.txt", instrMem);
-    // end
+    initial begin
+        instrMem[0][31:0] = 32'h17f00513;
+        instrMem[1][31:0] = 32'h0010059b;
+        instrMem[2][31:0] = 32'h02059593;
+        instrMem[3][31:0] = 32'hfff58593;
+        instrMem[4][31:0] = 32'h18002083;
+        instrMem[5][31:0] = 32'h00104663;
+        instrMem[6][31:0] = 32'h00008e63;
+        instrMem[7][31:0] = 32'hff5ff0ef;
+        instrMem[8][31:0] = 32'h00000113;
+        instrMem[9][31:0] = 32'h00b12023;
+        instrMem[10][31:0] = 32'h00410113;
+        instrMem[11][31:0] = 32'hfea14ce3;
+        instrMem[12][31:0] = 32'hfe1ff0ef;
+        instrMem[13][31:0] = 32'h00000113;
+        instrMem[14][31:0] = 32'h00012023;
+        // $readmemh("instrList.txt", instrMem);
+    end
 
     /*CPU_request_unit cpuru(
         .clk(clk),
