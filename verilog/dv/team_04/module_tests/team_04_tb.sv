@@ -16,8 +16,15 @@
 
 module team_04_tb();
 
-    ///////////////////////////////////
-    // Write your test bench code here!
-    ///////////////////////////////////
+    logic tb_clk, nrst; //clock and reset signals
+
+    logic [31:0] instruction, //instruction code
+        nextInstruction, exp_nextInstruction, //address of next instruction, to be outputted to Data Memory
+        alu_result, exp_alu_result, //result of numerical/logical operation from ALU
+        addr_to_mem, exp_addr_to_mem, //address sent to Data Memory/VGA 
+        data_to_mem, exp_data_to_mem, //
+        data_from_mem;
+
+    logic err_flag, exp_err_flag,
 
 endmodule

@@ -153,6 +153,14 @@ module very_top_tb (
         .data_from_mem(),
         .mem_busy()
     );*/
+
+    initial begin
+        $dumpfile("dump.vcd");
+        $dumpvars; 
+
+        $finish;
+
+    end
 endmodule
 
 
