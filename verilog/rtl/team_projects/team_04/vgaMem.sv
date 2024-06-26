@@ -2,7 +2,7 @@ module vgaMem (
     input logic clk,
     nRst, 
     write_enable, //control signal enabling writing
-    input logic [31:0] address, write_data, //address and values to be written
+    input logic [31:0] write_address, write_data, read_address, //address and values to be written
     output logic [31:0] read_data
 );
 
@@ -14,8 +14,8 @@ module vgaMem (
         if(~nRst) begin
             memory = '{default:0}; //
         end else if (write_enable) begin
-            memory[address] <= write_data;
+            memory[write_address] <= write_data;
         end  
-        read_data <= memory[address];
+        read_data <= memory[read_address];
     end
 endmodule
