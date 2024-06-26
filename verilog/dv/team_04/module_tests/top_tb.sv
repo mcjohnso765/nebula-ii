@@ -18,7 +18,22 @@ module tb_top ();
     logic condJumpValue; //branch calculation result
     logic [31:0] addr_to_mem, data_to_mem, nextInstruction;
 
-    top CPU(.instruction(instruction), .alu_result(alu_result), .err_flag(err_flag), .clk(tb_clk), .nrst(nrst), .reg_window(reg_window),  .addr_to_mem(addr_to_mem), .data_to_mem(data_to_mem), .nextInstruction(nextInstruction));
+    top CPU(.instruction(instruction), 
+            .alu_result(alu_result), 
+            .err_flag(err_flag), .clk(tb_clk), 
+            .nrst(nrst), .reg_window(reg_window),  
+            .addr_to_mem(addr_to_mem), 
+            .data_to_mem(data_to_mem), 
+            .nextInstruction(nextInstruction));
+
+
+    reg [31:0] [31:0] instructions;
+    //load 5 into x1
+    assign instructions[0] = 32'h00500093; //addi x1, x0, 5
+    //load 5 into x2
+    assign instructions[1] = 32'h00500113; // addi x2, x0, 5
+    //add x1 & x2
+    assign instructions[2] = 32'h002081b3; //add x3, x1, x2
 
 
     // Clock generation block
@@ -46,6 +61,8 @@ module tb_top ();
 
         //initialize
         reset_dut;
+
+
 
         @(posedge tb_clk);
         // @(negedge tb_clk);

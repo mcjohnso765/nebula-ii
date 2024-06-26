@@ -200,6 +200,8 @@ module program_counter (
       linkAddress <= 32'd0;
     end else begin
       if (enable) begin
+
+
         if (doForceJump) begin
           linkAddress <= instructionAddress + 32'd4;
         end else begin
@@ -207,7 +209,8 @@ module program_counter (
         end
 
         if (doForceJump | (doCondJump & condJumpValue)) begin
-          if (doForceJump) begin
+
+          if (doRegJump) begin
             instructionAddress <= regJumpValue + immJumpValue;
           end else begin
             instructionAddress <= instructionAddress + immJumpValue;
