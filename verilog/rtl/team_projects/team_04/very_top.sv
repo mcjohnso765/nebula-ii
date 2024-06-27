@@ -7,7 +7,7 @@ module very_top (
 );
 
     logic [31:0] nextInstruction;
-    logic MemWrite, MemRead;
+   logic MemWrite, MemRead;
     CPU cpu(
         .instruction(instrMem[nextInstruction/4]),
         .clk(clk),
@@ -33,19 +33,19 @@ module very_top (
 
     logic [31:0] temp_mem;
 
-    // // White Noise Gen
-    // logic [31:0] lfsr;
-    // logic random_bit;
-    // always_ff @(posedge clk or negedge nRst) begin
-    //     if (~nRst) begin
-    //         lfsr <= 32'hACE1; // Seed value for LFSR
-    //         random_bit <= 0;
-    //     end else begin
-    //         // Generate the next LFSR value
-    //         lfsr <= {lfsr[30:0], lfsr[31] ^ lfsr[21] ^ lfsr[1] ^ lfsr[0]};
-    //         random_bit <= lfsr[0]; // Output the LSB of the LFSR
-    //     end
-    // end
+    // White Noise Gen
+    logic [31:0] lfsr;
+    logic random_bit;
+    always_ff @(posedge clk or negedge nRst) begin
+        if (~nRst) begin
+            lfsr <= 32'hACE1; // Seed value for LFSR
+            random_bit <= 0;
+        end else begin
+            // Generate the next LFSR value
+            lfsr <= {lfsr[30:0], lfsr[31] ^ lfsr[21] ^ lfsr[1] ^ lfsr[0]};
+            random_bit <= lfsr[0]; // Output the LSB of the LFSR
+        end
+    end
 
     // always_ff @(posedge clk or negedge nRst) begin
     //     if (~nRst) begin
@@ -63,8 +63,8 @@ module very_top (
     VGA_out vga(
         //.SRAM_data_in(vga_mem_adr_write),
         // American Flag Display
-        .SRAM_data_in({32{(((~v_count[4]) & ((v_count > 158) | (h_count > 100))) | (((v_count[4] & v_count[3]) & (h_count[2]) & ((v_count < 130) & (h_count < 99))) ))}}),
-        //.SRAM_data_in(vga_mem_data_read),//{32{MemWrite}},nextInstruction,{32{random_bit}}
+        //.SRAM_data_in({32{(((~v_count[4]) & ((v_count > 158) | (h_count > 100))) | (((v_count[4] & v_count[3]) & (h_count[2]) & ((v_count < 130) & (h_count < 99))) ))}}),
+        .SRAM_data_in(vga_mem_data_read),//{32{MemWrite}},nextInstruction,{32{random_bit}}
         .SRAM_busy(0),
         
         .clk(clk),
@@ -94,6 +94,25 @@ module very_top (
         .clk(clk), 
         .dout(vga_mem_data_read)
     );
+
+    logic [7:0] uart_out;
+    logic uart_data_ready; // flags that the UART data is ready to be received
+
+    UART_Receiver uart(
+  .nRst(nRst), .clk(clk), .enable(1), .Rx(/* SIGNAL RECIEVED FROM EXTERNAL UART */),
+
+  .data_out(uart_out),
+  .data_ready(uart_data_ready), //flag is set to false only if data is being loaded into it
+
+  .working_data(), //Ignore 
+  .bits_received(), //Ignore
+  .receiving(), //Ignore
+
+
+  //SET HERE FOR TESTBENCH SAKE//////////////////////////////////
+  .BAUD_counter(), //Ignore
+  .parity_error() // ignore
+);
 /*
     vgaMem vgaMem(
         .r_clk(clk),
@@ -115,33 +134,7 @@ module very_top (
 
         .button(button),
         .flag(UART_flag)
-    );CPU cpu(
-        .instruction(instrMem[tb_nextInstruction/4]),
-        .clk(tb_clk),
-        .nrst(tb_nRst),      
-        .data_from_mem(tb_UART_flag),
-        .addr_to_mem(vga_mem_adr_write),
-        .data_to_mem(vga_mem_data_write),
-        .nextInstruction(tb_nextInstruction),
-        .MemWrite(tb_MemWrite),
-        .MemRead(tb_MemRead)
     );
-
-    ram ranch(
-        .din(vga_mem_data_write),
-        .addr_r(vga_mem_adr_read), 
-        .addr_w(vga_mem_adr_write), 
-        .write_en(MemWrite), 
-        .clk(clk), 
-        .dout(vga_mem_data_read)
-    );
-
-    //create mem
-    reg [31:0] instrMem [99:0];
-    initial begin
-        $readmemh("instrList.txt", instrMem);
-    end
-
 
     //create mem
     reg [31:0] instrMem [99:0];
@@ -650,7 +643,7 @@ register_file regs (
 memory_handler mem (
     .addr(alu_result_wire), //alu result, used as address
     .read_data_2(regB), 
-    .data_from_mem(32'd99), //requested data from memory
+    .data_from_mem(data_from_mem), //requested data from memory
     .en_read(MemRead), 
     .en_write(MemWrite), 
     .size(func3), 
@@ -1773,4 +1766,161 @@ always_ff @( posedge clk, negedge nRst) begin
         flag <= 0;
     end
 end
+endmodule
+
+
+
+
+typedef enum logic { 
+  RESET = 1'b0,
+  COUNTING = 1'b1
+} BAUD_counter_state_t;
+
+
+
+
+module UART_Receiver #(
+  parameter BAUD_RATE = 9600,
+  parameter CLOCK_FREQ = 50000000,
+  parameter CYCLES_PER_BIT = CLOCK_FREQ / BAUD_RATE //number of clock cycles per UART bit
+) (
+  input logic nRst, clk, enable, Rx,
+  output logic [7:0] data_out,
+  output logic data_ready, //flag is set to false only if data is being loaded into it
+
+  output logic [8:0] working_data, //NOTE TO SELF: move back inside module    // This needs to be 9 bits long now to include 8 data bits + parity bit
+  output logic [3:0] bits_received, //NOTE TO SELF: move back inside module   // 
+  output logic receiving, //NOTE TO SELF: move back inside module
+
+
+  //SET HERE FOR TESTBENCH SAKE//////////////////////////////////
+  output logic [31:0] BAUD_counter, //NOTE TO SELF: figure out if this is an appropriate bus size
+  output logic parity_error
+);
+
+  //
+  //
+  //  parity_error <= (^rx_shift[8:1]) != rx_shift[9]; // Parity error is high if the XOR of data_out
+  //  parity error will affect data_ready and not allow data to be sent
+  //  
+  //
+  
+  //logic [6:0] working_data;
+  //logic receiving;
+  //logic [2:0] bits_received;
+  // logic push_working_data;
+  BAUD_counter_state_t BAUD_counter_state;
+  //logic [15:0] BAUD_counter, //NOTE TO SELF: figure out if this is an appropriate bus size
+  //logic parity_error                          ADDED TO TOPSET OUTPUT FOR TESTBENCH SAKE, REMOVE COMMENT TOGGLE WHEN ACTUAL IS UPON US
+
+  
+
+  always_ff @( posedge clk, negedge nRst ) begin //BAUD counter
+    if (~nRst) begin
+      BAUD_counter <= 0;
+    end else begin
+      if(BAUD_counter_state == RESET | BAUD_counter == CYCLES_PER_BIT) begin //NOTE TO SELF: this may have an extra cycle per bit, but it should be fine i think
+        BAUD_counter <= 0;
+      end else begin
+        BAUD_counter <= BAUD_counter+1;
+      end
+    end
+  end
+
+  assign parity_error = ((^working_data[7:0]) != working_data[8]); // May not work idk, we will see when we try and run it. However, this is the accurate logic info for parity error
+
+  always_ff @( posedge clk, negedge nRst ) begin //data loader
+    if (~nRst) begin //reset
+      data_out <= 8'b0;
+      working_data <= 9'b0;
+      receiving <= 1'b0;
+      bits_received <= 4'b0;
+      data_ready <= 1'b0;
+      BAUD_counter_state <= RESET;
+
+    end else begin
+
+      if(enable) begin
+
+        if (receiving) begin
+          BAUD_counter_state <= COUNTING; 
+          
+          if(BAUD_counter == CYCLES_PER_BIT) begin //wait till clock cycle sync up with BAUD rate 
+
+            if (bits_received == 4'd10) begin //last bit received, send data out
+              
+              if (~parity_error) begin
+                data_out <= working_data[7:0]; // CHANGED TO THIS IN ORDER TO SEND OUT OUR 8 BITS OF USABLE DATA
+                working_data <= working_data;  // I HAVE MY CONCERNS ON WHETHER OR NOT THIS IS PLAUSIBLE, CONSIDERING DATA_OUT IS ALSO BEING SET TO WORKING_DATA
+                                       // I suggest leaving it as is and letting the reset state have its way with the working data
+                receiving <= 1'b0;
+                bits_received <= 4'b0;
+                data_ready <= 1'b1; // Flags that data is ready to transfer
+                BAUD_counter_state <= RESET; 
+
+              end else begin
+                data_out <= data_out; // CHANGED TO THIS IN ORDER TO SEND OUT OUR 8 BITS OF USABLE DATA
+                working_data <= 9'b0;
+                receiving <= 1'b0;
+                bits_received <= 4'b0;
+                data_ready <= 1'b0;
+                BAUD_counter_state <= RESET; 
+              end
+
+
+            end else begin //not enough bits received 
+              
+              data_out <= data_out;
+              working_data <= {Rx, working_data[8:1]};
+              receiving <= 1'b1;
+              bits_received <= (bits_received + 1);
+              data_ready <= 1'b0;
+              BAUD_counter_state <= COUNTING;
+            end
+
+          end else if ((BAUD_counter == (CYCLES_PER_BIT/2)) & (bits_received == 0))begin
+            data_out <= data_out;
+            working_data <= working_data;
+            receiving <= 1'b1;
+            bits_received <= bits_received + 1;
+            data_ready <= 1'b0;
+            BAUD_counter_state <= RESET;
+          end
+
+        end else begin //not receiving any information
+
+          if(Rx == 1'b0) begin //start bit received
+
+            data_out <= data_out;
+            working_data <= 9'b0;
+            receiving <= 1'b1;
+            bits_received <= 4'b0;
+            data_ready <= 1'b0;
+            BAUD_counter_state <= COUNTING;
+
+          end else begin //no start bit, keep waiting
+            
+            data_out <= data_out;
+            working_data <= 9'b0;
+            receiving <= 1'b0;
+            bits_received <= 4'b0;
+            data_ready <= 1'b0;
+            BAUD_counter_state <= RESET;
+
+          end
+
+        end
+        
+      end else begin //if disabled, reset all values
+        data_out <= 8'b0; // MAYBE WANT TO KEEP DATA OUT AS IS, THAT WAY THE REGISTER INFORMATION ISNT CHANGED BEFORE A NEW INPUT IS GIVEN
+        working_data <= 9'b0;
+        receiving <= 1'b0;
+        bits_received <= 4'b0;
+        data_ready <= 1'b0;
+        BAUD_counter_state <= RESET;
+      end
+
+    end
+  end
+
 endmodule
