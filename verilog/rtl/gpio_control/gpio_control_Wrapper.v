@@ -4,7 +4,7 @@
 // other gpio
 
 module gpio_control_Wrapper #(
-    parameter NUM_TEAMS = 1
+    parameter NUM_TEAMS = 12
 )
 (
     
@@ -21,20 +21,21 @@ module gpio_control_Wrapper #(
     output wire [31:0] wbs_dat_o,
     
     // GPIOs
-    input wire [33:0] designs_gpio_out[NUM_TEAMS:1], // Breakout Board Pins
-    input wire [33:0] designs_gpio_oeb[NUM_TEAMS:1], // Active Low Output Enable
+    input wire [37:0] designs_gpio_out[NUM_TEAMS:0], // Breakout Board Pins
+    input wire [37:0] designs_gpio_oeb[NUM_TEAMS:0], // Active Low Output Enable
 
-    output wire [33:0] gpio_out,
-    output wire [33:0] gpio_oeb
+    output wire [37:0] gpio_out,
+    output wire [37:0] gpio_oeb
 );
 
-    gpio_control_WB gpio_control_WB (
-        .ext_clk(wb_clk_i),
+    gpio_control_WB #(
+        .NUM_TEAMS(NUM_TEAMS)
+    ) gpio_control_WB (
         .clk_i(wb_clk_i),
         .rst_i(wb_rst_i),
         .adr_i(wbs_adr_i),
         .dat_i(wbs_dat_i),
-        .dat_o(wbs_dat_i),
+        .dat_o(wbs_dat_o),
         .sel_i(wbs_sel_i),
         .cyc_i(wbs_cyc_i),
         .stb_i(wbs_stb_i),

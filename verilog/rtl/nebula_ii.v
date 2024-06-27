@@ -1,6 +1,4 @@
-
 //This is just the sample project right now
-`define NUM_TEAMS 1
 
 module nebula_ii (
 `ifdef USE_POWER_PINS
@@ -36,34 +34,37 @@ module nebula_ii (
     output [2:0] irq
 );
     
+    // Number of teams (only sample project for now)
+    localparam NUM_TEAMS = 1;
+    
     assign irq = 3'b0; // TODO: use interrupt from sample project?
 
     // Truncated address for each internal block
     wire [31:0] adr_truncated;
 
     // WB slave stb_i inputs to all designs, GPIO control, LA control
-    wire designs_stb [NUM_TEAMS:1];
+    wire designs_stb [NUM_TEAMS:0];
     wire gpio_control_stb;
     wire la_control_stb;
 
     // WB slave outputs from all designs, GPIO control, LA control
-    wire designs_wbs_ack_o[NUM_TEAMS:1];
-    wire [31:0] designs_wbs_dat_o[NUM_TEAMS:1];
+    wire designs_wbs_ack_o[NUM_TEAMS:0];
+    wire [31:0] designs_wbs_dat_o[NUM_TEAMS:0];
     wire la_wbs_ack_o;
     wire [31:0] la_wbs_dat_o;
     wire gpio_wbs_ack_o;
     wire [31:0] gpio_wbs_dat_o;
 
     // LA outputs from all designs
-    wire [127:0] designs_la_data_out[NUM_TEAMS:1];
-    wire [127:0] designs_la_oenb[NUM_TEAMS:1];
+    wire [127:0] designs_la_data_out[NUM_TEAMS:0];
+    wire [127:0] designs_la_oenb[NUM_TEAMS:0];
 
     // GPIO outputs from all designs
-    wire [37:0] designs_gpio_out[NUM_TEAMS:1]; // Breakout Board Pins
-    wire [37:0] designs_gpio_oeb[NUM_TEAMS:1]; // Active Low Output Enable
+    wire [37:0] designs_gpio_out[NUM_TEAMS:0]; // Breakout Board Pins
+    wire [37:0] designs_gpio_oeb[NUM_TEAMS:0]; // Active Low Output Enable
 
     // IRQ from all designs
-    wire [2:0] designs_irq[NUM_TEAMS:1];
+    wire [2:0] designs_irq[NUM_TEAMS:0];
 
     // Sample Project Instance
     sample_team_proj_Wrapper sample_team_proj_Wrapper (
@@ -94,10 +95,9 @@ module nebula_ii (
     );
 
     // GPIO Control
-    gpio_control_wrapper #(
+    gpio_control_Wrapper #(
         .NUM_TEAMS(NUM_TEAMS)
-    ) gpio_control_wrapper
-    (
+    ) gpio_control_wrapper (
         // Wishbone Slave ports (WB MI A)
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -118,10 +118,9 @@ module nebula_ii (
     );
 
     // LA Control
-    la_control_wrapper #(
+    la_control_Wrapper #(
         .NUM_TEAMS(NUM_TEAMS)
-    ) la_control_wrapper
-    (
+    ) la_control_wrapper (
         // Wishbone Slave ports (WB MI A)
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),

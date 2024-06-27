@@ -26,9 +26,12 @@
 
 //`include			"wb_wrapper.vh"
 
-module la_control_WB (
+module la_control_WB #(
+    parameter NUM_TEAMS = 12
+)
+(
 	`WB_SLAVE_PORTS,
-	input	wire	[128-1:0]	la_dat [12:0],
+	input	wire	[128-1:0]	la_dat [NUM_TEAMS:0],
 	output	wire	[128-1:0]	muxxed_la_dat
 );
 
@@ -46,7 +49,9 @@ module la_control_WB (
 	assign	la_sel = LA_SEL_VAL_REG;
 	`WB_REG(LA_SEL_VAL_REG, 0, 4)
 
-	la_control instance_to_wrap (
+	la_control #(
+        .NUM_TEAMS(NUM_TEAMS)
+    ) instance_to_wrap (
 		.clk(clk),
 		.nrst(nrst),
 		.la_sel(la_sel),

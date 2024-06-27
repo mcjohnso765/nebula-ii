@@ -18,21 +18,23 @@
 #-v $(USER_PROJECT_VERILOG)/rtl/user_proj_example.v
 #-v $(USER_PROJECT_VERILOG)/rtl/nebula_ii.v
 #-v $(USER_PROJECT_VERILOG)/rtl/wb_interconnect.sv
-#-v $(USER_PROJECT_VERILOG)/rtl/wb_wrapper.vh
 
 # Wishbone Bus Wrap includes
 -v $(USER_PROJECT_VERILOG)/rtl/wb_wrapper.vh
 -v $(USER_PROJECT_VERILOG)/dv/tb_macros.vh
 #-v $(USER_PROJECT_VERILOG)/dv/wb_tasks.vh
 
+# Wishbone Manager Control
+#-v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
+
 # GPIO Control
-#-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_wb.v
-#-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_wrapper.v
+#-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_WB.v
+#-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_Wrapper.v
 #-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control.sv
  
 # LA Control
-#-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_wb.v
-#-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_wrapper.v
+#-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_WB.v
+#-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_Wrapper.v
 #-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
 
 # Sample Team project
