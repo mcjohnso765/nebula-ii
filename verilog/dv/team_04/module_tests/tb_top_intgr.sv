@@ -118,7 +118,7 @@ module tb_top_intgr ();
         tb_test_case = "Initializing";
 
 
-	      // ************************************************************************
+	// ************************************************************************
         // Test Case 1: testing for ADDI operation
         // ************************************************************************
 
@@ -157,38 +157,38 @@ module tb_top_intgr ();
         @(negedge tb_clk);
 	    check_op(exp_alu_result,exp_addr_to_mem, exp_data_to_mem, exp_nextInstruction, "ADD x2, x1 to reg3"); 
 	// // // //
-	// load mem loc d800 into x18
-	tb_instruction = 32'h32020913; // addi x18, x4, 800
-	exp_alu_result = 32'h320; //d800
+	// add 100 into x18
+	tb_instruction = 32'h06400913; // addi x18, x4, 100
+	exp_alu_result = 32'h064; //d100
 	exp_addr_to_mem = 32'h0;
 	exp_data_to_mem = 32'h0;
 	exp_nextInstruction = tb_nextInstruction +32'd4;
 	
         @(negedge tb_clk);
-	    check_op(exp_alu_result,exp_addr_to_mem, exp_data_to_mem, exp_nextInstruction, "ADDI 800 to reg18");  
-	// // // //
-	// store x3 into mem loc 810
+	    check_op(exp_alu_result,exp_addr_to_mem, exp_data_to_mem, exp_nextInstruction, "ADDI 100 to reg18");  
+
+	// store x3 into mem loc 110
 	tb_instruction = 32'h00392523; //sw x3, 10(x18)
-	exp_alu_result = 32'h32a; //alu performs add of offset and rs1
-	exp_addr_to_mem = 32'h32a; //d810
+	exp_alu_result = 32'h06e; //alu performs add of offset and rs1
+	exp_addr_to_mem = 32'h06e; //d110
 	exp_data_to_mem = 32'h8; //0x8
 	exp_nextInstruction = tb_nextInstruction +32'd4;
 	
         @(negedge tb_clk);
 	@(negedge tb_clk);  // extra clk cycle for write enable to get asserted in vgamem
-	    check_op(exp_alu_result,exp_addr_to_mem, exp_data_to_mem, exp_nextInstruction, "SW 8 to mem loc 810");  
-		// // // //
-	// load mem loc d810 into x5
+	    check_op(exp_alu_result,exp_addr_to_mem, exp_data_to_mem, exp_nextInstruction, "SW 8 to mem loc 110");  
+	// // // //
+	// load mem loc d110 into x5
 	tb_instruction = 32'h00a92283; //lw x5, 10(x18)
-	exp_alu_result = 32'h32a; //alu performs add of offset and rs1
-	exp_addr_to_mem = 32'h32a; //d810
+	exp_alu_result = 32'h06e; //alu performs add of offset and rs1	exp_addr_to_mem = 32'h06e; //d110
 	exp_data_to_mem = 32'h0; //0x8
-	exp_data_from_mem = 32'h8; //from addr 32a
+	exp_data_from_mem = 32'h8; //from addr 06e
 	exp_nextInstruction = tb_nextInstruction +32'd4;
+
 	
         @(negedge tb_clk);
 	@(negedge tb_clk);  // extra clk cycle for write enable to get asserted in vgamem
-	    check_op(exp_alu_result,exp_addr_to_mem, exp_data_to_mem, exp_nextInstruction, "lW mem loc 810 to reg5"); 
+	    check_op(exp_alu_result,exp_addr_to_mem, exp_data_to_mem, exp_nextInstruction, "lW mem loc 110 to reg5"); 
         $finish;
     	end
 endmodule
@@ -202,19 +202,182 @@ module vgaMem (
 );
 
     //instantiaate 384 32-bit registers    
-    reg [31:0] memory [383:0];
+    reg [383:0][31:0]  memory ;
 
     //write if write signal is HI, always read
-    always_ff @( posedge clk, negedge nRst ) begin
-        if(~nRst) begin
-		for (integer i = 0; i < 384; i++) begin
+    always_ff @(posedge clk, negedge nRst) begin
+        if (~nRst) begin 
+            for (integer i = 0; i < 32; i++) begin //
                 memory[i] <= 32'b0;
-            	end
-        end else if (write_enable) begin
+            end
+        end else if (write_enable) begin 
             memory[write_address] <= write_data;
-        end  
-        read_data <= memory[read_address];
+        end
     end
+
+    //combinational read block
+    always_comb begin
+        read_data = memory[read_address];
+    end
+endmodule
+module top (
+    input logic [31:0] instruction, //instruction to CPU
+    input logic clk, nrst, //timing & reset signals
+    input logic [31:0] data_from_mem,
+    output logic [31:0] alu_result,  //numerical/logical output of ALU
+    output reg [31:0] [31:0] reg_window,
+    // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
+    output logic err_flag, //ALU flag invalid operation, from ALU
+    output logic [31:0] addr_to_mem, data_to_mem,//signals from memory handler to mem
+    output logic [31:0] nextInstruction //next instruction address from PC
+    
+);
+
+//wires name
+//from decoder
+logic [4:0] rs1, rs2, rd; 
+logic [6:0] opcode, func7;
+logic [2:0] func3;
+
+//from imm_gen
+logic [31:0] imm;
+
+//from control_unit
+logic [1:0] RegWriteSrc;
+logic ALUSrc, RegWrite, Jump, Branch, MemWrite, MemRead, Error;
+
+//from ALU mux
+logic [31:0] opB;
+
+//from ALU
+logic [31:0] alu_result_wire;
+logic condJumpValue;
+
+//from RegWrite mux
+logic [31:0] DataWrite;
+
+
+//from Regs
+logic [31:0] regA, regB;
+
+//from Mem Handler
+logic [31:0] MemData;
+
+//from PC
+logic [31:0]  PCData;
+// nextInstruction,;
+
+//instantiation of modules
+
+//decode data and addresses withing instruction
+decode decoder (
+    .instruction(instruction), //32-bit instruction
+    .rs1(rs1), //address of source register 1
+    .rs2(rs2), //address of source register 2
+    .rd(rd), //address of destination register
+    .opcode(opcode), //7-bit Opcode (decoded from intrsuction)
+    .ALUOp(func3), //3-bit function code (decoded from intrsuction)
+    .func7(func7) //7-bit function code (decoded from intrsuction)
+);
+
+//genrate immediate value based on instruction format and values
+imm_gen make_imm (
+    .instruction(instruction), //32-bit instruction
+    .imm(imm), //32-bit genrated immediate value (signed)
+    .flag() //error flag (ignore, used for tb)
+    );
+
+//generate control signals based on Opcode
+control_unit cntrl (
+    .opcode(opcode), //7-bit Opcode (decoded from intrsuction)
+    .RegWriteSource(RegWriteSrc), //2-bit control signal specifiying what is writing to the regs
+    .ALUSrc(ALUSrc), //control signal indicating use of immediate
+    .RegWrite(RegWrite), //control signal indicating writing to destination reg
+    .Jump(Jump), //control signal indicating a Jump will take place
+    .Branch(Branch), //control signal indicating a Branch, (conditional jump)
+    .MemWrite(MemWrite), //control signal indicating Memory will be written to 
+    .MemRead(MemRead), //control signal indicating memory will be read from
+    .Error(Error) //testing signal indicating invalid Opcode
+);
+
+//decide whether a register value or immediate is used as the second operand in an operation
+aluop_mux ALUOpB(
+    .regB(regB), //value from register
+    .imm(imm), //immediate value
+    .alu_src(ALUSrc), //control signal
+    .opB(opB) //resulting second operand
+); 
+
+//perform arithmetic and logical operation
+alu ALU (
+    .opcode(opcode), //control signals
+    .alu_op(func3), 
+    .func7(func7), 
+    .opB(opB), //operands
+    .opA(regA), 
+    .alu_result(alu_result_wire), //results and flags
+    .zero_flag(), //indicate result == 0
+    .err_flag(err_flag), //indicate invalid operation
+    .condJumpValue(condJumpValue) //indicate branching condition is true
+    );
+
+//allow for easier display of alu result
+assign alu_result = alu_result_wire;
+
+//determine register write source
+reg_write_mux reg_write_control (
+    .immData(imm), //immediate value
+    .ALUData(alu_result_wire), //ALU result value
+    .MemData(MemData), //memory value
+    .PCData(PCData), //program counter value
+    .DataWrite(DataWrite), //chosen value
+    .RegWriteSrc(RegWriteSrc) //control signal
+    );
+
+//read to and write from registers
+register_file regs (
+    .read_addr_1(rs1), //read addresses
+    .read_addr_2(rs2), 
+    .write_addr(rd), //write address
+    .reg_enable_write(RegWrite), //control signal enabling write
+    .read_data_1(regA), //read values
+    .read_data_2(regB), 
+    .write_data(DataWrite), //value tobe written
+    .clk(clk), 
+    .nrst(nrst), 
+    .reg_file(reg_window) //testbenching array
+    );
+
+memory_handler mem (
+    .addr(alu_result_wire), //alu result, used as address
+    .read_data_2(regB), 
+    .data_from_mem(32'd99), //requested data from memory
+    .en_read(MemRead), 
+    .en_write(MemWrite), 
+    .size(func3), 
+    .select(),//fixme to wishbone/request unit
+    .data_to_reg(MemData),
+    .addr_to_mem(addr_to_mem),
+    .data_to_mem(data_to_mem),
+    .mem_read(), //fixme
+    .mem_write() //fixme
+    );
+
+
+program_counter PC (
+    .nRst(nrst),
+    .enable(1'b1), //global enable from busy signal of wishbone fixme
+    .clk(clk),
+    .immJumpValue(imm),
+    .regJumpValue(regA),
+    .doForceJump(Jump),
+    .doCondJump(Branch),
+    .condJumpValue(condJumpValue),
+    .doRegJump(~opcode[3]),
+    .instructionAddress(nextInstruction), //to Instruction memory
+    .linkAddress(PCData)
+
+);  
 endmodule
 
 
