@@ -7,7 +7,7 @@ module very_top (
 );
 
     logic [31:0] nextInstruction;
-   logic MemWrite, MemRead;
+    logic MemWrite, MemRead;
     CPU cpu(
         .instruction(instrMem[nextInstruction/4]),
         .clk(clk),
@@ -33,19 +33,19 @@ module very_top (
 
     logic [31:0] temp_mem;
 
-    // White Noise Gen
-    logic [31:0] lfsr;
-    logic random_bit;
-    always_ff @(posedge clk or negedge nRst) begin
-        if (~nRst) begin
-            lfsr <= 32'hACE1; // Seed value for LFSR
-            random_bit <= 0;
-        end else begin
-            // Generate the next LFSR value
-            lfsr <= {lfsr[30:0], lfsr[31] ^ lfsr[21] ^ lfsr[1] ^ lfsr[0]};
-            random_bit <= lfsr[0]; // Output the LSB of the LFSR
-        end
-    end
+    // // White Noise Gen
+    // logic [31:0] lfsr;
+    // logic random_bit;
+    // always_ff @(posedge clk or negedge nRst) begin
+    //     if (~nRst) begin
+    //         lfsr <= 32'hACE1; // Seed value for LFSR
+    //         random_bit <= 0;
+    //     end else begin
+    //         // Generate the next LFSR value
+    //         lfsr <= {lfsr[30:0], lfsr[31] ^ lfsr[21] ^ lfsr[1] ^ lfsr[0]};
+    //         random_bit <= lfsr[0]; // Output the LSB of the LFSR
+    //     end
+    // end
 
     // always_ff @(posedge clk or negedge nRst) begin
     //     if (~nRst) begin
@@ -115,7 +115,33 @@ module very_top (
 
         .button(button),
         .flag(UART_flag)
+    );CPU cpu(
+        .instruction(instrMem[tb_nextInstruction/4]),
+        .clk(tb_clk),
+        .nrst(tb_nRst),      
+        .data_from_mem(tb_UART_flag),
+        .addr_to_mem(vga_mem_adr_write),
+        .data_to_mem(vga_mem_data_write),
+        .nextInstruction(tb_nextInstruction),
+        .MemWrite(tb_MemWrite),
+        .MemRead(tb_MemRead)
     );
+
+    ram ranch(
+        .din(vga_mem_data_write),
+        .addr_r(vga_mem_adr_read), 
+        .addr_w(vga_mem_adr_write), 
+        .write_en(MemWrite), 
+        .clk(clk), 
+        .dout(vga_mem_data_read)
+    );
+
+    //create mem
+    reg [31:0] instrMem [99:0];
+    initial begin
+        $readmemh("instrList.txt", instrMem);
+    end
+
 
     //create mem
     reg [31:0] instrMem [99:0];
