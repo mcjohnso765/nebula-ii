@@ -1,12 +1,15 @@
-module top (
+//CURRENT VERSION OF VERY_TOP, 2ND ITERATION
+
+module very_top (
     input logic clk, nRst, button,
 
     output logic h_out, v_out, pixel_data
 );
 
     logic [31:0] nextInstruction;
+   logic MemWrite, MemRead;
     CPU cpu(
-        .instruction(instrMem[nextInstruction]),
+        .instruction(instrMem[nextInstruction/4]),
         .clk(clk),
         .nrst(nRst),
         
@@ -19,14 +22,49 @@ module top (
         .addr_to_mem(vga_mem_adr_write),
         .data_to_mem(vga_mem_data_write),
 
-        .nextInstruction(nextInstruction)
+        .nextInstruction(nextInstruction),
+        .MemWrite(MemWrite),
+        .MemRead(MemRead)
     );
+
 
     logic [31:0] vga_mem_adr_write, vga_mem_data_write;
     logic [31:0] vga_mem_adr_read, vga_mem_data_read;
 
+    logic [31:0] temp_mem;
+
+    // White Noise Gen
+    logic [31:0] lfsr;
+    logic random_bit;
+    always_ff @(posedge clk or negedge nRst) begin
+        if (~nRst) begin
+            lfsr <= 32'hACE1; // Seed value for LFSR
+            random_bit <= 0;
+        end else begin
+            // Generate the next LFSR value
+            lfsr <= {lfsr[30:0], lfsr[31] ^ lfsr[21] ^ lfsr[1] ^ lfsr[0]};
+            random_bit <= lfsr[0]; // Output the LSB of the LFSR
+        end
+    end
+
+    // always_ff @(posedge clk or negedge nRst) begin
+    //     if (~nRst) begin
+    //         temp_mem <= 0;
+    //     end else begin
+    //         if (~(MemWrite == 0)) begin
+    //             temp_mem <= vga_mem_data_write;
+    //         end else begin
+    //             temp_mem <= temp_mem;
+    //         end
+            
+    //     end
+    // end
+
     VGA_out vga(
-        .SRAM_data_in(vga_mem_data_read),
+        //.SRAM_data_in(vga_mem_adr_write),
+        // American Flag Display
+        .SRAM_data_in({32{(((~v_count[4]) & ((v_count > 158) | (h_count > 100))) | (((v_count[4] & v_count[3]) & (h_count[2]) & ((v_count < 130) & (h_count < 99))) ))}}),
+        //.SRAM_data_in(vga_mem_data_read),//{32{MemWrite}},nextInstruction,{32{random_bit}}
         .SRAM_busy(0),
         
         .clk(clk),
@@ -40,23 +78,35 @@ module top (
         .byte_select(),
         .VGA_state(),
 
-        .h_count(), //ignore
-        .v_count(), //ignore
+        .h_count(h_count), //ignore
+        .v_count(v_count), //ignore
         .h_state(), //ignore
         .v_state() //ignore
     );
 
+    logic [9:0] h_count;
+    logic [8:0] v_count;
+    ram ranch(
+        .din(vga_mem_data_write),
+        .addr_r(vga_mem_adr_read), 
+        .addr_w(vga_mem_adr_write), 
+        .write_en(MemWrite), 
+        .clk(clk), 
+        .dout(vga_mem_data_read)
+    );
+/*
     vgaMem vgaMem(
-        .clk(clk),
+        .r_clk(clk),
+        .w_clk(clk),
         .nRst(nRst),
 
-        .write_enable(1'b1),
+        .write_enable(MemWrite),
         .write_address(vga_mem_adr_write),
         .write_data(vga_mem_data_write),
         .read_address(vga_mem_adr_read),
         .read_data(vga_mem_data_read)
     );
-
+*/
 
     logic [31:0] UART_flag;
     UARTMem UARTMem(
@@ -279,6 +329,7 @@ module CPU_request_unit (
 endmodule
 
 
+
 typedef enum logic [1:0] {
   NONE = 2'd0,
   CPU = 2'd1,
@@ -449,7 +500,9 @@ module CPU (
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
     output logic err_flag, //ALU flag invalid operation, from ALU
     output logic [31:0] addr_to_mem, data_to_mem,//signals from memory handler to mem
-    output logic [31:0] nextInstruction //next instruction address from PC
+    output logic [31:0] nextInstruction, //next instruction address from PC
+
+    output logic MemWrite, MemRead
     
 );
 
@@ -464,7 +517,7 @@ logic [31:0] imm;
 
 //from control_unit
 logic [1:0] RegWriteSrc;
-logic ALUSrc, RegWrite, Jump, Branch, MemWrite, MemRead, Error;
+logic ALUSrc, RegWrite, Jump, Branch, Error;
 
 //from ALU mux
 logic [31:0] opB;
@@ -1455,7 +1508,7 @@ module VGA_out(
             h_sync: begin
                 h_state = 2'b00; // can be eliminated after tesbenching
                 v_count_toggle = 0;
-                if (h_count < 37) begin //OG 95
+                if (h_count < 45) begin //OG 95
                     h_next_count = h_next_count + 1'b1;
                     h_out = 0;
                     h_next_state = h_sync;
@@ -1471,7 +1524,7 @@ module VGA_out(
                 h_state = 2'b01; // can be eliminated after tesbenching
                 h_out = 1;
                 v_count_toggle = 0;
-                if (h_count < 18) begin // OG 47
+                if (h_count < 22) begin // OG 47
                     h_next_count = h_next_count + 1'b1;
                     h_next_state = h_backporch;
                 end else begin
@@ -1484,7 +1537,7 @@ module VGA_out(
                 h_state = 2'b10; // can be eliminated after tesbenching
                 h_out = 1;
                 v_count_toggle = 0;
-                if (h_count < 253) begin // OG 639
+                if (h_count < 304) begin // OG 639
                     h_next_count = h_next_count + 1'b1;
                     h_next_state = h_active;
                 end else begin
@@ -1497,7 +1550,7 @@ module VGA_out(
             h_frontporch: begin
                 h_state = 2'b11; // can be eliminated after tesbenching
                 h_out = 1;
-                if (h_count < 5) begin // OG 15
+                if (h_count < 7) begin // OG 15
                     h_next_count = h_next_count + 1'b1;
                     h_next_state = h_frontporch;
                     v_count_toggle = 0;
@@ -1598,7 +1651,7 @@ module VGA_out(
 
     always_comb begin
     ////////////////////////////////////POTENTIAL FOR ADDING AN ENABLE HERE TO OPTIMIZE/////////////////////////////////////////
-        h_offset = {7'b0, h_count[6:5]};  // sets h offset to hcount up until 32
+        h_offset = {7'b0, h_count[7:6]};  // sets h offset to hcount up until 32
         v_offset = 7'd4 * v_count[8:2];            // sets v offset to vcount * 4 // [8:2] accounts for after 4 lines we get a new offset of info
         word_address_offset = h_offset + v_offset; // sets word offset to the total of h and v offsets
     end
@@ -1613,31 +1666,74 @@ module VGA_out(
 
 endmodule
 
-module vgaMem (
-    input logic clk,
-    nRst, 
-    write_enable, //control signal enabling writing
-    input logic [31:0] write_address, write_data, read_address, //address and values to be written
-    output logic [31:0] read_data
-);
+// module ram (din, addr, write_en, clk, dout); // 512x8
+//   parameter addr_width = 9;
+//   parameter data_width = 8;
+//   input [addr_width-1:0] addr;
+//   input [data_width-1:0] din;
+//   input write_en, clk;
+//   output [data_width-1:0] dout;
 
-    //instantiaate 384 32-bit registers    
-    reg [31:0] memory [383:0];
+//   reg [data_width-1:0] dout; // Register for output.
+//   reg [data_width-1:0] mem [(1<<addr_width)-1:0];
+//   always @(posedge clk)
+//   begin
+//     if (write_en)
+//     mem[(addr)] <= din;
+//     dout = mem[addr]; // Output register controlled by clock.
+//   end
+// endmodule
 
-    //write if write signal is HI, always read
-    always_ff @( posedge clk, negedge nRst ) begin
-        if(~nRst) begin
-            memory = '{default:0}; //
-        end else if (write_enable) begin
-            memory[write_address] <= write_data;
-        end  
-        read_data <= memory[read_address];
-    end
+module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
+  parameter addr_width = 32;
+  parameter data_width = 32;
+  input [addr_width-1:0] addr_r, addr_w;
+  input [data_width-1:0] din;
+  input write_en, clk;
+  output [data_width-1:0] dout;
+
+  reg [data_width-1:0] dout; // Register for output.
+  reg [data_width-1:0] mem [384-1:0];
+  always @(posedge clk)
+  begin
+    if (write_en)
+    mem[(addr_w)] <= din;
+    dout = mem[addr_r]; // Output register controlled by clock.
+  end
 endmodule
 
+
+// module vgaMem (
+//     input logic r_clk, w_clk,
+//     nRst, 
+//     write_enable, //control signal enabling writing
+//     input logic [31:0] write_address, write_data, read_address, //address and values to be written
+//     output logic [31:0] read_data
+// );
+    
+//     //instantiaate 384 32-bit registers    
+//     reg [31:0] memory [383:0];
+
+//     //write if write signal is HI, always read
+//     always_ff @( posedge w_clk, negedge nRst) begin
+//         if(~nRst) begin
+//             for (integer i = 0; i < 384; i++) begin //
+//                 memory[i] = 32'b0;
+//             end
+//         end else if (write_enable) begin
+//             memory[write_address] = write_data;
+//         end  
+        
+//     end
+
+//     always_ff @(posedge r_clk) begin
+//         read_data <= memory[read_address];
+//     end
+// endmodule
+
+
 module UARTMem (
-    input logic  clk,
-    nRst, 
+    input logic  clk, nRst, 
     input logic button, //uart input signal
     output logic [31:0] flag //uart output signal
 );
