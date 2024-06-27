@@ -12,7 +12,9 @@ module vgaMem (
     //write if write signal is HI, always read
     always_ff @( posedge clk, negedge nRst ) begin
         if(~nRst) begin
-            memory = '{default:0}; //
+		for (integer i = 0; i < 384; i++) begin
+                memory[i] = 32'b0;
+            	end
         end else if (write_enable) begin
             memory[write_address] <= write_data;
         end  
