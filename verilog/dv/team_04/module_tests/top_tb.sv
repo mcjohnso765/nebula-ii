@@ -113,14 +113,14 @@ module tb_top ();
         //load 800 into x18   
         instruction = 32'h32000913; // addi x18, x0, 800
         @(negedge tb_clk);
-            //@(negedge tb_clk);
+        //@(negedge tb_clk);
 
             $display("ALU Result: %b", alu_result);
 
         //store x3 into mem loc 810
         instruction = 32'h00392523; // sw x3, 10(x18)
         @(negedge tb_clk);
-            //@(negedge tb_clk);
+        //@(negedge tb_clk);
 
         $display("data to mem: %b", data_to_mem); // 'd10/'ha
         $display("addr to mem: %b", addr_to_mem); // 0x810
@@ -128,7 +128,7 @@ module tb_top ();
         //load 810 into reg x12                       //need to instantiate mem module
         instruction = 32'h00a92603; //lw x12, 10(x18)
         @(negedge tb_clk);
-            //@(negedge tb_clk);
+        //@(negedge tb_clk);
 
 
 	    
@@ -414,7 +414,6 @@ always_comb begin
 			imm = 32'b01010101010101010101010101010101;
 			flag = 1'b1;
 		end
-
 	endcase
 end
 
@@ -574,7 +573,6 @@ always_comb begin
         opB = regB;
     end
 end //always_comb
-
 endmodule
 
 `default_nettype none
@@ -632,31 +630,31 @@ case(alu_control_input)
     begin
          alu_result = (opA << opB[4:0]); //DEFINE opB TO BE THE LEAST SIGNIFICANT 5 BITS OF rs2
          err_flag =1'b0;  
-        condJumpValue = 1'b0;      
+         condJumpValue = 1'b0;      
     end
     SLT: //taking the signed integer value of opA and opB for comparision
     begin
          alu_result = ((opA_signed < opB_signed) ? 32'b1 : 32'b0); 
          err_flag =1'b0;
-        condJumpValue = 1'b0;
+         condJumpValue = 1'b0;
     end
     SLTU: //taking the unsigned value of opA and opB for comparision
     begin
          alu_result = ((opA < opB) ? 32'b1 : 32'b0); 
          err_flag =1'b0; 
-      condJumpValue = 1'b0;
+         condJumpValue = 1'b0;
     end
     XOR:
     begin
          alu_result = (opA ^ opB); 
          err_flag =1'b0; 
-      condJumpValue = 1'b0;
+         condJumpValue = 1'b0;
     end
     SRL: 
     begin
-        alu_result = (opA >> opB[4:0]); 
+         alu_result = (opA >> opB[4:0]); 
          err_flag =1'b0; 
-      condJumpValue = 1'b0;
+         condJumpValue = 1'b0;
     end
     SRA: 
     begin
@@ -669,13 +667,13 @@ case(alu_control_input)
     begin
          alu_result = (opA | opB); 
          err_flag =1'b0; 
-      condJumpValue = 1'b0;
+         condJumpValue = 1'b0;
     end
     AND:
     begin
          alu_result = (opA & opB); 
          err_flag =1'b0; 
-      condJumpValue = 1'b0;
+         condJumpValue = 1'b0;
     end
 
     //B-type
@@ -683,7 +681,7 @@ case(alu_control_input)
     begin
          err_flag =1'b0; 
          alu_result= {32{opA==opB}};  //needed here cause alu_result is a don't care
-      condJumpValue = alu_result[0];
+         condJumpValue = alu_result[0];
     end
     BNE:
     begin
@@ -701,19 +699,19 @@ case(alu_control_input)
     begin
          err_flag =1'b0; 
          alu_result=32'b0;
-      condJumpValue = (opA_signed >= opB_signed) ? 1 : 0;
+         condJumpValue = (opA_signed >= opB_signed) ? 1 : 0;
     end
     BLTU:
     begin
          err_flag =1'b0; 
          alu_result=32'b0;
-      condJumpValue = (opA < opB) ? 1 : 0;
+         condJumpValue = (opA < opB) ? 1 : 0;
     end
     BGEU:
     begin
          err_flag =1'b0;
          alu_result=32'b0; 
-      condJumpValue = (opA >= opB) ? 1 : 0;
+         condJumpValue = (opA >= opB) ? 1 : 0;
     end
 
     default:
@@ -963,7 +961,6 @@ module register_file(
     output reg [31:0]  [31:0] reg_file
 );
     // logic [4:0] i;
-
     //assign reg_file[0] = 0;
 
 
@@ -1052,7 +1049,6 @@ always_comb begin
       data_to_reg = 0;
     end
 end
-
 endmodule
 
 module program_counter (
