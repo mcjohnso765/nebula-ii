@@ -53,3 +53,85 @@ ff5ff06f
 00128293
 fcc28ce3
 ff1ff06f
+
+//looping all ones:
+
+0010009b //addiw x1, x0, 1
+02009093 //slli x1, x1, 32
+fff08093 //addi x1, x1, -1
+00000133 //add x2, x0, x0
+17f00193 //addi x3, x0, 383
+00112023 //sw x1, 0(x2)
+00110113 //addi x2, x2, 1
+00310463 //beq x2, x3, 8
+ff5ff06f //jal x0, -12
+
+
+
+//testing branches
+00000193 //addi x3, x0, 0
+00300213 //addi x4, x0, 3
+00118193 //addi x3, x3, 1
+00418263 //beq x3, x4, 4
+00419263 //bne x3, x4, 4
+0041c263 //blt x3, x4, 4
+0041d263 //bge x3, x4, 4
+0041e263 //bltu x3, x4, 4
+0041f263 //bgeu x3, x4, 4
+fe5ff06f //jal x0, -28
+
+addi x3, x0, 0
+    addi x4, x0, 3
+    
+    loop:
+    
+    	addi x3, x3, 1
+        
+        beq x3, x4, bne
+        bne:
+        bne x3, x4, blt
+        blt:
+        blt x3, x4, bge
+        bge:
+        bge x3, x4, bltu
+        bltu:
+        bltu x3, x4, bgeu
+        bgeu:
+        bgeu x3, x4, jal
+        
+    jal:
+	jal x0, loop
+
+
+//math test i-types
+00700093
+01500113
+00808093
+0100a193
+00e0a193
+0140b193
+0160b193
+04814213
+04816213
+04817213
+00311293
+00215293
+40715293
+
+    addi x1, x0, 7
+    addi x2, x0, 21
+    
+    addi x1, x1, 8
+    
+    slti x3, x1, 16
+    slti x3, x1, 14
+    sltiu x3, x1, 20
+    sltiu x3, x1, 22
+    
+    xori x4, x2, 72    //1011101:93 , 1001000:72, 10101:21
+    ori x4, x2, 72
+    andi x4, x2, 72
+    
+    slli x5, x2, 3
+    srli x5, x2, 2
+    srai x5, x2, 7
