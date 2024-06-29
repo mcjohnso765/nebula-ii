@@ -33,8 +33,11 @@ $(DV_PATTERNS): verify-% :
 	cd $* && make
 
 clean:  ${PATTERNS}
+	for i in ${PATTERNS}; do \
+		( cd $$i && \rm  -f *.elf *.hex *.bin *.vvp *.log *.vcd *.lst *.hexe ) ; \
+	done
 	for i in $(filter-out io_ports la_test1 la_test2 wb_port mprj_stimulus, $(PATTERNS)); do \
-		( cd $$i && \rm  -f *.elf *.hex *.bin *.vvp *.log *.vcd *.lst *.hexe && \cd module_tests && \make clean) ; \
+		( cd $$i && \cd module_tests && \make clean) ; \
 	done
 	rm -rf *.log
 	

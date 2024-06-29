@@ -41,10 +41,12 @@
 /*
 	Sample Team Project Test:
 		- Configures all IO pins as outputs
-		- Configures and enables all IO and LA pins through the WB
-		- Enables design through WB
-		- Configures LA to enable the design's output cycling
-		- Checks outputs consistently
+		- Configures all IO and LA pins to be selected by sample project
+		- Enables sample project design through WB
+		- Enables design's output cycling through LA inputs
+		- Checks GPIO outputs consistently
+		- Stops output cycling through LA inputs
+		- "Acknowledges" interrupt, and enables cycling again
 */
 
 void main()
@@ -111,24 +113,21 @@ void main()
 	reg_la2_oenb = reg_la2_iena = 0x00000000;    // [95:64]
 	reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
 
-	// Configure GPIOs to be selected by sample project
-	// reg_gpio_PIN_0TO7 = 0x11111111;
-	// reg_gpio_PIN_8TO15 = 0x11111111;
-	// reg_gpio_PIN_16TO23 = 0x11111111;
-	// reg_gpio_PIN_24TO31 = 0x11111111;
-	// reg_gpio_PIN_32TO37 = 0x111111;
+	// Configure GPIOs outputs to be selected by sample project
+	reg_gpio_PIN_0TO7 = 0x11111111;
+	reg_gpio_PIN_8TO15 = 0x11111111;
+	reg_gpio_PIN_16TO23 = 0x11111111;
+	reg_gpio_PIN_24TO31 = 0x11111111;
+	reg_gpio_PIN_32TO37 = 0x111111;
 
-	// Configures LA pins to be selected by sample project
-	// reg_la_sel = 0x1;
+	// Configure LA output to be selected by sample project
+	reg_la_sel = 0x1;
 
 	// Enable the sample project design
-	// reg_sample_proj_EN = 0x1;
+	reg_sample_proj_EN = 0x1;
 
 	// Enable interrupt mask
-	// reg_sample_proj_IM = 0x1;
-
-	// Flag start of the test
-	reg_mprj_datal = 0xAB600000;
+	reg_sample_proj_IM = 0x1;
 
 	// Set "prescaler" value to 1
 	reg_sample_proj_PRESCALER = 0x1;
@@ -136,8 +135,15 @@ void main()
 	// Configure LA[0] LA[1] as outputs from the cpu
 	reg_la0_oenb = reg_la0_iena = 0x00000003;
 
-	// Set "enable" high
-	reg_la0_data = 0x1;
+	// Normal design operation
+	while (1) {
+		if (reg_sample_proj_MIS == 0x1) {  // if all outputs have been set high
+			reg_la0_data = 0x3;  // set "stop" high
+			reg_sample_proj_IC = 0x1;  // "acknowledge" interrupt
+		}
+		else if (reg_mprj_datah == 0) {
+			reg_la0_data = 0x1;  // Set "enable" high
+		}
+	}
 
 }
-

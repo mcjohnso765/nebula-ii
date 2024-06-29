@@ -57,7 +57,6 @@ module nebula_ii (
 
     // LA outputs from all designs
     wire [127:0] designs_la_data_out[NUM_TEAMS:0];
-    wire [127:0] designs_la_oenb[NUM_TEAMS:0];
 
     // GPIO outputs from all designs
     wire [37:0] designs_gpio_out[NUM_TEAMS:0]; // Breakout Board Pins
@@ -83,7 +82,7 @@ module nebula_ii (
         // Logic Analyzer - 2 pins used here
         .la_data_in(la_data_in),
         .la_data_out(designs_la_data_out[1]),
-        .la_oenb(designs_la_oenb[1]),
+        .la_oenb(la_oenb),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins

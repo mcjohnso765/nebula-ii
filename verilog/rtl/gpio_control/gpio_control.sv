@@ -37,8 +37,6 @@ integer idx_32to37;
 
 
 always @(*) begin
-
-
     for(idx_0to7 = 0; idx_0to7 <= 7; idx_0to7++) begin
         muxxed_io_oeb[idx_0to7] = io_oeb[pin_0to7_sel[idx_0to7*4 +: 4]][idx_0to7[5:0]];
         muxxed_io_out[idx_0to7] = io_out[pin_0to7_sel[idx_0to7*4 +: 4]][idx_0to7[5:0]];

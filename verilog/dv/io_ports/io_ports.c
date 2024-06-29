@@ -19,10 +19,22 @@
 #include <defs.h>
 #include <stub.c>
 
+// List of Wishbone Slave Addresses
+// Sample Project
+#define reg_sample_proj_EN (*(volatile uint32_t*)0x30010000)
+// GPIO Control
+#define reg_gpio_PIN_0TO7 (*(volatile uint32_t*)0x32000000)
+#define reg_gpio_PIN_8TO15 (*(volatile uint32_t*)0x32000004)
+#define reg_gpio_PIN_16TO23 (*(volatile uint32_t*)0x32000008)
+#define reg_gpio_PIN_24TO31 (*(volatile uint32_t*)0x3200000C)
+#define reg_gpio_PIN_32TO37 (*(volatile uint32_t*)0x32000010)
+
 /*
 	IO Test:
-		- Configures MPRJ lower 8-IO pins as outputs
-		- Observes counter value through the MPRJ lower 8 IO pins (in the testbench)
+		- Configures all IO pins as outputs
+		- Configures all IO pins to be selected by sample project
+		- Enables sample project design through WB
+		- Observe that GPIO[37:5] and GPIO[0] are reset
 */
 
 void main()
@@ -46,7 +58,8 @@ void main()
 	/* Set up the housekeeping SPI to be connected internally so	*/
 	/* that external pin changes don't affect it.			*/
 
-	// reg_spi_enable = 1;
+	reg_spi_enable = 1;
+	reg_wb_enable = 1;
 	// reg_spimaster_cs = 0x10001;
 	// reg_spimaster_control = 0x0801;
 
@@ -60,16 +73,53 @@ void main()
 	// Configure lower 8-IOs as user output
 	// Observe counter value in the testbench
 	reg_mprj_io_0 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_1 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_2 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_3 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_4 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_5 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_6 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_7 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_5 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_6 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_7 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_8 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_9 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_10 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_11 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_12 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_13 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_14 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_15 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_16 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_17 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_18 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_19 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_20 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_21 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_22 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_23 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_24 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_25 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_26 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_27 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_28 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_29 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_30 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_31 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_32 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_33 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_34 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_35 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_36 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_37 = GPIO_MODE_USER_STD_OUTPUT;
+	
 
 	/* Apply configuration */
 	reg_mprj_xfer = 1;
 	while (reg_mprj_xfer == 1);
+
+	// Configure GPIOs output selection through WB
+	reg_gpio_PIN_0TO7 = 0x11111111;
+	reg_gpio_PIN_8TO15 = 0x11111111;
+	reg_gpio_PIN_16TO23 = 0x11111111;
+	reg_gpio_PIN_24TO31 = 0x11111111;
+	reg_gpio_PIN_32TO37 = 0x111111;
+
+	// Enable the sample project design
+	reg_sample_proj_EN = 0x1;
 }
 
