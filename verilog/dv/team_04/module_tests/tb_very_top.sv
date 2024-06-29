@@ -2,7 +2,6 @@
 `timescale 1ms/1ns
 module tb_very_top ();
 
-
     // testbench parameters
     integer tb_test_num;
     string tb_test_case;
@@ -28,7 +27,6 @@ module tb_very_top ();
         #(CLK_PERIOD / 2.0); 
     end
 
-
     // Reset DUT Task
     task reset_dut;  
         @(negedge tb_clk);
@@ -43,16 +41,12 @@ module tb_very_top ();
     initial begin
 	//signal dump
         $dumpfile("dump.vcd");
-        $dumpvars(0, tb_top_intgr); 
-
+        $dumpvars(0, tb_very_top); 
         reset_dut();
 
-        #1000;
+        #200000;
 
         $finish;
     end
-
-
-
 
 endmodule
