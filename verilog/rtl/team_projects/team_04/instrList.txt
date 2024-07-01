@@ -136,6 +136,92 @@ addi x3, x0, 0
     srli x5, x2, 2
     srai x5, x2, 7
 
+//math test r-types
+00700093
+01500113
+002081b3
+401101b3
+0010a1b3
+0020a1b3
+0010b1b3
+0020b1b3
+00314233
+00316233
+00317233
+003112b3
+003152b3
+403152b3
+
+
+addi x1, x0, 7
+addi x2, x0, 21
+
+add x3, x1, x2
+sub x3, x2, x1
+slt x3, x1, x1 
+slt x3, x1, x2
+sltu x3, x1, x1
+sltu x3, x1, x2
+
+xor x4, x2, x3    
+or x4, x2, x3
+and x4, x2, x3
+
+sll x5, x2, x3
+srl x5, x2, x3
+sra x5, x2, x3
+
+
+//load store test i-type 
+00500093
+00300113
+002081b3
+06420913
+00392523
+00a92283
+00390523
+00a90283
+00391523
+00a91283
+00010317
+fd830313
+00430313
+
+addi x1, x0, 5
+addi x2, x0, 3
+add x3, x1, x2
+addi x18, x4, 100
+sw x3, 10(x18)
+lw x5, 10(x18)
+sb x3, 10(x18)
+lb x5, 10(x18)
+sh x3, 10(x18)
+lh x5, 10(x18)
+
+//u-type (lui and auipc)
+
+addi x1, x0, 5
+addi x2, x0, 3
+lui x2, 74565
+auipc x1, 65537
+
+00500093
+00300113
+12345137
+10001097
+00010317
+ff030313
+00430313
+
+
+
+
+//example assembly when integrating uart
+addi x2, x0, 384
+addi x3, x0, 61  //input key a
+lw x1, 0(x2)
+beq x1, x3, _loop
+
 
 //math test r-types
 00700093
