@@ -2,7 +2,7 @@
 // is interfacing with the LA
 
 module la_control_Wrapper #(
-    parameter NUM_TEAMS = 1
+    parameter NUM_TEAMS = 12
 )
 (
     // Wishbone Slave ports (WB MI A)
@@ -18,12 +18,13 @@ module la_control_Wrapper #(
     output wire [31:0] wbs_dat_o,
     
     // GPIOs
-    input wire [127:0] designs_la_data_out[NUM_TEAMS:1], // Breakout Board Pins
+    input wire [127:0] designs_la_data_out [NUM_TEAMS:0], // Breakout Board Pins
 
     output wire [127:0] la_data_out
 );
-    la_control_WB la_control_WB (
-        .ext_clk(wb_clk_i),
+    la_control_WB #(
+        .NUM_TEAMS(NUM_TEAMS)
+    ) la_control_WB (
         .clk_i(wb_clk_i),
         .rst_i(wb_rst_i),
         .adr_i(wbs_adr_i),
@@ -38,6 +39,5 @@ module la_control_Wrapper #(
         .la_dat(designs_la_data_out),
         .muxxed_la_dat(la_data_out)
     );
-    //TODO: use buswrap and Matthew's design to wrap the actual controller for the Logic Analyzer
 
 endmodule

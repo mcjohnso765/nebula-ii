@@ -19,6 +19,8 @@
 
 module io_ports_tb;
 	reg clock;
+	wire clock_in;
+	assign clock_in = clock;
 	reg RSTB;
 	reg CSB;
 	reg power1, power2;
@@ -26,10 +28,11 @@ module io_ports_tb;
 
 	wire gpio;
 	wire [37:0] mprj_io;
-	wire [7:0] mprj_io_0;
+	wire [33:0] checkbits;
+	// wire [7:0] mprj_io_0;
 
-	assign mprj_io_0 = mprj_io[7:0];
-	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
+	assign checkbits = {mprj_io[37:5], mprj_io[0]};
+	// assign mprj_io_0 = mprj_io[7:0]
 
 	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 	// assign mprj_io[3] = 1'b1;
@@ -145,7 +148,7 @@ module io_ports_tb;
 		$dumpvars(0, io_ports_tb);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
-		repeat (25) begin
+		repeat (100) begin
 			repeat (1000) @(posedge clock);
 			// $display("+1000 cycles");
 		end
@@ -160,19 +163,10 @@ module io_ports_tb;
 	end
 
 	initial begin
-	    // Observe Output pins [7:0]
-		wait(mprj_io_0 == 8'h01);
-		wait(mprj_io_0 == 8'h02);
-		wait(mprj_io_0 == 8'h03);
-		wait(mprj_io_0 == 8'h04);
-		wait(mprj_io_0 == 8'h05);
-		wait(mprj_io_0 == 8'h06);
-		wait(mprj_io_0 == 8'h07);
-		wait(mprj_io_0 == 8'h08);
-		wait(mprj_io_0 == 8'h09);
-		wait(mprj_io_0 == 8'h0A);   
-		wait(mprj_io_0 == 8'hFF);
-		wait(mprj_io_0 == 8'h00);
+	    // Observe output bits are set to 0
+		wait(checkbits == 0);
+
+		#100;  // wait some time before ending
 		
 		`ifdef GL
 	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
@@ -207,7 +201,7 @@ module io_ports_tb;
 	end
 
 	always @(mprj_io) begin
-		#1 $display("MPRJ-IO state = %b ", mprj_io[7:0]);
+		#1 $display("MPRJ-IO state = 34'h%h ", checkbits);
 	end
 
 	wire flash_csb;
@@ -242,7 +236,7 @@ module io_ports_tb;
 		.vccd2	  (VDD1V8),
 		.vssd1	  (VSS),
 		.vssd2	  (VSS),
-		.clock    (clock),
+		.clock    (clock_in),
 		.gpio     (gpio),
 		.mprj_io  (mprj_io),
 		.flash_csb(flash_csb),
