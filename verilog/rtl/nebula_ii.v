@@ -1,10 +1,10 @@
 //This is just the sample project right now
 
 module nebula_ii (
-`ifdef USE_POWER_PINS
-    inout vccd1,	// User area 1 1.8V supply
-    inout vssd1,	// User area 1 digital ground
-`endif
+// `ifdef USE_POWER_PINS
+//     inout vccd1,	// User area 1 1.8V supply
+//     inout vssd1,	// User area 1 digital ground
+// `endif
 
     // User clk, rst
     input wb_clk_i,
@@ -66,7 +66,7 @@ module nebula_ii (
     wire [2:0] designs_irq[NUM_TEAMS:0];
 
     // Sample Project Instance
-    sample_team_proj_Wrapper sample_team_proj_Wrapper (
+    team_12_Wrapper lol (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),

@@ -24,9 +24,9 @@
 
 `define				WB_AW		16
 
-`include			"wb_wrapper.vh"
+// `include			"wb_wrapper.vh"
 
-module poly_synth_WB (
+module team_12_WB (
 	`WB_SLAVE_PORTS,
 	input	wire	[128-1:0]	la_data_in,
 	output	wire	[128-1:0]	la_data_out,
@@ -50,7 +50,7 @@ module poly_synth_WB (
 	assign	en = EN_VAL_REG;
 	`WB_REG(EN_VAL_REG, 0, 1)
 
-	poly_synth instance_to_wrap (
+	team_12 instance_to_wrap (
 		.clk(clk),
 		.nrst(nrst),
 		.en(en),
