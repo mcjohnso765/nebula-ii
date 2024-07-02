@@ -7,18 +7,26 @@ module counter(
     logic [3:0]nextcount; //this will lead to nowehere, so probably be left open in the top instantuation 
 
     always_ff @(posedge clk, negedge rst)
-      if (rst)
+    if (rst)begin
         countout <= '0;
-      else
+    end
+    else begin
         countout <= nextcount;
+        if(countout == max && count_start)begin
+            atmax <= 1'b1;
+        end
+        else begin
+            atmax <= 1'b0;
+        end
+    end
 
     always_comb begin
         if(count_start == 1'b1)begin
-            nextcount = countout + 4'b0001;
-            atmax = 1'b0;
             if (countout == max)begin
                 nextcount = 4'b0;
-                atmax = 1'b1;
+            end
+            else begin  
+                nextcount = countout + 4'b0001;
             end
         end
         else begin

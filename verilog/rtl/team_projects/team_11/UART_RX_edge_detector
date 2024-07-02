@@ -7,20 +7,22 @@ module edge_detect (
 
     always_ff @(posedge clk, posedge rst) begin
         if(rst)begin
-            prev_sig = 1'b1;
+            prev_sig <= 1'b1;
         end
         else begin
-            prev_sig = signal_in;
-        end
-    end
-
-    always_comb begin
-        if(~signal_in && prev_sig) begin
-            falling_edge = 1'b1;
-        end
-        else begin
-            if(Ready == 1)begin
-                falling_edge = 1'b0;
+            prev_sig <= signal_in;
+            if(~signal_in && prev_sig) begin
+                falling_edge = 1'b1;
+            end
+            else begin
+                if(Ready == 1)begin
+                    if(signal_in && prev_sig) begin
+                        falling_edge = 1'b0;
+                    end
+                    else begin
+                        falling_edge = 1'b1;
+                    end
+                end
             end
         end
     end

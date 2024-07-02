@@ -17,17 +17,20 @@ module FSM(
     always_comb begin
 	    case(current_state)
 		    IDLE: begin
-                Success = 1;
-			    if (Start == 1) begin
+			    if (falling_edge == 1) begin
 				    next_state = RECEIVING;
                 end
 			    else begin
 				    next_state = current_state;
-			    end
+                    Success = 1'b1;
+                end
                 state_check = current_state;
 		    end
 		    RECEIVING: begin
-                if (falling_edge = 1)begin
+                if (falling_edge == 0)begin
+                    next_state = STOP;
+                end 
+                else begin
                     Count_Start = 1;
                     Reg_Start = 1;
                     Success = 0;
@@ -37,10 +40,6 @@ module FSM(
                     else begin
                         next_state = current_state;
                     end
-                end
-			    if (falling_edge == 1'b0) begin
-				    next_state = STOP;
-                    Success = 1;
                 end
             end
             STOP: begin
