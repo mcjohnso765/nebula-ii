@@ -203,9 +203,7 @@ initial begin
     reset();
 
     wb_write('0, 12);
-
     wb_write(32'h00000004, 8);
-
     wb_write(32'h00000008, 7);
     tb_WRITE_I = '0;
     #(CLK_PERIOD * 10);
