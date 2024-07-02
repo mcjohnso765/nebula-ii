@@ -308,3 +308,44 @@ addi x2, x0, 384
 addi x3, x0, 61  //input key a
 lw x1, 0(x2)
 beq x1, x3, _loop
+
+
+// move pixel up
+00000013
+00000093
+00000113
+0c200193
+18000213
+00100113
+0020a023
+07700293
+00022503
+00550463
+ff5ff06f
+0000a023
+ffc08093
+0020a023
+fe5ff06f
+
+//move pixel assembly
+nop
+	addi x1, x0, 0		  /* x1 = memory location */
+    addi x2, x0, 0		  /* x2 = bit select */
+    addi x3, x0, 194      /* center memory location*/
+    addi x4, x0, 384      /* x4 = UART location */
+  
+    _center:
+   addi x2, x0, 1
+   sw x2, 0(x1)
+    
+   _check_button:
+   addi x5, x0, 119
+   lw a0, 0(x4)
+   beq a0, x5, _move_up
+   j _check_button
+   
+   _move_up:
+   sw x0, 0(x1)			/* clear current pixel */
+   addi x1, x1, -4		/* update memory location */
+   sw x2, 0(x1)         /* fill screen */
+   j _check_button
