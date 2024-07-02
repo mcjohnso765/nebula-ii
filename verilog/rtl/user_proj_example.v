@@ -154,25 +154,4 @@ module counter #(
 
 endmodule
 
-cpu_core core0(
-    .data_in_BUS(data_in_BUS),
-    .pc_data(pc_data),
-    .bus_full(1'b0),
-    .clk(strobe),
-    .rst(reset),
-    .data_out_BUS(data_out_BUS),
-    .address_out(address_out),
-    .reg_write(reg_write),
-    .result(result), 
-    .instruction_x(temp),
-    .data_good_x(left[2]),
-    .instr_fetch_x(left[1]),
-    .instr_wait_x(left[0]),
-    .reg_write_en_x(left[7]),
-    .register_out_x(register_out),
-    .register_out_x_2(register_out_2),
-    .imm_32_x(imm_32_x),
-    .branch_ff(branch_ff)
-);
-
 `default_nettype wire
