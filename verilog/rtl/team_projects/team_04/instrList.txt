@@ -432,42 +432,74 @@ fb9ff06f
 
 // move up down left right
 
-00000093
-00000113
-0c200193
-18000213
-00000293
-00100113
-0020a023
-00200293
-00600393
-00400413
-00800493
-00022503
-00550a63
-02750063
-02850663
-02950c63
-fddff06f
-0000a023
-ffc08093
-0020a023
-0340006f
-0000a023
-00408093
-0020a023
-0240006f
-0000a023
-00409093
-0020a023
-0140006f
-0000a023
-0040d093
-0020a023
-0040006f
-00018337
-6a03031b
-fff30313
-fe031ee3
-f89ff06f
+.global _center
+.global _check_button
+.global _move_up
+.global _move_down
+.global _move_left
+.global _move_right
+.global _delay_loop  
 
+addi x1, x0, 0         /* x1 = memory location */
+addi x2, x0, 0         /* x2 = bit select */
+addi x3, x0, 194       /* center memory location */
+addi x4, x0, 384       /* x4 = UART location */
+
+_center:
+    addi x2, x0, 1
+    sw x2, 0(x1) 
+
+_check_button:
+    addi x5, x0, 2     /* Key code for 'up' button */
+    addi x7, x0, 6     /* Key code for 'down' button */
+    addi x8, x0, 4    /* Key code for 'left' button */
+    addi x9, x0, 8    /* Key code for 'right' button */
+    lw a0, 0(x4)
+    beq a0, x5, _move_up
+    beq a0, x7, _move_down
+    beq a0, x8, _move_left
+    beq a0, x9, _move_right
+    j _delay_loop
+
+_move_up:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, -4        /* update memory location (move up) */
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_move_down:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, 4         /* update memory location (move down) */
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_move_left:
+    sw x0, 0(x1)           /* clear current pixel */
+    slli x2, x2, 1         /* shift pixel left */
+    bnez x2, _no_wrap_left /* if not zero, continue */
+    addi x1, x1, -1        /* move to previous memory location */
+    addi x2, x0, 1         /* set pixel to LSB */
+    sw x2, 0(x1)           /* set new pixel */
+    j _check_button
+_no_wrap_left:
+    sw x2, 0(x1)           /* set new pixel */
+    j _delay_loop
+
+_move_right:
+    sw x0, 0(x1)           /* clear current pixel */
+    srli x2, x2, 1         /* shift pixel right */
+    bnez x2, _no_wrap_right/* if not zero, continue */
+    addi x1, x1, 1         /* move to next memory location */
+    addi x2, x0, -1         /* set pixel to LSB */
+    sw x2, 0(x1)           /* set new pixel */
+    j _check_button
+_no_wrap_right:
+    sw x2, 0(x1)           /* set new pixel */
+    j _delay_loop
+
+_delay_loop:
+    li x6, 100000          /* Load the delay count */
+delay_loop:
+    addi x6, x6, -1        /* Decrement the counter */
+    bnez x6, delay_loop    /* Loop until the counter reaches zero */
+    j _check_button
