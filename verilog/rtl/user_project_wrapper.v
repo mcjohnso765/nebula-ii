@@ -116,4 +116,14 @@ nebula_ii mprj (
 
 endmodule	// user_project_wrapper
 
+cpu_core core0(
+    .data_in_BUS(data_in_BUS),
+    .pc_data(pc_data),
+    .bus_full(1'b0),
+    .clk(strobe), //what is our clock
+    .rst(reset), //how to define reset
+    .data_out_BUS(data_out_BUS), //wishbone connections?
+    .address_out(address_out)
+);
+
 `default_nettype wire
