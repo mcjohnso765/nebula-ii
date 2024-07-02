@@ -1,0 +1,27 @@
+module edge_detect (
+    input logic clk, rst, signal_in, Ready,
+    output logic falling_edge
+);
+
+    logic prev_sig;
+
+    always_ff @(posedge clk, posedge rst) begin
+        if(rst)begin
+            prev_sig = 1'b1;
+        end
+        else begin
+            prev_sig = signal_in;
+        end
+    end
+
+    always_comb begin
+        if(~signal_in && prev_sig) begin
+            falling_edge = 1'b1;
+        end
+        else begin
+            if(Ready == 1)begin
+                falling_edge = 1'b0;
+            end
+        end
+    end
+endmodule

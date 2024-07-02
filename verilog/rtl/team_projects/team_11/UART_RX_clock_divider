@@ -1,0 +1,37 @@
+module clock_divider (
+  input logic clk, rst,
+  output logic new_clk
+);
+
+  parameter OG_CLK = 240000;
+  parameter BAUD_RATE = 9600;
+  parameter DIV_FACTOR = OG_CLK / BAUD_RATE;
+
+  parameter N = 32;
+
+  logic next_clk;
+  logic [N-1:0]count;
+  logic [N-1:0]next_count;
+
+  always_ff @(posedge clk, negedge rst) begin 
+    if(rst) begin
+      count <= 0;
+      new_clk <= 1;
+    end 
+    else begin
+      count <= next_count;
+      new_clk <= next_clk;
+    end
+  end
+
+  always_comb begin
+    next_clk = new_clk;
+    next_count = count + 1;
+
+    if (count == DIV_FACTOR -1) begin
+      next_count = 0;
+      next_clk = ~new_clk;
+    end
+  end
+endmodule
+
