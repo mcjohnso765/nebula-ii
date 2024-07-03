@@ -196,7 +196,7 @@ module CPU (
     output logic MemWrite, MemRead,
     output logic [3:0] select,
 
-    output logic enable
+    input logic enable
     
 );
 
@@ -964,7 +964,7 @@ module register_file(
     input logic [31:0] write_data,
     output logic [31:0]  read_data_1, read_data_2,
     output reg [31:0]  [31:0] reg_file,
-    output enable
+    input enable
 );
     // logic [4:0] i;
 
