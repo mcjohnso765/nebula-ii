@@ -25,6 +25,19 @@
 		- Observes counter value through the MPRJ lower 8 IO pins (in the testbench)
 */
 
+// Team 05
+#define reg_team_05_EN (*(volatile uint32_t*)0x30050000)
+
+// GPIO Control
+#define reg_gpio_PIN_0TO7 (*(volatile uint32_t*)0x32000000)
+#define reg_gpio_PIN_8TO15 (*(volatile uint32_t*)0x32000004)
+#define reg_gpio_PIN_16TO23 (*(volatile uint32_t*)0x32000008)
+#define reg_gpio_PIN_24TO31 (*(volatile uint32_t*)0x3200000C)
+#define reg_gpio_PIN_32TO37 (*(volatile uint32_t*)0x32000010)
+
+// LA Control
+#define reg_la_sel (*(volatile uint32_t*)0x31000000)
+
 void main()
 {
 	/* 
@@ -59,17 +72,46 @@ void main()
 
 	// Configure lower 8-IOs as user output
 	// Observe counter value in the testbench
-	reg_mprj_io_0 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_1 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_2 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_3 =  GPIO_MODE_USER_STD_OUTPUT;
+
+
+	//Keypad
+	reg_mprj_io_0 = GPIO_MODE_USER_STD_INPUT_NOPULL;
+	reg_mprj_io_1 = GPIO_MODE_USER_STD_INPUT_NOPULL; 
+	reg_mprj_io_2 = GPIO_MODE_USER_STD_INPUT_NOPULL;
+	reg_mprj_io_3 = GPIO_MODE_USER_STD_INPUT_NOPULL;   
 	reg_mprj_io_4 =  GPIO_MODE_USER_STD_OUTPUT;
 	reg_mprj_io_5 =  GPIO_MODE_USER_STD_OUTPUT;
 	reg_mprj_io_6 =  GPIO_MODE_USER_STD_OUTPUT;
 	reg_mprj_io_7 =  GPIO_MODE_USER_STD_OUTPUT;
 
+	//Temp Sensor
+	reg_mprj_io_8 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
+
+	//LCD screen
+	reg_mprj_io_9  =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_10 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_11 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_12 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_13 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_14 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_15 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_16 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_17 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_18 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_19 =  GPIO_MODE_USER_STD_OUTPUT;
+
 	/* Apply configuration */
 	reg_mprj_xfer = 1;
 	while (reg_mprj_xfer == 1);
+
+	// Configure GPIOs outputs to be selected by sample project
+	reg_gpio_PIN_0TO7 = 0x55555555;
+	reg_gpio_PIN_8TO15 = 0x55555555;
+	reg_gpio_PIN_16TO23 = 0x55555555;
+	reg_gpio_PIN_24TO31 = 0x55555555;
+	reg_gpio_PIN_32TO37 = 0x555555;
+
+	// Enable the design
+	reg_team_05_EN = 1;
 }
 
