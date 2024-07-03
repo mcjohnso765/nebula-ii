@@ -118,7 +118,8 @@ module very_top (
         .flag(UART_flag)
     );
 
-    request_handler reqhand (
+    request_handler #(.UART_ADDRESS(500)) reqhand
+    (
         .clk(clk),
         .nRst(nRst),
 
@@ -130,6 +131,8 @@ module very_top (
         .VGA_read(),
         .VGA_adr(),
         .data_to_VGA(),
+
+        .data_from_UART(),
 
         .CPU_instr_adr(CPU_instr_adr),
         .CPU_data_adr(CPU_adr_to_mem),

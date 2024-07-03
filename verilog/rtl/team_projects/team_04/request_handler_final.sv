@@ -6,17 +6,11 @@ typedef enum logic [1:0] {
 
 typedef enum logic [1:0] {
     VGA = 2'd0,
-    // UART = 2'd1,
     CPU_INSTR = 2'd2,
     CPU_DATA = 2'd3
 } client_t;
 
-// typedef enum logic {
-//     WAITING = 1'b0,
-//     SEND = 1'b1
-// } handler_state_t;
-
-module request_handler (
+module request_handler #(parameter UART_ADDRESS = 500)(
     input logic clk,
     input logic nRst,
 
@@ -31,10 +25,8 @@ module request_handler (
     input logic [31:0] VGA_adr,
     output logic [31:0] data_to_VGA,
 
-    // //signals to/from UART
-    // input logic UART_write,
-    // input logic [31:0] UART_adr,
-    // input logic [31:0] data_from_UART,
+    //signals to/from UART
+    input logic [31:0] data_from_UART,
 
     //signals to/from CPU
     input logic [31:0] CPU_instr_adr,
@@ -120,11 +112,19 @@ module request_handler (
                 data_to_mem =   32'b0;
                 sel_to_mem =    4'b1111;
             end else begin // next_client == CPU_DATA
-                mem_read =      CPU_read;
-                mem_write =     CPU_write;
-                adr_to_mem =    CPU_data_adr;
-                data_to_mem =   data_from_CPU;
-                sel_to_mem =    CPU_sel;
+                if (CPU_data_adr == UART_ADDRESS) begin
+                    mem_read =      1'b0;
+                    mem_write =     1'b0;
+                    adr_to_mem =    32'h0;
+                    data_to_mem =   32'h0;
+                    sel_to_mem =    4'b0;
+                end else begin
+                    mem_read =      CPU_read;
+                    mem_write =     CPU_write;
+                    adr_to_mem =    CPU_data_adr;
+                    data_to_mem =   data_from_CPU;
+                    sel_to_mem =    CPU_sel;
+                end
             end    
         end
         
@@ -148,7 +148,11 @@ module request_handler (
             end else begin // current_client == CPU_DATA
                 data_to_VGA =       32'b0;
                 next_instruction =  instruction;
-                data_to_CPU =       data_from_mem;
+                if (CPU_data_adr == UART_ADDRESS) begin
+                    data_to_CPU = data_from_UART;
+                end else begin
+                    data_to_CPU = data_from_mem;
+                end
             end    
         end
 
