@@ -557,6 +557,7 @@ f61ff06f
 
 /////// move up down left (right)
 
+
 .global _center
 .global _check_button
 .global _move_up
@@ -612,7 +613,7 @@ _no_wrap_left:
 _move_right:
     sw x0, 0(x1)           /* clear current pixel */
     srli x2, x2, 1         /* shift pixel right */
-    beq x2, x0, _no_wrap_right/* if not zero, continue */
+    bnez x2, _no_wrap_right /* if not zero, continue */
     addi x1, x1, 1         /* move to next memory location */
     li x2, 0x8000000      /* set pixel to MSB */
     sw x2, 0(x1)
@@ -627,5 +628,6 @@ delay_loop:
     addi x6, x6, -1        /* Decrement the counter */
     bnez x6, delay_loop    /* Loop until the counter reaches zero */
     j _check_button
+
 
 ////////////////////////////////////////////////////
