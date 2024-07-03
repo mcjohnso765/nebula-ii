@@ -15,14 +15,7 @@ module edge_detect (
                 falling_edge = 1'b1;
             end
             else begin
-                if(Ready == 1)begin
-                    if(signal_in && prev_sig) begin
-                        falling_edge = 1'b0;
-                    end
-                    else begin
-                        falling_edge = 1'b1;
-                    end
-                end
+                falling_edge = 1'b0;
             end
         end
     end

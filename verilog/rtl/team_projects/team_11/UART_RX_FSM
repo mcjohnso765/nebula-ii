@@ -1,5 +1,5 @@
 module FSM(
-    input logic clk, rst, Start, Ready_Sig, falling_edge,
+    input logic clk, rst, Start, Ready_Sig, no_count,
     output logic [2:0]state_check,
     output logic Success, Reg_Start, Count_Start
 );
@@ -10,37 +10,39 @@ module FSM(
     always_ff@(posedge clk, posedge rst) begin
 	    if (rst)
 		    current_state <= IDLE;
-      else 
+        else 
 		    current_state <= next_state;
     end
 
     always_comb begin
+        Success = 1'b0;
+        Reg_Start = 1'b0;
+        Count_Start = 1'b0;
 	    case(current_state)
 		    IDLE: begin
-			    if (falling_edge == 1) begin
+                Success = 1'b1;
+			    if (Start == 1) begin
 				    next_state = RECEIVING;
                 end
 			    else begin
 				    next_state = current_state;
-                    Success = 1'b1;
                 end
                 state_check = current_state;
 		    end
 		    RECEIVING: begin
-                if (falling_edge == 0)begin
-                    next_state = STOP;
-                end 
-                else begin
+                //if (falling_edge == 0)begin
+                    //next_state = current_state;
+                //end 
+                //else begin
                     Count_Start = 1;
                     Reg_Start = 1;
                     Success = 0;
-                    if (Ready_Sig == 1'b1) begin 
-                        next_state = STOP;
+                    if (no_count == 1'b1) begin 
+                      next_state = current_state;
                     end
                     else begin
                         next_state = current_state;
                     end
-                end
             end
             STOP: begin
                 Count_Start = 0;

@@ -1,5 +1,5 @@
 module counter(
-    input logic clk, rst, count_start, falling_edge, receive_ready, //count_start is connected to the count_start from FSM
+    input logic clk, rst, count_start, falling_edge, receive_ready, no_count, //count_start is connected to the count_start from FSM
     input logic [3:0]max,  // We will set the max to 8, or 1000 in binary in the top module
     output logic atmax, //the ready signal will be based on this
     output logic [3:0]countout
@@ -7,18 +7,23 @@ module counter(
     logic [3:0]nextcount; //this will lead to nowehere, so probably be left open in the top instantuation 
 
     always_ff @(posedge clk, negedge rst)
-        if (rst)begin
-            countout <= '0;
-        end
-        else begin
-            countout <= nextcount;
-            if(countout == max && count_start)begin
+    if (rst)begin
+        countout <= '0;
+    end
+    else begin
+        countout <= nextcount;
+        if(no_count == 1'b0)begin   
+            if(countout == max)begin
                 atmax <= 1'b1;
             end
             else begin
                 atmax <= 1'b0;
             end
         end
+        else begin
+            atmax = 1'b0;
+        end
+    end
 
     always_comb begin
         if(count_start == 1'b1)begin

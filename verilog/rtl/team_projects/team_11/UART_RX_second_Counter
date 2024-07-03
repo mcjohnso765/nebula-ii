@@ -1,0 +1,33 @@
+module second_counter(
+    input logic clk, rst, falling_edge,
+    input logic [3:0]max,  
+    output logic no_count,
+    output logic [3:0] countout
+);
+    logic [3:0]nextcount;
+
+    always_ff @(posedge clk, posedge rst)begin
+        if (rst)begin
+            countout <= '0;
+        end
+        else begin
+            countout <= nextcount;
+        end
+    end
+
+    always_comb begin
+        if (falling_edge == 1'b1)begin
+            nextcount = 4'b0;
+        end
+        else begin
+            if (countout == max)begin
+                no_count = 1'b1;
+                nextcount = 4'b0;
+            end
+            else begin
+                nextcount = countout + 1'b1;
+                no_count = 1'b0;
+            end
+        end
+    end
+endmodule
