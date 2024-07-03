@@ -35,16 +35,22 @@ USER_ARGS = -u $$(id -u $$USER):$$(id -g $$USER)
 ifeq ($(ROOTLESS), 1)
 	USER_ARGS =
 endif
-export OPENLANE_ROOT?=$(PWD)/dependencies/openlane_src
+# export OPENLANE_ROOT?=$(PWD)/dependencies/openlane_src
+export OPENLANE2_ROOT?=${HOME}/STARS2024/openlane2-2.0.7 # for nanoHUB
 export BUS_WRAP_ROOT?=$(PWD)/dependencies/BusWrap
 export PDK_ROOT?=$(PWD)/dependencies/pdks
+# export PDK_ROOT?=/apps/share64/rocky8/openlane2/openlane2-stars2024-20240613/PDKS   # for nanoHUB
 export DISABLE_LVS?=0
 
 export ROOTLESS
 
+# After students are done with nanoHUB,
+# before tapeout we may want to use the following:
+# export OPEN_PDKS_COMMIT?=78b7bc32ddb4b6f14f76883c2e2dc5b5de9d1cbc
+
 ifeq ($(PDK),sky130A)
 	SKYWATER_COMMIT=f70d8ca46961ff92719d8870a18a076370b85f6c
-	export OPEN_PDKS_COMMIT?=78b7bc32ddb4b6f14f76883c2e2dc5b5de9d1cbc
+	export OPEN_PDKS_COMMIT?=4d5af10bfee4dab799566aaf903bb22aee69bac9
 	export OPENLANE_TAG?=2023.07.19-1
 	MPW_TAG ?= mpw-9i
 

@@ -5,6 +5,10 @@ module la_control_Wrapper #(
     parameter NUM_TEAMS = 12
 )
 (
+`ifdef USE_POWER_PINS
+    inout vccd1,	// User area 1 1.8V supply
+    inout vssd1,	// User area 1 digital ground
+`endif
     // Wishbone Slave ports (WB MI A)
     input wire wb_clk_i,
     input wire wb_rst_i,
@@ -18,7 +22,7 @@ module la_control_Wrapper #(
     output wire [31:0] wbs_dat_o,
     
     // GPIOs
-    input wire [127:0] designs_la_data_out [NUM_TEAMS:0], // Breakout Board Pins
+    input wire [128*(NUM_TEAMS+1)-1:0] designs_la_data_out_flat, // Breakout Board Pins
 
     output wire [127:0] la_data_out
 );
@@ -36,7 +40,7 @@ module la_control_Wrapper #(
         .ack_o(wbs_ack_o),
         .we_i(wbs_we_i),
         .IRQ(),
-        .la_dat(designs_la_data_out),
+        .designs_la_data_out_flat(designs_la_data_out_flat),
         .muxxed_la_dat(la_data_out)
     );
 

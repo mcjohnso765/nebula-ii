@@ -10,7 +10,10 @@
 // Aidan Jacobsen, 06/15/2024, integrated with automated bus wrapping, moved ports internal so teams don't have to modify
 
 module sample_team_proj_Wrapper (
-
+`ifdef USE_POWER_PINS
+    inout vccd1,	// User area 1 1.8V supply
+    inout vssd1,	// User area 1 digital ground
+`endif
     // Wishbone Slave ports (WB MI A)
     input wire wb_clk_i,
     input wire wb_rst_i, // Active high reset!
