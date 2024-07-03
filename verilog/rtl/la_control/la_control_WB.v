@@ -31,7 +31,7 @@ module la_control_WB #(
 )
 (
 	`WB_SLAVE_PORTS,
-	input	wire	[128-1:0]	la_dat [NUM_TEAMS:0],
+	input	wire	[128*(NUM_TEAMS+1)-1:0] designs_la_data_out_flat,
 	output	wire	[128-1:0]	muxxed_la_dat
 );
 
@@ -55,7 +55,7 @@ module la_control_WB #(
 		.clk(clk),
 		.nrst(nrst),
 		.la_sel(la_sel),
-		.la_dat(la_dat),
+		.designs_la_data_out_flat(designs_la_data_out_flat),
 		.muxxed_la_dat(muxxed_la_dat)
 	);
 

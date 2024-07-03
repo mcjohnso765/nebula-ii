@@ -43,12 +43,12 @@ module nebula_ii (
     wire [31:0] adr_truncated;
 
     // WB slave stb_i inputs to all designs, GPIO control, LA control
-    wire designs_stb [NUM_TEAMS:0];
+    wire [NUM_TEAMS:0] designs_stb ;
     wire gpio_control_stb;
     wire la_control_stb;
 
     // WB slave outputs from all designs, GPIO control, LA control
-    wire designs_wbs_ack_o[NUM_TEAMS:0];
+    wire [NUM_TEAMS:0] designs_wbs_ack_o;
     wire [31:0] designs_wbs_dat_o[NUM_TEAMS:0];
     wire la_wbs_ack_o;
     wire [31:0] la_wbs_dat_o;
@@ -67,6 +67,10 @@ module nebula_ii (
 
     // Sample Project Instance
     sample_team_proj_Wrapper sample_team_proj_Wrapper (
+    `ifdef USE_POWER_PINS
+            .vccd1(vccd1),	// User area 1 1.8V power
+            .vssd1(vssd1),	// User area 1 digital ground
+    `endif
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -93,11 +97,26 @@ module nebula_ii (
         .irq(designs_irq[1])
     );
 
+    reg [38*(NUM_TEAMS+1)-1:0] designs_gpio_out_flat;
+    reg [38*(NUM_TEAMS+1)-1:0] designs_gpio_oeb_flat;
+
+    integer i1;
+    always @* begin
+        for (i1 = 0; i1 <= NUM_TEAMS; i1 = i1 + 1) begin
+            designs_gpio_out_flat[i1*38 +: 38] = designs_gpio_out[i1];//[38i:38(i+1)-1]
+            designs_gpio_oeb_flat[i1*38 +: 38] = designs_gpio_oeb[i1];//[38i:38(i+1)-1]
+        end
+    end
+
     // GPIO Control
     gpio_control_Wrapper #(
         .NUM_TEAMS(NUM_TEAMS)
     ) gpio_control_wrapper (
         // Wishbone Slave ports (WB MI A)
+    `ifdef USE_POWER_PINS
+            .vccd1(vccd1),	// User area 1 1.8V power
+            .vssd1(vssd1),	// User area 1 digital ground
+    `endif
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
         .wbs_stb_i(gpio_control_stb),
@@ -110,17 +129,30 @@ module nebula_ii (
         .wbs_dat_o(gpio_wbs_dat_o),
         
         // GPIOs
-        .designs_gpio_out(designs_gpio_out),
-        .designs_gpio_oeb(designs_gpio_oeb),
+        .designs_gpio_out_flat(designs_gpio_out_flat),
+        .designs_gpio_oeb_flat(designs_gpio_oeb_flat),
         .gpio_out(io_out),
         .gpio_oeb(io_oeb)
     );
+
+    reg [128*(NUM_TEAMS+1)-1:0] designs_la_data_out_flat;
+
+    integer i2;
+    always @* begin
+        for (i2 = 0; i2 <= NUM_TEAMS; i2 = i2 + 1) begin
+            designs_la_data_out_flat[i2*128 +: 128] = designs_la_data_out[i2];//[38i:38(i+1)-1]
+        end
+    end
 
     // LA Control
     la_control_Wrapper #(
         .NUM_TEAMS(NUM_TEAMS)
     ) la_control_wrapper (
         // Wishbone Slave ports (WB MI A)
+    `ifdef USE_POWER_PINS
+            .vccd1(vccd1),	// User area 1 1.8V power
+            .vssd1(vssd1),	// User area 1 digital ground
+    `endif
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
         .wbs_stb_i(la_control_stb),
@@ -133,14 +165,27 @@ module nebula_ii (
         .wbs_dat_o(la_wbs_dat_o),
         
         // LA
-        .designs_la_data_out(designs_la_data_out),
+        .designs_la_data_out_flat(designs_la_data_out_flat),
         .la_data_out(la_data_out)
     );
+
+    reg [32*(NUM_TEAMS+1)-1:0] designs_wbs_dat_o_flat;
+
+    integer i3;
+    always @* begin
+        for (i3 = 0; i3 <= NUM_TEAMS; i3 = i3 + 1) begin
+            designs_wbs_dat_o_flat[i3*32 +: 32] = designs_wbs_dat_o[i3];//[38i:38(i+1)-1]
+        end
+    end
 
     // WB Interconnect
     wb_interconnect #(
         .NUM_TEAMS(NUM_TEAMS)
     ) wb_interconnect (
+    `ifdef USE_POWER_PINS
+            .vccd1(vccd1),	// User area 1 1.8V power
+            .vssd1(vssd1),	// User area 1 digital ground
+    `endif
         // Wishbone Slave ports (only the ones we need)
         .wbs_stb_i(wbs_stb_i),
         .wbs_adr_i(wbs_adr_i),
@@ -156,7 +201,7 @@ module nebula_ii (
         .adr_truncated(adr_truncated),
 
         // WB dat_o Signals
-        .designs_dat_o(designs_wbs_dat_o),
+        .designs_wbs_dat_o_flat(designs_wbs_dat_o_flat),
         .la_control_dat_o(la_wbs_dat_o),
         .gpio_control_dat_o(gpio_wbs_dat_o),
 

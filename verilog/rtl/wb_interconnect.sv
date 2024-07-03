@@ -13,6 +13,10 @@ module wb_interconnect #(
     parameter NUM_TEAMS = 12
 )
 (
+`ifdef USE_POWER_PINS
+    inout vccd1,	// User area 1 1.8V supply
+    inout vssd1,	// User area 1 digital ground
+`endif
     // Wishbone Slave ports (only the ones we need)
     input logic wbs_stb_i,
     input logic [31:0] wbs_adr_i,
@@ -20,7 +24,7 @@ module wb_interconnect #(
     output logic [31:0] wbs_dat_o,
 
     // Strobe Signals
-    output logic designs_stb [NUM_TEAMS:0],
+    output logic [NUM_TEAMS:0] designs_stb ,
     output logic la_control_stb,
     output logic gpio_control_stb,
 
@@ -28,15 +32,26 @@ module wb_interconnect #(
     output logic [31:0] adr_truncated,
 
     // WB dat_o Signals
-    input logic [31:0] designs_dat_o [NUM_TEAMS:0],
+    input logic [32*(NUM_TEAMS+1)-1:0] designs_wbs_dat_o_flat,
     input logic [31:0] la_control_dat_o,
     input logic [31:0] gpio_control_dat_o,
 
     // WB ack_o Signals
-    input logic designs_ack_o [NUM_TEAMS:0],
+    input logic [NUM_TEAMS:0] designs_ack_o,
     input logic la_control_ack_o,
     input logic gpio_control_ack_o
 );
+
+    //recreate multidimensional array
+    logic [31:0] designs_dat_o [NUM_TEAMS:0];
+
+    integer i;
+    always @* begin
+        for (i = 0; i <= NUM_TEAMS; i = i + 1) begin
+            designs_dat_o[i] = designs_wbs_dat_o_flat[i*32 +: 32];
+        end
+    end
+
 
     // Truncated Address
     assign adr_truncated = {16'b0, wbs_adr_i[15:0]};

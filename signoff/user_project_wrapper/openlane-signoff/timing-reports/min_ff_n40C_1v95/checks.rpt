@@ -1,0 +1,852 @@
+
+===========================================================================
+report_checks -unconstrained
+===========================================================================
+======================= min_ff_n40C_1v95 Corner ===================================
+
+Startpoint: wb_rst_i (input port clocked by clk)
+Endpoint: _1143_ (recovery check against rising-edge clock clk)
+Path Group: asynchronous
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+---------------------------------------------------------------------------------------------
+                                  0.000000    0.000000   clock clk (rise edge)
+                                  5.570000    5.570000   clock network delay (propagated)
+                                 50.000000   55.570000 v input external delay
+    13    0.158084    0.000000    0.000000   55.570000 v wb_rst_i (in)
+                                                         wb_rst_i (net)
+                      0.066267    0.033133   55.603134 v fanout319/A (sky130_fd_sc_hd__buf_2)
+    12    0.054142    0.090914    0.154344   55.757477 v fanout319/X (sky130_fd_sc_hd__buf_2)
+                                                         net319 (net)
+                      0.090933    0.001126   55.758602 v fanout309/A (sky130_fd_sc_hd__buf_2)
+    12    0.046864    0.079453    0.156728   55.915329 v fanout309/X (sky130_fd_sc_hd__buf_2)
+                                                         net309 (net)
+                      0.079453    0.000234   55.915565 v fanout306/A (sky130_fd_sc_hd__buf_4)
+    10    0.054076    0.059055    0.145707   56.061272 v fanout306/X (sky130_fd_sc_hd__buf_4)
+                                                         net306 (net)
+                      0.059055    0.000153   56.061424 v fanout305/A (sky130_fd_sc_hd__buf_4)
+    10    0.054079    0.058647    0.137693   56.199120 v fanout305/X (sky130_fd_sc_hd__buf_4)
+                                                         net305 (net)
+                      0.058657    0.000767   56.199886 v _0985_/A (sky130_fd_sc_hd__inv_2)
+     1    0.004031    0.025148    0.040728   56.240612 ^ _0985_/Y (sky130_fd_sc_hd__inv_2)
+                                                         _0071_ (net)
+                      0.025148    0.000032   56.240646 ^ _1143_/RESET_B (sky130_fd_sc_hd__dfrtp_1)
+                                             56.240646   data arrival time
+
+                                100.000000  100.000000   clock clk (rise edge)
+                                  4.650000  104.649994   clock source latency
+   318    0.862409    0.610000    0.000000  104.649994 ^ wb_clk_i (in)
+                                                         wb_clk_i (net)
+                      1.021987    0.205993  104.855988 ^ _1143_/CLK (sky130_fd_sc_hd__dfrtp_1)
+                                 -0.250000  104.605988   clock uncertainty
+                                  0.000000  104.605988   clock reconvergence pessimism
+                                  0.214174  104.820160   library recovery time
+                                            104.820160   data required time
+---------------------------------------------------------------------------------------------
+                                            104.820160   data required time
+                                            -56.240646   data arrival time
+---------------------------------------------------------------------------------------------
+                                             48.579517   slack (MET)
+
+
+Startpoint: wbs_adr_i[7] (input port clocked by clk)
+Endpoint: wbs_dat_o[28] (output port clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+---------------------------------------------------------------------------------------------
+                                  0.000000    0.000000   clock clk (rise edge)
+                                  5.570000    5.570000   clock network delay (propagated)
+                                  3.890000    9.460000 v input external delay
+    12    0.156765    0.920000    0.000000    9.460000 v wbs_adr_i[7] (in)
+                                                         wbs_adr_i[7] (net)
+                      1.026471    0.053236    9.513236 v mprj.sample_team_proj_Wrapper/wbs_adr_i[7] (sample_team_proj_Wrapper)
+    47    0.147338    0.336577    3.021126   12.534362 v mprj.sample_team_proj_Wrapper/wbs_dat_o[28] (sample_team_proj_Wrapper)
+                                                         mprj.designs_wbs_dat_o[1][28] (net)
+                      0.352973    0.059089   12.593451 v _0893_/B (sky130_fd_sc_hd__and3_1)
+     2    0.016602    0.070053    0.261340   12.854791 v _0893_/X (sky130_fd_sc_hd__and3_1)
+                                                         _0506_ (net)
+                      0.070069    0.001029   12.855820 v _0894_/A3 (sky130_fd_sc_hd__o31a_2)
+     2    0.028633    0.079095    0.233895   13.089715 v _0894_/X (sky130_fd_sc_hd__o31a_2)
+                                                         net226 (net)
+                      0.079229    0.002895   13.092610 v output226/A (sky130_fd_sc_hd__buf_12)
+     1    0.191591    0.076599    0.153107   13.245717 v output226/X (sky130_fd_sc_hd__buf_12)
+                                                         wbs_dat_o[28] (net)
+                      0.076750    0.002979   13.248695 v wbs_dat_o[28] (out)
+                                             13.248695   data arrival time
+
+                                100.000000  100.000000   clock clk (rise edge)
+                                  4.650000  104.649994   clock network delay (propagated)
+                                 -0.250000  104.399994   clock uncertainty
+                                  0.000000  104.399994   clock reconvergence pessimism
+                                 -3.620000  100.779999   output external delay
+                                            100.779999   data required time
+---------------------------------------------------------------------------------------------
+                                            100.779999   data required time
+                                            -13.248695   data arrival time
+---------------------------------------------------------------------------------------------
+                                             87.531303   slack (MET)
+
+
+
+
+===========================================================================
+report_checks --slack_max -0.01
+============================================================================
+======================= min_ff_n40C_1v95 Corner ===================================
+
+No paths found.
+
+
+===========================================================================
+ report_check_types -max_slew -max_cap -max_fanout -violators
+============================================================================
+======================= min_ff_n40C_1v95 Corner ===================================
+
+max slew
+
+Pin                                        Limit        Slew       Slack
+------------------------------------------------------------------------
+mprj.sample_team_proj_Wrapper/la_data_in[122]    1.500000    1.764121   -0.264121 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[122]/DIODE    1.500000    1.764119   -0.264119 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[121]    1.500000    1.743933   -0.243933 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[121]/DIODE    1.500000    1.743930   -0.243930 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[7]    1.500000    1.654110   -0.154110 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[7]/DIODE    1.500000    1.654100   -0.154100 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[104]    1.500000    1.653452   -0.153452 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[104]/DIODE    1.500000    1.653440   -0.153440 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[20]    1.500000    1.622844   -0.122844 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[20]/DIODE    1.500000    1.622838   -0.122838 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[105]    1.500000    1.564474   -0.064474 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[105]/DIODE    1.500000    1.564471   -0.064471 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[5]    1.500000    1.562930   -0.062930 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[5]/DIODE    1.500000    1.562920   -0.062920 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[100]    1.500000    1.557820   -0.057820 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[100]/DIODE    1.500000    1.557818   -0.057818 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[119]    1.500000    1.556409   -0.056409 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[119]/DIODE    1.500000    1.556406   -0.056406 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[124]    1.500000    1.522981   -0.022981 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[124]/DIODE    1.500000    1.522979   -0.022979 (VIOLATED)
+
+max fanout
+
+Pin                                   Limit Fanout  Slack
+---------------------------------------------------------
+wb_clk_i                                 10    317   -307 (VIOLATED)
+wbs_dat_i[14]                            10     95    -85 (VIOLATED)
+wbs_dat_i[17]                            10     94    -84 (VIOLATED)
+wbs_dat_i[15]                            10     93    -83 (VIOLATED)
+wbs_dat_i[20]                            10     83    -73 (VIOLATED)
+wbs_dat_i[22]                            10     83    -73 (VIOLATED)
+wbs_dat_i[25]                            10     83    -73 (VIOLATED)
+wbs_dat_i[30]                            10     81    -71 (VIOLATED)
+wbs_dat_i[28]                            10     54    -44 (VIOLATED)
+wbs_dat_i[18]                            10     47    -37 (VIOLATED)
+wbs_dat_i[19]                            10     47    -37 (VIOLATED)
+wbs_dat_i[21]                            10     47    -37 (VIOLATED)
+wbs_dat_i[24]                            10     47    -37 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[28]     10     47    -37 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[27]     10     43    -33 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[30]     10     43    -33 (VIOLATED)
+wbs_dat_i[26]                            10     41    -31 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[26]     10     40    -30 (VIOLATED)
+wbs_dat_i[5]                             10     33    -23 (VIOLATED)
+wbs_adr_i[15]                            10     27    -17 (VIOLATED)
+wbs_dat_i[16]                            10     27    -17 (VIOLATED)
+wbs_dat_i[23]                            10     27    -17 (VIOLATED)
+wbs_dat_i[27]                            10     27    -17 (VIOLATED)
+wbs_dat_i[29]                            10     27    -17 (VIOLATED)
+wbs_dat_i[31]                            10     27    -17 (VIOLATED)
+wbs_dat_i[3]                             10     24    -14 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_out[23]     10     23    -13 (VIOLATED)
+fanout239/X                              10     20    -10 (VIOLATED)
+fanout242/X                              10     20    -10 (VIOLATED)
+fanout244/X                              10     20    -10 (VIOLATED)
+fanout246/X                              10     20    -10 (VIOLATED)
+fanout248/X                              10     20    -10 (VIOLATED)
+fanout250/X                              10     20    -10 (VIOLATED)
+fanout252/X                              10     20    -10 (VIOLATED)
+fanout254/X                              10     20    -10 (VIOLATED)
+fanout256/X                              10     20    -10 (VIOLATED)
+fanout258/X                              10     20    -10 (VIOLATED)
+fanout260/X                              10     20    -10 (VIOLATED)
+fanout263/X                              10     20    -10 (VIOLATED)
+fanout264/X                              10     20    -10 (VIOLATED)
+fanout270/X                              10     20    -10 (VIOLATED)
+fanout272/X                              10     20    -10 (VIOLATED)
+fanout276/X                              10     20    -10 (VIOLATED)
+fanout278/X                              10     20    -10 (VIOLATED)
+fanout279/X                              10     20    -10 (VIOLATED)
+fanout283/X                              10     20    -10 (VIOLATED)
+fanout292/X                              10     20    -10 (VIOLATED)
+fanout295/X                              10     20    -10 (VIOLATED)
+fanout311/X                              10     20    -10 (VIOLATED)
+wbs_dat_i[0]                             10     18     -8 (VIOLATED)
+wbs_dat_i[1]                             10     18     -8 (VIOLATED)
+wbs_dat_i[2]                             10     18     -8 (VIOLATED)
+_0567_/Y                                 10     18     -8 (VIOLATED)
+_0709_/X                                 10     16     -6 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[16]     10     16     -6 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[18]     10     16     -6 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[19]     10     16     -6 (VIOLATED)
+wbs_dat_i[10]                            10     15     -5 (VIOLATED)
+wbs_dat_i[11]                            10     15     -5 (VIOLATED)
+wbs_dat_i[12]                            10     15     -5 (VIOLATED)
+wbs_dat_i[13]                            10     15     -5 (VIOLATED)
+wbs_dat_i[4]                             10     15     -5 (VIOLATED)
+wbs_dat_i[6]                             10     15     -5 (VIOLATED)
+wbs_dat_i[7]                             10     15     -5 (VIOLATED)
+wbs_dat_i[8]                             10     15     -5 (VIOLATED)
+wbs_dat_i[9]                             10     15     -5 (VIOLATED)
+wbs_we_i                                 10     15     -5 (VIOLATED)
+_0527_/Y                                 10     14     -4 (VIOLATED)
+wb_rst_i                                 10     12     -2 (VIOLATED)
+wbs_adr_i[11]                            10     12     -2 (VIOLATED)
+wbs_adr_i[14]                            10     12     -2 (VIOLATED)
+fanout243/X                              10     12     -2 (VIOLATED)
+fanout262/X                              10     12     -2 (VIOLATED)
+fanout309/X                              10     12     -2 (VIOLATED)
+fanout314/X                              10     12     -2 (VIOLATED)
+fanout319/X                              10     12     -2 (VIOLATED)
+hold36/X                                 10     12     -2 (VIOLATED)
+hold39/X                                 10     12     -2 (VIOLATED)
+hold40/X                                 10     12     -2 (VIOLATED)
+hold41/X                                 10     12     -2 (VIOLATED)
+wbs_adr_i[7]                             10     11        (VIOLATED)
+wbs_cyc_i                                10     11        (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_out[97]     10     11        (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[12]     10     11        (VIOLATED)
+
+
+
+===========================================================================
+report_parasitic_annotation -report_unannotated
+============================================================================
+Found 308 unannotated drivers.
+ analog_io[0]
+ analog_io[10]
+ analog_io[11]
+ analog_io[12]
+ analog_io[13]
+ analog_io[14]
+ analog_io[15]
+ analog_io[16]
+ analog_io[17]
+ analog_io[18]
+ analog_io[19]
+ analog_io[1]
+ analog_io[20]
+ analog_io[21]
+ analog_io[22]
+ analog_io[23]
+ analog_io[24]
+ analog_io[25]
+ analog_io[26]
+ analog_io[27]
+ analog_io[28]
+ analog_io[2]
+ analog_io[3]
+ analog_io[4]
+ analog_io[5]
+ analog_io[6]
+ analog_io[7]
+ analog_io[8]
+ analog_io[9]
+ la_oenb[0]
+ la_oenb[100]
+ la_oenb[101]
+ la_oenb[102]
+ la_oenb[103]
+ la_oenb[104]
+ la_oenb[105]
+ la_oenb[106]
+ la_oenb[107]
+ la_oenb[108]
+ la_oenb[109]
+ la_oenb[10]
+ la_oenb[110]
+ la_oenb[111]
+ la_oenb[112]
+ la_oenb[113]
+ la_oenb[114]
+ la_oenb[115]
+ la_oenb[116]
+ la_oenb[117]
+ la_oenb[118]
+ la_oenb[119]
+ la_oenb[11]
+ la_oenb[120]
+ la_oenb[121]
+ la_oenb[122]
+ la_oenb[123]
+ la_oenb[124]
+ la_oenb[125]
+ la_oenb[126]
+ la_oenb[127]
+ la_oenb[12]
+ la_oenb[13]
+ la_oenb[14]
+ la_oenb[15]
+ la_oenb[16]
+ la_oenb[17]
+ la_oenb[18]
+ la_oenb[19]
+ la_oenb[1]
+ la_oenb[20]
+ la_oenb[21]
+ la_oenb[22]
+ la_oenb[23]
+ la_oenb[24]
+ la_oenb[25]
+ la_oenb[26]
+ la_oenb[27]
+ la_oenb[28]
+ la_oenb[29]
+ la_oenb[2]
+ la_oenb[30]
+ la_oenb[31]
+ la_oenb[32]
+ la_oenb[33]
+ la_oenb[34]
+ la_oenb[35]
+ la_oenb[36]
+ la_oenb[37]
+ la_oenb[38]
+ la_oenb[39]
+ la_oenb[3]
+ la_oenb[40]
+ la_oenb[41]
+ la_oenb[42]
+ la_oenb[43]
+ la_oenb[44]
+ la_oenb[45]
+ la_oenb[46]
+ la_oenb[47]
+ la_oenb[48]
+ la_oenb[49]
+ la_oenb[4]
+ la_oenb[50]
+ la_oenb[51]
+ la_oenb[52]
+ la_oenb[53]
+ la_oenb[54]
+ la_oenb[55]
+ la_oenb[56]
+ la_oenb[57]
+ la_oenb[58]
+ la_oenb[59]
+ la_oenb[5]
+ la_oenb[60]
+ la_oenb[61]
+ la_oenb[62]
+ la_oenb[63]
+ la_oenb[64]
+ la_oenb[65]
+ la_oenb[66]
+ la_oenb[67]
+ la_oenb[68]
+ la_oenb[69]
+ la_oenb[6]
+ la_oenb[70]
+ la_oenb[71]
+ la_oenb[72]
+ la_oenb[73]
+ la_oenb[74]
+ la_oenb[75]
+ la_oenb[76]
+ la_oenb[77]
+ la_oenb[78]
+ la_oenb[79]
+ la_oenb[7]
+ la_oenb[80]
+ la_oenb[81]
+ la_oenb[82]
+ la_oenb[83]
+ la_oenb[84]
+ la_oenb[85]
+ la_oenb[86]
+ la_oenb[87]
+ la_oenb[88]
+ la_oenb[89]
+ la_oenb[8]
+ la_oenb[90]
+ la_oenb[91]
+ la_oenb[92]
+ la_oenb[93]
+ la_oenb[94]
+ la_oenb[95]
+ la_oenb[96]
+ la_oenb[97]
+ la_oenb[98]
+ la_oenb[99]
+ la_oenb[9]
+ user_clock2
+ _1232__331/HI
+ _1233__332/HI
+ _1234__333/HI
+ mprj.sample_team_proj_Wrapper/irq[0]
+ mprj.sample_team_proj_Wrapper/irq[1]
+ mprj.sample_team_proj_Wrapper/irq[2]
+ mprj.sample_team_proj_Wrapper_334/HI
+ mprj.sample_team_proj_Wrapper_335/HI
+ mprj.sample_team_proj_Wrapper_336/HI
+ mprj.sample_team_proj_Wrapper_337/HI
+ mprj.sample_team_proj_Wrapper_338/HI
+ mprj.sample_team_proj_Wrapper_339/HI
+ mprj.sample_team_proj_Wrapper_340/HI
+ mprj.sample_team_proj_Wrapper_341/HI
+ mprj.sample_team_proj_Wrapper_342/HI
+ mprj.sample_team_proj_Wrapper_343/HI
+ mprj.sample_team_proj_Wrapper_344/HI
+ mprj.sample_team_proj_Wrapper_345/HI
+ mprj.sample_team_proj_Wrapper_346/HI
+ mprj.sample_team_proj_Wrapper_347/HI
+ mprj.sample_team_proj_Wrapper_348/HI
+ mprj.sample_team_proj_Wrapper_349/HI
+ mprj.sample_team_proj_Wrapper_350/HI
+ mprj.sample_team_proj_Wrapper_351/HI
+ mprj.sample_team_proj_Wrapper_352/HI
+ mprj.sample_team_proj_Wrapper_353/HI
+ mprj.sample_team_proj_Wrapper_354/HI
+ mprj.sample_team_proj_Wrapper_355/HI
+ mprj.sample_team_proj_Wrapper_356/HI
+ mprj.sample_team_proj_Wrapper_357/HI
+ mprj.sample_team_proj_Wrapper_358/HI
+ mprj.sample_team_proj_Wrapper_359/HI
+ mprj.sample_team_proj_Wrapper_360/HI
+ mprj.sample_team_proj_Wrapper_361/HI
+ mprj.sample_team_proj_Wrapper_362/HI
+ mprj.sample_team_proj_Wrapper_363/HI
+ mprj.sample_team_proj_Wrapper_364/HI
+ mprj.sample_team_proj_Wrapper_365/HI
+ mprj.sample_team_proj_Wrapper_366/HI
+ mprj.sample_team_proj_Wrapper_367/HI
+ mprj.sample_team_proj_Wrapper_368/HI
+ mprj.sample_team_proj_Wrapper_369/HI
+ mprj.sample_team_proj_Wrapper_370/HI
+ mprj.sample_team_proj_Wrapper_371/HI
+ mprj.sample_team_proj_Wrapper_372/HI
+ mprj.sample_team_proj_Wrapper_373/HI
+ mprj.sample_team_proj_Wrapper_374/HI
+ mprj.sample_team_proj_Wrapper_375/HI
+ mprj.sample_team_proj_Wrapper_376/HI
+ mprj.sample_team_proj_Wrapper_377/HI
+ mprj.sample_team_proj_Wrapper_378/HI
+ mprj.sample_team_proj_Wrapper_379/HI
+ mprj.sample_team_proj_Wrapper_380/HI
+ mprj.sample_team_proj_Wrapper_381/HI
+ mprj.sample_team_proj_Wrapper_382/HI
+ mprj.sample_team_proj_Wrapper_383/HI
+ mprj.sample_team_proj_Wrapper_384/HI
+ mprj.sample_team_proj_Wrapper_385/HI
+ mprj.sample_team_proj_Wrapper_386/HI
+ mprj.sample_team_proj_Wrapper_387/HI
+ mprj.sample_team_proj_Wrapper_388/HI
+ mprj.sample_team_proj_Wrapper_389/HI
+ mprj.sample_team_proj_Wrapper_390/HI
+ mprj.sample_team_proj_Wrapper_391/HI
+ mprj.sample_team_proj_Wrapper_392/HI
+ mprj.sample_team_proj_Wrapper_393/HI
+ mprj.sample_team_proj_Wrapper_394/HI
+ mprj.sample_team_proj_Wrapper_395/HI
+ mprj.sample_team_proj_Wrapper_396/HI
+ mprj.sample_team_proj_Wrapper_397/HI
+ mprj.sample_team_proj_Wrapper_398/HI
+ mprj.sample_team_proj_Wrapper_399/HI
+ mprj.sample_team_proj_Wrapper_400/HI
+ mprj.sample_team_proj_Wrapper_401/HI
+ mprj.sample_team_proj_Wrapper_402/HI
+ mprj.sample_team_proj_Wrapper_403/HI
+ mprj.sample_team_proj_Wrapper_404/HI
+ mprj.sample_team_proj_Wrapper_405/HI
+ mprj.sample_team_proj_Wrapper_406/HI
+ mprj.sample_team_proj_Wrapper_407/HI
+ mprj.sample_team_proj_Wrapper_408/HI
+ mprj.sample_team_proj_Wrapper_409/HI
+ mprj.sample_team_proj_Wrapper_410/HI
+ mprj.sample_team_proj_Wrapper_411/HI
+ mprj.sample_team_proj_Wrapper_412/HI
+ mprj.sample_team_proj_Wrapper_413/HI
+ mprj.sample_team_proj_Wrapper_414/HI
+ mprj.sample_team_proj_Wrapper_415/HI
+ mprj.sample_team_proj_Wrapper_416/HI
+ mprj.sample_team_proj_Wrapper_417/HI
+ mprj.sample_team_proj_Wrapper_418/HI
+ mprj.sample_team_proj_Wrapper_419/HI
+ mprj.sample_team_proj_Wrapper_420/HI
+ mprj.sample_team_proj_Wrapper_421/HI
+ mprj.sample_team_proj_Wrapper_422/HI
+ mprj.sample_team_proj_Wrapper_423/HI
+ mprj.sample_team_proj_Wrapper_424/HI
+ mprj.sample_team_proj_Wrapper_425/HI
+ mprj.sample_team_proj_Wrapper_426/HI
+ mprj.sample_team_proj_Wrapper_427/HI
+ mprj.sample_team_proj_Wrapper_428/HI
+ mprj.sample_team_proj_Wrapper_429/HI
+ mprj.sample_team_proj_Wrapper_430/HI
+ mprj.sample_team_proj_Wrapper_431/HI
+ mprj.sample_team_proj_Wrapper_432/HI
+ mprj.sample_team_proj_Wrapper_433/HI
+ mprj.sample_team_proj_Wrapper_434/HI
+ mprj.sample_team_proj_Wrapper_435/HI
+ mprj.sample_team_proj_Wrapper_436/HI
+ mprj.sample_team_proj_Wrapper_437/HI
+ mprj.sample_team_proj_Wrapper_438/HI
+ mprj.sample_team_proj_Wrapper_439/HI
+ mprj.sample_team_proj_Wrapper_440/HI
+ mprj.sample_team_proj_Wrapper_441/HI
+ mprj.sample_team_proj_Wrapper_442/HI
+ mprj.sample_team_proj_Wrapper_443/HI
+ mprj.sample_team_proj_Wrapper_444/HI
+ mprj.sample_team_proj_Wrapper_445/HI
+ mprj.sample_team_proj_Wrapper_446/HI
+ mprj.sample_team_proj_Wrapper_447/HI
+ mprj.sample_team_proj_Wrapper_448/HI
+ mprj.sample_team_proj_Wrapper_449/HI
+ mprj.sample_team_proj_Wrapper_450/HI
+ mprj.sample_team_proj_Wrapper_451/HI
+ mprj.sample_team_proj_Wrapper_452/HI
+ mprj.sample_team_proj_Wrapper_453/HI
+ mprj.sample_team_proj_Wrapper_454/HI
+ mprj.sample_team_proj_Wrapper_455/HI
+ mprj.sample_team_proj_Wrapper_456/HI
+ mprj.sample_team_proj_Wrapper_457/HI
+ mprj.sample_team_proj_Wrapper_458/HI
+ mprj.sample_team_proj_Wrapper_459/HI
+ mprj.sample_team_proj_Wrapper_460/HI
+ mprj.sample_team_proj_Wrapper_461/HI
+ mprj.sample_team_proj_Wrapper_462/HI
+ mprj.sample_team_proj_Wrapper_463/HI
+ mprj.sample_team_proj_Wrapper_464/HI
+ mprj.sample_team_proj_Wrapper_465/HI
+ mprj.sample_team_proj_Wrapper_466/HI
+ mprj.sample_team_proj_Wrapper_467/HI
+ mprj.sample_team_proj_Wrapper_468/HI
+ mprj.sample_team_proj_Wrapper_469/HI
+ mprj.sample_team_proj_Wrapper_470/HI
+ mprj.sample_team_proj_Wrapper_471/HI
+ mprj.sample_team_proj_Wrapper_472/HI
+ mprj.sample_team_proj_Wrapper_473/HI
+ mprj.sample_team_proj_Wrapper_474/HI
+ mprj.sample_team_proj_Wrapper_475/HI
+ mprj.sample_team_proj_Wrapper_476/HI
+ mprj.sample_team_proj_Wrapper_477/HI
+Found 0 partially unannotated drivers.
+
+===========================================================================
+max slew violation count 20
+max fanout violation count 84
+max cap violation count 0
+============================================================================
+
+===========================================================================
+check_setup -verbose -unconstrained_endpoints -multiple_clock -no_clock -no_input_delay -loops -generated_clocks
+===========================================================================
+Warning: There are 68 input ports missing set_input_delay.
+  analog_io[0]
+  analog_io[10]
+  analog_io[11]
+  analog_io[12]
+  analog_io[13]
+  analog_io[14]
+  analog_io[15]
+  analog_io[16]
+  analog_io[17]
+  analog_io[18]
+  analog_io[19]
+  analog_io[1]
+  analog_io[20]
+  analog_io[21]
+  analog_io[22]
+  analog_io[23]
+  analog_io[24]
+  analog_io[25]
+  analog_io[26]
+  analog_io[27]
+  analog_io[28]
+  analog_io[2]
+  analog_io[3]
+  analog_io[4]
+  analog_io[5]
+  analog_io[6]
+  analog_io[7]
+  analog_io[8]
+  analog_io[9]
+  io_in[0]
+  io_in[10]
+  io_in[11]
+  io_in[12]
+  io_in[13]
+  io_in[14]
+  io_in[15]
+  io_in[16]
+  io_in[17]
+  io_in[18]
+  io_in[19]
+  io_in[1]
+  io_in[20]
+  io_in[21]
+  io_in[22]
+  io_in[23]
+  io_in[24]
+  io_in[25]
+  io_in[26]
+  io_in[27]
+  io_in[28]
+  io_in[29]
+  io_in[2]
+  io_in[30]
+  io_in[31]
+  io_in[32]
+  io_in[33]
+  io_in[34]
+  io_in[35]
+  io_in[36]
+  io_in[37]
+  io_in[3]
+  io_in[4]
+  io_in[5]
+  io_in[6]
+  io_in[7]
+  io_in[8]
+  io_in[9]
+  user_clock2
+Warning: There are 236 unconstrained endpoints.
+  analog_io[0]
+  analog_io[10]
+  analog_io[11]
+  analog_io[12]
+  analog_io[13]
+  analog_io[14]
+  analog_io[15]
+  analog_io[16]
+  analog_io[17]
+  analog_io[18]
+  analog_io[19]
+  analog_io[1]
+  analog_io[20]
+  analog_io[21]
+  analog_io[22]
+  analog_io[23]
+  analog_io[24]
+  analog_io[25]
+  analog_io[26]
+  analog_io[27]
+  analog_io[28]
+  analog_io[2]
+  analog_io[3]
+  analog_io[4]
+  analog_io[5]
+  analog_io[6]
+  analog_io[7]
+  analog_io[8]
+  analog_io[9]
+  io_oeb[0]
+  io_oeb[10]
+  io_oeb[11]
+  io_oeb[12]
+  io_oeb[13]
+  io_oeb[14]
+  io_oeb[15]
+  io_oeb[16]
+  io_oeb[17]
+  io_oeb[18]
+  io_oeb[19]
+  io_oeb[1]
+  io_oeb[20]
+  io_oeb[21]
+  io_oeb[22]
+  io_oeb[23]
+  io_oeb[24]
+  io_oeb[25]
+  io_oeb[26]
+  io_oeb[27]
+  io_oeb[28]
+  io_oeb[29]
+  io_oeb[2]
+  io_oeb[30]
+  io_oeb[31]
+  io_oeb[32]
+  io_oeb[33]
+  io_oeb[34]
+  io_oeb[35]
+  io_oeb[36]
+  io_oeb[37]
+  io_oeb[3]
+  io_oeb[4]
+  io_oeb[5]
+  io_oeb[6]
+  io_oeb[7]
+  io_oeb[8]
+  io_oeb[9]
+  io_out[0]
+  io_out[10]
+  io_out[11]
+  io_out[12]
+  io_out[13]
+  io_out[14]
+  io_out[15]
+  io_out[16]
+  io_out[17]
+  io_out[18]
+  io_out[19]
+  io_out[1]
+  io_out[20]
+  io_out[21]
+  io_out[22]
+  io_out[23]
+  io_out[24]
+  io_out[25]
+  io_out[26]
+  io_out[27]
+  io_out[28]
+  io_out[29]
+  io_out[2]
+  io_out[30]
+  io_out[31]
+  io_out[32]
+  io_out[33]
+  io_out[34]
+  io_out[35]
+  io_out[36]
+  io_out[37]
+  io_out[3]
+  io_out[4]
+  io_out[5]
+  io_out[6]
+  io_out[7]
+  io_out[8]
+  io_out[9]
+  la_data_out[0]
+  la_data_out[100]
+  la_data_out[101]
+  la_data_out[102]
+  la_data_out[103]
+  la_data_out[104]
+  la_data_out[105]
+  la_data_out[106]
+  la_data_out[107]
+  la_data_out[108]
+  la_data_out[109]
+  la_data_out[10]
+  la_data_out[110]
+  la_data_out[111]
+  la_data_out[112]
+  la_data_out[113]
+  la_data_out[114]
+  la_data_out[115]
+  la_data_out[116]
+  la_data_out[117]
+  la_data_out[118]
+  la_data_out[119]
+  la_data_out[11]
+  la_data_out[120]
+  la_data_out[121]
+  la_data_out[122]
+  la_data_out[123]
+  la_data_out[124]
+  la_data_out[125]
+  la_data_out[126]
+  la_data_out[127]
+  la_data_out[12]
+  la_data_out[13]
+  la_data_out[14]
+  la_data_out[15]
+  la_data_out[16]
+  la_data_out[17]
+  la_data_out[18]
+  la_data_out[19]
+  la_data_out[1]
+  la_data_out[20]
+  la_data_out[21]
+  la_data_out[22]
+  la_data_out[23]
+  la_data_out[24]
+  la_data_out[25]
+  la_data_out[26]
+  la_data_out[27]
+  la_data_out[28]
+  la_data_out[29]
+  la_data_out[2]
+  la_data_out[30]
+  la_data_out[31]
+  la_data_out[32]
+  la_data_out[33]
+  la_data_out[34]
+  la_data_out[35]
+  la_data_out[36]
+  la_data_out[37]
+  la_data_out[38]
+  la_data_out[39]
+  la_data_out[3]
+  la_data_out[40]
+  la_data_out[41]
+  la_data_out[42]
+  la_data_out[43]
+  la_data_out[44]
+  la_data_out[45]
+  la_data_out[46]
+  la_data_out[47]
+  la_data_out[48]
+  la_data_out[49]
+  la_data_out[4]
+  la_data_out[50]
+  la_data_out[51]
+  la_data_out[52]
+  la_data_out[53]
+  la_data_out[54]
+  la_data_out[55]
+  la_data_out[56]
+  la_data_out[57]
+  la_data_out[58]
+  la_data_out[59]
+  la_data_out[5]
+  la_data_out[60]
+  la_data_out[61]
+  la_data_out[62]
+  la_data_out[63]
+  la_data_out[64]
+  la_data_out[65]
+  la_data_out[66]
+  la_data_out[67]
+  la_data_out[68]
+  la_data_out[69]
+  la_data_out[6]
+  la_data_out[70]
+  la_data_out[71]
+  la_data_out[72]
+  la_data_out[73]
+  la_data_out[74]
+  la_data_out[75]
+  la_data_out[76]
+  la_data_out[77]
+  la_data_out[78]
+  la_data_out[79]
+  la_data_out[7]
+  la_data_out[80]
+  la_data_out[81]
+  la_data_out[82]
+  la_data_out[83]
+  la_data_out[84]
+  la_data_out[85]
+  la_data_out[86]
+  la_data_out[87]
+  la_data_out[88]
+  la_data_out[89]
+  la_data_out[8]
+  la_data_out[90]
+  la_data_out[91]
+  la_data_out[92]
+  la_data_out[93]
+  la_data_out[94]
+  la_data_out[95]
+  la_data_out[96]
+  la_data_out[97]
+  la_data_out[98]
+  la_data_out[99]
+  la_data_out[9]
+  user_irq[0]
+  user_irq[1]
+  user_irq[2]
