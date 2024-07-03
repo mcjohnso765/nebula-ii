@@ -79,7 +79,7 @@ module team_05 (
     );
 
 
-    cpu_core core(
+    t05_cpu_core core(
         .data_in_BUS(CPU_DAT_O),
         .bus_full(BUSY_O),
         .clk(clk),
@@ -118,7 +118,7 @@ typedef enum logic [2:0] {
     Wait = 6
 } state_t;
 
-module cpu_core(
+module t05_cpu_core(
         input logic [31:0] data_in_BUS,// pc_data,//input data from memory bus, memory starting point
         input logic bus_full, //input from memory bus
         input logic clk, rst, //external clock, reset
@@ -221,7 +221,7 @@ module cpu_core(
     end
 
 
-    instruction_memory instr_mem(
+    t05_instruction_memory instr_mem(
         .instruction_adr_i(pc_val),
         .instruction_i(data_out_INSTR),
         .clk(clk),
@@ -232,7 +232,7 @@ module cpu_core(
         .instruction_o(instruction),
         .instr_wait(instr_wait));
     
-    control_unit ctrl(
+    t05_control_unit ctrl(
         .instruction(instruction), 
         .opcode(opcode), 
         .funct7(funct7), 
@@ -261,7 +261,7 @@ module cpu_core(
 
     logic [31:0] register_out;
     
-    register_file regFile(
+    t05_register_file regFile(
         .reg_write(reg_write | reg_write_flipflop), 
         .clk(clk), 
         .rst(rst), 
@@ -274,7 +274,7 @@ module cpu_core(
         .register_out(register_out));
  
     logic branch_temp;
-    ALU math(
+    t05_ALU math(
         .ALU_source(ALU_source), 
         .opcode(opcode), 
         .funct3(funct3), 
@@ -302,7 +302,7 @@ module cpu_core(
     end
 
     //sort through mem management inputs/outputs
-    data_memory data_mem(
+    t05_data_memory data_mem(
         .data_read_adr_i(read_address),
         .data_write_adr_i(write_address),
         .data_cpu_i(reg2),
@@ -317,7 +317,7 @@ module cpu_core(
         .data_cpu_o(data_cpu_o));
 
     //need to figure out these inputs
-    memcontrol mem_ctrl(
+    t05_memcontrol mem_ctrl(
         .address_in(mem_adr_i), //only works if non-active addresses are set to 0 
         .data_in_CPU(data_bus_o),
         .data_in_BUS(data_in_BUS), //external info
@@ -339,7 +339,7 @@ module cpu_core(
     // assign address_out = mem_adr_i;
     logic [31:0] pc_input;
     assign pc_input = (pc_jump != 32'b0) ? pc_jump : pc_data;
-    pc program_count(
+    t05_pc program_count(
         .clk(clk),
         .clr(rst),
         .load(load_pc),
@@ -352,7 +352,7 @@ module cpu_core(
 
 endmodule
 
-module ALU(
+module t05_ALU(
     input logic ALU_source,
     input logic [6:0] opcode,
     input logic [2:0] funct3,
@@ -455,7 +455,7 @@ module ALU(
 endmodule
 
 
-module control_unit(
+module t05_control_unit(
     input logic [31:0] instruction,
     output logic [6:0] opcode, funct7,
     output logic [2:0] funct3,
@@ -568,7 +568,7 @@ module control_unit(
     end
 endmodule
 
-module data_memory(
+module t05_data_memory(
     input logic [31:0] data_read_adr_i, data_write_adr_i, data_bus_i, data_cpu_i,
     input logic clk, data_good, rst,
     output logic data_read, data_write,
@@ -618,7 +618,7 @@ module data_memory(
     end
 endmodule
 
-module instruction_memory(
+module t05_instruction_memory(
     input logic [31:0] instruction_adr_i, instruction_i,
     input logic clk, data_good, rst, instr_wait,
     output logic instr_fetch,
@@ -662,7 +662,7 @@ module instruction_memory(
     end
 endmodule
 
-module memcontrol(
+module t05_memcontrol(
     // inputs
     // data_in_BUS and bus_full are the only inputs from the bus manager, so we need to figure those out on wednesday
     input logic [31:0] address_in, data_in_CPU, data_in_BUS,
@@ -758,7 +758,7 @@ module memcontrol(
     end
 endmodule
 
-module pc(
+module t05_pc(
     input logic clk, clr, load, inc, Disable, ALU_out,
     input logic [31:0] data, imm_val,
     output logic [31:0] pc_val 
@@ -806,7 +806,7 @@ module pc(
    end       
 endmodule
 
-module register_file (
+module t05_register_file (
     input logic [31:0] reg_write, 
     input logic [4:0] rd, rs1, rs2, 
     input logic clk, rst, write,
