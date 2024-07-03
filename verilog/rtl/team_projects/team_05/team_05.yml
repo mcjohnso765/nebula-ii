@@ -1,14 +1,14 @@
 ---
 info:
-  name: 
+  name: team_05
   description: 
   repo: STARS-Design-Track-2024/Project_Template.git
   owner: Purdue University
   license: APACHE 2.0
-  author: 
-  email: 
+  author: lol
+  email: lol
   version: v1.0.0
-  date: 
+  date: 9-12-2222
   category: digital
   tags:
     - team05
@@ -62,6 +62,49 @@ external_interface:
     width: 34
     direction: output
     description: Output enables to GPIO
+
+  - name: ADR_O
+    port: ADR_O
+    width: 32
+    direction: output
+    description: ADR_o
+
+  - name: A_ADR_I
+    port: A_ADR_I
+    width: 32
+    direction: output
+    description: ADR_i
+
+  - name: A_DAT_I
+    port: A_DAT_I
+    width: 32
+    direction: output
+    description: DAT_I
+
+  - name: A_SEL_I
+    port: A_SEL_I
+    width: 4
+    direction: output
+    description: SEL_I
+
+  - name: A_WE_I
+    port: A_WE_I
+    width: 1
+    direction: output
+    description: WE_I
+
+  - name: A_STB_I
+    port: A_STB_I
+    width: 1
+    direction: output
+    description: STB_I
+
+  - name: A_CYC_I
+    port: A_CYC_I
+    width: 1
+    direction: output
+    description: CYC_I
+
 
 clock:
   name: clk

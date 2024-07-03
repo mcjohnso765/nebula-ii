@@ -1,137 +1,180 @@
-// $Id: $
-// File name:   team_05.sv
-// Created:     MM/DD/YYYY
-// Author:      <Full Name>
-// Description: <Module Description>
 
 `default_nettype none
-
-module team_05 (
-    // HW
-    input logic clk, nrst,
-    
-    input logic en, //This signal is an enable signal for your chip. Your design should disable if this is low.
-
-    // Logic Analyzer - Grant access to all 128 LA
-    input wire [127:0] la_data_in,
-    output wire [127:0] la_data_out,
-    input wire [127:0] la_oenb,
-
-    // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
-    input  wire [33:0] gpio_in, // Breakout Board Pins
-    output wire [33:0] gpio_out, // Breakout Board Pins
-    output wire [33:0] gpio_oeb, // Active Low Output Enable
-    
-    output wire [31:0]ADR_O
-    /*
-    * Add other I/O ports that you wish to interface with the
-    * Wishbone bus to the management core. For examples you can 
-    * add registers that can be written to with the Wishbone bus
-    */
+module top (
+  // I/O ports
+  input  logic clk, rst,
+  input logic [127:0] row_1, row_2,
+  output logic lcd_en, lcd_rw,
+  output reg [7:0] lcd_rs,
+  output reg [7:0] lcd_data
 );
 
-    // All outputs must have a value even if not used
-    assign la_data_out = 128'b0;
-    assign gpio_out = 34'b0; //Inputs, but set low anyways
-    assign gpio_oeb = '1;//All 1's inputs
-    /*
-    * Place code and sub-module instantiations here.
-    */
+  logic [4:0] button_val;
+  logic [31:0] data_in_BUS, pc_data; //input data from memory bus
+  logic bus_full; //input from memory bus
+  logic [31:0] data_out_BUS, address_out, reg_write; //output data +address to memory bus
+  logic [31:0] memory_address_out;
 
-    logic [31:0] DAT_I;
-    logic        ACK_I;
+  synckey sync(
+    .in(pb[19:0]),
+    .clock(clk),
+    .reset(rst),
+    .out(button_val),
+    .strobe(bus_full)
+  );
 
-    logic [31:0] CPU_DAT_I;
-    logic [31:0] ADR_I;
-    logic [3:0]  SEL_I;
-    logic        WRITE_I;
-    logic        READ_I;
+  cpu_core core0(
+    .data_in_BUS(data_in_BUS),
+    .pc_data(pc_data),
+    .bus_full(!bus_full),
+    .clk(clk),
+    .rst(rst),
+    .data_out_BUS(data_out_BUS),
+    .address_out(address_out),
+    .reg_write(reg_write)
+  );
 
-   // logic [31:0] ADR_O;
-    logic [31:0] DAT_O;
-    logic [3:0]  SEL_O;
-    logic        WE_O;
-    logic        STB_O;
-    logic        CYC_O;
-    logic [31:0] CPU_DAT_O;
-    logic        BUSY_O;
+  ram mem(
+    .clk(clk),
+    .address_data(address_out[11:0]),
+    .address_instr(address_out[11:0]),
+    .data_in(data_out_BUS),
+    .write_enable(1'b1),
+    .addr_out(memory_address_out),
+    .instr_out(data_in_BUS)
+  );
 
-    assign SEL_I = 4'b1111;
+    // display displaying(.seq(data_in_BUS), .ssds({ss7, ss6, ss5, ss4, ss3, ss2, ss1, ss0}));
 
-    wishbone_manager wishbone(
-        .nRST(nrst),
-        .CLK(clk),
-        .DAT_I(DAT_I),
-        .ACK_I(ACK_I),
-        .CPU_DAT_I(CPU_DAT_I),
-        .ADR_I(ADR_I),
-        .SEL_I(SEL_I),
-        .WRITE_I(WRITE_I),
-        .READ_I(READ_I),
-        .ADR_O(ADR_O),
-        .DAT_O(DAT_O),
-        .SEL_O(SEL_O),
-        .WE_O(WE_O),
-        .STB_O(STB_O),
-        .CYC_O(CYC_O),
-        .CPU_DAT_O(CPU_DAT_O),
-        .BUSY_O(BUSY_O)
-    );
+    // logic lcd_en, lcd_rw;
+    // reg lcd_rs;
+    // reg [7:0] lcd_data;
+    lcd_controller lcd_display(.clk(clk), 
+                               .rst(rst),
+                               .row_1({data_in_BUS, 96'b0}),
+                                .row_2({data_in_BUS, 96'b0}),
+                                .lcd_en(lcd_en),
+                                .lcd_rw(lcd_rw),
+                                .lcd_rs(lcd_rs),
+                                .lcd_data(lcd_data));
 
-
-    cpu_core core(
-        .data_in_BUS(CPU_DAT_O),
-        .bus_full(BUSY_O),
-        .clk(clk),
-        .rst(~nrst),
-        .data_out_BUS(CPU_DAT_I),
-        .address_out(ADR_I),
-        .data_write(WRITE_I), 
-        .mem_read(READ_I)
-    );
-
-    
 endmodule
 
 
+// Add more modules down here...
+module synckey(
+    input logic [19:0] in,
+    input logic clock, reset,
+    output logic [4:0] out,
+    output logic strobe
+);
+
+    //logic [5:0] i;
+    logic [1:0] flipflops;
+    logic button_pressed;
+    
+    always_ff @(posedge clock, posedge reset) begin
+        if(reset) begin
+            flipflops <= 2'b00;
+        end else begin  
+            flipflops[1] <= flipflops[0];
+            flipflops[0] <= button_pressed;
+        end
+    end
+    
+    always_comb begin
+        button_pressed = |in;
+        out = 0;
+        for (integer i = 0; i < 20; i++) begin
+            if(in[i])
+                out = i[4:0];
+        end
+        strobe = flipflops[1];
+    end
+
+endmodule
 
 
+module display(
+    input logic [31:0] seq,
+    output logic [63:0] ssds
+);
 
+    //logic [63:0] ssdec_data = ssds;
+    logic [7:0] enable = 8'hff;
 
+    ssdec sdd7(.in(seq[31:28]), .enable(enable[7]), .out({ssds[62:56]}));
+    ssdec sdd6(.in(seq[27:24]), .enable(enable[6]), .out({ssds[54:48]}));
+    ssdec sdd5(.in(seq[23:20]), .enable(enable[5]), .out({ssds[46:40]}));
+    ssdec sdd4(.in(seq[19:16]), .enable(enable[4]), .out({ssds[38:32]}));
+    ssdec sdd3(.in(seq[15:12]), .enable(enable[3]), .out({ssds[30:24]}));
+    ssdec sdd2(.in(seq[11:8]), .enable(enable[2]), .out({ssds[22:16]}));
+    ssdec sdd1(.in(seq[7:4]), .enable(enable[1]), .out({ssds[14:8]}));
+    ssdec sdd0(.in(seq[3:0]), .enable(enable[0]), .out({ssds[6:0]}));
 
+endmodule
 
+module ram (
+    input logic clk,
+    input logic [11:0] address_data, address_instr,
+    input logic [31:0] data_in,
+    input logic write_enable,
+    output logic [31:0] addr_out,
+    output logic [31:0] instr_out
+);
 
+reg[31:0] memory [4095:0];
 
+initial begin
+    $readmemh("cpu.mem", memory);
+end
 
+always @(posedge clk) begin
+    if(write_enable) begin
+        memory[address_data] <= data_in;
+    end
+    addr_out <= memory[address_data];
+    instr_out <= memory[address_instr];
+    
+end
 
+endmodule
 
+module ssdec(
+    input logic [3:0] in,
+    input logic enable,
+    output logic [6:0] out
+);
 
+    assign out[0] = enable & (~in[3] & in[1] | in[3] & ~in[0] | ~in[2] & ~in[0] | in[2] & in[1] | in[3] & ~in[2] & ~in[1] | ~in[3] & in[2] & in[0]);
+    assign out[1] = enable & (~in[3] & ~in[2] | ~in[2] & ~in[1] | ~in[2] & ~in[0] | ~in[3] & in[1] & in[0] | ~in[3] & ~in[1] & ~in[0] | in[3] & ~in[1] & in[0]);
+    assign out[2] = enable & (in[3] & ~in[2] | ~in[3] & in[2] | ~in[1] & in[0] | ~in[3] & ~in[1] | ~in[3] & in[0]);
+    assign out[3] = enable & (~in[2] & in[1] & in[0] | ~in[3] & in[1] & ~in[0] | in[2] & ~in[1] & in[0] | ~in[2] & ~in[1] & ~in[0] | in[3] & in[2] & ~in[0]);
+    assign out[4] = enable & (in[3] & in[2] | in[1] & ~in[0] | ~in[2] & ~in[0] | in[3] & in[1]);
+    assign out[5] = enable & (in[3] & ~in[2] | ~in[1] & ~in[0] | in[3] & in[1] | in[2] & ~in[0] | ~in[3] & in[2] & ~in[1]);
+    assign out[6] = enable & (in[3] & ~in[2] | in[1] & ~in[0] | ~in[2] & in[1] | ~in[3] & in[2] & ~in[1] | in[3] & in[2] & in[0]);
 
-
-
+endmodule
 
 typedef enum logic [2:0] {
     INIT = 0,
     IDLE = 1,
+    Read_Request = 2,
+    Write_Request = 3,
     Read = 4,
     Write = 5,
     Wait = 6
 } state_t;
 
 module cpu_core(
-        input logic [31:0] data_in_BUS,// pc_data,//input data from memory bus, memory starting point
-        input logic bus_full, //input from memory bus
-        input logic clk, rst, //external clock, reset
-        output logic [31:0] data_out_BUS, address_out,
-        output logic data_write, mem_read
-        //, result, reg1, reg2, data_cpu_o, write_address, reg_write, //instruction, result, reg1, reg2 //output data +address to memory bus
-        //testing vals from control unit
-        //output logic [4:0] rs1, rs2, rd,
-       // output logic memToReg_flipflop, instr_wait, reg_write_en, data_write,
-     //   output logic [6:0] opcode,
-        //output logic [31:0] pc_val, pc_jump,
-       // output logic branch_ff, branch, load_pc
+    input logic [31:0] data_in_BUS, pc_data,//input data from memory bus, memory starting point
+    input logic bus_full, //input from memory bus
+    input logic clk, rst, //external clock, reset
+    output logic [31:0] data_out_BUS, address_out, reg_write //output data +address to memory bus
 );
+
+    logic memToReg_flipflop, instr_wait;
+
     //Instruction Memory -> Control Unit
     logic [31:0] instruction;
 
@@ -142,7 +185,6 @@ module cpu_core(
     
     //Control Unit -> ALU + Program Counter
     logic [31:0] imm_32;
-    logic [31:0] pc_jump;
 
     //Control Unit -> Registers
     logic [4:0] rs1, rs2, rd;
@@ -154,7 +196,7 @@ module cpu_core(
     logic load_pc; //0 means leave pc as is, 1 means need to load in data
 
     //Data Memory -> Registers
-    logic [31:0] reg_write;
+    //logic [31:0] reg_write;
 
     //Register Input (double check where its coming from)
     logic reg_write_en;
@@ -182,11 +224,11 @@ module cpu_core(
     //Data Memory
     logic [31:0] data_read_adr_i, data_write_adr_i, data_bus_i;
     logic data_good, bus_full_CPU;
-    logic data_read;//, data_write;
+    logic data_read, data_write;
     logic [31:0] data_adr_o, data_bus_o, data_cpu_o;
 
     //(ALU or external reset) -> Program Counter 
-    logic [31:0] pc_data; //external reset value only now
+    //logic [31:0] pc_data; //external reset value only now
 
     //Program Counter -> Instruction Memory
     logic [31:0] pc_val;
@@ -199,11 +241,7 @@ module cpu_core(
     logic [31:0] instruction_adr_o; 
 
     logic [31:0] mem_adr_i;
-   // logic mem_read;
-
-    logic branch_ff;
-    logic instr_wait;
-    logic memToReg_flipflop;
+    logic mem_read;
     
     always_comb begin
         mem_adr_i = (data_adr_o | instruction_adr_o);
@@ -212,11 +250,10 @@ module cpu_core(
         instr_wait = ((~(read_address == 32'b0) | ~(write_address == 32'b0)) & ~data_good);
     end
 
-    logic [31:0] load_data_flipflop, reg_write_flipflop;
+    logic [31:0] load_data_flipflop;
 
     always_ff @(posedge clk) begin
         memToReg_flipflop <= memToReg;
-        reg_write_flipflop <= reg_write;
         load_data_flipflop <= data_cpu_o;
     end
 
@@ -245,24 +282,20 @@ module cpu_core(
         .memToReg(memToReg),
         .load(load_pc));
 
-        // assign result = imm_32;
-
     //multiplexer for register input
     always_comb begin
         if((opcode != 7'b0100011) && (opcode != 7'b1100011)) begin
             if(memToReg_flipflop == 1'b1) reg_write = (load_data_flipflop | data_cpu_o);
             else reg_write = result;
-            reg_write_en = (!instr_fetch) ? 1'b1 : 1'b0;
+            reg_write_en = 1'b1;
         end else begin
             reg_write = 32'b0;
             reg_write_en = 1'b0;
         end
     end
 
-    logic [31:0] register_out;
-    
     register_file regFile(
-        .reg_write(reg_write | reg_write_flipflop), 
+        .reg_write(reg_write), 
         .clk(clk), 
         .rst(rst), 
         .write(reg_write_en), 
@@ -270,10 +303,8 @@ module cpu_core(
         .rs1(rs1), 
         .rs2(rs2),
         .reg1(reg1),
-        .reg2(reg2),
-        .register_out(register_out));
+        .reg2(reg2));
  
-    logic branch_temp;
     ALU math(
         .ALU_source(ALU_source), 
         .opcode(opcode), 
@@ -285,20 +316,10 @@ module cpu_core(
         .read_address(read_address), 
         .write_address(write_address), 
         .result(result), 
-        .branch(branch),
-        .pc_data(pc_jump),
-        .pc_val(pc_val));
+        .branch(branch));
 
     always_comb begin
         data_good = !bus_full_CPU & (state == Read | state == Write);
-    end
-
-    logic [31:0] val2;
-    always_comb begin
-        // if (ALU_source) val2 = imm_32;
-        // else val2 = reg2;
-        val2 = reg2;
-        branch_ff = ((opcode == 7'b1100011) && ((funct3 == 3'b000 && (reg1 == val2)) | (funct3 == 3'b100 && (reg1 < val2)) | (funct3 == 3'b001 && (reg1 != val2)) | (funct3 == 3'b101 && (reg1 >= val2)))) | (opcode == 7'b1101111) | (opcode == 7'b1100111);
     end
 
     //sort through mem management inputs/outputs
@@ -336,17 +357,14 @@ module cpu_core(
         .data_out_INSTR(data_out_INSTR), //to instr mem
         .bus_full_CPU(bus_full_CPU)); 
 
-    // assign address_out = mem_adr_i;
-    logic [31:0] pc_input;
-    assign pc_input = (pc_jump != 32'b0) ? pc_jump : pc_data;
     pc program_count(
         .clk(clk),
         .clr(rst),
         .load(load_pc),
         .inc(data_good),
-        .ALU_out(branch_ff),
+        .ALU_out(branch),
         .Disable(instr_wait),
-        .data(pc_input),
+        .data(pc_data),
         .imm_val(imm_32),
         .pc_val(pc_val));
 
@@ -357,8 +375,8 @@ module ALU(
     input logic [6:0] opcode,
     input logic [2:0] funct3,
     input logic [6:0] funct7,
-    input logic [31:0] reg1, reg2, immediate, pc_val,
-    output logic [31:0] read_address, write_address, result, pc_data,
+    input logic [31:0] reg1, reg2, immediate,
+    output logic [31:0] read_address, write_address, result,
     output logic branch
 );
 
@@ -374,8 +392,7 @@ module ALU(
         
 
     always_comb begin
-        pc_data = 32'b0;
-        read_address = 32'b0;
+        read_address = 32'b0; 
         write_address = 32'b0; 
         result = 32'b0;
         branch = 1'b0;
@@ -431,17 +448,7 @@ module ALU(
                         default: branch=1'b0;
                     endcase 
                 end
-            7'b1101111:
-              begin
-                branch = 1'b1;
-                result = pc_val + 32'd4;
-              end
-            7'b1100111:
-              begin 
-                branch=1'b1;//jump and link, jalr
-                result = pc_val + 32'd4;
-                pc_data = reg1 + val2;
-              end
+            7'b1101111,7'b1100111: branch=1'b1;//jump and link, jalr
             7'b0110111: result = {val2[19:0],12'b0}; // lui
             default: 
                 begin
@@ -530,7 +537,7 @@ module control_unit(
                 end
             7'b1101111: //j type instruction
                 begin
-                    rd = instruction[11:7] ;
+                    rd = instruction[11:7];
                     imm_32 = {12'b0, instruction[31], instruction[19:12], instruction[20], instruction[30:21]};
                     rs1 = 5'b0;
                     rs2 = 5'b0;
@@ -632,7 +639,7 @@ module instruction_memory(
         next_fetch = 1'b0;
         if(data_good & instr_fetch) begin
             next_fetch = 1'b0;
-            stored_instr_adr = instruction_adr_i;
+            stored_instr_adr = 32'b0;
             stored_instr = instruction_i;
         end else if(!instr_wait) begin
             next_fetch = 1'b1;
@@ -640,7 +647,7 @@ module instruction_memory(
             stored_instr = 32'b0;
         end else begin
             next_fetch = 1'b0;
-            stored_instr_adr = instruction_adr_i;
+            stored_instr_adr = 32'b0;
             stored_instr = instruction_i;
         end
     end
@@ -651,7 +658,7 @@ module instruction_memory(
             instruction_o <= 32'b0;
             instr_fetch <= 1'b0;
         end else if(instr_wait) begin
-            instruction_adr_o <= instruction_adr_o;
+            instruction_adr_o <= 32'b0;
             instruction_o <= instruction_o;
             instr_fetch <= 1'b0;
         end else begin
@@ -687,7 +694,7 @@ module memcontrol(
     always_comb begin : changeState
         bus_full_CPU = bus_full;
         // garbage values for testing
-        address_out = address_in;
+        address_out = 32'h0;
         data_out_BUS = 32'h0;
         data_out_CPU = 32'h0;
         data_out_INSTR = 32'h0;
@@ -701,18 +708,29 @@ module memcontrol(
             
             IDLE: begin
                 if (memRead) begin
-                    next_state = Read;
-                    prev_state = Read;
+                    next_state = Read_Request;
+                    prev_state = Read_Request;
                 end else if (memWrite) begin
-                    next_state = Write;
-                    prev_state = Write;
-                end else if (prev_state == Read | prev_state == Write) begin
-                    address_out = address_in;
-                    prev_state = IDLE;
+                    next_state = Write_Request;
+                    prev_state = Write_Request;
                 end else begin
-                    prev_state = IDLE;
                     next_state = IDLE;
-                    address_out = 32'b0;
+                end
+            end
+
+            Read_Request: begin 
+                if (bus_full) begin
+                    next_state = Wait;
+                end else begin
+                    next_state = Read;
+                end
+            end
+            
+            Write_Request: begin 
+                if (bus_full) begin
+                    next_state = Wait;
+                end else begin
+                    next_state = Write;
                 end
             end
             
@@ -740,9 +758,9 @@ module memcontrol(
 
             Wait: begin 
                 if (!bus_full) begin
-                    if (prev_state == Read) begin
+                    if (prev_state == Read_Request) begin
                         next_state = Read;
-                    end else if (prev_state == Write) begin
+                    end else if (prev_state == Write_Request) begin
                         next_state = Write;
                     end else begin
                         next_state = IDLE;
@@ -760,7 +778,7 @@ endmodule
 
 module pc(
     input logic clk, clr, load, inc, Disable, ALU_out,
-    input logic [31:0] data, imm_val,
+    input logic [31:0] data, imm_val, 
     output logic [31:0] pc_val 
 );
     logic [31:0] next_line_ad;
@@ -784,25 +802,28 @@ module pc(
    always_comb begin
        next_pc = pc_val;
        next_line_ad = pc_val + 32'd4;	// Calculate next line address  
-       jump_ad = pc_val + imm_val;    // Calculate jump address (jump and link)
+       jump_ad = next_line_ad + imm_val;    // Calculate jump address (jump and link)
 
 	
         // Mux choice between next line address and jump address
         if (Disable) begin 
-		      next_pc = pc_val; 
-	      end
+		    next_pc = pc_val; 
+	    end
 
         else if (load) begin
-          next_pc = data;
+            next_pc = data + next_line_ad;
         end
             
         else if (ALU_out) begin
-		      next_pc = jump_ad ;
-	      end
+		    next_pc = jump_ad ;
+	    end
 	
         else if (inc) begin
-          next_pc= next_line_ad;
-        end
+            next_pc= next_line_ad;
+       end
+
+        
+       
    end       
 endmodule
 
@@ -810,8 +831,7 @@ module register_file (
     input logic [31:0] reg_write, 
     input logic [4:0] rd, rs1, rs2, 
     input logic clk, rst, write,
-    output logic [31:0] reg1, reg2,
-    output logic [31:0] register_out//array????
+    output logic [31:0] reg1, reg2 //array????
 );
     reg[31:0][31:0] register;
     //reg[31:0][31:0] next_register; 
@@ -821,7 +841,7 @@ module register_file (
     //assign register = '{default:'0};
 
     always_comb begin
-        write_data = reg_write;
+        write_data = 32'b0;
         if (write) begin
             if (rd != 0) begin
                 write_data = reg_write;
@@ -831,10 +851,9 @@ module register_file (
         end
         reg1 = register[rs1];
         reg2 = register[rs2];
-        register_out = register[5'd2];
     end
 
-    always_ff @ (posedge clk, posedge rst) begin //reset pos or neg or no reset
+    always_ff @ (negedge clk, posedge rst) begin //reset pos or neg or no reset
         if (rst) begin
             register <= '0;
         end
@@ -847,224 +866,229 @@ module register_file (
     end
 endmodule
 
+module lcd_controller #(parameter clk_div = 24_000)(
+    input clk,
+    input rst,
+    // Data to be displayed
+    input [127:0] row_1,
+    input [127:0] row_2,
+   
+    // LCD control signal
+    output lcd_en,
+    output lcd_rw,
+    output reg lcd_rs,
+    output reg [7:0] lcd_data
+    );
 
+    logic lcd_ctrl; // added declaration
 
+    reg [7:0] currentState; // updated bits from 6 to 8
+    reg [7:0] nextState; // updated bits from 6 to 8
+    reg [17:0] cnt_20ms;
+    reg [14:0] cnt_500hz;
+    wire delay_done;
+ 
+    localparam TIME_500HZ = clk_div;
+    // Wait for 20 ms before intializing.
+    localparam TIME_20MS = TIME_500HZ * 10;
+   
+    // Set lcd_data accroding to datasheet
+    localparam IDLE = 8'h00,                
+               SET_FUNCTION = 8'h01,      
+               DISP_OFF = 8'h03,
+               DISP_CLEAR = 8'h02,
+               ENTRY_MODE = 8'h06,
+               DISP_ON = 8'h07,
+               ROW1_ADDR = 8'h05,      
+               ROW1_0 = 8'h04,
+               ROW1_1 = 8'h0C,
+               ROW1_2 = 8'h0D,
+               ROW1_3 = 8'h0F,
+               ROW1_4 = 8'h0E,
+               ROW1_5 = 8'h0A,
+               ROW1_6 = 8'h0B,
+               ROW1_7 = 8'h09,
+               ROW1_8 = 8'h08,
+               ROW1_9 = 8'h18,
+               ROW1_A = 8'h19,
+               ROW1_B = 8'h1B,
+               ROW1_C = 8'h1A,
+               ROW1_D = 8'h1E,
+               ROW1_E = 8'h1F,
+               ROW1_F = 8'h1D,
+               ROW2_ADDR = 8'h1C,
+               ROW2_0 = 8'h14,
+               ROW2_1 = 8'h15,
+               ROW2_2 = 8'h17,
+               ROW2_3 = 8'h16,
+               ROW2_4 = 8'h12,
+               ROW2_5 = 8'h13,
+               ROW2_6 = 8'h11,
+               ROW2_7 = 8'h10,
+               ROW2_8 = 8'h30,
+               ROW2_9 = 8'h31,
+               ROW2_A = 8'h33,
+               ROW2_B = 8'h32,
+               ROW2_C = 8'h36,
+               ROW2_D = 8'h37,
+               ROW2_E = 8'h35,
+               ROW2_F = 8'h34;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module wishbone_manager(
-    //clock and reset of course
-    input logic nRST, CLK,
-    
-    //input from wishbone interconnect
-    input logic [31:0] DAT_I,
-    input logic        ACK_I,
-
-    //input from user design
-    input logic [31:0] CPU_DAT_I,
-    input logic [31:0] ADR_I,
-    input logic [3:0]  SEL_I,
-    input logic        WRITE_I,
-    input logic        READ_I,
-
-    //output to wishbone interconnect
-    output logic [31:0] ADR_O,
-    output logic [31:0] DAT_O,
-    output logic [3:0]  SEL_O,
-    output logic        WE_O,
-    output logic        STB_O,
-    output logic        CYC_O,
-
-    //output to user design
-    output logic [31:0] CPU_DAT_O,
-    output logic        BUSY_O
-);
-
-typedef enum logic[1:0] {
-    IDLE,
-    WRITE,
-    READ
- } state;
-
-
-state curr_state;
-state next_state;
-
-logic [31:0] next_ADR_O;
-logic [31:0] next_DAT_O;
-logic [3:0]  next_SEL_O;
-logic        next_WE_O;
-logic        next_STB_O;
-logic        next_CYC_O;
-
-logic [31:0] next_CPU_DAT_O;
-logic        next_BUSY_O;
-
-
-always_ff @(posedge CLK, negedge nRST) begin : All_ffs
-    if(~nRST) begin
-        //state machine
-        curr_state <= IDLE;
-
-        //registers for user project outputs
-        CPU_DAT_O <= '0;
-        BUSY_O    <= '0;
-
-        //signals going to interconnect
-        ADR_O     <= '0;
-        DAT_O     <= '0;
-        SEL_O     <= '0;
-        WE_O      <= '0;
-        STB_O     <= '0;
-        CYC_O     <= '0;
-    end
-    else begin
-        curr_state <= next_state;
-
-        CPU_DAT_O  <= next_CPU_DAT_O;
-        BUSY_O     <= next_BUSY_O;
-
-        ADR_O      <= next_ADR_O;
-        DAT_O      <= next_DAT_O;
-        SEL_O      <= next_SEL_O;
-        WE_O       <= next_WE_O;
-        STB_O      <= next_STB_O;
-        CYC_O      <= next_CYC_O;
-    end
-end
-
-
-always_comb begin
-    next_state = curr_state;
-
-    next_ADR_O  = ADR_O;
-    next_DAT_O  = DAT_O;
-    next_SEL_O  = SEL_O;
-    next_WE_O   = WE_O;
-    next_STB_O  = STB_O;
-    next_CYC_O  = CYC_O;
-    next_BUSY_O = BUSY_O;    
-    
-    case(curr_state)
-        IDLE: begin
-            if(WRITE_I && !READ_I) begin
-                next_BUSY_O = 1'b1;
-                next_state  = WRITE;
-            end
-            if(!WRITE_I && READ_I) begin
-                next_BUSY_O = 1'b1;
-                next_state  = READ;
-            end
-        end     
-        WRITE: begin
-            next_ADR_O  = ADR_I;
-            next_DAT_O  = CPU_DAT_I;
-            next_SEL_O  = SEL_I;
-            next_WE_O   = 1'b1;
-            next_STB_O  = 1'b1;
-            next_CYC_O  = 1'b1;
-            next_BUSY_O = 1'b1;
-
-            if(ACK_I) begin
-                next_state = IDLE;
-
-                next_ADR_O  = '0;
-                next_DAT_O  = '0;
-                next_SEL_O  = '0;
-                next_WE_O   = '0;
-                next_STB_O  = '0;
-                next_CYC_O  = '0;
-                next_BUSY_O = '0;
-            end
+    assign delay_done = (cnt_20ms==TIME_20MS-1) ? 1'b1 : 1'b0;
+    always @(posedge clk) begin
+        if (!rst) begin
+            cnt_20ms <= 0;
         end
-        READ: begin
-            next_ADR_O  = ADR_I;
-            next_DAT_O  = '0;
-            next_SEL_O  = SEL_I;
-            next_WE_O   = '0;
-            next_STB_O  = 1'b1;
-            next_CYC_O  = 1'b1;
-            next_BUSY_O = 1'b1;
-
-            if(ACK_I) begin
-                next_state = IDLE;
-
-                next_ADR_O  = '0;
-                next_DAT_O  = '0;
-                next_SEL_O  = '0;
-                next_WE_O   = '0;
-                next_STB_O  = '0;
-                next_CYC_O  = '0;
-                next_BUSY_O = '0;
-            end
+        else if (cnt_20ms == TIME_20MS-1) begin
+            cnt_20ms <= cnt_20ms;
         end
-        default: next_state = curr_state;
-    endcase
-end
-
-
-
-logic prev_BUSY_O;
-logic BUSY_O_edge;
-
-always_ff @(posedge CLK, negedge nRST) begin : BUSY_O_edge_detector
-    if(!nRST) begin
-        prev_BUSY_O <= '0;
+        else
+            cnt_20ms <= cnt_20ms + 1;
     end
-    else begin
-        prev_BUSY_O <= BUSY_O;
-    end
-end
 
-//detects the falling edge of BUSY_O to indicate the end of a transaction
-assign BUSY_O_edge = (!BUSY_O && prev_BUSY_O);
-
-//this always comb is for the logic to latch the data input on a read transaction
-always_comb begin
-    next_CPU_DAT_O = 32'hBAD1BAD1;
-
-    if((curr_state == READ) && ACK_I) begin
-        next_CPU_DAT_O = DAT_I;
+    //500HZ for lcd
+    always  @(posedge clk) begin
+        if(!rst)begin
+            cnt_500hz <= 0;
+        end
+        else if(delay_done)begin
+            if(cnt_500hz == TIME_500HZ - 1)
+                cnt_500hz <= 0;
+            else
+                cnt_500hz<=cnt_500hz + 1 ;
+        end
+        else
+            cnt_500hz <= 0;
     end
-    else if(BUSY_O_edge) begin
-        next_CPU_DAT_O = CPU_DAT_O;
+
+    assign lcd_en = (cnt_500hz > (TIME_500HZ-1)/2)? 1'b0 : 1'b1;
+    assign lcd_ctrl = (cnt_500hz == TIME_500HZ - 1) ? 1'b1 : 1'b0;
+
+    always  @(posedge clk) begin
+        if(!rst)
+            currentState <= IDLE;
+        else if (lcd_ctrl)
+            currentState <= nextState;
+        else
+            currentState <= currentState;
     end
-end
+
+    always  @(*) begin
+        case (currentState)
+            IDLE: nextState = SET_FUNCTION;
+            SET_FUNCTION: nextState = DISP_OFF;
+            DISP_OFF: nextState = DISP_CLEAR;
+            DISP_CLEAR: nextState = ENTRY_MODE;
+            ENTRY_MODE: nextState = DISP_ON;
+            DISP_ON: nextState = ROW1_ADDR;
+            ROW1_ADDR: nextState = ROW1_0;
+            ROW1_0: nextState = ROW1_1;
+            ROW1_1: nextState = ROW1_2;
+            ROW1_2: nextState = ROW1_3;
+            ROW1_3: nextState = ROW1_4;
+            ROW1_4: nextState = ROW1_5;
+            ROW1_5: nextState = ROW1_6;
+            ROW1_6: nextState = ROW1_7;
+            ROW1_7: nextState = ROW1_8;
+            ROW1_8: nextState = ROW1_9;
+            ROW1_9: nextState = ROW1_A;
+            ROW1_A: nextState = ROW1_B;
+            ROW1_B: nextState = ROW1_C;
+            ROW1_C: nextState = ROW1_D;
+            ROW1_D: nextState = ROW1_E;
+            ROW1_E: nextState = ROW1_F;
+            ROW1_F: nextState = ROW2_ADDR;
+            ROW2_ADDR: nextState = ROW2_0;
+            ROW2_0: nextState = ROW2_1;
+            ROW2_1: nextState = ROW2_2;
+            ROW2_2: nextState = ROW2_3;
+            ROW2_3: nextState = ROW2_4;
+            ROW2_4: nextState = ROW2_5;
+            ROW2_5: nextState = ROW2_6;
+            ROW2_6: nextState = ROW2_7;
+            ROW2_7: nextState = ROW2_8;
+            ROW2_8: nextState = ROW2_9;
+            ROW2_9: nextState = ROW2_A;
+            ROW2_A: nextState = ROW2_B;
+            ROW2_B: nextState = ROW2_C;
+            ROW2_C: nextState = ROW2_D;
+            ROW2_D: nextState = ROW2_E;
+            ROW2_E: nextState = ROW2_F;
+            ROW2_F: nextState = ROW1_ADDR;
+            default: nextState = IDLE;
+        endcase
+    end  
+
+    // LCD control sigal
+    assign lcd_rw = 1'b0;
+    always  @(posedge clk) begin
+        if(!rst) begin
+            lcd_rs <= 1'b0;   //order or data  0: order 1:data
+        end
+        else if (lcd_ctrl) begin
+            if((nextState==SET_FUNCTION) || (nextState==DISP_OFF) || (nextState==DISP_CLEAR) || (nextState==ENTRY_MODE)||
+                (nextState==DISP_ON ) || (nextState==ROW1_ADDR)|| (nextState==ROW2_ADDR))
+                lcd_rs <= 1'b0;
+            else
+                lcd_rs <= 1'b1;
+        end
+        else begin
+            lcd_rs <= lcd_rs;
+        end    
+    end                  
+
+    always  @(posedge clk) begin
+        if (!rst) begin
+            lcd_data <= 8'h00;
+        end
+        else if(lcd_ctrl) begin
+            case(nextState)
+                IDLE: lcd_data <= 8'hxx;
+                SET_FUNCTION: lcd_data <= 8'h38; //2 lines and 5×7 matrix
+                DISP_OFF: lcd_data <= 8'h08;
+                DISP_CLEAR: lcd_data <= 8'h01;
+                ENTRY_MODE: lcd_data <= 8'h06;
+                DISP_ON: lcd_data <= 8'h0C;  //Display ON, cursor OFF
+                ROW1_ADDR: lcd_data <= 8'h80; //Force cursor to beginning of first line
+                ROW1_0: lcd_data <= row_1 [127:120];
+                ROW1_1: lcd_data <= row_1 [119:112];
+                ROW1_2: lcd_data <= row_1 [111:104];
+                ROW1_3: lcd_data <= row_1 [103: 96];
+                ROW1_4: lcd_data <= row_1 [ 95: 88];
+                ROW1_5: lcd_data <= row_1 [ 87: 80];
+                ROW1_6: lcd_data <= row_1 [ 79: 72];
+                ROW1_7: lcd_data <= row_1 [ 71: 64];
+                ROW1_8: lcd_data <= row_1 [ 63: 56];
+                ROW1_9: lcd_data <= row_1 [ 55: 48];
+                ROW1_A: lcd_data <= row_1 [ 47: 40];
+                ROW1_B: lcd_data <= row_1 [ 39: 32];
+                ROW1_C: lcd_data <= row_1 [ 31: 24];
+                ROW1_D: lcd_data <= row_1 [ 23: 16];
+                ROW1_E: lcd_data <= row_1 [ 15:  8];
+                ROW1_F: lcd_data <= row_1 [  7:  0];
+
+                ROW2_ADDR: lcd_data <= 8'hC0;      //Force cursor to beginning of second line
+                ROW2_0: lcd_data <= row_2 [127:120];
+                ROW2_1: lcd_data <= row_2 [119:112];
+                ROW2_2: lcd_data <= row_2 [111:104];
+                ROW2_3: lcd_data <= row_2 [103: 96];
+                ROW2_4: lcd_data <= row_2 [ 95: 88];
+                ROW2_5: lcd_data <= row_2 [ 87: 80];
+                ROW2_6: lcd_data <= row_2 [ 79: 72];
+                ROW2_7: lcd_data <= row_2 [ 71: 64];
+                ROW2_8: lcd_data <= row_2 [ 63: 56];
+                ROW2_9: lcd_data <= row_2 [ 55: 48];
+                ROW2_A: lcd_data <= row_2 [ 47: 40];
+                ROW2_B: lcd_data <= row_2 [ 39: 32];
+                ROW2_C: lcd_data <= row_2 [ 31: 24];
+                ROW2_D: lcd_data <= row_2 [ 23: 16];
+                ROW2_E: lcd_data <= row_2 [ 15:  8];
+                ROW2_F: lcd_data <= row_2 [  7:  0];
+                default: lcd_data <= 8'hxx;
+            endcase                    
+        end
+        else
+            lcd_data <= lcd_data;
+    end
+
 endmodule
-
-
-

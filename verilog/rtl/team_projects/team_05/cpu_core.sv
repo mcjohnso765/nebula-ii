@@ -10,56 +10,50 @@ module cpu_core(
         input logic [31:0] data_in_BUS, pc_data,//input data from memory bus, memory starting point
         input logic bus_full, //input from memory bus
         input logic clk, rst, //external clock, reset
-        output logic [31:0] data_out_BUS, address_out, //instruction, result, reg1, reg2 //output data +address to memory bus
+        output logic [31:0] data_out_BUS, address_out, result, imm_32, reg1, reg2, data_cpu_o, write_address, reg_write, //instruction, result, reg1, reg2 //output data +address to memory bus
         //testing vals from control unit
-        //output logic [4:0] rs1, rs2, rd,
-        //output logic memToReg_flipflop, instr_wait, data_write,
-        //output logic [6:0] opcode,
-        //output logic [31:0] pc_val,
-        //output logic branch_ff, branch
+        output logic [4:0] rs1, rs2, rd,
+        output logic memToReg_flipflop, instr_wait, reg_write_en, data_write,
+        output logic [6:0] opcode,
+        output logic [31:0] pc_val, pc_jump,
+        output logic branch_ff, branch, load_pc
 );
-
-    // assign {data_good_x, instr_fetch_x, instr_wait_x} = {data_good, instr_fetch, instr_wait};
-    // assign instruction_x = mem_adr_i;
-    // assign reg_write_en_x = reg_write_en;
-    // assign register_out_x = reg1;
-    // assign imm_32_x = imm_32;
-    /logic memToReg_flipflop;
-
     //Instruction Memory -> Control Unit
     logic [31:0] instruction;
 
     //Control Unit -> ALU
-    logic [6:0] funct7, opcode;
+    logic [6:0] funct7;
     logic [2:0] funct3;
     logic ALU_source; //0 means register, 1 means immediate
     
     //Control Unit -> ALU + Program Counter
-    logic [31:0] imm_32;
+    // logic [31:0] imm_32;
+    // logic [31:0] pc_jump;
 
     //Control Unit -> Registers
-    logic [4:0] rs1, rs2, rd;
+    // logic [4:0] rs1, rs2, rd;
     
     //Control Unit -> Data Memory
     logic memToReg; //0 means use ALU output, 1 means use data from memory
 
     //Control Unit -> Program Counter
-    logic load_pc; //0 means leave pc as is, 1 means need to load in data
+    // logic load_pc; //0 means leave pc as is, 1 means need to load in data
 
     //Data Memory -> Registers
-    logic [31:0] reg_write;
+    //logic [31:0] reg_write;
 
     //Register Input (double check where its coming from)
-    logic reg_write_en;
+    // logic reg_write_en;
 
     //Registers -> ALU
-    logic [31:0] reg1, reg2;
+    // logic [31:0] reg1, reg2, resultx;
 
     //ALU -> Data Memory
-    logic [31:0] read_address, write_address, result;
+    logic [31:0] read_address;
+    //  write_address;//, result;
 
     //ALU -> Program Counter
-    logic branch, branch_ff;
+    // logic branch;
 
     //Memcontrol
     logic [31:0] address_in, data_in_CPU;
@@ -76,14 +70,15 @@ module cpu_core(
     logic [31:0] data_read_adr_i, data_write_adr_i, data_bus_i;
     logic data_good, bus_full_CPU;
     logic data_read;
-    logic data_write;
-    logic [31:0] data_adr_o, data_bus_o, data_cpu_o;
+    // data_write;
+    logic [31:0] data_adr_o, data_bus_o;
+    // data_cpu_o;
 
     //(ALU or external reset) -> Program Counter 
     //logic [31:0] pc_data; //external reset value only now
 
     //Program Counter -> Instruction Memory
-    logic [31:0] pc_val;
+    // logic [31:0] pc_val;
 
     //Memory Manager -> Instruction Memory
     logic [31:0] instruction_i;
@@ -175,7 +170,9 @@ module cpu_core(
         .read_address(read_address), 
         .write_address(write_address), 
         .result(result), 
-        .branch(branch));
+        .branch(branch),
+        .pc_data(pc_jump),
+        .pc_val(pc_val));
 
     always_comb begin
         data_good = !bus_full_CPU & (state == Read | state == Write);
@@ -225,7 +222,8 @@ module cpu_core(
         .bus_full_CPU(bus_full_CPU)); 
 
     // assign address_out = mem_adr_i;
-
+    logic [31:0] pc_input;
+    assign pc_input = (pc_jump != 32'b0) ? pc_jump : pc_data;
     pc program_count(
         .clk(clk),
         .clr(rst),
@@ -233,7 +231,7 @@ module cpu_core(
         .inc(data_good),
         .ALU_out(branch_ff),
         .Disable(instr_wait),
-        .data(pc_data),
+        .data(pc_input),
         .imm_val(imm_32),
         .pc_val(pc_val));
 
@@ -244,8 +242,8 @@ module ALU(
     input logic [6:0] opcode,
     input logic [2:0] funct3,
     input logic [6:0] funct7,
-    input logic [31:0] reg1, reg2, immediate,
-    output logic [31:0] read_address, write_address, result,
+    input logic [31:0] reg1, reg2, immediate, pc_val,
+    output logic [31:0] read_address, write_address, result, pc_data,
     output logic branch
 );
 
@@ -261,6 +259,7 @@ module ALU(
         
 
     always_comb begin
+        pc_data = 32'b0;
         read_address = 32'b0;
         write_address = 32'b0; 
         result = 32'b0;
@@ -317,7 +316,17 @@ module ALU(
                         default: branch=1'b0;
                     endcase 
                 end
-            7'b1101111,7'b1100111: branch=1'b1;//jump and link, jalr
+            7'b1101111:
+              begin
+                branch = 1'b1;
+                result = pc_val + 32'd4;
+              end
+            7'b1100111:
+              begin 
+                branch=1'b1;//jump and link, jalr
+                result = pc_val + 32'd4;
+                pc_data = reg1 + val2;
+              end
             7'b0110111: result = {val2[19:0],12'b0}; // lui
             default: 
                 begin
@@ -406,7 +415,7 @@ module control_unit(
                 end
             7'b1101111: //j type instruction
                 begin
-                    rd = instruction[11:7];
+                    rd = instruction[11:7] ;
                     imm_32 = {12'b0, instruction[31], instruction[19:12], instruction[20], instruction[30:21]};
                     rs1 = 5'b0;
                     rs2 = 5'b0;
@@ -636,7 +645,7 @@ endmodule
 
 module pc(
     input logic clk, clr, load, inc, Disable, ALU_out,
-    input logic [31:0] data, imm_val, 
+    input logic [31:0] data, imm_val,
     output logic [31:0] pc_val 
 );
     logic [31:0] next_line_ad;
@@ -669,7 +678,7 @@ module pc(
 	      end
 
         else if (load) begin
-          next_pc = data + next_line_ad;
+          next_pc = data;
         end
             
         else if (ALU_out) begin

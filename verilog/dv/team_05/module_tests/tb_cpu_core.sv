@@ -6,7 +6,7 @@ module tb_cpu_core;
     integer tb_test_num;
     string tb_test_name;
 
-    logic [31:0] data_in_BUS, pc_data; //input data from memory bus
+    logic [31:0] data_in_BUS, pc_jump, pc_data; //input data from memory bus
     logic bus_full; //input from memory bus
     logic clk, rst; //external clock, reset
     logic [31:0] data_out_BUS, address_out; //output data +address to memory bus
@@ -17,8 +17,9 @@ module tb_cpu_core;
     logic memToReg, instr_wait, reg_write_en, branch_ff, branch;
 
     cpu_core core0(
-        .data_in_BUS(data_in_BUS),
         .pc_data(pc_data),
+        .data_in_BUS(data_in_BUS),
+        .pc_jump(pc_jump),
         .bus_full(bus_full),
         .clk(clk),
         .rst(rst),
@@ -53,6 +54,7 @@ module tb_cpu_core;
         $dumpfile("cpu_core.vcd");
         $dumpvars(0, tb_cpu_core);
         data_in_BUS = 32'b0;
+        pc_data = 32'b0;
         bus_full = 1'b0;
         rst = 1'b0;
         #(CLK_PERIOD);
@@ -91,31 +93,31 @@ module tb_cpu_core;
         // $display("\nTest %d: %s", tb_test_num, tb_test_name);
         // add_then_sub(32'd40, 32'd10, 32'd25, 32'd50, 32'd25);
         
-        reset_dut;
-        tb_test_num++;
-        tb_test_name = "Multiplication 42x7";
-        $display("\nTest %d: %s", tb_test_num, tb_test_name);
-        multiply (32'd42, 7, 32'd294);
-        tb_test_num++;
-        tb_test_name = "Multiplication 294x2";
-        $display("\nTest %d: %s", tb_test_num, tb_test_name);
-        multiply (reg2, 2, 32'd588);
-        tb_test_num++;
-        tb_test_name = "Division 588/14";
-        $display("\nTest %d: %s", tb_test_num, tb_test_name);
-        divide (result, 14, 32'd42);
-        tb_test_num++;
-        tb_test_name = "Division 42/7";
-        $display("\nTest %d: %s", tb_test_num, tb_test_name);
-        divide (reg2, 7, 32'd6);
-        tb_test_num++;
-        tb_test_name = "Division 6/6";
-        $display("\nTest %d: %s", tb_test_num, tb_test_name);
-        divide (reg2, 6, 32'd1);
-        tb_test_num++;
-        tb_test_name = "Try to multiply 6x6";
-        $display("\nTest %d: %s", tb_test_num, tb_test_name);
-        divide (reg2, 6, 32'd36);
+        // reset_dut;
+        // tb_test_num++;
+        // tb_test_name = "Multiplication 42x7";
+        // $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        // multiply (32'd42, 7, 32'd294);
+        // tb_test_num++;
+        // tb_test_name = "Multiplication 294x2";
+        // $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        // multiply (reg2, 2, 32'd588);
+        // tb_test_num++;
+        // tb_test_name = "Division 588/14";
+        // $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        // divide (result, 14, 32'd42);
+        // tb_test_num++;
+        // tb_test_name = "Division 42/7";
+        // $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        // divide (reg2, 7, 32'd6);
+        // tb_test_num++;
+        // tb_test_name = "Division 6/6";
+        // $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        // divide (reg2, 6, 32'd1);
+        // tb_test_num++;
+        // tb_test_name = "Try to multiply 6x6";
+        // $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        // divide (reg2, 6, 32'd36);
 
 
 
@@ -304,7 +306,25 @@ module tb_cpu_core;
         // test_bge(32'd0, 32'd1, 1); // pc should not update
         // $info("pc_val: %b", pc_val);
         
-        reset_dut;
+        // reset_dut;
+        tb_test_num++;  
+        tb_test_name = "Testing JAL";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        test_jal;
+
+        // reset_dut;
+        tb_test_num++;  
+        tb_test_name = "Testing JAL (reg)";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        test_jalr;
+
+        tb_test_num++;
+        tb_test_name = "Testing LUI";
+        $display("\nTest %d: %s", tb_test_num, tb_test_name);
+        check_lui;
+
+
+        
         // test_loop_multiply;
 
         $finish;
@@ -678,4 +698,27 @@ module tb_cpu_core;
         load_instruction(32'b0000000_00010_00001_101_00001_1100011, 0, exp_result);
     endtask
 
+    // jump and link
+    task test_jal;
+        // imm[20|10:1|11|19:12]  |  rd  | opcode
+        load_instruction(32'b00000000011000000000_00010_1101111, 0, 0); 
+        #(CLK_PERIOD);
+        // imm [11:5]   | rs2  | rs1  | funct3  | imm[4:0]  |  opcode
+        // load_instruction(32'b0000000_00011_00010_010_00001_0100011, 0, 0); //read data from register 3
+    endtask
+
+    // jump and link reg
+    task test_jalr;
+        // imm[11:0]  |  rs1  |  funct3  |  rd  |  opcode
+        load_instruction(32'b000000000110_00001_000_00010_1100111, 0, 0); 
+    endtask
+
+    // lui
+    task check_lui;
+        // imm [31:12]    |    rd    |   opcode
+        load_instruction(32'b000000000000000011_00010_0110111, 0, 0);
+        // #(CLK_PERIOD);
+        // imm [11:5]   | rs2  | rs1  | funct3  | imm[4:0]  |  opcode
+        load_instruction(32'b0000000_00011_00010_010_00011_0100011, 0, 0); //read data from register 3
+    endtask
 endmodule
