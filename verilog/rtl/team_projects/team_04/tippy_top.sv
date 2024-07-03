@@ -2,7 +2,7 @@
 //INCLUDES REQUEST HANDLER
 
 
-module very_top (
+module tippy_top (
     input logic clk, nRst, button,
 
     input logic mem_busy, 
