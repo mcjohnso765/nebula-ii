@@ -1,15 +1,17 @@
 //CURRENT VERSION OF TIPPY_TOP, 1ST ITERATION
 //INCLUDES REQUEST HANDLER
 
-/*
-TODO List
- - implement UART stuff to Request Handler
- - add travis's VGA handler
- - finish connecting everything
-*/
 
 module very_top (
     input logic clk, nRst, button,
+
+    input logic mem_busy, 
+    input [31:0] data_from_mem,
+    output logic mem_read, mem_write,
+    output [31:0] adr_to_mem, data_to_mem,
+    output [3:0] sel_to_mem,
+
+    input logic Rx,
 
     output logic h_out, v_out, pixel_data
 );
@@ -22,6 +24,7 @@ module very_top (
     logic CPU_read;
     logic CPU_write;
     logic [3:0] CPU_sel;
+    logic CPU_enable;
     CPU cpu(
         .instruction(CPU_instructions),
 
@@ -40,42 +43,52 @@ module very_top (
         .nextInstruction(CPU_instr_adr),
         .MemWrite(CPU_write),
         .MemRead(CPU_read),
-        .select(CPU_sel)
+        .select(CPU_sel),
+
+        .enable(CPU_enable)
     );
 
-    
+    logic [31:0] VGA_request_address;
+    logic [31:0] mem_data_to_VGA;
+    logic [9:0] h_count;
+    logic [1:0] VGA_state;
+    logic data_en;
+    logic VGA_read;
+    logic [31:0] data_to_VGA;
+    logic [31:0] VGA_adr;
     VGA_data_controller VGA_data_control(
-        .clk(),
-        .nrst(),
-        .VGA_request_address(),
-        .data_from_SRAM(),
-        .h_count(),
-        .VGA_state(),
-        .data_en(),
-        .byte_select_in(),
-        .byte_select_out(),
-        .read(),
-        .data_to_VGA(),
-        .SRAM_address()
+        .clk(clk),
+        .nrst(nRst),
+        .VGA_request_address(VGA_request_address),
+        .data_from_SRAM(mem_data_to_VGA),
+        .h_count(h_count),
+        .VGA_state(VGA_state),
+        .data_en(data_en),
+        .byte_select_in({4{data_en}}),
+        .byte_select_out(), //ignore
+        .read(VGA_read),
+        .data_to_VGA(data_to_VGA),
+        .SRAM_address(VGA_adr)
     );
 
 
+    logic VGA_enable;
     VGA_out vga(
-        .SRAM_data_in(),
+        .SRAM_data_in(data_to_VGA),
         .SRAM_busy(),
         
         .clk(clk),
         .nrst(nRst),
 
-        .data_en(),
+        .data_en(data_en),
         .h_out(h_out), //VGA Connect
         .v_out(v_out),  //VGA Connect
         .pixel_data(pixel_data), //VGA Connect
-        .word_address_dest(),
+        .word_address_dest(VGA_request_address),
         .byte_select(), //ignore, redundant
-        .VGA_state(),
+        .VGA_state(VGA_state),
 
-        .h_count(), //ignore
+        .h_count(h_count),
         .v_count(), //ignore
         .h_state(), //ignore
         .v_state() //ignore
@@ -94,10 +107,10 @@ module very_top (
     logic uart_data_ready; // flags that the UART data is ready to be received
 
     UART_Receiver uart(
-        .nRst(nRst), .clk(clk), .enable(1), .Rx(/* SIGNAL RECIEVED FROM EXTERNAL UART */),
+        .nRst(nRst), .clk(clk), .enable(1), .Rx(Rx),
 
         .data_out(uart_out),
-        .data_ready(uart_data_ready), //flag is set to false only if data is being loaded into it
+        .data_ready(uart_data_ready), //flag is set to false only if data is being loaded into it, might be useless in hindsight
 
         .working_data(), //Ignore 
         .bits_received(), //Ignore
@@ -109,30 +122,30 @@ module very_top (
         .parity_error() // ignore
     );
 
-    logic [31:0] UART_flag;
-    UARTMem UARTMem(
-        .clk(clk),
-        .nRst(nRst),
+    // logic [31:0] UART_flag;
+    // UARTMem UARTMem(
+    //     .clk(clk),
+    //     .nRst(nRst),
 
-        .button(button),
-        .flag(UART_flag)
-    );
+    //     .button(button),
+    //     .flag(UART_flag)
+    // );
 
     request_handler #(.UART_ADDRESS(500)) reqhand
     (
         .clk(clk),
         .nRst(nRst),
 
-        .mem_busy(),
-        .VGA_state(),
-        .CPU_enable(),
-        .VGA_enable(),
+        .mem_busy(mem_busy),
+        .VGA_state(VGA_state),
+        .CPU_enable(CPU_enable),
+        .VGA_enable(VGA_enable),
 
-        .VGA_read(),
-        .VGA_adr(),
-        .data_to_VGA(),
+        .VGA_read(VGA_read),
+        .VGA_adr(VGA_adr),
+        .data_to_VGA(mem_data_to_VGA),
 
-        .data_from_UART(),
+        .data_from_UART({24'b0, uart_out}),
 
         .CPU_instr_adr(CPU_instr_adr),
         .CPU_data_adr(CPU_adr_to_mem),
@@ -143,12 +156,12 @@ module very_top (
         .instr_data_to_CPU(CPU_instructions),
         .data_to_CPU(mem_data_to_CPU),
 
-        .data_from_mem(),
-        .mem_read(),
-        .mem_write(),
-        .adr_to_mem(),
-        .data_to_mem(),
-        .sel_to_mem()
+        .data_from_mem(data_from_mem),
+        .mem_read(mem_read),
+        .mem_write(mem_write),
+        .adr_to_mem(adr_to_mem),
+        .data_to_mem(data_to_mem),
+        .sel_to_mem(sel_to_mem)
     );
 
     // //create mem
@@ -181,7 +194,9 @@ module CPU (
     output logic [31:0] nextInstruction, //next instruction address from PC
 
     output logic MemWrite, MemRead,
-    output logic [3:0] select
+    output logic [3:0] select,
+
+    output logic enable
     
 );
 
@@ -297,7 +312,8 @@ module CPU (
         .write_data(DataWrite), //value tobe written
         .clk(clk), 
         .nrst(nrst), 
-        .reg_file(reg_window) //testbenching array
+        .reg_file(reg_window), //testbenching array
+        .enable(enable)
         );
 
     memory_handler mem (
@@ -318,7 +334,7 @@ module CPU (
 
     program_counter PC (
         .nRst(nrst),
-        .enable(1'b1), //global enable from busy signal of wishbone fixme
+        .enable(enable), //global enable from busy signal of wishbone fixme
         .clk(clk),
         .immJumpValue(imm),
         .regJumpValue(regA),
@@ -947,7 +963,8 @@ module register_file(
     input logic clk, nrst, reg_enable_write,
     input logic [31:0] write_data,
     output logic [31:0]  read_data_1, read_data_2,
-    output reg [31:0]  [31:0] reg_file
+    output reg [31:0]  [31:0] reg_file,
+    output enable
 );
     // logic [4:0] i;
 
@@ -959,7 +976,7 @@ module register_file(
             for (integer i = 0; i < 32; i++) begin //
                 reg_file[i] <= 32'b0;
             end
-        end else if (write_addr != 5'd0 && reg_enable_write) begin //ensure x0 never written to (maintain value of 0)
+        end else if (write_addr != 5'd0 && reg_enable_write && enable) begin //ensure x0 never written to (maintain value of 0)
             reg_file[write_addr] <= write_data;
         end
     end
@@ -1437,22 +1454,22 @@ endmodule
 //   end
 // endmodule
 
-module UARTMem (
-    input logic  clk, nRst, 
-    input logic button, //uart input signal
-    output logic [31:0] flag //uart output signal
-);
+// module UARTMem (
+//     input logic  clk, nRst, 
+//     input logic button, //uart input signal
+//     output logic [31:0] flag //uart output signal
+// );
 
-    always_ff @( posedge clk, negedge nRst) begin
-        if(~nRst) begin
-            flag <= 0;
-        end else if (button) begin
-            flag <= 32'hffffffff;
-        end else begin
-            flag <= 0;
-        end
-    end
-endmodule
+//     always_ff @( posedge clk, negedge nRst) begin
+//         if(~nRst) begin
+//             flag <= 0;
+//         end else if (button) begin
+//             flag <= 32'hffffffff;
+//         end else begin
+//             flag <= 0;
+//         end
+//     end
+// endmodule
 
 
 
@@ -1617,12 +1634,11 @@ typedef enum logic [1:0] {
 
 typedef enum logic [1:0] {
     VGA = 2'd0,
-    // UART = 2'd1,
     CPU_INSTR = 2'd2,
     CPU_DATA = 2'd3
 } client_t;
 
-module request_handler (
+module request_handler #(parameter UART_ADDRESS = 500)(
     input logic clk,
     input logic nRst,
 
@@ -1636,6 +1652,9 @@ module request_handler (
     input logic VGA_read,
     input logic [31:0] VGA_adr,
     output logic [31:0] data_to_VGA,
+
+    //signals to/from UART
+    input logic [31:0] data_from_UART,
 
     //signals to/from CPU
     input logic [31:0] CPU_instr_adr,
@@ -1721,11 +1740,19 @@ module request_handler (
                 data_to_mem =   32'b0;
                 sel_to_mem =    4'b1111;
             end else begin // next_client == CPU_DATA
-                mem_read =      CPU_read;
-                mem_write =     CPU_write;
-                adr_to_mem =    CPU_data_adr;
-                data_to_mem =   data_from_CPU;
-                sel_to_mem =    CPU_sel;
+                if (CPU_data_adr == UART_ADDRESS) begin
+                    mem_read =      1'b0;
+                    mem_write =     1'b0;
+                    adr_to_mem =    32'h0;
+                    data_to_mem =   32'h0;
+                    sel_to_mem =    4'b0;
+                end else begin
+                    mem_read =      CPU_read;
+                    mem_write =     CPU_write;
+                    adr_to_mem =    CPU_data_adr;
+                    data_to_mem =   data_from_CPU;
+                    sel_to_mem =    CPU_sel;
+                end
             end    
         end
         
@@ -1749,7 +1776,11 @@ module request_handler (
             end else begin // current_client == CPU_DATA
                 data_to_VGA =       32'b0;
                 next_instruction =  instruction;
-                data_to_CPU =       data_from_mem;
+                if (CPU_data_adr == UART_ADDRESS) begin
+                    data_to_CPU = data_from_UART;
+                end else begin
+                    data_to_CPU = data_from_mem;
+                end
             end    
         end
 
