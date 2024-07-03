@@ -14,10 +14,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Caravel user project includes
-#-v $(USER_PROJECT_VERILOG)/rtl/user_project_wrapper.v	     
-#-v $(USER_PROJECT_VERILOG)/rtl/user_proj_example.v
-#-v $(USER_PROJECT_VERILOG)/rtl/nebula_ii.v
-#-v $(USER_PROJECT_VERILOG)/rtl/wb_interconnect.sv
+-v $(USER_PROJECT_VERILOG)/rtl/user_project_wrapper.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/user_proj_example.v
+-v $(USER_PROJECT_VERILOG)/rtl/nebula_ii.v
+-v $(USER_PROJECT_VERILOG)/rtl/wb_interconnect.sv
 
 # Wishbone Bus Wrap includes
 -v $(USER_PROJECT_VERILOG)/rtl/wb_wrapper.vh
@@ -28,14 +28,14 @@
 #-v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
 
 # GPIO Control
-#-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_WB.v
-#-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_Wrapper.v
-#-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control.sv
+-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_Wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control.sv
  
 # LA Control
-#-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_WB.v
-#-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_Wrapper.v
-#-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
+-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_Wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
 
 # Sample Team project
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
