@@ -1,3 +1,4 @@
+`default_nettype none
 module uart_clk_div (
 	MHz10,
 	nrst,

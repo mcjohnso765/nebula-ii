@@ -83,8 +83,12 @@ module midi_decoder (
 		next_state = current_state;
 		if (clear)
 			next_state = 2'd0;
-		if (done)
-			next_state = current_state + 1;
+		if (done) begin
+			if ((current_state != 2'd0) && (uart_output[7] == 1))
+				next_state = 2'd1;
+			else
+				next_state = current_state + 1;
+		end
 		if (current_state == 2'd3)
 			next_state = current_state + 1;
 	end

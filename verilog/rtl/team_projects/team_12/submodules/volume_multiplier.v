@@ -1,3 +1,4 @@
+`default_nettype none
 module volume_multiplier (
 	MHz10,
 	nrst,

@@ -1,3 +1,4 @@
+`default_nettype none
 module posedge_detector (
 	MHz10,
 	nrst,

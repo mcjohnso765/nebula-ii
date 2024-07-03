@@ -1,3 +1,4 @@
+`default_nettype none
 module ser_to_par (
 	MHz10,
 	nrst,

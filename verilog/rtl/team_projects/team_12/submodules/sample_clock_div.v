@@ -1,3 +1,4 @@
+`default_nettype none
 module sample_clock_div (
 	MHz10,
 	nrst,

@@ -5,7 +5,7 @@
 
 `timescale 1ns/1ps
 
-module tb_volume_multiplier();
+module volume_multiplier_tb();
 
 // Define local parameters
 	localparam CLK_PERIOD = 10; // 100 MHz 
@@ -25,7 +25,7 @@ logic tb_vol_done;
 logic [15:0] volume_exp;
 
 initial begin
-    $dumpfile ("dump.vcd");
+    $dumpfile ("volume_multiplier.vcd");
     $dumpvars;
 end
 
@@ -44,7 +44,8 @@ task reset_dut;
 	endtask    
 // endtask //
 volume_multiplier DUT (
-    .clk(tb_clk),
+    .MHz10(tb_clk),
+    .en(1'b1),
     .nrst(tb_nrst),
     .start_vol(tb_start_vol),
     .velocity(tb_velocity),

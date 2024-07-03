@@ -34,7 +34,6 @@ module norm_out (
 	reg [S + 7:0] next_M;
 	reg [$clog2(S + 8) - 1:0] i;
 	reg [$clog2(S + 8) - 1:0] next_i;
-	reg [4:0] start_index;
 	wire [S - 1:0] new_count;
 	wire [S - 1:0] new_max;
 	always @(posedge MHz10 or negedge nrst)
@@ -55,7 +54,6 @@ module norm_out (
 		next_state = state;
 		{next_A, next_Q, next_M, next_i} = {A, Q, M, i};
 		ready = 1'b0;
-		start_index = 0;
 		if (state == READY) begin
 			ready = 1'b1;
 			next_state = READY;

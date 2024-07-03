@@ -1,3 +1,4 @@
+`default_nettype none
 module sync (
 	MHz10,
 	nrst,

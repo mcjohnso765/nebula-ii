@@ -1,3 +1,4 @@
+`default_nettype none
 module saw_counter (
 	MHz10,
 	nrst,

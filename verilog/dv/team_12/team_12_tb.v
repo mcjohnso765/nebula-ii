@@ -18,6 +18,12 @@
 `timescale 1 ns / 1 ns
 
 module team_12_tb;
+
+	localparam CLK_PERIOD = 25;
+	localparam SAMPLE_CLK_HALF_PERIOD = 100*227/2;
+	localparam BAUD_PERIOD = CLK_PERIOD * 320;
+
+	reg sample_clk;
 	reg clock;
 	wire clk2;
 	reg RSTB;
@@ -29,22 +35,71 @@ module team_12_tb;
 	wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
 
+	reg tb_serIn_reg;
+	reg tb_wave_mode_pb_reg;
+	reg tb_clear_reg;
+
+	wire [11:0] tb_latch_output;
+
+	reg finish_monitor;
+	integer fd;
+
 	assign mprj_io_0 = mprj_io[7:0];
 	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
 
+	assign mprj_io[0] = tb_serIn_reg;
+	assign mprj_io[5] = tb_clear_reg; 
+	assign mprj_io[6] = tb_wave_mode_pb_reg;  
 	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 	// assign mprj_io[3] = 1'b1;
 
 	// External clock is used by default.  Make this artificially fast for the
 	// simulation.  Normally this would be a slow clock and the digital PLL
 	// would be the fast clock.
+	assign tb_latch_output = mprj_io[18:7];
 	assign clk2 = clock;
 	always #12.5 clock <= (clock === 1'b0);
+	always #SAMPLE_CLK_HALF_PERIOD sample_clk <= (sample_clk === 1'b0);
 
 	initial begin
-		clock = 0;
+		clock = 1'b0;
+		sample_clk = 1'b0;
 	end
 
+	task press_mode(
+		 integer presses
+	);
+	begin
+		@(negedge clk2);
+
+		for (integer j = 0; j < presses; j++) begin
+			tb_wave_mode_pb_reg = 1'b1;
+			@(negedge clk2);
+			@(negedge clk2);
+			tb_wave_mode_pb_reg = 1'b0;
+			@(negedge clk2);
+			@(negedge clk2);
+		end
+	end
+	endtask
+
+	task send_MIDI(
+		input integer midi_byte);
+	begin
+		@(negedge clk2);
+
+		#(BAUD_PERIOD);
+		tb_serIn_reg = 0; // start bit
+		for (integer i = 0; i < 8; i++) begin
+			#(BAUD_PERIOD);
+			tb_serIn_reg = midi_byte[i];
+		end
+		#(BAUD_PERIOD);
+		tb_serIn_reg = 1; // stop bit
+
+		@(posedge clk2);
+	end
+	endtask
 
 	// `ifdef ENABLE_SDF
 	// 	initial begin
@@ -141,6 +196,13 @@ module team_12_tb;
 	// 	end
 	// `endif 
 
+	always @(posedge sample_clk) begin
+		if(!finish_monitor) begin
+			$fwrite(fd, "%0d\n", tb_latch_output);
+			// $fwrite(fd, "%0d,%0d\n", tb_latch_output, tb_test_num);
+		end
+	end
+
 	initial begin
 		$dumpfile("team_12.vcd");
 		$dumpvars(0, team_12_tb);
@@ -161,31 +223,48 @@ module team_12_tb;
 	end
 
 	initial begin
-	    // Observe Output pins [7:0]
-		wait(mprj_io_0 == 8'h01);
-		// wait(mprj_io_0 == 8'h02);
-		// wait(mprj_io_0 == 8'h03);
-		// wait(mprj_io_0 == 8'h04);
-		// wait(mprj_io_0 == 8'h05);
-		// wait(mprj_io_0 == 8'h06);
-		// wait(mprj_io_0 == 8'h07);
-		// wait(mprj_io_0 == 8'h08);
-		// wait(mprj_io_0 == 8'h09);
-		// wait(mprj_io_0 == 8'h0A);   
-		// wait(mprj_io_0 == 8'hFF);
-		// wait(mprj_io_0 == 8'h00);
-		// #600;
-		
+		fd = $fopen("latch_monitor.txt", "w");
+		// while (!finish_monitor) begin
+		// 	// #(SAMP_PERIOD);
+		// 	$fdisplay(fd, tb_latch_output);
+		// end
+		if (finish_monitor) begin
+			$fclose(fd);
+			$finish;
+		end
+	end
+
+	initial begin
+		finish_monitor = 1'b0;
+		tb_serIn_reg = 1'b1;
+		tb_clear_reg = 1'b0;
+		tb_wave_mode_pb_reg = 1'b0;
+
+	    // Observe Output pins [18:7]
+		wait(tb_latch_output == 12'h000);
+
+		#(14 * SAMPLE_CLK_HALF_PERIOD);
+	
+		press_mode(4);
+
+		send_MIDI(144); // start note
+		send_MIDI(84); // note C6
+		send_MIDI(32); // velocity 64
+
+		#(SAMPLE_CLK_HALF_PERIOD * 1000 * 2);
+
 		`ifdef GL
 	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
 		`else
 		    $display("Monitor: Test 1 Mega-Project IO (RTL) Passed");
 		`endif
+		finish_monitor = 1'b1;
 	    $finish;
 	end
 
-	always @(mprj_io) begin
-		#1 $display("MPRJ-IO state = %b ", mprj_io[7:0]);
+	always @(tb_latch_output) begin
+		if(tb_latch_output >= '0)
+		#1 $display("Latch Output state = %b ", tb_latch_output);
 	end
 
 	// Reset Operation

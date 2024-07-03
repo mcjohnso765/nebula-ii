@@ -1,3 +1,4 @@
+`default_nettype none
 module start_arbitrator (
 	MHz10,
 	nrst,

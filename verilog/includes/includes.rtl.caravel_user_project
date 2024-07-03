@@ -28,7 +28,7 @@
 -v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
 
 # GPIO Control
--v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_WB.sv
 -v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_Wrapper.v
 -v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control.sv
  
@@ -38,7 +38,6 @@
 -v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
 
 # Sample Team project
-<<<<<<< HEAD
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_WB.v
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
@@ -49,23 +48,19 @@
 # Team 12 Synth
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/accumulator.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/exp_table.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/midiDecode.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/midi_decoder.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/MidiRx.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/negedge_detector.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm_in.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm_out.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm_pipe.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/note_div_table.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/note_div.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/osc_sel.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/poly_ctrl.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/posedge_detector.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/sample_clock_div.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/sample_register.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/saw_counter.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/SerToPar.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/ser_to_par.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/start_arbitrator.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/sync.v

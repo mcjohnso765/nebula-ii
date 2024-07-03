@@ -48,6 +48,7 @@ module team_12 (
     assign clear = gpio_in[1]; //Clear mapped to GPIO 5
     assign wave_mode_pb = gpio_in[2]; //Wave mode button mapped to GPIO 6
 
+
 	localparam N = 13;
 	wire baudClk;
 	wire done;
@@ -77,7 +78,7 @@ module team_12 (
 		.nrst(nrst),
 		.en(en),
 		.uart_output(uart_out),
-		.clear('0),
+		.clear(0),
 		.done(done),
 		.output_note(note),
 		.output_velocity(velocity),
@@ -164,7 +165,7 @@ module team_12 (
 		.start_out(start_out)
 	);
 	note_div_table note_table(
-		.note(note[6:0] - 7'd11),
+		.note(note[6:0] - 11),
 		.max(max)
 	);
 	genvar _gv_i_1;
@@ -232,11 +233,11 @@ module team_12 (
 		.velocity_sel(velocity_sel),
 		.single_new_note_velocity(single_new_note_velocity)
 	);
-	norm normalizer(
+	norm_pipe normalizer(
 		.MHz10(MHz10),
 		.nrst(nrst),
 		.en(en),
-		.start(start | 0), //////////NEVER REMOVE THIS OR 0. IT WORKS BUT WE DONT KNOW WHY
+		.start(start | 0), //DO NOT TOUCH. DEAD SERIOUS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		.count(selected_count),
 		.max(selected_max),
 		.count_nm(normalized_out),
@@ -276,6 +277,4 @@ module team_12 (
 		.samp_out(latch_output),
 		.clear(clear)
 	);
-
-
 endmodule

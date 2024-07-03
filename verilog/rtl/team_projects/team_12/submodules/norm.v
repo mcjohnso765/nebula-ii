@@ -31,8 +31,8 @@ module norm (
 	reg [$clog2(S + 8) - 1:0] next_i;
 	reg [4:0] start_index;
 	reg [S - 1:0] new_count;
-	wire [S - 1:0] new_max;
-	always @(posedge MHz10 or negedge nrst) begin
+	reg [S - 1:0] new_max;
+	always @(posedge MHz10 or negedge nrst)
 		if (!nrst) begin
 			count_nm <= 0;
 			state <= 1'd0;
@@ -49,10 +49,6 @@ module norm (
 			M <= next_M;
 			i <= next_i;
 		end
-	end
-
-	assign new_max = max[start_index-:S];
-
 	always @(*) begin
 		if (_sv2v_0)
 			;
@@ -65,13 +61,15 @@ module norm (
 		ready = 1'b0;
 		start_index = 0;
 		new_count = 0;
+		new_max = 0;
 		begin : sv2v_autoblock_1
 			integer j;
 			for (j = 0; j <= 19; j = j + 1)
-				start_index = (max[j] ? j[4:0] : start_index);
+				start_index = (max[j] == 1 ? j[4:0] : start_index);
 		end
-		start_index = start_index < 8 ? 8 : start_index;
+		start_index = (start_index < S ? S : start_index);
 		new_count = count[start_index-:S];
+		new_max = max[start_index-:S];
 		if (state == 1'd0) begin
 			ready = 1'b1;
 			next_state = 1'd0;

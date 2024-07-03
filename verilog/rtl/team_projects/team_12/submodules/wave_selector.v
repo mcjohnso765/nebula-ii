@@ -1,3 +1,4 @@
+`default_nettype none
 module wave_selector (
 	MHz10,
 	nrst,

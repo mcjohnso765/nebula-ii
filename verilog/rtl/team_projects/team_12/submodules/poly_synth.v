@@ -175,7 +175,7 @@ module poly_synth (
 		.single_new_note_velocity(single_new_note_velocity),
 		.current_velocity(current_velocity),
 		.velocity_sel(velocity_sel),
-		.osc_num(osc_num),
+		.osc_num(osc_num[3:0]),
 		.count(current_count),
 		.max(current_max),
 		.count_sel(selected_count),

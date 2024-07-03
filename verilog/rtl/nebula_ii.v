@@ -66,11 +66,11 @@ module nebula_ii (
     wire [2:0] designs_irq[NUM_TEAMS:0];
 
     // Sample Project Instance
-    team_12_Wrapper lol (
-    `ifdef USE_POWER_PINS
-            .vccd1(vccd1),	// User area 1 1.8V power
-            .vssd1(vssd1),	// User area 1 digital ground
-    `endif
+    team_12_Wrapper team12 (
+    // `ifdef USE_POWER_PINS
+    //         .vccd1(vccd1),	// User area 1 1.8V power
+    //         .vssd1(vssd1),	// User area 1 digital ground
+    // `endif
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),

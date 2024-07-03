@@ -67,6 +67,7 @@ module norm_in (
 			for (j = 0; j <= 19; j = j + 1)
 				start_index = (max[j] == 1 ? j[4:0] : start_index);
 		end
+		start_index = (start_index < S ? S : start_index);
 		new_count = count[start_index-:S];
 		new_max = max[start_index-:S];
 		if (state == READY) begin
