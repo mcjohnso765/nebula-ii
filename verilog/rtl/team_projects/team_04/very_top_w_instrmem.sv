@@ -1,15 +1,14 @@
 
-//CURRENT VERSION OF VERY_TOP, 2ND ITERATION
+//VERSION OF VERY TOP USED FOR TB, NEED TO MERGE CHANGES WITH NEBULA
 
 module very_top (
     input logic clk, nRst, button,
-
     output logic h_out, v_out, pixel_data
 );
 
     logic [31:0] nextInstruction;
     logic MemWrite, MemRead;
-logic [31:0] UART_flag;
+    logic [31:0] UART_flag;
 
     logic [31:0] vga_mem_adr_write, vga_mem_data_write;
     logic [31:0] vga_mem_adr_read, vga_mem_data_read;
@@ -24,54 +23,30 @@ logic [31:0] UART_flag;
     //     $readmemh("instrList", instrMem);
     // end
 
+//reset is taking 2 clock cycles first instr is a dummy?
+assign instrMem [0] = 32'h00000000; //dummy 
+
+assign instrMem [1] = 32'h00500093;
+assign instrMem [2] = 32'h00300113;
+assign instrMem [3] = 32'h002081b3;
+assign instrMem [4] = 32'h00a00913;
+assign instrMem [5] = 32'h00392523;
+
+assign instrMem [6] = 32'h00a92283;
+assign instrMem [7] = 32'h003905a3;
+assign instrMem [8] = 32'h00b90303;
+assign instrMem [9] = 32'h00391623;
+assign instrMem [10] = 32'h00c91383;
 
 
-	//all ones (not anymore)
-    assign instrMem[0] = 32'h03c08093;
-    assign instrMem[1] = 32'h02410113;
-    assign instrMem[2] = 32'h01818193;
-    assign instrMem[3] = 32'h0ff20213;
-    assign instrMem[4] = 32'h00102023;
-    assign instrMem[5] = 32'h00202223;
-    assign instrMem[6] = 32'h00102423;
-    assign instrMem[7] = 32'h00302623;
-    assign instrMem[8] = 32'h00402823;
-    assign instrMem[9] = 32'h00302c23;
-    assign instrMem[10] = 32'h00302e23;
-    assign instrMem[11] = 32'h02202023;
-    assign instrMem[12] = 32'h02202223;
-    assign instrMem[13] = 32'h02202423;
-    assign instrMem[14] = 32'h0000006f;
-
-    //counting down
-    // assign instrMem[0] = 32'h0010009b
-    // assign instrMem[1] = 32'h02009093
-    // assign instrMem[2] = 32'hfff08093
-    // assign instrMem[3] = 32'h17f00513
-    // assign instrMem[4] = 32'h00b72cb7
-    // assign instrMem[5] = 32'hb00c8c9b
-    // assign instrMem[6] = 32'h00008113
-    // assign instrMem[7] = 32'h010002ef
-    // assign instrMem[8] = 32'h00000113
-    // assign instrMem[9] = 32'h008002ef
-    // assign instrMem[10] = 32'hff1ff06f
-    // assign instrMem[11] = 32'h00000493
-    // assign instrMem[12] = 32'h0024a023
-    // assign instrMem[13] = 32'h00148493
-    // assign instrMem[14] = 32'hfea4cce3
-    // assign instrMem[15] = 32'h00028067
-    // assign instrMem[16] = 32'h00000c13
-    // assign instrMem[17] = 32'h001c0c13
-    // assign instrMem[18] = 32'hff9c4ee3
-    // assign instrMem[19] = 32'h00028067
 
     CPU cpu(
         .instruction(instrMem[{2'b0,nextInstruction[31:2]}]),
         .clk(clk),
         .nrst(nRst),
         
-        .data_from_mem(UART_flag),
-
+        //.data_from_mem(UART_flag),
+	    .data_from_mem(vga_mem_data_read), //to load to cpu from mem
         .alu_result(), //ignore
         .reg_window(), //ignore
         .err_flag(), //ignore
@@ -83,8 +58,6 @@ logic [31:0] UART_flag;
         .MemWrite(MemWrite),
         .MemRead(MemRead)
     );
-
-
 
 
     VGA_out vga(
@@ -113,7 +86,8 @@ logic [31:0] UART_flag;
     
     ram ranch(
         .din(vga_mem_data_write),
-        .addr_r(vga_mem_adr_read), 
+        //.addr_r(vga_mem_adr_read), 
+	    .addr_r(vga_mem_adr_write), //to load to cpu from mem
         .addr_w(vga_mem_adr_write), 
         .write_en(MemWrite), 
         .clk(clk), 
@@ -128,15 +102,8 @@ logic [31:0] UART_flag;
         .button(button),
         .flag(UART_flag)
     );
-    
-    
-
 
 endmodule
-
-
-
-
 
 
 typedef enum logic [3:0] {
@@ -154,7 +121,6 @@ module CPU (
     output logic err_flag, //ALU flag invalid operation, from ALU
     output logic [31:0] addr_to_mem, data_to_mem,//signals from memory handler to mem
     output logic [31:0] nextInstruction, //next instruction address from PC
-
     output logic MemWrite, MemRead
     
 );
@@ -170,7 +136,7 @@ logic [31:0] imm;
 
 //from control_unit
 logic [1:0] RegWriteSrc;
-logic ALUSrc, RegWrite, Jump, Branch, Error;
+logic ALUSrc, RegWrite, Jump, Branch, Error, AUIlink;
 
 //from ALU mux
 logic [31:0] opB;
@@ -223,7 +189,8 @@ control_unit cntrl (
     .Branch(Branch), //control signal indicating a Branch, (conditional jump)
     .MemWrite(MemWrite), //control signal indicating Memory will be written to 
     .MemRead(MemRead), //control signal indicating memory will be read from
-    .Error(Error) //testing signal indicating invalid Opcode
+    .Error(Error), //testing signal indicating invalid Opcode
+    .AUIlink(AUIlink) //control signal indicating auipc instruction
 );
 
 //decide whether a register value or immediate is used as the second operand in an operation
@@ -277,7 +244,8 @@ register_file regs (
 memory_handler mem (
     .addr(alu_result_wire), //alu result, used as address
     .read_data_2(regB), 
-    .data_from_mem(32'd99), //requested data from memory
+	//.data_from_mem(32'd99), //requested data from memory //was hardcoded
+	.data_from_mem(data_from_mem),
     .en_read(MemRead), 
     .en_write(MemWrite), 
     .size(func3), 
@@ -301,7 +269,8 @@ program_counter PC (
     .condJumpValue(condJumpValue),
     .doRegJump(~opcode[3]),
     .instructionAddress(nextInstruction), //to Instruction memory
-    .linkAddress(PCData)
+    .linkAddress(PCData),
+    .AUIlink(AUIlink)
 
 );  
 endmodule
@@ -394,7 +363,8 @@ module control_unit (
     Branch, //ON: The next instruction should be taken from the address determined by the immediate value if some condition is fulfilled, to PC
     MemWrite, //ON: Memory will be written to, to Data Memory
     MemRead, //ON: Memory will be read from, to Data Memory
-    Error //ON: Invalid Opcode 
+    Error, //ON: Invalid Opcode 
+    AUIlink //ON: auipc instruction, requires 
 );
     
 
@@ -409,6 +379,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b0010111: begin //(auipc)
@@ -420,6 +391,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 1;
     end
     
     7'b1101111: begin //(jal)
@@ -431,6 +403,7 @@ always_comb begin
         Jump = 1;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b1100111: begin //(jalr)
@@ -443,6 +416,7 @@ always_comb begin
         Jump = 1;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b1100011: begin //(B-Type):
@@ -454,6 +428,7 @@ always_comb begin
         Jump = 0;
         Branch = 1;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b0000011: begin //(I-Type):
@@ -465,6 +440,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b0100011: begin //(S-Type):
@@ -476,6 +452,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b0010011: begin //(I-Type):
@@ -487,6 +464,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b0110011: begin //(R-Type):    
@@ -498,6 +476,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
      
     default: begin
@@ -509,6 +488,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 1;
+        AUIlink = 0;
     end
     endcase
 end
@@ -567,10 +547,10 @@ operation_t alu_control_input;
 logic ctrl_err;
 //INSTANTING alu_control_unit here
     alu_control_unit ex1 (.opcode(opcode), 
-                         .alu_op(alu_op), 
+                          .alu_op(alu_op), 
                           .func7(func7), 
                           .ctrl_err(ctrl_err),
-                         .alu_control_input(alu_control_input));
+                          .alu_control_input(alu_control_input));
 
 always_comb 
 begin
@@ -910,7 +890,7 @@ always_comb begin
         DataWrite = immData;
     end else if (RegWriteSrc == 2'b11)
     begin
-        DataWrite =  PCData;
+        DataWrite = PCData;
     end
 end
 
@@ -1025,24 +1005,36 @@ endmodule
 module program_counter (
   input logic nRst, enable, clk,
   input logic [31:0] immJumpValue, regJumpValue,
-  input logic doForceJump, doCondJump, condJumpValue, doRegJump,
+  input logic doForceJump, doCondJump, condJumpValue, doRegJump, AUIlink,
   output logic [31:0] instructionAddress, linkAddress
 
 );
+
+  always_comb begin
+    if (doForceJump) begin
+        linkAddress = instructionAddress + 32'd4;
+    end else if (AUIlink) begin
+        linkAddress = instructionAddress + immJumpValue;
+    end else begin
+        linkAddress = 32'h0;
+    end
+  end
   
-  always_ff @( posedge clk, negedge nRst ) begin //michael 6/28 - changed from negedge to posedge :)
+  always_ff @( negedge clk, negedge nRst ) begin //michael 6/28 - changed from negedge to posedge :)
     if(~nRst) begin
       instructionAddress <= 32'd0;
-      linkAddress <= 32'd0;
+    //   linkAddress <= 32'd0;
     end else begin
       if (enable) begin
 
 
-        if (doForceJump) begin
-          linkAddress <= instructionAddress + 32'd4;
-        end else begin
-          linkAddress <= 32'd0;
-        end
+        // if (doForceJump) begin
+        //   linkAddress <= instructionAddress + 32'd4;
+        // end else if (AUIlink) begin
+        //   linkAddress <= instructionAddress + immJumpValue;
+        // end else begin
+        //   linkAddress <= 32'h0;
+        // end
 
         if (doForceJump | (doCondJump & condJumpValue)) begin
 
@@ -1056,12 +1048,16 @@ module program_counter (
         end
       end else begin
         instructionAddress <= instructionAddress;
-        linkAddress <= 32'd0;
+        // linkAddress <= 32'd0;
       end
     end
   end
 
-
+// always_ff @( posedge clk ) begin
+//     if(AUIlink) begin
+//         linkAddress <= instructionAddress + immJumpValue;
+//     end
+// end
 endmodule
 
 
@@ -1348,11 +1344,14 @@ module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
   reg [data_width-1:0] dout; // Register for output.
   reg [data_width-1:0] mem [384-1:0];
   always @(posedge clk)
-  begin
+	//always@(negedge clk) //timing in load/store
+  	begin
     if (write_en)
     mem[(addr_w)] <= din;
-    dout = mem[addr_r]; // Output register controlled by clock.
   end
+	always_comb begin
+    dout = mem[addr_r]; // Output register controlled by clock.
+	end
 endmodule
 
 
