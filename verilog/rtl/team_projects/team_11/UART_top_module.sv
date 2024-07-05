@@ -12,7 +12,7 @@ module top (
     logic no_count;
     logic send;
 
-    second_counter secondcount(.clk(clk), .rst(rst), .falling_edge(falling_edge), .max(4'b1010),  .no_count(no_count), .countout());
+    second_counter secondcount(.clk(clk), .rst(rst), .falling_edge(falling_edge), .max(4'b1001),  .no_count(no_count), .countout());
 
     shift_register shifting_in(.clk(clk), .rst(rst), .Reg_Start(Reg_Start), .receive_ready(send), .Din(rx_din), .data_receive(data_receive), .show_internal(show_internal));
 
