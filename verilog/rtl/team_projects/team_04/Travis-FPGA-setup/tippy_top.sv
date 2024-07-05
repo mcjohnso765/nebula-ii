@@ -63,8 +63,6 @@ module tippy_top (
         .data_from_SRAM(mem_data_to_VGA),
         .h_count(h_count),
         .VGA_state(VGA_state),
-        .data_en(data_en),
-        .byte_select_in({4{data_en}}),
         .byte_select_out(), //ignore
         .read(VGA_read),
         .data_to_VGA(data_to_VGA),
@@ -1369,19 +1367,22 @@ module VGA_data_controller (
     input logic [31:0] VGA_request_address, data_from_SRAM,
     input logic [9:0] h_count,
     input logic [1:0] VGA_state,
-    input logic data_en, // Can be used for the read 
-    input logic [3:0] byte_select_in, // directly tied to the data_en output
-    output logic [3:0] byte_select_out, // directly tied to the data_en output
+    output logic [3:0] byte_select_out,
     output logic read,
     output logic [31:0] data_to_VGA, SRAM_address
 );
-    // logic [31:0] data_hold;
-    // logic data_send_enable;
 
-    // assign data_send_enable = &h_count[5:0];
+    logic [31:0] next_data;
 
-    assign byte_select_out = byte_select_in;
-    assign read = data_en;
+    always_comb begin
+        if (VGA_state > 0) begin
+            read = 1'b1;
+            byte_select_out = 4'b1111;
+        end else begin
+            read = 1'b0;
+            byte_select_out = 4'b0000;
+        end
+    end
 
     typedef enum logic [1:0] {
         IDLE,
@@ -1389,52 +1390,55 @@ module VGA_data_controller (
         LOAD_NEW_REGISTER
     } state_type;
 
-    state_type state;
+    state_type state, next_state;
 
-    always_ff @(posedge clk or negedge nrst) begin
-        if (~nrst) begin
+    always_ff @(posedge clk, negedge nrst) begin
+        if(~nrst) begin
             state <= IDLE;
-            data_to_VGA <= data_from_SRAM;
+            data_to_VGA <= 32'b0;
         end else begin
+            state <= next_state;
+            data_to_VGA <= next_data;
+        end
+    end
+
+    always_comb begin
+        next_data = data_to_VGA;
+        SRAM_address = VGA_request_address;
             case (state)
                 IDLE: begin
-                    data_to_VGA <= data_from_SRAM;
-                    state <= LOAD_NEW_REGISTER;
+                    next_data = data_from_SRAM;
+                    next_state = LOAD_NEW_REGISTER;
+                    SRAM_address = VGA_request_address;
                 end
 
                 LOAD_NEW_REGISTER: begin
-                    data_to_VGA <= data_from_SRAM;
-                    SRAM_address <= SRAM_address;
-                    state <= PREPARE_DATA;
+                    next_data = data_from_SRAM;
+                    SRAM_address = VGA_request_address + 1;
+                    next_state = PREPARE_DATA;
                 end
 
                 PREPARE_DATA: begin
                     if (VGA_state == 1) begin // preparing first word 
                       //SRAM_address <= 32'h3E80; // base of SRAM storage
-                        SRAM_address <= 32'h0; // TESTBENCH CASE
-                        data_to_VGA <= data_from_SRAM;
-                        state <= LOAD_NEW_REGISTER;
+                        SRAM_address = 32'h0; // TESTBENCH CASE
+                        next_data = data_from_SRAM;
+                        next_state = LOAD_NEW_REGISTER;
                     end
                     
-                    else if (h_count[5:0] == 63) begin
-                        state <= LOAD_NEW_REGISTER;
+                    else if (h_count[5:0] == 62) begin
+                        next_state = LOAD_NEW_REGISTER;
                     end else begin
-                        SRAM_address <= VGA_request_address + 1; // preparing next word 
-                        data_to_VGA <= data_to_VGA;
-                        state <= PREPARE_DATA;
+                        SRAM_address = VGA_request_address + 1; // preparing next word 
+                        next_data = data_to_VGA;
+                        next_state = PREPARE_DATA;
                     end
 
                 end
 
-                default: state <= IDLE;
+                default: next_state = IDLE;
             endcase
         end
-    end
-
-
-
-
-
 
 endmodule
 
