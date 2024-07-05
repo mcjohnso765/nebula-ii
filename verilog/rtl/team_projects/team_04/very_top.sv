@@ -1,7 +1,8 @@
 //CURRENT VERSION OF VERY_TOP, 2ND ITERATION
 
 module very_top (
-    input logic clk, nRst, button,
+    input logic clk, nRst, 
+    // button, (temp UART testing input)
 
     input logic Rx,
 
@@ -153,7 +154,8 @@ module CPU (
 
     output logic MemWrite, MemRead
     
-);
+);    logic Rx; ///wires from UART
+
 
 //wires name
 //from decoder
@@ -1335,23 +1337,23 @@ module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
   end
 endmodule
 
+//temporary testing memory for UART input
+// module UARTMem (
+//     input logic  clk, nRst, 
+//     input logic button, //uart input signal
+//     output logic [31:0] flag //uart output signal
+// );
 
-module UARTMem (
-    input logic  clk, nRst, 
-    input logic button, //uart input signal
-    output logic [31:0] flag //uart output signal
-);
-
-always_ff @( posedge clk, negedge nRst) begin
-    if(~nRst) begin
-        flag <= 0;
-    end else if (button) begin
-        flag <= 32'hffffffff;
-    end else begin
-        flag <= 0;
-    end
-end
-endmodule
+// always_ff @( posedge clk, negedge nRst) begin
+//     if(~nRst) begin
+//         flag <= 0;
+//     end else if (button) begin
+//         flag <= 32'hffffffff;
+//     end else begin
+//         flag <= 0;
+//     end
+// end
+// endmodule
 
 
 
