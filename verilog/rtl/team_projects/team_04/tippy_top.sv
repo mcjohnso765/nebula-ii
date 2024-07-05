@@ -1801,8 +1801,6 @@ module request_handler #(parameter UART_ADDRESS = 999)(
 
 endmodule
 
-
-//fix me later
 module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
     parameter addr_width = 32;
     parameter data_width = 32;
