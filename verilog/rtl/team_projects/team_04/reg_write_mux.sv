@@ -29,7 +29,7 @@ always_comb begin
         DataWrite = immData;
     end else if (RegWriteSrc == 2'b11)
     begin
-        DataWrite =  PCData;
+        DataWrite = PCData;
     end
 end
 

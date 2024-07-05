@@ -1,9 +1,10 @@
 `default_nettype none
 
-// typedef enum logic [3:0] {
-//     ADD=0, SUB=1, SLL=2, SLT=3, SLTU=4, XOR=5, SRL=6, SRA=7,OR=8, AND=9, 
-//     BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR=4'b
-//     } operation_t;
+//FIXME:comment when integrating with cpu
+typedef enum logic [3:0] {
+    ADD=0, SUB=1, SLL=2, SLT=3, SLTU=4, XOR=5, SRL=6, SRA=7,OR=8, AND=9, 
+    BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR=4'bxx
+    } operation_t;
 
 module alu (
 input logic [6:0] opcode,
@@ -27,10 +28,10 @@ operation_t alu_control_input;
 logic ctrl_err;
 //INSTANTING alu_control_unit here
     alu_control_unit ex1 (.opcode(opcode), 
-                         .alu_op(alu_op), 
+                          .alu_op(alu_op), 
                           .func7(func7), 
                           .ctrl_err(ctrl_err),
-                         .alu_control_input(alu_control_input));
+                          .alu_control_input(alu_control_input));
 
 always_comb 
 begin
@@ -103,8 +104,8 @@ case(alu_control_input)
     BEQ:
     begin
          err_flag =1'b0; 
-         alu_result=32'b0;  //needed here cause alu_result is a don't care
-      condJumpValue = (opA == opB) ? 1 : 0;
+         alu_result= {32{opA==opB}};  //needed here cause alu_result is a don't care
+      condJumpValue = alu_result[0];
     end
     BNE:
     begin

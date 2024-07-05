@@ -1,6 +1,6 @@
 `default_nettype none
 
-//FIXME: comment following typedef when using tb_alu
+//FIXME: comment following typedef when using tb
 typedef enum logic [3:0] {
     ADD=0, SUB=1, SLL=2, SLT=3, SLTU=4, XOR=5, SRL=6, SRA=7,OR=8, AND=9,
     BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR = 4'bxxxx
