@@ -6,7 +6,7 @@ module very_top (
 
     input logic Rx,
 
-    output logic h_out, v_out, pixel_data, op_code_error, alu_error
+    output logic h_out, v_out, pixel_data, opcode_error, alu_error
 );
 
     logic [31:0] nextInstruction;
@@ -28,7 +28,7 @@ module very_top (
         .nextInstruction(nextInstruction),
         .MemWrite(MemWrite),
         .MemRead(MemRead),
-        .Error(op_code_error)
+        .Error(opcode_error)
     );
 
 

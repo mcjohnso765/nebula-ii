@@ -66,7 +66,7 @@ module team_04 (
         .h_out(h_out),
         .v_out(v_out),
         .pixel_data(pixel_data),
-        .op_code_error(gpio_out[3]),
+        .opcode_error(gpio_out[3]),
         .alu_error(gpio_out[4])
     );
 
