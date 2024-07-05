@@ -1,8 +1,8 @@
 module FSM(
-    input logic clk, rst, Start, Ready_Sig, no_count,
+    input logic clk, rst, receive_ready, no_count, falling_edge,
     output logic [2:0]state_check,
-    output logic Success, Reg_Start, Count_Start
-);
+    output logic Success, Reg_Start, Count_Start, send
+  );
 
     typedef enum logic[2:0] {IDLE, RECEIVING, STOP} turnstile_t;
     turnstile_t current_state, next_state;
@@ -20,36 +20,49 @@ module FSM(
         Count_Start = 1'b0;
 	    case(current_state)
 		    IDLE: begin
-                Success = 1'b1;
-			    if (Start == 1) begin
-				    next_state = RECEIVING;
+                send = 1'b0;
+                if(falling_edge == 1'b1)begin
+                    Reg_Start = 1'b1;
+                    Count_Start = 1'b1;
+                    next_state = RECEIVING;
                 end
-			    else begin
-				    next_state = current_state;
+                else begin
+                    next_state = current_state;
+                    Reg_Start = 1'b0;
+                    Count_Start = 1'b0;
                 end
-                state_check = current_state;
-		    end
+            end
 		    RECEIVING: begin
-                //if (falling_edge == 0)begin
-                    //next_state = current_state;
-                //end 
-                //else begin
-                    Count_Start = 1;
-                    Reg_Start = 1;
-                    Success = 0;
-                    if (no_count == 1'b1) begin 
-                      next_state = current_state;
+                Count_Start = 1'b1;
+                Reg_Start = 1'b1;
+                if(no_count == 1'b1)begin
+                    next_state = IDLE;
+                    Reg_Start = 1'b0;
+                    Count_Start = 1'b0;
+                    Success = 1'b0;
+                    send = 1'b0;
+                end
+                else begin
+                    if(receive_ready == 1'b1)begin
+                        send = 1'b1;
+                        Success = 1'b1;
+                        next_state = STOP;
+                        Count_Start = 1'b0;
+                        Reg_Start = 1'b0;
                     end
                     else begin
+                        send = 1'b0;
                         next_state = current_state;
+                        Success = 1'b0;
                     end
+                end
             end
             STOP: begin
-                Count_Start = 0;
-                Reg_Start = 0;
-                Success = 1;
-			    next_state = IDLE;
-                state_check = current_state;
+                send = 1'b0;
+                Count_Start = 1'b0;
+                Reg_Start = 1'b0;
+                Success = 1'b0;
+                next_state = IDLE;
 		    end
         endcase
     end

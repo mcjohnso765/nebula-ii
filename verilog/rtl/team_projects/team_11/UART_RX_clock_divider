@@ -1,7 +1,7 @@
 module clock_divider (
-  input logic clk, nrst,
+  input logic clk, rst,
   output logic new_clk
-):
+);
 
   parameter OG_CLK = 240000;
   parameter BAUD_RATE = 9600;
@@ -13,8 +13,8 @@ module clock_divider (
   logic [N-1:0]count;
   logic [N-1:0]next_count;
 
-  always_ff @(posede clk, negedge nrst) begin 
-    if(!nrst) begin
+  always_ff @(posedge clk, negedge rst) begin 
+    if(rst) begin
       count <= 0;
       new_clk <= 1;
     end 
