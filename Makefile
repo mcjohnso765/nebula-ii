@@ -465,7 +465,7 @@ zicsr-fix:
 
 #Clone BusWrap Repo
 .PHONY: bus-wrap-setup
-bus-wrap-setup:
+bus-wrap-setup: check_dependencies
 	pip install svmodule &&\
 	cd $(PWD)/dependencies &&\
 	git clone git@github.com:efabless/BusWrap.git
