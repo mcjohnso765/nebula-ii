@@ -131,7 +131,7 @@ module tippy_top (
     //     .flag(UART_flag)
     // );
 
-    request_handler #(.UART_ADDRESS(500)) reqhand
+    request_handler #(.UART_ADDRESS(999)) reqhand
     (
         .clk(clk),
         .nRst(nRst),
@@ -1073,7 +1073,7 @@ module program_counter (
 
 );
   
-  always_ff @( negedge clk, negedge nRst ) begin
+  always_ff @( posedge clk, negedge nRst ) begin
     if(~nRst) begin
       instructionAddress <= 32'd0;
       linkAddress <= 32'd0;
@@ -1140,7 +1140,7 @@ module VGA_out(
     logic [31:0] current_word, next_word; // used for calling the next line of info from SRAM and having it on standby
     
     //assign word_address_base = 32'h3E80; // Word address base for the actual SRAM
-    assign word_address_base = 32'h0; // Word address base for test benching purposes
+    assign word_address_base = 32'd1000; // Word address base for test benching purposes
 
     // Enum for H_STATES
     typedef enum logic [1:0] {
@@ -1436,24 +1436,6 @@ module VGA_data_controller (
 
 endmodule
 
-// module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
-//   parameter addr_width = 32;
-//   parameter data_width = 32;
-//   input [addr_width-1:0] addr_r, addr_w;
-//   input [data_width-1:0] din;
-//   input write_en, clk;
-//   output [data_width-1:0] dout;
-
-//   reg [data_width-1:0] dout; // Register for output.
-//   reg [data_width-1:0] mem [384-1:0];
-//   always @(posedge clk)
-//   begin
-//     if (write_en)
-//     mem[(addr_w)] <= din;
-//     dout = mem[addr_r]; // Output register controlled by clock.
-//   end
-// endmodule
-
 // module UARTMem (
 //     input logic  clk, nRst, 
 //     input logic button, //uart input signal
@@ -1638,7 +1620,7 @@ typedef enum logic [1:0] {
     CPU_DATA = 2'd3
 } client_t;
 
-module request_handler #(parameter UART_ADDRESS = 500)(
+module request_handler #(parameter UART_ADDRESS = 999)(
     input logic clk,
     input logic nRst,
 
@@ -1759,29 +1741,45 @@ module request_handler #(parameter UART_ADDRESS = 500)(
         
 
         //logic for sending data to other parts (VGA,CPU)
-        instr_data_to_CPU = instruction;
         if (mem_busy) begin
             data_to_VGA =       32'b0;
-            next_instruction =  instruction;
             data_to_CPU =       32'b0;
+            next_instruction =  instruction;
+            instr_data_to_CPU = instruction;
         end else begin
             if (current_client == VGA) begin
                 data_to_VGA =       data_from_mem;
-                next_instruction =  32'b0;
                 data_to_CPU =       32'b0;
+                next_instruction =  32'b0;
+                instr_data_to_CPU = instruction;
             end else if (current_client == CPU_INSTR) begin
                 data_to_VGA =       32'b0;
-                next_instruction =  data_from_mem;
                 data_to_CPU =       32'b0;
+                next_instruction =  data_from_mem;
+                instr_data_to_CPU = data_from_mem;
             end else begin // current_client == CPU_DATA
                 data_to_VGA =       32'b0;
-                next_instruction =  instruction;
                 if (CPU_data_adr == UART_ADDRESS) begin
                     data_to_CPU = data_from_UART;
                 end else begin
                     data_to_CPU = data_from_mem;
                 end
+                next_instruction =  instruction;
+                instr_data_to_CPU = instruction;
             end    
+        end
+
+        //logic for instructions to CPU
+        if(mem_busy) begin
+            
+        end else begin
+            if(current_client == VGA) begin
+                
+            end else if (current_client == CPU_INSTR) begin
+                
+            end else begin // current_client == CPU_DATA
+                
+            end
         end
 
 
@@ -1800,5 +1798,52 @@ module request_handler #(parameter UART_ADDRESS = 500)(
     end
 
 
+
+endmodule
+
+
+//fix me later
+module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
+    parameter addr_width = 32;
+    parameter data_width = 32;
+    input [addr_width-1:0] addr_r, addr_w;
+    input [data_width-1:0] din;
+    input write_en, clk;
+    output [data_width-1:0] dout;
+
+    reg [data_width-1:0] dout; // Register for output.
+    reg [data_width-1:0] mem [2000-1:0];
+    
+    // initial begin
+    //     $readmemh("instrList.txt", mem);
+    // end
+
+    always @(posedge clk)
+    begin
+        // mem[1000] <= 32'h1;
+
+        mem[00] <= 32'h00000000;
+        mem[01] <= 32'h03c00093;
+        mem[02] <= 32'h02400113;
+        mem[03] <= 32'h01800193;
+        mem[04] <= 32'h0ff00213;
+        mem[05] <= 32'h3e102423;
+        mem[06] <= 32'h3e202623;
+        mem[07] <= 32'h3e102823;
+        mem[08] <= 32'h3e302a23;
+        mem[09] <= 32'h3e402c23;
+        mem[10] <= 32'h3e302e23;
+        mem[11] <= 32'h40302023;
+        mem[12] <= 32'h40202223;
+        mem[13] <= 32'h40202423;
+        mem[14] <= 32'h40202623;
+        
+        if (write_en) begin
+            mem[(addr_w)] <= din;
+        end
+        dout <= mem[addr_r]; // Output register controlled by clock.
+    end
+
+    
 
 endmodule
