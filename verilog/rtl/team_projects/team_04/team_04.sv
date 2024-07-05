@@ -19,7 +19,7 @@ module team_04 (
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
     output wire [33:0] gpio_out, // Breakout Board Pins
-    output wire [33:0] gpio_oeb, // Active Low Output Enable
+    output wire [33:0] gpio_oeb // Active Low Output Enable
     
     /*
     * Add other I/O ports that you wish to interface with the
@@ -62,10 +62,12 @@ module team_04 (
     very_top final_design (
         .clk(clk),
         .nRst(nrst),
-        .Rx(gpio_in[3]),
+        .Rx(gpio_in[5]),
         .h_out(h_out),
         .v_out(v_out),
-        .pixel_data(pixel_data)
+        .pixel_data(pixel_data),
+        .op_code_error(gpio_out[3]),
+        .alu_error(gpio_out[4])
     );
 
     wishbone_manager wb_manage (
@@ -98,5 +100,5 @@ module team_04 (
         end
     end
 
-    
+
 endmodule

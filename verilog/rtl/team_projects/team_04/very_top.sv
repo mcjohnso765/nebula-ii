@@ -6,7 +6,7 @@ module very_top (
 
     input logic Rx,
 
-    output logic h_out, v_out, pixel_data
+    output logic h_out, v_out, pixel_data, op_code_error, alu_error
 );
 
     logic [31:0] nextInstruction;
@@ -18,16 +18,17 @@ module very_top (
         
         .data_from_mem({24'b0,uart_out}),//32'hFFFFFFFF,{uart_out,uart_out,uart_out,uart_out}
 
-        .alu_result(), //ignore
-        .reg_window(), //ignore
-        .err_flag(), //ignore
+        .alu_result(), //ignore, used for testbenching
+        .reg_window(), //ignore, used for testbenching
+        .err_flag(alu_error),
         
         .addr_to_mem(vga_mem_adr_write),
         .data_to_mem(vga_mem_data_write),
 
         .nextInstruction(nextInstruction),
         .MemWrite(MemWrite),
-        .MemRead(MemRead)
+        .MemRead(MemRead),
+        .Error(op_code_error)
     );
 
 
@@ -124,7 +125,7 @@ module very_top (
         .clk(clk),
         .nRst(nRst),
 
-        .button(button),
+        .button(),
         .flag(UART_flag)
     );
 
@@ -152,7 +153,7 @@ module CPU (
     output logic [31:0] addr_to_mem, data_to_mem,//signals from memory handler to mem
     output logic [31:0] nextInstruction, //next instruction address from PC
 
-    output logic MemWrite, MemRead
+    output logic MemWrite, MemRead, Error
     
 );    logic Rx; ///wires from UART
 
@@ -168,7 +169,7 @@ logic [31:0] imm;
 
 //from control_unit
 logic [1:0] RegWriteSrc;
-logic ALUSrc, RegWrite, Jump, Branch, Error;
+logic ALUSrc, RegWrite, Jump, Branch;
 
 //from ALU mux
 logic [31:0] opB;
