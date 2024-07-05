@@ -1,0 +1,31 @@
+logic [31:0] data_from_mem, adr_to_mem, data_to_mem;
+  logic mem_write;
+  tippy_top tt(
+    .clk(hz100),
+    .nRst(~reset),
+    .button(),
+    
+    .mem_busy(1'b0),
+    .data_from_mem(data_from_mem),
+    .mem_read(),
+    .mem_write(mem_write),
+
+    .adr_to_mem(adr_to_mem),
+    .data_to_mem(data_to_mem),
+    .sel_to_mem(),
+
+    .Rx(),
+
+    .h_out(left[1]),
+    .v_out(left[2]),
+    .pixel_data(left[3])
+  );
+
+  ram ranch(
+    .din(data_to_mem),
+    .addr_r({2'b0, adr_to_mem[31:2]}),
+    .addr_w({2'b0, adr_to_mem[31:2]}),
+    .write_en(mem_write),
+    .clk(hz100),
+    .dout(data_from_mem)
+  );
