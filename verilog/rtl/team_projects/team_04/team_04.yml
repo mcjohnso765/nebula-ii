@@ -63,7 +63,36 @@ external_interface:
     direction: output
     description: Output enables to GPIO
   - name: ADR_O
-    port: 
+    port: ADR_O
+    width: 32
+    direction: output
+    description: Address Output to WB
+  - name: DAT_O
+    port: DAT_O
+    width: 32
+    direction: output
+    description: Data Output to WB
+  - name: SEL_O
+    port: SEL_O
+    width: 4
+    direction: output
+    description: size selection Output to WB
+  - name: WE_O
+    port: WE_O
+    width: 1
+    direction: output
+    description: Output to WB
+  - name: STB_O
+    port: STB_O
+    width: 1
+    direction: output
+    description: Output to WB
+  - name: CYC_O
+    port: CYC_O
+    width: 1
+    direction: output
+    description: Output to WB
+
 
 clock:
   name: clk
