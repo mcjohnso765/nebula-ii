@@ -1,17 +1,18 @@
 `default_nettype none
 
-`include "debouncer.sv"
-`include "decoder.sv"
-`include "keypad.sv"
-`include "controls.sv"
-`include "buffer.sv"
+`include "source/debouncer.sv"
+`include "source/decoder.sv"
+`include "source/keypad.sv"
+`include "source/controls.sv"
+`include "source/buffer.sv"
 
 module keypad_control (
 input logic [3:0]readrow,
 input logic clk,
 input logic nrst,
+
 output logic [3:0]scancol,
-output logic [127:0] msg,
+output logic [127:0] msg_1,
 output logic msg_tx_ctrl
 );
 
@@ -26,7 +27,7 @@ logic [1:0]key_count;
 keypad keypadtop(.clk(clk), .nrst(nrst), .readrow(readrow), .scancol(scancol), .keycode(keycode), .keyvalid(keyvalid));
 buffer buffertop(.keycode(keycode), .clk(clk), .nrst(nrst), .receive_ready(receive_ready), .keycode_previous(keycode_previous));
 controls controlstop(.clk(clk), .nrst(nrst), .keycode_previous(keycode_previous), .keycode(keycode), .upper(upper), .mode(mode), .key_count(key_count), .msg_tx_ctrl(msg_tx_ctrl));
-decoder decodertop(.clk(clk), .nrst(nrst), .keycode(keycode), .keycode_previous(keycode_previous), .key_count(key_count), .mode(mode), .upper(upper), .data_received(msg));
+decoder decodertop(.clk(clk), .nrst(nrst), .keycode(keycode), .keycode_previous(keycode_previous), .key_count(key_count), .mode(mode), .upper(upper), .data_received(msg_1));
 debouncer debouncertop(.clk(clk), .nrst(nrst), .keyvalid(keyvalid), .receive_ready(receive_ready));
 
 endmodule

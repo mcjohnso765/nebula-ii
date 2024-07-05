@@ -1,9 +1,11 @@
 `default_nettype none
+
 module keypad(
 
   input clk,
   input nrst,
   input logic [3:0]readrow,
+  
   output logic [3:0]scancol,
   output logic [7:0]keycode,
   output logic keyvalid
@@ -48,6 +50,7 @@ always_comb begin
       nextstate = 3'b0; end//default is IDLE state
     endcase
     end
+    
 always_comb begin
   //initialize
     

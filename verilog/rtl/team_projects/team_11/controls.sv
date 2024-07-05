@@ -20,12 +20,12 @@ module controls(
       mode <= 0;
       upper <= 0;     
       previous_key_count <= 2'b0;
-      msg_tx_ctrl <= 0; end
+      next_msg_tx_ctrl <= 0; end
     else begin
       mode <= next_mode;
       upper <= next_upper;
       previous_key_count <= key_count;
-      msg_tx_ctrl <= next_msg_tx_ctrl; end
+      next_msg_tx_ctrl <= msg_tx_ctrl; end
   end
 
 
@@ -73,10 +73,16 @@ module controls(
 
 
   always_comb begin    //MSG Control
-    next_msg_tx_ctrl = msg_tx_ctrl;
+    
+    msg_tx_ctrl = next_msg_tx_ctrl;
 
-    if (keycode == 8'b10001000) next_msg_tx_ctrl = 1;
-    else next_msg_tx_ctrl = 0; end
+    if (keycode == 8'b10001000) begin
+      msg_tx_ctrl = 1;
+    end
+    else begin
+      msg_tx_ctrl = 0;
+    end
+  end
     
   
 

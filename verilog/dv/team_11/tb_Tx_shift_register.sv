@@ -1,6 +1,6 @@
 `timescale 1ms/10ns
 
-module tb_shift_register;
+module tb_Tx_shift_register;
    localparam RESET_ACTIVE = 0;
    localparam RESET_INACTIVE = 1;
    localparam CLK_PERIOD = 10;
@@ -20,7 +20,7 @@ module tb_shift_register;
    logic bit_out;
    
 
-   shift_register unit(.clk(clk), .nrst(nrst), .enable_s(enable_s), .data_send(data_send),.tx_ctrl(tx_ctrl), .count(count), .bit_out(bit_out));
+   Tx_shift_register unit(.clk(clk), .nrst(nrst), .enable_s(enable_s), .data_send(data_send),.tx_ctrl(tx_ctrl), .count(count), .bit_out(bit_out));
    
    task reset_dut;
    begin
@@ -55,7 +55,7 @@ module tb_shift_register;
       logic bitout_exp;
 
       $dumpfile ("sim.vcd");
-      $dumpvars(0, tb_shift_register);
+      $dumpvars(0, tb_Tx_shift_register);
 
       // initialization
       nrst = 1'b1;
