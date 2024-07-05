@@ -1,5 +1,5 @@
 module FSM(
-    input logic clk, rst, receive_ready, no_count, falling_edge,
+    input logic clk, nrst, receive_ready, no_count, falling_edge,
     output logic [2:0]state_check,
     output logic Success, Reg_Start, Count_Start, send
   );
@@ -7,8 +7,8 @@ module FSM(
     typedef enum logic[2:0] {IDLE, RECEIVING, STOP} turnstile_t;
     turnstile_t current_state, next_state;
 
-    always_ff@(posedge clk, posedge rst) begin
-	    if (rst)
+    always_ff@(posedge clk, negedge nrst) begin
+	    if (!nrst)
 		    current_state <= IDLE;
         else 
 		    current_state <= next_state;

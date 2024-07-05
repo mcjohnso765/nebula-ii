@@ -1,13 +1,13 @@
 module counter(
-    input logic clk, rst, count_start,
+    input logic clk, nrst, count_start,
     input logic [3:0]max,  
     output logic atmax,
     output logic [3:0]countout
 );
     logic [3:0]nextcount; 
 
-    always_ff @(posedge clk, negedge rst)
-    if (rst)begin
+    always_ff @(posedge clk, negedge nrst)
+    if (!nrst)begin
         countout <= '0;
         atmax <= 1'b0;
     end

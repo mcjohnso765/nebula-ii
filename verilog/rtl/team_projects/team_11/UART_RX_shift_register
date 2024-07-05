@@ -1,12 +1,12 @@
 module shift_register (
-    input logic clk, rst, Reg_Start, Din, receive_ready,
+    input logic clk, nrst, Reg_Start, Din, receive_ready,
     output logic [7:0] data_receive, 
     output logic [8:0]show_internal
 );
     logic [8:0] internal_shift_register, shifted_data;
 
-    always_ff @(posedge clk, posedge rst) begin
-        if (rst)
+    always_ff @(posedge clk, negedge nrst) begin
+        if (!nrst)
             shifted_data <= 9'b0; 
         else
             shifted_data = internal_shift_register;

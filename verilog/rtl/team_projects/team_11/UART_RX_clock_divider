@@ -1,5 +1,5 @@
 module clock_divider (
-  input logic clk, rst,
+  input logic clk, nrst,
   output logic new_clk
 );
 
@@ -13,8 +13,8 @@ module clock_divider (
   logic [N-1:0]count;
   logic [N-1:0]next_count;
 
-  always_ff @(posedge clk, negedge rst) begin 
-    if(rst) begin
+  always_ff @(posedge clk, negedge nrst) begin 
+    if(!nrst) begin
       count <= 0;
       new_clk <= 1;
     end 
@@ -34,4 +34,3 @@ module clock_divider (
     end
   end
 endmodule
-

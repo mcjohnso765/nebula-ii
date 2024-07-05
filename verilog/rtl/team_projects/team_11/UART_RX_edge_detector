@@ -1,12 +1,12 @@
 module edge_detect (
-    input logic clk, rst, signal_in,
+    input logic clk, nrst, signal_in,
     output logic falling_edge
 );
 
     logic prev_sig;
 
-    always_ff @(posedge clk, posedge rst) begin
-        if(rst)begin
+    always_ff @(posedge clk, negedge nrst) begin
+        if(!nrst)begin
             prev_sig <= 1'b1;
         end
         else begin

@@ -1,13 +1,13 @@
 module second_counter(
-    input logic clk, rst, falling_edge,
+    input logic clk, nrst, falling_edge,
     input logic [3:0]max,  
     output logic no_count,
     output logic [3:0] countout
 );
     logic [3:0]nextcount;
 
-    always_ff @(posedge clk, posedge rst)begin
-        if (rst)begin
+    always_ff @(posedge clk, negedge nrst)begin
+        if (!nrst)begin
             countout <= '0;
         end
         else begin
@@ -30,4 +30,3 @@ module second_counter(
             end
         end
     end
-endmodule
