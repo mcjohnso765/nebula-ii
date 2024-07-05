@@ -8,19 +8,21 @@ module VGA_data_controller (
     input logic [31:0] VGA_request_address, data_from_SRAM,
     input logic [9:0] h_count,
     input logic [1:0] VGA_state,
-    input logic data_en, // Can be used for the read 
-    input logic [3:0] byte_select_in, // directly tied to the data_en output
-    output logic [3:0] byte_select_out, // directly tied to the data_en output
+    output logic [3:0] byte_select_out,
     output logic read,
     output logic [31:0] data_to_VGA, SRAM_address
 );
-    // logic [31:0] data_hold;
-    // logic data_send_enable;
 
-    // assign data_send_enable = &h_count[5:0];
 
-    assign byte_select_out = byte_select_in;
-    assign read = data_en;
+    always_comb begin
+        if (VGA_state > 0) begin
+            read = 1'b1;
+            byte_select_out = 4'b1111;
+        end else begin
+            read = 1'b0;
+            byte_select_out = 4'b0000;
+        end
+    end
 
     typedef enum logic [1:0] {
         IDLE,

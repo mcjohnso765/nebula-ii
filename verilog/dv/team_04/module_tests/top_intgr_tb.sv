@@ -1,6 +1,6 @@
 
 `timescale 1ms/1ns
-module tb_top_intgr ();
+module top_intgr_tb ();
 
 
 //enum for operation type
@@ -193,33 +193,33 @@ module tb_top_intgr ();
     	end
 endmodule
 
-module vgaMem (
-    input logic clk,
-    nRst, 
-    write_enable, //control signal enabling writing
-    input logic [31:0] write_address, write_data, read_address, //address and values to be written
-    output logic [31:0] read_data
-);
+// module vgaMem (
+//     input logic clk,
+//     nRst, 
+//     write_enable, //control signal enabling writing
+//     input logic [31:0] write_address, write_data, read_address, //address and values to be written
+//     output logic [31:0] read_data
+// );
 
-    //instantiaate 384 32-bit registers    
-    reg [383:0][31:0]  memory ;
+//     //instantiaate 384 32-bit registers    
+//     reg [383:0][31:0]  memory ;
 
-    //write if write signal is HI, always read
-    always_ff @(posedge clk, negedge nRst) begin
-        if (~nRst) begin 
-            for (integer i = 0; i < 32; i++) begin //
-                memory[i] <= 32'b0;
-            end
-        end else if (write_enable) begin 
-            memory[write_address] <= write_data;
-        end
-    end
+//     //write if write signal is HI, always read
+//     always_ff @(posedge clk, negedge nRst) begin
+//         if (~nRst) begin 
+//             for (integer i = 0; i < 32; i++) begin //
+//                 memory[i] <= 32'b0;
+//             end
+//         end else if (write_enable) begin 
+//             memory[write_address] <= write_data;
+//         end
+//     end
 
-    //combinational read block
-    always_comb begin
-        read_data = memory[read_address];
-    end
-endmodule
+//     //combinational read block
+//     always_comb begin
+//         read_data = memory[read_address];
+//     end
+// endmodule
 module top (
     input logic [31:0] instruction, //instruction to CPU
     input logic clk, nrst, //timing & reset signals

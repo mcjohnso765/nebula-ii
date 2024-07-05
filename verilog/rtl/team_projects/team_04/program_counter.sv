@@ -189,24 +189,36 @@
 module program_counter (
   input logic nRst, enable, clk,
   input logic [31:0] immJumpValue, regJumpValue,
-  input logic doForceJump, doCondJump, condJumpValue, doRegJump,
+  input logic doForceJump, doCondJump, condJumpValue, doRegJump, AUIlink,
   output logic [31:0] instructionAddress, linkAddress
 
 );
+
+  always_comb begin
+    if (doForceJump) begin
+        linkAddress = instructionAddress + 32'd4;
+    end else if (AUIlink) begin
+        linkAddress = instructionAddress + immJumpValue;
+    end else begin
+        linkAddress = 32'h0;
+    end
+  end
   
-  always_ff @( negedge clk, negedge nRst ) begin
+  always_ff @( negedge clk, negedge nRst ) begin //michael 6/28 - changed from negedge to posedge :)
     if(~nRst) begin
       instructionAddress <= 32'd0;
-      linkAddress <= 32'd0;
+    //   linkAddress <= 32'd0;
     end else begin
       if (enable) begin
 
 
-        if (doForceJump) begin
-          linkAddress <= instructionAddress + 32'd4;
-        end else begin
-          linkAddress <= 32'd0;
-        end
+        // if (doForceJump) begin
+        //   linkAddress <= instructionAddress + 32'd4;
+        // end else if (AUIlink) begin
+        //   linkAddress <= instructionAddress + immJumpValue;
+        // end else begin
+        //   linkAddress <= 32'h0;
+        // end
 
         if (doForceJump | (doCondJump & condJumpValue)) begin
 
@@ -220,10 +232,17 @@ module program_counter (
         end
       end else begin
         instructionAddress <= instructionAddress;
-        linkAddress <= 32'd0;
+        // linkAddress <= 32'd0;
       end
     end
   end
 
-
+// always_ff @( posedge clk ) begin
+//     if(AUIlink) begin
+//         linkAddress <= instructionAddress + immJumpValue;
+//     end
+// end
 endmodule
+
+
+//changes made to accomodate auipc functionality

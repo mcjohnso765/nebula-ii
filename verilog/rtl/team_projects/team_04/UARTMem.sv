@@ -1,6 +1,5 @@
 module UARTMem (
-    input logic  clk,
-    nRst, 
+    input logic  clk, nRst, 
     input logic button, //uart input signal
     output logic [31:0] flag //uart output signal
 );

@@ -1,3 +1,4 @@
+//idk fs what this is
 0010009b
 02009093
 fff08093
@@ -20,18 +21,6 @@ ff9c4ee3
 000280e7
 000000ef
 
-
-//all ones looping:
-
-0010009b
-02009093
-fff08093
-00000133
-17f00193
-00112023
-00110113
-00310463
-ff5ff06f
 
 // check button on/off
 0010051b
@@ -135,93 +124,6 @@ addi x3, x0, 0
     slli x5, x2, 3
     srli x5, x2, 2
     srai x5, x2, 7
-
-//math test r-types
-00700093
-01500113
-002081b3
-401101b3
-0010a1b3
-0020a1b3
-0010b1b3
-0020b1b3
-00314233
-00316233
-00317233
-003112b3
-003152b3
-403152b3
-
-
-addi x1, x0, 7
-addi x2, x0, 21
-
-add x3, x1, x2
-sub x3, x2, x1
-slt x3, x1, x1 
-slt x3, x1, x2
-sltu x3, x1, x1
-sltu x3, x1, x2
-
-xor x4, x2, x3    
-or x4, x2, x3
-and x4, x2, x3
-
-sll x5, x2, x3
-srl x5, x2, x3
-sra x5, x2, x3
-
-
-//load store test i-type 
-00500093
-00300113
-002081b3
-06420913
-00392523
-00a92283
-00390523
-00a90283
-00391523
-00a91283
-00010317
-fd830313
-00430313
-
-addi x1, x0, 5
-addi x2, x0, 3
-add x3, x1, x2
-addi x18, x4, 100
-sw x3, 10(x18)
-lw x5, 10(x18)
-sb x3, 10(x18)
-lb x5, 10(x18)
-sh x3, 10(x18)
-lh x5, 10(x18)
-
-//u-type (lui and auipc)
-
-addi x1, x0, 5
-addi x2, x0, 3
-lui x2, 74565
-auipc x1, 65537
-
-00500093
-00300113
-12345137
-10001097
-00010317
-ff030313
-00430313
-
-
-
-
-//example assembly when integrating uart
-addi x2, x0, 384
-addi x3, x0, 61  //input key a
-lw x1, 0(x2)
-beq x1, x3, _loop
-
 
 //math test r-types
 00700093
@@ -554,3 +456,80 @@ fa5ff06f
 fff30313
 fe031ee3
 f61ff06f
+
+/////// move up down left (right)
+
+
+.global _center
+.global _check_button
+.global _move_up
+.global _move_down
+.global _move_left
+.global _move_right
+.global _delay_loop  
+
+addi x1, x0, 0         /* x1 = memory location */
+addi x2, x0, 0         /* x2 = bit select */
+addi x3, x0, 194       /* center memory location */
+addi x4, x0, 384       /* x4 = UART location */
+
+_center:
+    addi x2, x0, 1
+    sw x2, 0(x1) 
+
+_check_button:
+    addi x5, x0, 2     /* Key code for 'up' button */
+    addi x7, x0, 6     /* Key code for 'down' button */
+    addi x8, x0, 4     /* Key code for 'left' button */
+    addi x9, x0, 8     /* Key code for 'right' button */
+    lw a0, 0(x4)
+    beq a0, x5, _move_up
+    beq a0, x7, _move_down
+    beq a0, x8, _move_left
+    beq a0, x9, _move_right
+    j _check_button
+
+_move_up:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, -4        /* update memory location (move up) */
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_move_down:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, 4         /* update memory location (move down) */
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_move_left:
+    sw x0, 0(x1)           /* clear current pixel */
+    slli x2, x2, 1         /* shift pixel left */
+    bnez x2, _no_wrap_left /* if not zero, continue */
+    addi x1, x1, -1        /* move to previous memory location */
+    addi x2, x0, 1         /* set pixel to LSB */
+    j _check_button
+_no_wrap_left:
+    sw x2, 0(x1)           /* set new pixel */
+    j _delay_loop
+
+_move_right:
+    sw x0, 0(x1)           /* clear current pixel */
+    srli x2, x2, 1         /* shift pixel right */
+    bnez x2, _no_wrap_right /* if not zero, continue */
+    addi x1, x1, 1         /* move to next memory location */
+    li x2, 0x8000000      /* set pixel to MSB */
+    sw x2, 0(x1)
+    j _delay_loop
+_no_wrap_right:
+    sw x2, 0(x1)           /* set new pixel */
+    j _delay_loop
+
+_delay_loop:
+    li x6, 100000          /* Load the delay count */
+delay_loop:
+    addi x6, x6, -1        /* Decrement the counter */
+    bnez x6, delay_loop    /* Loop until the counter reaches zero */
+    j _check_button
+
+
+////////////////////////////////////////////////////

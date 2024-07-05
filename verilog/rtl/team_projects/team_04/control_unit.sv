@@ -11,7 +11,8 @@ module control_unit (
     Branch, //ON: The next instruction should be taken from the address determined by the immediate value if some condition is fulfilled, to PC
     MemWrite, //ON: Memory will be written to, to Data Memory
     MemRead, //ON: Memory will be read from, to Data Memory
-    Error //ON: Invalid Opcode 
+    Error, //ON: Invalid Opcode 
+    AUIlink //ON: auipc instruction, requires 
 );
     
 
@@ -26,6 +27,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b0010111: begin //(auipc)
@@ -37,6 +39,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 1;
     end
     
     7'b1101111: begin //(jal)
@@ -48,6 +51,7 @@ always_comb begin
         Jump = 1;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b1100111: begin //(jalr)
@@ -60,17 +64,19 @@ always_comb begin
         Jump = 1;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b1100011: begin //(B-Type):
         RegWrite = 0;
-        ALUSrc = 1;
+        ALUSrc = 0;
         RegWriteSource = 2'b00;
         MemWrite = 0;
         MemRead = 0;
         Jump = 0;
         Branch = 1;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b0000011: begin //(I-Type):
@@ -82,6 +88,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b0100011: begin //(S-Type):
@@ -93,6 +100,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b0010011: begin //(I-Type):
@@ -104,6 +112,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
 
     7'b0110011: begin //(R-Type):    
@@ -115,6 +124,7 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 0;
+        AUIlink = 0;
     end
      
     default: begin
@@ -126,8 +136,11 @@ always_comb begin
         Jump = 0;
         Branch = 0;
         Error = 1;
+        AUIlink = 0;
     end
     endcase
 end
 
 endmodule
+
+//changes made include additional AUIlink signal
