@@ -1608,11 +1608,11 @@ module UART_Receiver #(
 
 endmodule
 
-// typedef enum logic [1:0] {
-//     INACTIVE = 2'd0,
-//     READY = 2'd1,
-//     ACTIVE = 2'd2
-// } VGA_state_t;
+typedef enum logic [1:0] {
+    INACTIVE = 2'd0,
+    READY = 2'd1,
+    ACTIVE = 2'd2
+} VGA_state_t;
 
 typedef enum logic [1:0] {
     VGA = 2'd0,
