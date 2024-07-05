@@ -19,10 +19,10 @@
 
 /* THIS FILE IS GENERATED, DO NOT EDIT */
 
-`timescale			1ns/1ps
+// `timescale			1ns/1ps
 `default_nettype	none
 
-`define				WB_AW		16
+`define				WB_AW		32
 
 //`include			"wb_wrapper.vh"
 
@@ -31,11 +31,11 @@ module la_control_WB #(
 )
 (
 	`WB_SLAVE_PORTS,
-	input	wire	[128-1:0]	la_dat [NUM_TEAMS:0],
+	input	wire	[128*(NUM_TEAMS+1)-1:0] designs_la_data_out_flat,
 	output	wire	[128-1:0]	muxxed_la_dat
 );
 
-	localparam	LA_SEL_VAL_REG_OFFSET = `WB_AW'h0000;
+	localparam	LA_SEL_VAL_REG_OFFSET = `WB_AW'h31000000;
 	wire		clk = clk_i;
 	wire		nrst = (~rst_i);
 
@@ -55,7 +55,7 @@ module la_control_WB #(
 		.clk(clk),
 		.nrst(nrst),
 		.la_sel(la_sel),
-		.la_dat(la_dat),
+		.designs_la_data_out_flat(designs_la_data_out_flat),
 		.muxxed_la_dat(muxxed_la_dat)
 	);
 

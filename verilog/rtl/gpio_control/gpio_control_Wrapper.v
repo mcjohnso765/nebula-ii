@@ -7,7 +7,10 @@ module gpio_control_Wrapper #(
     parameter NUM_TEAMS = 12
 )
 (
-    
+`ifdef USE_POWER_PINS
+    inout vccd1,	// User area 1 1.8V supply
+    inout vssd1,	// User area 1 digital ground
+`endif
     // Wishbone Slave ports (WB MI A)
     input wire wb_clk_i,
     input wire wb_rst_i,
@@ -21,8 +24,8 @@ module gpio_control_Wrapper #(
     output wire [31:0] wbs_dat_o,
     
     // GPIOs
-    input wire [37:0] designs_gpio_out[NUM_TEAMS:0], // Breakout Board Pins
-    input wire [37:0] designs_gpio_oeb[NUM_TEAMS:0], // Active Low Output Enable
+    input wire [38*(NUM_TEAMS+1)-1:0] designs_gpio_out_flat, // Breakout Board Pins
+    input wire [38*(NUM_TEAMS+1)-1:0] designs_gpio_oeb_flat, // Active Low Output Enable
 
     output wire [37:0] gpio_out,
     output wire [37:0] gpio_oeb
@@ -42,8 +45,8 @@ module gpio_control_Wrapper #(
         .ack_o(wbs_ack_o),
         .we_i(wbs_we_i),
         .IRQ(),
-        .io_oeb(designs_gpio_oeb),
-        .io_out(designs_gpio_out),
+        .designs_gpio_oeb_flat(designs_gpio_oeb_flat),
+        .designs_gpio_out_flat(designs_gpio_out_flat),
         .muxxed_io_oeb(gpio_oeb),
         .muxxed_io_out(gpio_out)
     );

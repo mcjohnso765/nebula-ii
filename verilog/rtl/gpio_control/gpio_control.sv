@@ -11,8 +11,8 @@ module gpio_control #(
 (
     input logic clk,
     input logic nrst,
-    input logic [37:0] io_oeb [NUM_TEAMS:0],  
-    input logic [37:0] io_out [NUM_TEAMS:0],
+    input wire [38*(NUM_TEAMS+1)-1:0] designs_gpio_out_flat,  
+    input wire [38*(NUM_TEAMS+1)-1:0] designs_gpio_oeb_flat,
 
     //select lines that are being sent from a set of registers
     //the wishbone bus can write to
@@ -34,7 +34,16 @@ integer idx_16to23;
 integer idx_24to31;
 integer idx_32to37;
 
+logic [37:0] io_oeb [NUM_TEAMS:0]; 
+logic [37:0] io_out [NUM_TEAMS:0];
 
+integer i;
+always @* begin
+    for (i = 0; i <= NUM_TEAMS; i = i + 1) begin
+        io_out[i] = designs_gpio_out_flat[i*38 +: 38];
+        io_oeb[i] = designs_gpio_oeb_flat[i*38 +: 38];
+    end
+end
 
 always @(*) begin
     for(idx_0to7 = 0; idx_0to7 <= 7; idx_0to7++) begin

@@ -1,45 +1,65 @@
 {
     "DESIGN_NAME": "user_project_wrapper",
     "VERILOG_FILES": [
+        "dir::../../verilog/rtl/wb_wrapper.vh",
+        "dir::../../verilog/rtl/gpio_control/gpio_control_WB.sv",
+        "dir::../../verilog/rtl/gpio_control/gpio_control_Wrapper.v",
+        "dir::../../verilog/rtl/gpio_control/gpio_control.sv",
+        "dir::../../verilog/rtl/la_control/la_control_WB.v",
+        "dir::../../verilog/rtl/la_control/la_control_Wrapper.v",
+        "dir::../../verilog/rtl/la_control/la_control.sv",
+        "dir::../../verilog/rtl/wishbone_manager/wishbone_manager.sv",
         "dir::../../verilog/rtl/defines.v",
+        "dir::../../verilog/rtl/nebula_ii.v",
+        "dir::../../verilog/rtl/wb_interconnect.sv",
         "dir::../../verilog/rtl/user_project_wrapper.v"
     ],
-    "ROUTING_CORES": 1,
-    "CLOCK_PERIOD": 25,
+    "ROUTING_CORES": 6,
+    "CLOCK_PERIOD": 100,
     "CLOCK_PORT": "wb_clk_i",
     "CLOCK_NET": "mprj.clk",
-    "FP_PDN_MACRO_HOOKS": "mprj vccd1 vssd1 vccd1 vssd1",
+    "ERROR_ON_KLAYOUT_DRC": false,
+    "FP_PDN_MACRO_HOOKS": [
+        "mprj.* vccd1 vssd1 vccd1 vssd1"
+    ],
     "MACRO_PLACEMENT_CFG": "dir::macro.cfg",
     "MAGIC_DEF_LABELS": 0,
     "VERILOG_FILES_BLACKBOX": [
-        "dir::../../verilog/gl/user_proj_example.v"
+        "dir::../../verilog/gl/sample_team_proj_Wrapper.v"
     ],
-    "EXTRA_LEFS": "dir::../../lef/user_proj_example.lef",
-    "EXTRA_GDS_FILES": "dir::../../gds/user_proj_example.gds",
-    "EXTRA_LIBS": "dir::../../lib/user_proj_example.lib",
+    "EXTRA_LEFS": [
+        "dir::../../lef/sample_team_proj_Wrapper.lef"
+    ],
+    "EXTRA_GDS_FILES": [
+        "dir::../../gds/sample_team_proj_Wrapper.gds"
+    ],
+    "EXTRA_LIBS": [
+        "dir::../../lib/sample_team_proj_Wrapper.lib"
+    ],
     "EXTRA_SPEFS": [
-        "user_proj_example", 
-        "dir::../../spef/multicorner/user_proj_example.min.spef", 
-        "dir::../../spef/multicorner/user_proj_example.nom.spef", 
-        "dir::../../spef/multicorner/user_proj_example.max.spef"
+        "sample_team_proj_Wrapper", 
+        "dir::../../spef/multicorner/sample_team_proj_Wrapper.min.spef", 
+        "dir::../../spef/multicorner/sample_team_proj_Wrapper.nom.spef", 
+        "dir::../../spef/multicorner/sample_team_proj_Wrapper.max.spef"
     ],
     "BASE_SDC_FILE": "dir::base_user_project_wrapper.sdc",
     "IO_SYNC": 0,
     "MAX_TRANSITION_CONSTRAINT": 1.5,
     "RUN_LINTER": 0,
     "QUIT_ON_SYNTH_CHECKS": 0,
-    "FP_PDN_CHECK_NODES": 0,
-    "SYNTH_ELABORATE_ONLY": 1,
+    "FP_PDN_CHECK_NODES": 1,
+    "SYNTH_ELABORATE_ONLY": 0,
     "PL_RANDOM_GLB_PLACEMENT": 1,
-    "PL_RESIZER_DESIGN_OPTIMIZATIONS": 0,
-    "PL_RESIZER_TIMING_OPTIMIZATIONS": 0,
-    "GLB_RESIZER_DESIGN_OPTIMIZATIONS": 0,
-    "GLB_RESIZER_TIMING_OPTIMIZATIONS": 0,
+    "PL_RESIZER_DESIGN_OPTIMIZATIONS": 1,
+    "PL_RESIZER_TIMING_OPTIMIZATIONS": 1,
+    "GLB_RESIZER_DESIGN_OPTIMIZATIONS": 1,
+    "GLB_RESIZER_TIMING_OPTIMIZATIONS": 1,
     "PL_RESIZER_BUFFER_INPUT_PORTS": 0,
-    "FP_PDN_ENABLE_RAILS": 0,
-    "GRT_REPAIR_ANTENNAS": 0,
-    "RUN_FILL_INSERTION": 0,
-    "RUN_TAP_DECAP_INSERTION": 0,
+    "FP_PDN_ENABLE_RAILS": 1,
+    "GRT_REPAIR_ANTENNAS": 1,
+    "RUN_FILL_INSERTION": 1,
+    "RUN_TAP_DECAP_INSERTION": 1,
+    "RUN_HEURISTIC_DIODE_INSERTION": true,
     "FP_PDN_VPITCH": 180,
     "FP_PDN_HPITCH": 180,
     "RUN_CTS": 0,
@@ -80,35 +100,9 @@
     ],
     "SYNTH_USE_PG_PINS_DEFINES": "USE_POWER_PINS",
     "pdk::sky130*": {
+        "PL_TARGET_DENSITY": 0.60,
         "RT_MAX_LAYER": "met4",
         "DIE_AREA": "0 0 2920 3520",
-        "FP_DEF_TEMPLATE": "dir::fixed_dont_change/user_project_wrapper.def",
-        "scl::sky130_fd_sc_hd": {
-            "CLOCK_PERIOD": 25
-        },
-        "scl::sky130_fd_sc_hdll": {
-            "CLOCK_PERIOD": 10
-        },
-        "scl::sky130_fd_sc_hs": {
-            "CLOCK_PERIOD": 8
-        },
-        "scl::sky130_fd_sc_ls": {
-            "CLOCK_PERIOD": 10,
-            "SYNTH_MAX_FANOUT": 5
-        },
-        "scl::sky130_fd_sc_ms": {
-            "CLOCK_PERIOD": 10
-        }
-    },
-    "pdk::gf180mcuC": {
-        "STD_CELL_LIBRARY": "gf180mcu_fd_sc_mcu7t5v0",
-        "FP_PDN_CHECK_NODES": 0,
-        "FP_PDN_ENABLE_RAILS": 0,
-        "RT_MAX_LAYER": "Metal4",
-        "DIE_AREA": "0 0 3000 3000",
-        "FP_DEF_TEMPLATE": "dir::fixed_dont_change/user_project_wrapper_gf180mcu.def",
-        "PL_OPENPHYSYN_OPTIMIZATIONS": 0,
-        "DIODE_INSERTION_STRATEGY": 0,
-        "MAGIC_WRITE_FULL_LEF": 0
+        "FP_DEF_TEMPLATE": "dir::fixed_dont_change/user_project_wrapper.def"
     }
 }

@@ -12,6 +12,7 @@
 #------------------------------------------#
 
 # Clock network
+set ::env(IO_SYNC) 0
 if {[info exists ::env(CLOCK_PORT)] && $::env(CLOCK_PORT) != ""} {
 	set clk_input $::env(CLOCK_PORT)
 	create_clock [get_ports $clk_input] -name clk -period $::env(CLOCK_PERIOD)
