@@ -10,7 +10,7 @@ typedef enum logic [1:0] {
     CPU_DATA = 2'd3
 } client_t;
 
-module request_handler #(parameter UART_ADDRESS = 500)(
+module t04_request_handler_final #(parameter UART_ADDRESS = 500)(
     input logic clk,
     input logic nRst,
 

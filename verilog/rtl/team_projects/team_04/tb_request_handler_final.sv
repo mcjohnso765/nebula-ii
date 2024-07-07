@@ -65,7 +65,7 @@ module tb;
 
 
     // DUT Instance
-    request_handler reqhand (
+    t04_request_handler_final reqhand (
         .clk(clk),
         .nRst(nRst),
 
