@@ -48,6 +48,11 @@ initial begin
     //signal dump
     $dumpfile("dump.vcd");
     $dumpvars(0, tippy_top_tb); 
+
+
+    #200000;
+
+    $finish;
 end
 
 

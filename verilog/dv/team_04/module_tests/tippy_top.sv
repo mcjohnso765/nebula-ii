@@ -6,10 +6,10 @@ module tippy_top (
     input logic clk, nRst, button,
 
     input logic mem_busy, 
-    input [31:0] data_from_mem,
+    input logic [31:0] data_from_mem,
     output logic mem_read, mem_write,
-    output [31:0] adr_to_mem, data_to_mem,
-    output [3:0] sel_to_mem,
+    output logic [31:0] adr_to_mem, data_to_mem,
+    output logic [3:0] sel_to_mem,
 
     input logic Rx,
 
@@ -95,12 +95,12 @@ module tippy_top (
     );
 
     ram ranch(
-        .din(),
-        .addr_r(), 
-        .addr_w(), 
-        .write_en(), 
+        .din(data_to_mem),
+        .addr_r({2'b0, adr_to_mem}), 
+        .addr_w(adr_to_mem), 
+        .write_en(mem_write), 
         .clk(clk), 
-        .dout()
+        .dout(data_from_mem)
     );
 
     logic [7:0] uart_out;
@@ -1802,46 +1802,62 @@ module request_handler #(parameter UART_ADDRESS = 999)(
 endmodule
 
 module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
-    parameter addr_width = 32;
-    parameter data_width = 32;
-    input [addr_width-1:0] addr_r, addr_w;
-    input [data_width-1:0] din;
-    input write_en, clk;
-    output [data_width-1:0] dout;
+  parameter addr_width = 32;
+  parameter data_width = 32;
+  input [addr_width-1:0] addr_r, addr_w;
+  input [data_width-1:0] din;
+  input write_en, clk;
+  output [data_width-1:0] dout;
 
-    reg [data_width-1:0] dout; // Register for output.
-    reg [data_width-1:0] mem [2000-1:0];
-    
-    // initial begin
-    //     $readmemh("instrList.txt", mem);
-    // end
-
-    always @(posedge clk)
-    begin
-        // mem[1000] <= 32'h1;
-
-        mem[00] <= 32'h00000000;
-        mem[01] <= 32'h03c00093;
-        mem[02] <= 32'h02400113;
-        mem[03] <= 32'h01800193;
-        mem[04] <= 32'h0ff00213;
-        mem[05] <= 32'h3e102423;
-        mem[06] <= 32'h3e202623;
-        mem[07] <= 32'h3e102823;
-        mem[08] <= 32'h3e302a23;
-        mem[09] <= 32'h3e402c23;
-        mem[10] <= 32'h3e302e23;
-        mem[11] <= 32'h40302023;
-        mem[12] <= 32'h40202223;
-        mem[13] <= 32'h40202423;
-        mem[14] <= 32'h40202623;
-        
-        if (write_en) begin
-            mem[(addr_w)] <= din;
-        end
-        dout <= mem[addr_r]; // Output register controlled by clock.
-    end
-
-    
-
+  reg [data_width-1:0] dout; // Register for output.
+  reg [data_width-1:0] mem [384-1:0];
+  always @(posedge clk)
+  begin
+    if (write_en)
+    mem[(addr_w)] <= din;
+    dout = mem[addr_r]; // Output register controlled by clock.
+  end
 endmodule
+
+
+// module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
+//     parameter addr_width = 32;
+//     parameter data_width = 32;
+//     input [addr_width-1:0] addr_r, addr_w;
+//     input [data_width-1:0] din;
+//     input write_en, clk;
+//     output [data_width-1:0] dout;
+
+//     reg [data_width-1:0] dout; // Register for output.
+//     reg [data_width-1:0] mem [2000-1:0];
+    
+//     // initial begin
+//     //     $readmemh("instrList.txt", mem);
+//     // end
+
+//     always @(posedge clk)
+//     begin
+//         // mem[1000] <= 32'h1;
+
+//         mem[00] <= 32'h00000000;
+//         mem[01] <= 32'h03c00093;
+//         mem[02] <= 32'h02400113;
+//         mem[03] <= 32'h01800193;
+//         mem[04] <= 32'h0ff00213;
+//         mem[05] <= 32'h3e102423;
+//         mem[06] <= 32'h3e202623;
+//         mem[07] <= 32'h3e102823;
+//         mem[08] <= 32'h3e302a23;
+//         mem[09] <= 32'h3e402c23;
+//         mem[10] <= 32'h3e302e23;
+//         mem[11] <= 32'h40302023;
+//         mem[12] <= 32'h40202223;
+//         mem[13] <= 32'h40202423;
+//         mem[14] <= 32'h40202623;
+        
+//         if (write_en) begin
+//             mem[(addr_w)] <= din;
+//         end
+//         dout <= mem[addr_r]; // Output register controlled by clock.
+//     end
+// endmodule
