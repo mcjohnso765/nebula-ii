@@ -1,5 +1,5 @@
 `timescale 1ns/100ps
-module tb_tippy_top ();
+module tippy_top_tb ();
 
 localparam CLK_PERIOD = 10;
 
