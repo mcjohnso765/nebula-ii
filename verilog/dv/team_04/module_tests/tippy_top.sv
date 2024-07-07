@@ -94,14 +94,14 @@ module tippy_top (
         .v_state() //ignore
     );
 
-    ram ranch(
-        .din(data_to_mem),
-        .addr_r({2'b0, adr_to_mem}), 
-        .addr_w(adr_to_mem), 
-        .write_en(mem_write), 
-        .clk(clk), 
-        .dout(data_from_mem)
-    );
+    // ram ranch(
+    //     .din(data_to_mem),
+    //     .addr_r({2'b0, adr_to_mem}), 
+    //     .addr_w(adr_to_mem), 
+    //     .write_en(mem_write), 
+    //     .clk(clk), 
+    //     .dout(data_from_mem)
+    // );
 
     logic [7:0] uart_out;
     logic uart_data_ready; // flags that the UART data is ready to be received
@@ -1801,23 +1801,6 @@ module request_handler #(parameter UART_ADDRESS = 999)(
 
 endmodule
 
-module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
-  parameter addr_width = 32;
-  parameter data_width = 32;
-  input [addr_width-1:0] addr_r, addr_w;
-  input [data_width-1:0] din;
-  input write_en, clk;
-  output [data_width-1:0] dout;
-
-  reg [data_width-1:0] dout; // Register for output.
-  reg [data_width-1:0] mem [384-1:0];
-  always @(posedge clk)
-  begin
-    if (write_en)
-    mem[(addr_w)] <= din;
-    dout = mem[addr_r]; // Output register controlled by clock.
-  end
-endmodule
 
 
 // module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
