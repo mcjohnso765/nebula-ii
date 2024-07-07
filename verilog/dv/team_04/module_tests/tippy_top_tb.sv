@@ -47,7 +47,7 @@ end
 initial begin
     //signal dump
     $dumpfile("dump.vcd");
-    $dumpvars(0, tb_very_top); 
+    $dumpvars(0, tippy_top_tb); 
 end
 
 
