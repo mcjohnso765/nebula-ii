@@ -116,16 +116,16 @@ module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
 
   reg [data_width-1:0] dout; // Register for output.
   reg [data_width-1:0] mem [2000-1:0];
-  always @(posedge clk)
-  begin
+
+  
+  always @(posedge clk) begin
     if (write_en)
     mem[(addr_w)] <= din;
     dout = mem[addr_r]; // Output register controlled by clock.
   end
 
-  always_comb begin
-    mem[0] = 32'h00000000;
-    mem[1] = 32'h00300213; //addi x4, x0, 3
-    mem[2] = 32'h00118193;//addi x3, x3, 1
-  end
+    assign mem[0] = 32'h00000000;
+    assign mem[1] = 32'h00300213; //addi x4, x0, 3
+    assign mem[2] = 32'h00118193;//addi x3, x3, 1
+
 endmodule
