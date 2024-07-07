@@ -4,7 +4,7 @@ module tippy_top_tb ();
 localparam CLK_PERIOD = 10;
 
 //input wires    
-logic tb_clk, nRst, button, mem_busy;
+logic tb_clk, tb_nRst, button, mem_busy;
 logic [31:0] data_from_mem;
 logic Rx;
 
@@ -14,12 +14,11 @@ logic [31:0] adr_to_mem, data_to_mem;
 logic [3:0] sel_to_mem;
 logic h_out, v_out, pixel_data;
 
-
 //instantiate top level
 //Full Project: CPU, VGA, UART, and Request Unit to Connect them
 tippy_top everest(
     .clk(tb_clk), 
-    .nRst(nRst),
+    .nRst(tb_nRst),
     .button(button), 
     .mem_busy(mem_busy), 
     .data_from_mem(data_from_mem),
@@ -33,15 +32,16 @@ tippy_top everest(
     .v_out(v_out), 
     .pixel_data(pixel_data)
 );
-    ram ranch(
-        .din(data_to_mem),
-        //.addr_r(vga_mem_adr_read), 
-	    .addr_r({2'b0, adr_to_mem[31:2]}), //to load to cpu from mem
-        .addr_w(adr_to_mem), 
-        .write_en(mem_write), 
-        .clk(tb_clk), 
-        .dout(data_from_mem)
-    );
+
+ram ranch(
+    .din(data_to_mem),
+    //.addr_r(vga_mem_adr_read), 
+    .addr_r(adr_to_mem), //to load to cpu from mem
+    .addr_w(adr_to_mem), 
+    .write_en(mem_write), 
+    .clk(tb_clk), 
+    .dout(data_from_mem)
+);
 
 //clock generation
 always begin
@@ -51,25 +51,43 @@ always begin
     #(CLK_PERIOD / 2.0); 
 end
 
+//power-on reset task
+task reset_dut;  
+    @(negedge tb_clk);
+    tb_nRst = 1'b0; 
+    @(negedge tb_clk);
+    @(negedge tb_clk);
+    tb_nRst = 1'b1;
+    @(posedge tb_clk);
+endtask
 
+//inject initial instructions
+task write_initial_instructions;
+    mem_busy = 1'b1;
+    
+
+    @(negedge tb_clk);
+    adr_to_mem = 32'd0;
+    data_to_mem = 32'h00700093;
+    
+    @(negedge tb_clk);
+    adr_to_mem = 32'd4;
+    data_to_mem = 32'h01500113;
+    
+    @(negedge tb_clk);
+    adr_to_mem = 32'd8;
+    data_to_mem = 32'h00808093;
+   
+endtask
 
 initial begin
     //signal dump
     $dumpfile("dump.vcd");
     $dumpvars(0, tippy_top_tb); 
 
+    reset_dut();
+    write_initial_instructions();
     #200000;
-
-    // iram instr(
-    //     .din('b0),
-    //     //.addr_r(vga_mem_adr_read), 
-	//     .addr_r(), //to load to cpu from mem
-    //     .addr_w('b0), 
-    //     .write_en('b0), 
-    //     .clk(clk), 
-    //     .dout()
-    // );
-
 
 
     $finish;
@@ -78,54 +96,23 @@ end
 
 endmodule
 
-// module iram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
-//   parameter addr_width = 32;
-//   parameter data_width = 32;
-//   input [addr_width-1:0] addr_r, addr_w;
-//   input [data_width-1:0] din;
-//   input write_en, clk;
-//   output [data_width-1:0] dout;
-
-//   reg [data_width-1:0] dout; // Register for output.
-//   reg [data_width-1:0] mem [99:0];
-//   always @(posedge clk)
-//   begin
-
-//     dout = mem[addr_r]; // Output register controlled by clock.
-//   end
-
-//   always_comb begin
-//     mem[0] = 32'h00000000;
-//     // mem[1] = 32'h;
-//     // mem[2] = 32'h;
-//     // mem[3] = 32'h;
-//     // mem[4] = 32'h;
-//     // mem[5] = 32'h;
-//     // mem[6] = 32'h;
-
-//   end
-// endmodule
-
 module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
   parameter addr_width = 32;
   parameter data_width = 32;
-  input [addr_width-1:0] addr_r, addr_w;
-  input [data_width-1:0] din;
-  input write_en, clk;
-  output [data_width-1:0] dout;
+  input logic [addr_width-1:0] addr_r, addr_w;
+  input logic [data_width-1:0] din;
+  input logic write_en, clk;
+  output logic [data_width-1:0] dout;
 
-  reg [data_width-1:0] dout; // Register for output.
-  reg [data_width-1:0] mem [2000-1:0];
-
-    assign dout = mem[addr_r]; // Output register controlled by clock.
-    assign mem[0] = 32'h00000000;
-    assign mem[1] = 32'h00300213; //addi x4, x0, 3
-    assign mem[2] = 32'h00118193;//addi x3, x3, 1
+  reg [data_width-1:0] mem [600-1:0];
+  logic [31:0] focus_read = '0, focus_write  ='0;
   
-  always @(posedge clk) begin
-    if (write_en)
-    mem[(addr_w)] <= din;
+  always_ff @( posedge clk ) begin 
+      if (write_en) begin
+          mem[addr_w] <= din;
+      end else begin
+          dout <= mem[addr_r];
+      end
   end
 
-
-endmodule
+  endmodule
