@@ -1,8 +1,8 @@
 // $Id: $
 // File name:   team_04_Wrapper.sv
-// Created:     MM/DD/YYYY
-// Author:      <Full Name>
-// Description: <Module Description>
+// Created:     07/05/2024
+// Author:      <Andy Hu & Dhruve>
+// Description: <Wrapper Module for Team 04 CPU>
 
 module team_04_Wrapper (
 
@@ -10,10 +10,6 @@ module team_04_Wrapper (
     inout vccd1,	// User area 1 1.8V supply
     inout vssd1,	// User area 1 digital ground
 `endif
-
-    // Chip Select (Active Low)
-    input wire ncs,
-
     /*
     *--------------------------------------------------------------
     * NOTE: You may not need to include all of these.

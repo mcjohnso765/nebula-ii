@@ -90,6 +90,7 @@ module nebula_ii (
     wire                  [31:0] wbs_dat_o_sram;
 
     // Sample Project Instance
+    //fixme: replace with project wrapper instance
     sample_team_proj_Wrapper sample_team_proj_Wrapper (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
