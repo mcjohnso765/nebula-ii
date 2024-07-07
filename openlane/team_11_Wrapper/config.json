@@ -3,13 +3,13 @@
     "DESIGN_IS_CORE": 0,
     "VERILOG_FILES": [
         "dir::../../verilog/rtl/wb_wrapper.vh",
-        "dir::../../verilog/rtl/team_11/team_11_Wrapper.sv",
-        "dir::../../verilog/rtl/team_11/team_11.sv",
-        "dir::../../verilog/rtl/team_11/team_11_WB.v",
+        "dir::../../verilog/rtl/team_projects/team_11/team_11_Wrapper.sv",
+        "dir::../../verilog/rtl/team_projects/team_11/team_11.sv",
+        "dir::../../verilog/rtl/team_projects/team_11/team_11_WB.v",
         "<INSERT OTHER VERILOG FILES IN #(pwd)/openlane/team_##_Wrapper>"
     ],
     "CLOCK_PERIOD": 100,
-    "CLOCK_PORT": "clk",
+    "CLOCK_PORT": "wb_clk_i",
     "FP_CORE_UTIL": 10,
     "PL_TARGET_DENSITY": 0.4,
     "RUN_HEURISTIC_DIODE_INSERTION": true,
@@ -18,7 +18,7 @@
     "FP_PDN_CORE_RING": 0,
     "RT_MAX_LAYER": "met4",
     "FP_SIZING": "absolute",
-    "DIE_AREA": "0 0 1200 300",
+    "DIE_AREA": "0 0 800 400",
     "pdk::sky130*": {
         "scl::sky130_fd_sc_hd": {
             "CLOCK_PERIOD": 100
