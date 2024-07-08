@@ -1,4 +1,5 @@
 module pc(
+    input logic en, 
     output logic [31:0] pc_out,
     output logic [31:0] pc_add_out,
     input logic [31:0] generated_immediate,
@@ -35,7 +36,7 @@ always_ff @(posedge clock, posedge reset) begin
     if(reset) begin
         current_pc <= '0; //placeholder constant for initialization
     end
-    else begin
+    else if (en) begin
         current_pc <= next_pc;
     end
 

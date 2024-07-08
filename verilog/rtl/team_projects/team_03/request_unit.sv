@@ -1,6 +1,6 @@
 module request_unit (
     // From CPU
-    input logic clk, nRST,
+    input logic clk, nRST, en, 
     input logic D_fetch, D_write, I_fetch,  
     input logic [31:0] data_adr, instr_adr, 
     input logic [31:0] writedata,           
@@ -31,7 +31,7 @@ module request_unit (
             data        <= 32'b0;
             adr_i       <= 32'b0;
             cpu_dat_i   <= 32'b0;
-        end else begin
+        end else if (en) begin
             state       <= next_state;
             instr       <= next_instr;
             data        <= next_data;
