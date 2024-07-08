@@ -61,7 +61,7 @@ module team_07_WB (
 		.gpio_out(gpio_out),
 		.gpio_oeb(gpio_oeb)
 	);
-
+	assign IRQ = 0;
 
 	assign	dat_o = 
 			(adr_i[`WB_AW-1:0] == EN_VAL_REG_OFFSET)	? EN_VAL_REG :
