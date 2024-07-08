@@ -28,9 +28,6 @@ module wb_interconnect #(
     output logic la_control_stb,
     output logic gpio_control_stb,
 
-    // Truncated Address (use only last 16 bits)
-    output logic [31:0] adr_truncated,
-
     // WB dat_o Signals
     input logic [32*(NUM_TEAMS+1)-1:0] designs_wbs_dat_o_flat,
     input logic [31:0] la_control_dat_o,
@@ -51,10 +48,6 @@ module wb_interconnect #(
             designs_dat_o[i] = designs_wbs_dat_o_flat[i*32 +: 32];
         end
     end
-
-
-    // Truncated Address
-    assign adr_truncated = {16'b0, wbs_adr_i[15:0]};
     
     // Multiplexing of strobe signals - LA and GPIO
     assign la_control_stb = (wbs_adr_i[31:16] == 16'h3100) ? wbs_stb_i : 'b0;
