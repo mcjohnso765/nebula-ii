@@ -69,15 +69,23 @@ module team_04 (
     logic [31:0] CPU_DAT_O;
     logic        BUSY_O;
 
-    very_top final_design (
+    tippy_top final_design (
         .clk(clk),
         .nRst(nrst),
+        .button(),
         .Rx(gpio_in[5]),
         .h_out(h_out),
         .v_out(v_out),
         .pixel_data(pixel_data),
-        .opcode_error(opcode_error),
-        .alu_error(alu_error)
+        //.opcode_error(opcode_error),
+        //.alu_error(alu_error),
+        .mem_busy(BUSY_O),
+        .mem_read(READ_I),
+        .mem_write(WRITE_I),
+        .adr_to_mem(ADR_I),
+        .data_to_mem(CPU_DAT_I),
+        .sel_to_mem(SEL_O)
+
     );
 
     wishbone_manager wb_manage (
