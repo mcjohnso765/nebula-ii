@@ -200,23 +200,12 @@ _check_button:
     beq a0, x8, _move_left
     beq a0, x9, _move_right
     
-    j _check_button
+    j _delay_loop
 
 _shoot:
+	sw x0, -8(x18)
 	addi x18, x1, 0
-	shoot_loop:
-    addi x18, x18, -4      
     addi x19, x17, 0
-    sw x19, -8(x18)          
-    sw x0, -4(x18)
-    
-    li x6, 100000          /* Load the delay count */
-delay_loops:
-    addi x6, x6, -1        /* Decrement the counter */
-    bnez x6, delay_loops    /* Loop until the counter reaches zero */
-    
-    bge x18, x0, shoot_loop  
-    
     j _delay_loop
 
 _move_left:
@@ -308,4 +297,12 @@ _delay_loop:
 delay_loop:
     addi x6, x6, -1        /* Decrement the counter */
     bnez x6, delay_loop    /* Loop until the counter reaches zero */
+    addi x18, x18, -4      
+    sw x19, -8(x18)          
+    sw x0, -4(x18)
+    blt x18, x0, _shoot_loop  
+    j _check_button
+    
+_shoot_loop:
+	addi x18, x0, 0
     j _check_button
