@@ -226,7 +226,7 @@ module CPU (
 
     //from Regs
     logic [31:0] regA, regB;
-    logic [31:0] [31:0] reg_file;
+    logic [31:0] reg_file [31:0] ;
 
     //from Mem Handler
     logic [31:0] MemData;
@@ -964,7 +964,7 @@ module register_file(
     input logic clk, nrst, reg_enable_write,
     input logic [31:0] write_data,
     output logic [31:0]  read_data_1, read_data_2,
-    output reg [31:0]  [31:0] reg_file,
+    output reg [31:0]   reg_file [31:0],
     input enable
 );
     // logic [4:0] i;
