@@ -20,7 +20,7 @@ tippy_top everest(
     .clk(tb_clk), 
     .nRst(tb_nRst),
     .button(button), 
-    .mem_busy(mem_busy), 
+    .mem_busy(1'b0), //hardcoding to high
     .data_from_mem(data_from_mem),
     .mem_read(mem_read),
     .mem_write(mem_write),
