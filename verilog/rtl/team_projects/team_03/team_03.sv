@@ -49,13 +49,6 @@ module team_03 (
     assign gpio_out = 34'b0; //Inputs, but set low anyways
     assign gpio_oeb = '1;//All 1's inputs
 
- input logic clock, reset, en,
-  input logic [31:0] CPU_DAT_O, 
-  input logic BUSY_O,
-  output logic [31:0] CPU_DAT_I, ADR_I, 
-  output logic [3:0] SEL_I,
-  output logic WRITE_I, READ_I
-
     logic WRITE_I, READ_I, BUSY_O;
     
     logic [31:0] CPU_DAT_O;
