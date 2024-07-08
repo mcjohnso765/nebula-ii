@@ -1668,6 +1668,9 @@ module request_handler #(parameter UART_ADDRESS = 999)(
             next_client <= VGA;
 
             instruction <= 32'b0;
+
+            CPU_enable <= '0;
+            VGA_enable <= '0;
         end else begin
             // handler_state <= next_handler_state;
 
