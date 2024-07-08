@@ -33,15 +33,29 @@ tippy_top everest(
     .pixel_data(pixel_data)
 );
 
-ram ranch(
-    .din(data_to_mem),
-    //.addr_r(vga_mem_adr_read), 
-    .addr_r(adr_to_mem), //to load to cpu from mem
-    .addr_w(adr_to_mem), 
-    .write_en(mem_write), 
-    .clk(tb_clk), 
-    .dout(data_from_mem)
+// ram ranch(
+//     .din(data_to_mem),
+//     //.addr_r(vga_mem_adr_read), 
+//     .addr_r(adr_to_mem), //to load to cpu from mem
+//     .addr_w(adr_to_mem), 
+//     .write_en(mem_write), 
+//     .clk(tb_clk), 
+//     .dout(data_from_mem)
+// );
+
+ram chicken (
+   .clk(tb_clk), 
+   .nrst(tb_nRst),
+    .data_address(), // alu result to be read or written -why are they using dis
+  .instruction_address(), // no brainer, it is the insturction address      -wanna use data_from_mem instead somehow??!
+  .dm_read_en(), //we dont have a read enable
+  .dm_write_en(), // enable ports for the read and enable
+ .data_to_write(data_to_mem), // data to be written into memory  //=data_to_mem?
+ .instruction_read(), // things we got from memory dude -ngl idk what this dos
+ .data_read()  //same with this ^^ - i mean i do actually nvm 
 );
+
+
 
 //clock generation
 always begin
@@ -61,24 +75,24 @@ task reset_dut;
     @(posedge tb_clk);
 endtask
 
-//inject initial instructions
-task write_initial_instructions;
-    mem_busy = 1'b1;
+// //inject initial instructions
+// task write_initial_instructions;
+//     mem_busy = 1'b1;
     
 
-    @(negedge tb_clk);
-    adr_to_mem = 32'd0;
-    data_to_mem = 32'h00700093;
+//     @(negedge tb_clk);
+//     adr_to_mem = 32'd0;
+//     data_to_mem = 32'h00700093;
     
-    @(negedge tb_clk);
-    adr_to_mem = 32'd4;
-    data_to_mem = 32'h01500113;
+//     @(negedge tb_clk);
+//     adr_to_mem = 32'd4;
+//     data_to_mem = 32'h01500113;
     
-    @(negedge tb_clk);
-    adr_to_mem = 32'd8;
-    data_to_mem = 32'h00808093;
+//     @(negedge tb_clk);
+//     adr_to_mem = 32'd8;
+//     data_to_mem = 32'h00808093;
    
-endtask
+// endtask
 
 initial begin
     //signal dump
@@ -86,7 +100,7 @@ initial begin
     $dumpvars(0, tippy_top_tb); 
 
     reset_dut();
-    write_initial_instructions();
+    // write_initial_instructions();
     #200000;
 
 
@@ -96,23 +110,115 @@ end
 
 endmodule
 
-module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
-  parameter addr_width = 32;
-  parameter data_width = 32;
-  input logic [addr_width-1:0] addr_r, addr_w;
-  input logic [data_width-1:0] din;
-  input logic write_en, clk;
-  output logic [data_width-1:0] dout;
+// module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
+//   parameter addr_width = 32;
+//   parameter data_width = 32;
+//   input logic [addr_width-1:0] addr_r, addr_w;
+//   input logic [data_width-1:0] din;
+//   input logic write_en, clk;
+//   output logic [data_width-1:0] dout;
 
-  reg [data_width-1:0] mem [600-1:0];
-  logic [31:0] focus_read = '0, focus_write  ='0;
+//   reg [data_width-1:0] mem [600-1:0];
+//   logic [31:0] focus_read = '0, focus_write  ='0;
   
-  always_ff @( posedge clk ) begin 
-      if (write_en) begin
-          mem[addr_w] <= din;
-      end else begin
-          dout <= mem[addr_r];
-      end
-  end
+//   always_ff @( posedge clk ) begin 
+//       if (write_en) begin
+//           mem[addr_w] <= din;
+//       end else begin
+//           dout <= mem[addr_r];
+//       end
+//   end
 
-  endmodule
+//   endmodule
+
+// module ram ( //og gonna change this up
+//     input logic clk, nrst,
+//     input logic [31:0] data_address, // alu result to be read or written
+//     input logic [31:0] instruction_address, // no brainer, it is the insturction address
+//     input logic dm_read_en, dm_write_en, // enable ports for the read and enable
+//     input logic [31:0] data_to_write, // data to be written into memory  //=data_to_mem
+//     output logic [31:0] instruction_read, data_read // things we got from memory dude
+// );
+
+// logic [31:0] mem [4095:0];
+// initial $readmemh("cpu.mem", mem, 0, 4095);
+
+// always_ff @(posedge clk) begin
+//     if (dm_write_en && data_address[11]) begin
+//         mem[data_address[11:0]] <= data_to_write;
+//     end
+
+// end
+
+// always_ff @(posedge clk, negedge nrst) begin
+//     if (nrst) begin
+//         data_read <= '0;
+//         instruction_read <= mem[32'b0];
+//     end
+
+//     else if (dm_read_en) begin
+//         data_read <= mem[data_address[11:0]];
+
+//     end
+    
+//     else if (!dm_read_en) begin
+//         instruction_read <= mem[instruction_address];
+
+//     end
+
+//     else begin
+//         instruction_read <= 32'b00000000000000000000000000010011;
+//         data_read <= '0;
+
+//     end
+// end
+
+
+
+// endmodule
+
+module ram (
+    input logic clk, nrst,
+    input logic [31:0] data_address, // alu result to be read or written
+    input logic [31:0] instruction_address, // no brainer, it is the insturction address
+    input logic dm_read_en, dm_write_en, // enable ports for the read and enable
+    input logic [31:0] data_to_write, // data to be written into memory  //=data_to_mem
+    output logic [31:0] instruction_read, data_read // things we got from memory dude
+);
+
+logic [31:0] mem [4095:0];
+initial $readmemh("cpu.mem", mem, 0, 4095);
+
+always_ff @(posedge clk) begin
+    if (dm_write_en) begin
+        mem[data_address] <= data_to_write;
+    end
+
+end
+
+always_ff @(posedge clk, negedge nrst) begin
+    if (nrst) begin
+        data_read <= '0;
+        instruction_read <= mem[32'b0];
+    end
+
+    else if (dm_read_en) begin
+        data_read <= mem[data_address];
+
+    end
+    
+    else if (!dm_read_en) begin
+        instruction_read <= mem[instruction_address];
+
+    end
+
+    else begin
+        instruction_read <= 32'b00000000000000000000000000010011;
+        data_read <= '0;
+
+    end
+end
+
+
+
+endmodule
