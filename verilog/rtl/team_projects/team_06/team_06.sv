@@ -1,8 +1,8 @@
 // $Id: $
 // File name:   team_06.sv
-// Created:     MM/DD/YYYY
-// Author:      <Full Name>
-// Description: <Module Description>
+// Created:     07/08/2024
+// Author:      Thomas Fang
+// Description: This is the top wrapper that wraps the all the snake game modules stogether. It controls how many input pins goes into the chip and how many output pins goes out of the chip.
 
 `default_nettype none
 
