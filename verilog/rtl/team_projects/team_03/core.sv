@@ -4,7 +4,10 @@ module core(
   input logic BUSY_O,
   output logic [31:0] CPU_DAT_I, ADR_I, 
   output logic [3:0] SEL_I,
-  output logic WRITE_I, READ_I
+  output logic WRITE_I, READ_I,
+
+  input logic [33:0] gpio_in,
+  output logic [33:0] gpio_out, gpio_oeb
 );
 
     logic [2:0] i_type; // instruction type (r, i, s, etc)
@@ -34,7 +37,7 @@ module core(
     logic Z, N, C, V;
 
     logic b_out;
-    logic [31:0] data_to_write, data_read;
+    logic [31:0] data_to_write, data_read, data_to_IO;
     logic pc_en;
     logic slt;
     logic u;
@@ -42,7 +45,7 @@ module core(
 
      
     logic i_ready, d_ready;
-    request_unit ru(.en(en), .clk(clock), .nRST(reset), .D_fetch(read_mem), .D_write(write_mem), .I_fetch(1'b1), .data_adr(result), .instr_adr(program_counter), .writedata(data_to_write), .i_done(i_ready), .d_done(d_ready), .instr(inst), .data(data_read), .busy_o(BUSY_O), .cpu_dat_o(CPU_DAT_O), .write_i(WRITE_I), .read_i(READ_I), .adr_i(ADR_I),  .cpu_dat_i(CPU_DAT_I), .sel_i(SEL_I));
+    request_unit ru(.en(en), .clk(clock), .nRST(reset), .D_fetch(read_mem), .D_write(write_mem), .I_fetch(1'b1), .data_adr(result), .instr_adr(program_counter), .writedata(data_to_write), .i_done(i_ready), .d_done(d_ready), .instr(inst), .data(data_to_IO), .busy_o(BUSY_O), .cpu_dat_o(CPU_DAT_O), .write_i(WRITE_I), .read_i(READ_I), .adr_i(ADR_I),  .cpu_dat_i(CPU_DAT_I), .sel_i(SEL_I));
 
 
     wire cpu_clock;
@@ -65,6 +68,8 @@ module core(
     writeback writeback(.memory_value(data_read), .ALU_value(result), .pc_4_value(program_counter_out), .mem_to_reg(mem_to_reg), .load_byte(load_byte), .read_pc_4(1'b0), .register_write(register_write_data), .slt(slt), .ALU_neg_flag(N), .ALU_overflow_flag(V));
 
     byte_demux byte_demux(.reg_b(regB_data), .store_byte_en(store_byte), .b_out(data_to_write));
+
+    IO_mod_enable IO_mod(.clk(clock), .rst(reset), .write_mem(write_mem), .read_mem(read_mem), .data_from_mem(data_to_IO), .data_address(result), .data_to_write(data_to_write), .data_read(data_read), .IO_out(gpio_out[31:0]), .IO_enable(gpio_oeb[31:0]), .IO_in(gpio_in[31:0]));
 
     //byte_imm_gen byte_immediate_generator (.b_out(b_out_connect), .imm_gen_byte(data_to_write));
 
