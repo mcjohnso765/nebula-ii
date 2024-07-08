@@ -29,7 +29,7 @@ module team_03 (
     output  logic        STB_O,
     output  logic        CYC_O,
 
-    input logic DAT_I,
+    input logic [31:0] DAT_I,
     input logic ACK_I,
 
     /*
