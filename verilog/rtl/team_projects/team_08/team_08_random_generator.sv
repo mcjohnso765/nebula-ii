@@ -1,5 +1,5 @@
 
-module random_generator(
+module team_08_random_generator(
     input logic clk,
     input logic rst_n,
     input logic [3:0] MCNT1, MCNT2,

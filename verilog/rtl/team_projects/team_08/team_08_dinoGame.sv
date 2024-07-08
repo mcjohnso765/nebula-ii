@@ -6,7 +6,7 @@
         WIN = 3'd3
     } state_t;
 
-module dinoGame (input clk, input up, input rst,
+module team_08_dinoGame (input clk, input up, input rst,
 
     /*spi*/ 
     output logic tft_sck, output logic tft_sdi, 
@@ -71,42 +71,42 @@ module dinoGame (input clk, input up, input rst,
     .rd(rd), .data(data), .received({drawDoneCactus, drawDoneDino})
      );*/
 
-    GameState game(/*inputs*/.clk(clk), .reset(rst), .collision_detect(collides), .button_pressed(edge_det), .score(score), 
+    team_08_GameState game(/*inputs*/.clk(clk), .reset(rst), .collision_detect(collides), .button_pressed(edge_det), .score(score), 
     /*outputs*/.state(state)); 
 
-    rectangleGenerator recGen(/*inputs*/.clk(clk), .nRst(rst), .state(state), .cactusH1(cactusHeight1), .cactusH2(cactusHeight2), .x(x), .y(y), .dinoY(dinoY), 
+    team_08_rectangleGenerator recGen(/*inputs*/.clk(clk), .nRst(rst), .state(state), .cactusH1(cactusHeight1), .cactusH2(cactusHeight2), .x(x), .y(y), .dinoY(dinoY), 
     .cactusX(cactusX), .x_dist(x_dist), 
     /*outputs*/.r_floor(r_floor), .r_cloud(r_cloud), .r_idle(r_idle), .r_over(r_over), .r_win(r_win), .r_dino(r_dino), .r_cactus(r_cactus));
 
-    dinoJump dinoJump(/*inputs*/.clk(clk), .nRst(rst), .state(state), .button(sync1), .drawDoneDino(drawDoneDino),
+    team_08_dinoJump dinoJump(/*inputs*/.clk(clk), .nRst(rst), .state(state), .button(sync1), .drawDoneDino(drawDoneDino),
     /*outputs*/.dinoY(dinoY), .v(v), .dinoMovement(dinoMovement), .dinoJumpGood(dinoJumpGood));
     
-    cactusMove cactusMove(/*inputs*/.clk(clk), .nRst(rst), .enable(1'b1), .state(state), 
+    team_08_cactusMove cactusMove(/*inputs*/.clk(clk), .nRst(rst), .enable(1'b1), .state(state), 
     .rng_input(cactusRandDist), .type1(cactusType1), .type2(cactusType2), .drawDoneCactus(drawDoneCactus),
     /*outputs*/.x_dist(x_dist), .pixel(cactusX), .height1(cactusHeight1), .height2(cactusHeight2), .cactusMovement(cactusMovement));
 
-    collision_detector collision(/*inputs*/.clk(clk), .reset(rst), .dinoY(dinoY), .state(state),
+    team_08_collision_detector collision(/*inputs*/.clk(clk), .reset(rst), .dinoY(dinoY), .state(state),
     .dinoX(9'd280), .dinoWidth(9'd20), .cactusX1(cactusX), .cactusRandDist(x_dist), .cactusY(9'd101), 
     .cactusHeight1(cactusHeight1), .cactusHeight2(cactusHeight2), .cactusWidth(9'd20), 
     /*outputs*/.collision_detect(collides));
     
-    imageGenerator lcdOutput(/*inputs*/.clk(clk), .rst(rst),
+    team_08_imageGenerator lcdOutput(/*inputs*/.clk(clk), .rst(rst),
     .r_idle(r_idle), .r_over(r_over), .r_win(r_win), .r_cactus(r_cactus), .r_cloud(r_cloud), .r_dino(r_dino), .r_floor(r_floor), 
     /*outputs*/.x(x), .y(y), .tft_sck(tft_sck), .tft_sdi(tft_sdi), .tft_dc(tft_dc), .tft_reset(tft_reset), .tft_cs(tft_cs));
     
-    random_generator cactus1size(/*inputs*/.clk(clk), .rst_n(rst), .MCNT1(4'd3), .MCNT2(4'd5), .button_pressed(edge_det), .state(state), 
+    team_08_random_generator cactus1size(/*inputs*/.clk(clk), .rst_n(rst), .MCNT1(4'd3), .MCNT2(4'd5), .button_pressed(edge_det), .state(state), 
     /*outputs*/.rnd(cactusType1));
 
-    random_generator cactus2size(/*inputs*/.clk(clk), .rst_n(rst), .MCNT1(4'd2), .MCNT2(4'd7), .button_pressed(edge_det), .state(state), 
+    team_08_random_generator cactus2size(/*inputs*/.clk(clk), .rst_n(rst), .MCNT1(4'd2), .MCNT2(4'd7), .button_pressed(edge_det), .state(state), 
     /*outputs*/.rnd(cactusType2));
 
-    random_generator cactusDist(/*inputs*/.clk(clk), .rst_n(rst), .MCNT1(4'd3), .MCNT2(4'd5), .button_pressed(edge_det), .state(state), 
+    team_08_random_generator cactusDist(/*inputs*/.clk(clk), .rst_n(rst), .MCNT1(4'd3), .MCNT2(4'd5), .button_pressed(edge_det), .state(state), 
     /*outputs*/.rnd(cactusRandDist));
 
-    score_counter scoreCounter(/*inputs*/.clk(clk), .reset(rst), .collision_detect(collides), .state(state), 
+    team_08_score_counter scoreCounter(/*inputs*/.clk(clk), .reset(rst), .collision_detect(collides), .state(state), 
     /*outputs*/.bcd_ones(bcd_ones), .bcd_tens(bcd_tens), .score(score));
 
-    score_display flash(/*inputs*/.clk(clk), .reset(rst), .bcd_ones(bcd_ones), .bcd_tens(bcd_tens), 
+    team_08_score_display flash(/*inputs*/.clk(clk), .reset(rst), .bcd_ones(bcd_ones), .bcd_tens(bcd_tens), 
     /*outputs*/.displayOut(displayOut), .blinkToggle(blinkToggle));
 
     ssdec ones(.in(displayOut), .enable(~blinkToggle), .out(ones_score));

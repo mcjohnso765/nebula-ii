@@ -1,5 +1,5 @@
 
-module rectangleGenerator(
+module team_08_rectangleGenerator(
     input logic clk,
     input logic nRst,
     input logic [8:0] x,

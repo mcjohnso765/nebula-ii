@@ -1,4 +1,4 @@
-module cactusMove(
+module team_08_cactusMove(
 input logic clk, nRst, enable, 
 input logic [1:0] rng_input,
 input logic [1:0] type1, type2,

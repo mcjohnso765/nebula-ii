@@ -1,5 +1,5 @@
 
-module collision_detector (
+module team_08_collision_detector (
   input logic clk,
   input logic reset,
   input logic [8:0] dinoY, 

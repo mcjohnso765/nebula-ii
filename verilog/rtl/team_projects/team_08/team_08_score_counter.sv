@@ -1,6 +1,6 @@
 
 
-module score_counter (
+module team_08_score_counter (
   input logic clk,
   input logic reset,
   input logic collision_detect, // if collision detected --> stop counting score

@@ -6,7 +6,7 @@
 */
 
 
-module GameState (
+module team_08_GameState (
   input logic clk,
   input logic reset,
   input logic collision_detect, // comes from collision_detector module

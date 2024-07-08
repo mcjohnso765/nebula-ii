@@ -31,9 +31,9 @@ logic [19:0] empty;
 logic blinkToggle;
 logic [6:0] scoreDisplayed;
 
-GPIOPins game(
+team_08_GPIOPins game(
   .clk(hwclk), .reset(reset), .in({11'd0, pb[17], pb[18], ~pb[19], 20'd0}), 
-  .out({right[5], right[6], empty, scoreDisplayed, right[4:0]}),=
+  .out({right[5], right[6], empty, scoreDisplayed, right[4:0]})
 );
 
 // assign ss0[6:0] = 7'b1100111;

@@ -1,5 +1,5 @@
 
-module dinoJump( 
+module team_08_dinoJump( 
   input logic clk, nRst, button, 
   input state_t state,
   input logic drawDoneDino,

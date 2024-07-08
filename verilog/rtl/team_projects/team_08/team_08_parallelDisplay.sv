@@ -21,7 +21,7 @@ typedef enum logic [3:0] {
     DONES = 9
 } state_d;
 
-module parallelDisplay (
+module team_08_parallelDisplay (
     input logic clk,
     input logic rst,
     input logic [1:0] move_enable, // Enable signals for movement of each object

@@ -1,4 +1,4 @@
-module GPIOPins(
+module team_08_GPIOPins(
     input logic [33:0] in,
     output logic [33:0] out,
     input logic clk, reset
@@ -8,10 +8,10 @@ logic cs, cd, wr, rd;
 logic tft_sck, tft_sdi, tft_dc, tft_reset, tft_cs;
 logic dac_sdi, dac_cs, dac_sck;
 logic [6:0] ones_score, tens_score;
-logic up, collides;    
+logic up, collides, blinkToggle;    
 logic [7:0] data;
     
-    dinoGame game(.clk(clk), .rst(in[20]), .up(in[21]), .collides(out[33]), 
+    team_08_dinoGame game(.clk(clk), .rst(in[20]), .up(in[21]), .collides(out[33]), 
     .cs(cs),
     .cd(cd),
     .wr(wr),
@@ -32,9 +32,7 @@ logic [7:0] data;
 
 always_comb begin
     if(!blinkToggle) begin
-        out[11:5] = ones_score;
-       
-        
+        out[11:5] = ones_score;        
     end
     else begin
         out[11:5] = tens_score;

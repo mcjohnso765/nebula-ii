@@ -1,5 +1,5 @@
 
-module imageGenerator (
+module team_08_imageGenerator (
     input clk,                          // system clock
     input rst,                          // active low reset
     // Items to draw on the LCD
