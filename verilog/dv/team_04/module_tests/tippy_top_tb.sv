@@ -234,7 +234,7 @@ always_ff @(posedge clk, negedge nrst) begin
         end
         data_read <= '0;
         //instruction_read <= mem[32'b0];
-        intruction_read <= 32'h00000000;
+        instruction_read <= 32'h00000000;
     end
 
     else if (dm_read_en) begin
