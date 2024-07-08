@@ -223,8 +223,9 @@ module bomb_game(
     generate_boom boomGen(.clk(clk), .nrst(nrst), .x(x), .y(y), .boomPixel(boomPixel));
 
     logic tft_sdo;
-    logic tft_reset;
+    logic tft_rst;
     logic tftstate;
+    initial tft_sdo = 0;
     imageGenerator lcdOutput(
         .clk(clk), 
         .nrst(nrst), 
@@ -246,7 +247,7 @@ module bomb_game(
         .tft_sck(tft_sck),
         .tft_sdi(tft_sdi),
         .tft_dc(tft_dc),
-        .tft_reset(tft_reset),
+        .tft_reset(tft_rst),
         .tft_cs(tft_cs),
         .tftstate(tft_state)
     );
