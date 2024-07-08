@@ -30,7 +30,7 @@ module team_03 (
     output  logic        CYC_O,
 
     input logic [31:0] DAT_I,
-    input logic ACK_I,
+    input logic ACK_I
 
     /*
     * Add other I/O ports that you wish to interface with the
