@@ -19,12 +19,12 @@
 
 /* THIS FILE IS GENERATED, DO NOT EDIT */
 
-`timescale			1ns/1ps
+// `timescale			1ns/1ps
 `default_nettype	none
 
-`define				WB_AW		16
+`define				WB_AW		32
 
-`include			"wb_wrapper.vh"
+// `include			"wb_wrapper.vh"
 
 module team_03_WB (
 `ifdef USE_POWER_PINS
@@ -38,17 +38,17 @@ module team_03_WB (
 	input	wire	[34-1:0]	gpio_in,
 	output	wire	[34-1:0]	gpio_out,
 	output	wire	[34-1:0]	gpio_oeb,
-	output	wire	[32-1:0]	DAT_I,
-	output	wire	[1-1:0]	ACK_I,
-	input	wire	[32-1:0]	ADR_O,
-	input	wire	[32-1:0]	DAT_O,
-	input	wire	[4-1:0]	SEL_O,
-	input	wire	[1-1:0]	WE_O,
+	input	wire	[32-1:0]	DAT_I,
+	input	wire	[1-1:0]	ACK_I,
+	output	wire	[32-1:0]	ADR_O,
+	output	wire	[32-1:0]	DAT_O,
+	output	wire	[4-1:0]	SEL_O,
+	output	wire	[1-1:0]	WE_O,
 	output	wire	[1-1:0]	STB_O,
-	input	wire	[1-1:0]	CYC_O
+	output	wire	[1-1:0]	CYC_O
 );
 
-	localparam	EN_VAL_REG_OFFSET = `WB_AW'h0000;
+	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30030000;
 
         wire clk_g;
         wire clk_gated_en = GCLK_REG[0];
@@ -78,7 +78,7 @@ module team_03_WB (
 	assign	en = EN_VAL_REG;
 	`WB_REG(EN_VAL_REG, 0, 1)
 
-	localparam	GCLK_REG_OFFSET = `WB_AW'hFF10;
+	localparam	GCLK_REG_OFFSET = `WB_AW'h3003FF10;
 	reg [0:0] GCLK_REG;
 	`WB_REG(GCLK_REG, 0, 1)
 

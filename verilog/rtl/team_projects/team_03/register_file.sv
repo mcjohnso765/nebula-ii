@@ -1,5 +1,5 @@
 module register_file(
-    input logic clk, rst,
+    input logic clk, rst, en, 
     input logic [4:0] regA_address, regB_address, rd_address,
     input logic register_write_en,
     input logic [31:0] register_write_data,
@@ -30,7 +30,7 @@ always_ff @(posedge clk, posedge rst) begin
         registers_state <= '0;
     end
 
-    else begin
+    else if (en) begin
         registers_state <= next_registers_state;
     end
 

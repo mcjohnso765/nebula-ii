@@ -65,47 +65,42 @@ external_interface:
   - name: DAT_I
     port: DAT_I
     width: 32
-    direction: output
+    direction: input
     description: Output sends data
   - name: ACK_I
     port: ACK_I
     width: 1
-    direction: output
+    direction: input
     description: dunno
-
   - name: ADR_O
     port: ADR_O
     width: 32
-    direction: input
+    direction: output
     description: Output sends data
-
   - name: DAT_O
     port: DAT_O
     width: 32
-    direction: input
+    direction: output
     description: Output sends data
-
   - name: SEL_O
     port: SEL_O
     width: 4
-    direction: input
+    direction: output
     description: Output sends data
   - name: WE_O
     port: WE_O
     width: 1
-    direction: input
+    direction: output
     description: Output sends data
-
   - name: STB_O
     port: STB_O
     width: 1
     direction: output
     description: Output sends data
-
   - name: CYC_O
     port: CYC_O
     width: 1
-    direction: input
+    direction: output
     description: Output sends data
 clock:
   name: clk

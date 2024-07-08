@@ -22,21 +22,16 @@ module team_03 (
     output wire [33:0] gpio_out, // Breakout Board Pins
     output wire [33:0] gpio_oeb, // Active Low Output Enable
 
-    input  logic [31:0] ADR_O,
-    input  logic [31:0] DAT_O,
-    input  logic [3:0]  SEL_O,
-    input  logic        WE_O,
-    input  logic        STB_O,
-    input  logic        CYC_O,
+    output  logic [31:0] ADR_O,
+    output  logic [31:0] DAT_O,
+    output  logic [3:0]  SEL_O,
+    output  logic        WE_O,
+    output  logic        STB_O,
+    output  logic        CYC_O,
 
-    output logic DAT_I,
-    output logic ACK_I,
+    input logic DAT_I,
+    input logic ACK_I,
 
-    output logic [31:0] CPU_DAT_I,
-    output logic [31:0] ADR_I,
-    output logic [3:0]  SEL_I,
-    output logic        WRITE_I,
-    output logic        READ_I
     /*
     * Add other I/O ports that you wish to interface with the
     * Wishbone bus to the management core. For examples you can 
@@ -53,9 +48,14 @@ module team_03 (
     
     logic [31:0] CPU_DAT_O;
 
+    logic [31:0] CPU_DAT_I, ADR_I;
+
+    logic [3:0] SEL_I;
+
+
     core core(.clock(clk), .reset(!nrst), .en(en), .CPU_DAT_O(CPU_DAT_O), .BUSY_O(BUSY_O), .CPU_DAT_I(CPU_DAT_I), .ADR_I(ADR_I), .SEL_I(SEL_I), .WRITE_I(WRITE_I), .READ_I(READ_I));
     
-    wishbone_manager wb(.CLK(clock), .nRST(!nrst), .DAT_I(DAT_I), .ACK_I(ACK_I), .CPU_DAT_I(CPU_DAT_I), .ADR_I(ADR_I), .SEL_I(SEL_I), .WRITE_I(WRITE_I), .READ_I(READ_I), .ADR_O(ADR_O), .DAT_O(DAT_O), .SEL_O(SEL_O), .WE_O(WE_O), .STB_O(STB_O), .CYC_O(CYC_O), .CPU_DAT_O(CPU_DAT_O), .BUSY_O(BUSY_O));
+    wishbone_manager wb(.CLK(clk), .nRST(!nrst), .DAT_I(DAT_I), .ACK_I(ACK_I), .CPU_DAT_I(CPU_DAT_I), .ADR_I(ADR_I), .SEL_I(SEL_I), .WRITE_I(WRITE_I), .READ_I(READ_I), .ADR_O(ADR_O), .DAT_O(DAT_O), .SEL_O(SEL_O), .WE_O(WE_O), .STB_O(STB_O), .CYC_O(CYC_O), .CPU_DAT_O(CPU_DAT_O), .BUSY_O(BUSY_O));
 
     /*
     * Place code and sub-module instantiations here.
