@@ -1,4 +1,3 @@
-`default_nettype none
 module uart_in (
 	MHz10,
 	nrst,

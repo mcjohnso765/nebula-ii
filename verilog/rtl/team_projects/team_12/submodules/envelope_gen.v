@@ -22,6 +22,7 @@ module envelope_gen (
 			;
 		single_new_note_velocity = 0;
 		if ((envelope_pulse && poly_start) && (velocity_sel > 16)) begin
+			single_new_note_velocity = velocity_sel;
 			if (key_pressed)
 				single_new_note_velocity = velocity_sel - 'd1;
 			else if (ended_note)

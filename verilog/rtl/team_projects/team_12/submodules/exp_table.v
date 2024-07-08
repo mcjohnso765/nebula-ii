@@ -1,14 +1,26 @@
 module exp_table (
+	MHz10,
+	nrst,
 	in,
+	ready,
 	exp_out
 );
 	reg _sv2v_0;
+	input wire MHz10;
+	input wire nrst;
 	input wire [4:0] in;
+	input wire ready;
 	output reg [6:0] exp_out;
+	reg [44:0] delay_in;
+	always @(posedge MHz10 or negedge nrst)
+		if (~nrst)
+			delay_in <= 0;
+		else if (ready)
+			delay_in <= {delay_in[39:0], in};
 	always @(*) begin
 		if (_sv2v_0)
 			;
-		case (in)
+		case (delay_in[44:40])
 			0: exp_out = 7'b0000000;
 			1: exp_out = 7'b0000000;
 			2: exp_out = 7'b0000000;

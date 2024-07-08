@@ -1,4 +1,3 @@
-`default_nettype none
 module start_arbitrator (
 	MHz10,
 	nrst,
@@ -43,21 +42,6 @@ module start_arbitrator (
 			for (i = N - 1; i >= 0; i = i - 1)
 				if (avail[i])
 					start_out_intmd = 1 << i;
-		end
-		else begin : sv2v_autoblock_2
-			reg signed [31:0] i;
-			for (i = N - 1; i >= 0; i = i - 1)
-				begin
-					not_recent = 1;
-					begin : sv2v_autoblock_3
-						reg signed [31:0] j;
-						for (j = 0; j < STORE; j = j + 1)
-							if (recent[j * $clog2(N)+:$clog2(N)] == i[$clog2(N) - 1:0])
-								not_recent = 0;
-					end
-					if (not_recent)
-						start_out_intmd = 1 << i;
-				end
 		end
 		start_out = (start_in ? start_out_intmd : 0);
 		if (|start_out) begin

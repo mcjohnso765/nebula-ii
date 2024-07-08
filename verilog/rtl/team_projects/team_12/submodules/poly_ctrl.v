@@ -25,34 +25,39 @@ module poly_ctrl (
 	output reg store_samp;
 	output reg clr;
 	output reg start_vol;
-	output reg [5:0] osc_num;
+	output reg [6:0] osc_num;
 	localparam START_DIV = 0;
 	localparam DONE_DIV = 1;
-	localparam WAIT_VOL = 2;
-	localparam HOLD_SAMP = 3;
-	reg [5:0] next_osc_num;
-	reg [1:0] state;
-	reg [1:0] next_state;
+	localparam HOLD_SAMP = 4;
+	reg [6:0] next_osc_num;
+	reg [2:0] state;
+	reg [2:0] next_state;
+	reg [23:0] acc_delay;
+	reg [23:0] next_acc;
 	always @(posedge MHz10 or negedge nrst)
 		if (!nrst) begin
 			osc_num <= 0;
 			state <= START_DIV;
+			acc_delay <= 0;
 		end
 		else if (en) begin
 			osc_num <= next_osc_num;
 			state <= next_state;
+			acc_delay <= next_acc;
 		end
 	always @(*) begin
 		if (_sv2v_0)
 			;
+		acc = acc_delay[23];
 		next_osc_num = osc_num;
 		next_state = state;
 		start = 1'b0;
-		acc = 1'b0;
 		store_samp = 1'b0;
 		clr = 1'b0;
 		start_vol = 0;
+		next_acc = 0;
 		if (state == START_DIV) begin
+			next_acc = {acc_delay[22:0], 1'b0};
 			next_state = START_DIV;
 			start_vol = 0;
 			if (ready) begin
@@ -61,24 +66,16 @@ module poly_ctrl (
 			end
 		end
 		else if (state == DONE_DIV) begin
-			acc = 1'b1;
+			next_acc = {acc_delay[22:0], 1'b1};
 			next_osc_num = osc_num + 1;
 			start_vol = 1;
 			if (next_osc_num < N)
 				next_state = START_DIV;
 			else
-				next_state = WAIT_VOL;
-		end
-		else if (state == WAIT_VOL) begin
-			acc = 0;
-			start_vol = 0;
-			next_state = WAIT_VOL;
-			if (vol_done) begin
-				acc = 1;
 				next_state = HOLD_SAMP;
-			end
 		end
 		else if (state == HOLD_SAMP) begin
+			next_acc = {acc_delay[22:0], 1'b0};
 			next_state = HOLD_SAMP;
 			start_vol = 0;
 			if (samp_enable) begin

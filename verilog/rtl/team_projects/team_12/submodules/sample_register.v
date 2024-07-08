@@ -1,4 +1,3 @@
-`default_nettype none
 module sample_register (
 	MHz10,
 	nrst,

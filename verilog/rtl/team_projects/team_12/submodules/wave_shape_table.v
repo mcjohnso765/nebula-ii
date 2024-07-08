@@ -1,4 +1,3 @@
-`default_nettype none
 module wave_shape_table (
 	sample,
 	mode,

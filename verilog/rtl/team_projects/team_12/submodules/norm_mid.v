@@ -1,4 +1,4 @@
-module norm_out (
+module norm_mid (
 	MHz10,
 	nrst,
 	en,
@@ -6,7 +6,9 @@ module norm_out (
 	A_i,
 	Q_i,
 	M_i,
-	count_nm,
+	A_o,
+	Q_o,
+	M_o,
 	ready
 );
 	reg _sv2v_0;
@@ -19,11 +21,12 @@ module norm_out (
 	input wire [S + 7:0] A_i;
 	input wire [S + 7:0] Q_i;
 	input wire [S + 7:0] M_i;
-	output reg [7:0] count_nm;
+	output reg [S + 7:0] A_o;
+	output reg [S + 7:0] Q_o;
+	output reg [S + 7:0] M_o;
 	output reg ready;
 	localparam READY = 0;
 	localparam DIVIDE = 1;
-	reg [7:0] next_count_nm;
 	reg state;
 	reg next_state;
 	reg [S + 7:0] A;
@@ -32,26 +35,31 @@ module norm_out (
 	reg [S + 7:0] next_Q;
 	reg [S + 7:0] M;
 	reg [S + 7:0] next_M;
+	reg [S + 7:0] next_A_o;
+	reg [S + 7:0] next_Q_o;
+	reg [S + 7:0] next_M_o;
 	reg [$clog2(S + 8) - 1:0] i;
 	reg [$clog2(S + 8) - 1:0] next_i;
+	reg [4:0] start_index;
 	always @(posedge MHz10 or negedge nrst)
 		if (!nrst) begin
-			count_nm <= 0;
+			{A_o, Q_o, M_o} <= 0;
 			state <= READY;
 			{A, Q, M, i} <= 0;
 		end
 		else begin
-			count_nm <= next_count_nm;
+			{A_o, Q_o, M_o} <= {next_A_o, next_Q_o, next_M_o};
 			state <= next_state;
 			{A, Q, M, i} <= {next_A, next_Q, next_M, next_i};
 		end
 	always @(*) begin
 		if (_sv2v_0)
 			;
-		next_count_nm = count_nm;
+		{next_A_o, next_Q_o, next_M_o} = {A_o, Q_o, M_o};
 		next_state = state;
 		{next_A, next_Q, next_M, next_i} = {A, Q, M, i};
-		ready = 1'b0;
+		ready = 0;
+		start_index = 0;
 		if (en) begin
 			if (state == READY) begin
 				ready = 1'b1;
@@ -75,9 +83,9 @@ module norm_out (
 				if (next_i != 0)
 					next_state = DIVIDE;
 				else begin
-					next_count_nm = next_Q[7:0];
-					if (next_A[S + 7])
-						next_A = next_A + M;
+					next_A_o = next_A;
+					next_Q_o = next_Q;
+					next_M_o = next_M;
 					next_state = READY;
 				end
 			end

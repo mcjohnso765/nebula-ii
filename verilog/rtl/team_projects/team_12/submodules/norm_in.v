@@ -47,7 +47,7 @@ module norm_in (
 			state <= READY;
 			{A, Q, M, i} <= 0;
 		end
-		else if (en) begin
+		else begin
 			{A_o, Q_o, M_o} <= {next_A_o, next_Q_o, next_M_o};
 			state <= next_state;
 			{A, Q, M, i} <= {next_A, next_Q, next_M, next_i};
@@ -62,42 +62,42 @@ module norm_in (
 		start_index = 0;
 		new_count = 0;
 		new_max = 0;
-		begin : sv2v_autoblock_1
-			integer j;
-			for (j = 0; j <= 19; j = j + 1)
-				start_index = (max[j] == 1 ? j[4:0] : start_index);
-		end
-		start_index = (start_index < S ? S : start_index);
-		new_count = count[start_index-:S];
-		new_max = max[start_index-:S];
-		if (state == READY) begin
-			ready = 1'b1;
-			next_state = READY;
-			if (start) begin
-				next_A = 0;
-				next_Q = {new_count, 8'b00000000};
-				next_M = {8'b00000000, new_max};
-				next_i = D;
-				next_state = DIVIDE;
+		if (en) begin
+			begin : sv2v_autoblock_1
+				integer j;
+				for (j = 0; j <= 19; j = j + 1)
+					start_index = (max[j] == 1 ? j[4:0] : start_index);
 			end
-		end
-		else if (state == DIVIDE) begin
-			{next_A, next_Q} = {A[S + 6:0], Q, 1'b0};
-			if (next_A[S + 7])
-				next_A = next_A + M;
-			else
-				next_A = next_A - M;
-			next_Q[0] = !next_A[S + 7];
-			next_i = i - 1;
-			if (next_i != 0)
-				next_state = DIVIDE;
-			else begin
+			start_index = (start_index < S ? S : start_index);
+			new_count = count[start_index-:S];
+			new_max = max[start_index-:S];
+			if (state == READY) begin
+				ready = 1'b1;
+				next_state = READY;
+				if (start) begin
+					next_A = 0;
+					next_Q = {new_count, 8'b00000000};
+					next_M = {8'b00000000, new_max};
+					next_i = D;
+					next_state = DIVIDE;
+				end
+			end
+			else if (state == DIVIDE) begin
+				{next_A, next_Q} = {A[S + 6:0], Q, 1'b0};
 				if (next_A[S + 7])
 					next_A = next_A + M;
-				next_A_o = next_A;
-				next_Q_o = next_Q;
-				next_M_o = next_M;
-				next_state = READY;
+				else
+					next_A = next_A - M;
+				next_Q[0] = !next_A[S + 7];
+				next_i = i - 1;
+				if (next_i != 0)
+					next_state = DIVIDE;
+				else begin
+					next_A_o = next_A;
+					next_Q_o = next_Q;
+					next_M_o = next_M;
+					next_state = READY;
+				end
 			end
 		end
 	end
