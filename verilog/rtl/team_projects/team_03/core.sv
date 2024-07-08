@@ -1,5 +1,10 @@
 module core(
-  input logic clock, reset
+  input logic clock, reset, en,
+  input logic [31:0] CPU_DAT_O, 
+  input logic BUSY_O,
+  output logic [31:0] CPU_DAT_I, ADR_I, 
+  output logic [3:0] SEL_I,
+  output logic WRITE_I, READ_I
 );
 
     logic [2:0] i_type; // instruction type (r, i, s, etc)
@@ -35,7 +40,9 @@ module core(
     logic u;
     //this is a test
 
-
+     
+  logic i_ready, d_ready, 
+  request_unit ru(.clk(keyclk1), .nRST(reset), .D_fetch(read_mem), .D_write(write_mem), .I_fetch(1'b1), .data_adr(result), .instr_adr(program_counter), .writedata(data_to_write), .i_done(i_ready), .d_done(d_ready), .instr(inst), .data(data_read), .busy_o(busy_o),  .cpu_dat_o(CPU_DAT_O), .write_i(WRITE_I), .read_i(READ_I), .adr_i(ADR_I),  .cpu_dat_i(CPU_DAT_I), .sel_i(SEL_I));
 
 
     wire cpu_clock;
