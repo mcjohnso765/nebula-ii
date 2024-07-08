@@ -36,6 +36,7 @@ module team_09 (
     /*
     * Place code and sub-module instantiations here.
     */
+    localparam MAX_LENGTH = 78;
     logic snakeBody, snakeHead, apple, border, badColl, goodColl, obstacleFlag, obstacle, good_coll, bad_coll;
     logic [3:0] x, y, randX, randY, randX2, randY2;
     logic next_map_i, next_map_a;
@@ -48,7 +49,6 @@ module team_09 (
     logic [1:0] junk;
 
     // The MAX_LENGTH value that the snake can store that will fit the size of the FPGA (subject to change with efficiency upgrades)
-    localparam MAX_LENGTH = 78;
 
     // Handles the display output of the game to an 8-bit parallel MCU interface TFT display
     image_generator img_gen(.snakeBody(snakeBody), .snakeHead(snakeHead), .apple(apple), .border(border || obstacle), .KeyEnc(gpio_in[31]), .GameOver(isGameComplete), .clk(clk), .nrst(nrst||en),
