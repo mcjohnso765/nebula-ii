@@ -120,7 +120,7 @@ module core (
 		.branch_decision(branch_choice),
 		.pc_write_value(regA_data),
 		.pc_add_write_value(pc_add_write_value),
-		.in_en(pc_en),
+		.in_en(i_ready),
 		.auipc_in(alu_mux_en),
 		.clock(clock),
 		.reset(reset)
