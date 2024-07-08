@@ -14,15 +14,18 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Caravel user project includes
--v $(USER_PROJECT_VERILOG)/rtl/user_project_wrapper.v	     
--v $(USER_PROJECT_VERILOG)/rtl/user_proj_example.v
+-v $(USER_PROJECT_VERILOG)/rtl/user_project_wrapper.v
+#-v $(USER_PROJECT_VERILOG)/rtl/user_proj_example.v
 -v $(USER_PROJECT_VERILOG)/rtl/nebula_ii.v
--v $(USER_PROJECT_VERILOG)/rtl/wb_interconnect.sv
 
 # Wishbone Bus Wrap includes
 -v $(USER_PROJECT_VERILOG)/rtl/wb_wrapper.vh
 -v $(USER_PROJECT_VERILOG)/dv/tb_macros.vh
 #-v $(USER_PROJECT_VERILOG)/dv/wb_tasks.vh
+
+# Wishbone Interconnect  
+-v $(USER_PROJECT_VERILOG)/rtl/wishbone_interconnect/wishbone_arbitrator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/wishbone_interconnect/wishbone_decoder.sv
 
 # Wishbone Manager Control
 -v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
@@ -77,3 +80,10 @@
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/team_12_WB.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/team_12_Wrapper.sv
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/team_12.sv
+
+# SRAM
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/SRAM_1024x32.v
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/ram_controller.v
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper.v
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/beh_models/EF_SRAM_1024x32.tt_180V_25C.v
+#-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper_LVS.v
