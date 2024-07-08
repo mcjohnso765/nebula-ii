@@ -22,7 +22,7 @@
 // `timescale			1ns/1ps
 `default_nettype	none
 
-`define				WB_AW		32
+`define				WB_AW		16
 
 // `include			"wb_wrapper.vh"
 
@@ -48,7 +48,7 @@ module team_03_WB (
 	output	wire	[1-1:0]	CYC_O
 );
 
-	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30030000;
+	localparam	EN_VAL_REG_OFFSET = `WB_AW'h0000;
 
         wire clk_g;
         wire clk_gated_en = GCLK_REG[0];
@@ -78,7 +78,7 @@ module team_03_WB (
 	assign	en = EN_VAL_REG;
 	`WB_REG(EN_VAL_REG, 0, 1)
 
-	localparam	GCLK_REG_OFFSET = `WB_AW'h3003FF10;
+	localparam	GCLK_REG_OFFSET = `WB_AW'hFF10;
 	reg [0:0] GCLK_REG;
 	`WB_REG(GCLK_REG, 0, 1)
 
