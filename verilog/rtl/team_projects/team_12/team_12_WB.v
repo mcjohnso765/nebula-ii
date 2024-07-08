@@ -50,6 +50,8 @@ module team_12_WB (
 	assign	en = EN_VAL_REG;
 	`WB_REG(EN_VAL_REG, 0, 1)
 
+	assign IRQ = '0;
+
 	team_12 instance_to_wrap (
 		.clk(clk),
 		.nrst(nrst),

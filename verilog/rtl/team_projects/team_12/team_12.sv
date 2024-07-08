@@ -138,7 +138,7 @@ localparam N = 75;
 	wire ready;
 	wire start;
 	wire start_vol;
-	wire vol_done;
+
 	wire [15:0] volume_output;
 	wire accumulate;
 	wire store_samp;
@@ -209,7 +209,7 @@ localparam N = 75;
 		.clr(clear_accumulator),
 		.osc_num(osc_num),
 		.start_vol(start_vol),
-		.vol_done(vol_done)
+		.vol_done()
 	);
 	osc_sel #(.N(N)) oscillator_selector(
 		.key_pressed(key_pressed),
