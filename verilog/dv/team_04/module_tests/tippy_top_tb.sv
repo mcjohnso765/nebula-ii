@@ -101,10 +101,9 @@ initial begin
     //signal dump
     $dumpfile("tippy_top.vcd");
     $dumpvars(0, tippy_top_tb); 
-    
-    reset_dut();
-    #10
+
     mem_busy = 1'b0;
+    reset_dut();
     #10
     mem_busy = 1'b1;
     #10
