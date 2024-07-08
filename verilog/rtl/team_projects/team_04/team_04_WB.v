@@ -34,6 +34,8 @@ module team_04_WB (
 	input	wire	[34-1:0]	gpio_in,
 	output	wire	[34-1:0]	gpio_out,
 	output	wire	[34-1:0]	gpio_oeb,
+	input   wire    [31:0]      DAT_I,
+	input   wire                ACK_I,
 	output	wire	[32-1:0]	ADR_O,
 	output	wire	[32-1:0]	DAT_O,
 	output	wire	[4-1:0]	SEL_O,
@@ -46,6 +48,7 @@ module team_04_WB (
 	wire		clk = clk_i;
 	wire		nrst = (~rst_i);
 
+	assign IRQ = 0;
 
 	`WB_CTRL_SIGNALS
 
@@ -71,7 +74,9 @@ module team_04_WB (
 		.SEL_O(SEL_O),
 		.WE_O(WE_O),
 		.STB_O(STB_O),
-		.CYC_O(CYC_O)
+		.CYC_O(CYC_O),
+		.DAT_I(DAT_I),
+		.ACK_I(ACK_I)
 	);
 
 	assign	dat_o = 

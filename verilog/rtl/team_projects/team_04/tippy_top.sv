@@ -14,6 +14,8 @@ module tippy_top (
     input logic Rx,
 
     output logic h_out, v_out, pixel_data
+
+    //output logic 
 );
 
     logic [31:0] CPU_instructions;

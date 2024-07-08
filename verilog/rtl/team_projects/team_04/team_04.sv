@@ -33,7 +33,9 @@ module team_04 (
     output wire [3:0]  SEL_O,
     output wire        WE_O,
     output wire        STB_O,
-    output wire        CYC_O
+    output wire        CYC_O,
+    input  wire [31:0] DAT_I,
+    input  wire        ACK_I
 
 );
 
@@ -47,11 +49,10 @@ module team_04 (
     */
     
     logic h_out, v_out, pixel_data; //wires to VGA from CPU
-    logic opcode_error, alu_error;
+    //logic opcode_error, alu_error;
 
     //input from wishbone interconnect
-    logic [31:0] DAT_I;
-    logic        ACK_I;
+    
     //input from user design
     logic [31:0] CPU_DAT_I;
     logic [31:0] ADR_I;
@@ -104,7 +105,8 @@ module team_04 (
         .STB_O(STB_O),
         .CYC_O(CYC_O),
         .CPU_DAT_O(CPU_DAT_O),
-        .BUSY_O(BUSY_O)
+        .BUSY_O(BUSY_O),
+        .ACK_I(ACK_I)
     );
     
     //enable handler
@@ -116,8 +118,8 @@ module team_04 (
             gpio_out[0] = h_out;
             gpio_out[1] = v_out;
             gpio_out[2] = pixel_data;
-            gpio_out[3] = opcode_error;
-            gpio_out[4] = alu_error;
+            //gpio_out[3] = opcode_error;
+            //gpio_out[4] = alu_error;
         end
     end
 

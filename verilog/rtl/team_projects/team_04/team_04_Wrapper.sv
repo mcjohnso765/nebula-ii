@@ -51,7 +51,9 @@ module team_04_Wrapper (
     output wire [3:0]  SEL_O,
     output wire        WE_O,
     output wire        STB_O,
-    output wire        CYC_O
+    output wire        CYC_O,
+    input  wire [31:0] DAT_I,
+    input wire         ACK_I
 );
     /*
     *--------------------------------------------------------------
@@ -100,7 +102,9 @@ module team_04_Wrapper (
         .SEL_O(SEL_O),
         .WE_O(WE_O),
         .STB_O(STB_O),
-        .CYC_O(CYC_O)
+        .CYC_O(CYC_O),
+        .DAT_I(DAT_I),
+        .ACK_I(ACK_I)
     );
 
 endmodule
