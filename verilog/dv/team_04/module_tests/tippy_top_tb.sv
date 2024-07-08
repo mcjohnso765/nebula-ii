@@ -222,7 +222,15 @@ always_ff @(posedge clk) begin
 end
 
 always_ff @(posedge clk, negedge nrst) begin
-    if (nrst) begin
+    if (~nrst) begin
+        for (integer i = 0; i < 4096; i++) begin
+        mem[i] = 32'b0;
+            case(i):
+                    0: mem[i] = 32'h00000000;
+                    // 1: mem[i] = 32';
+                    // 2: mem[i] = 32';
+            endcase
+        end
         data_read <= '0;
         instruction_read <= mem[32'b0];
     end
