@@ -6,13 +6,13 @@
 
 module team_05_Wrapper (
 
+
+// beginning edits
+
 `ifdef USE_POWER_PINS
     inout vccd1,	// User area 1 1.8V supply
     inout vssd1,	// User area 1 digital ground
 `endif
-
-    // Chip Select (Active Low)
-    input wire ncs,
 
     /*
     *--------------------------------------------------------------
@@ -25,29 +25,41 @@ module team_05_Wrapper (
     */
 
     // Wishbone Slave ports (WB MI A)
-    input wire wb_clk_i,  // DO INCLUDE! - this is your clock signal
-    input wire wb_rst_i,  // DO INCLUDE! - this is your reset signal
-    input wire wbs_stb_i,
-    input wire wbs_cyc_i,
-    input wire wbs_we_i,
-    input wire [3:0] wbs_sel_i,
-    input wire [31:0] wbs_dat_i,
-    input wire [31:0] wbs_adr_i,
-    output wire wbs_ack_o,
-    output wire [31:0] wbs_dat_o,
+    input logic wb_clk_i,  // DO INCLUDE! - this is your clock signal
+    input logic wb_rst_i,  // DO INCLUDE! - this is your reset signal
+    input logic wbs_stb_i,
+    input logic wbs_cyc_i,
+    input logic wbs_we_i,
+    input logic [3:0] wbs_sel_i,
+    input logic [31:0] wbs_dat_i,
+    input logic [31:0] wbs_adr_i,
+    output logic wbs_ack_o,
+    output logic [31:0] wbs_dat_o,
 
     // Logic Analyzer - 2 pins used here
-    input wire [127:0] la_data_in,
-    output wire [127:0] la_data_out,
-    input wire [127:0] la_oenb,
+    input logic [127:0] la_data_in,
+    output logic [127:0] la_data_out,
+    input logic [127:0] la_oenb,
 
     // GPIOs
-    input  wire [37:0] gpio_in, // Breakout Board Pins
-    output wire [37:0] gpio_out, // Breakout Board Pins
-    output wire [37:0] gpio_oeb, // Active Low Output Enable
+    input  logic [37:0] gpio_in, // Breakout Board Pins
+    output logic [37:0] gpio_out, // Breakout Board Pins
+    output logic [37:0] gpio_oeb, // Active Low Output Enable
 
     // IRQ signal
-    output wire [2:0] irq
+    output logic [2:0] irq,
+
+    //input from wishbone interconnect
+    input logic [31:0] DAT_I,
+    input logic        ACK_I,
+
+    //output to wishbone interconnect
+    output logic [31:0] ADR_O,
+    output logic [31:0] DAT_O,
+    output logic [3:0]  SEL_O,
+    output logic        WE_O,
+    output logic        STB_O,
+    output logic        CYC_O
 );
     /*
     *--------------------------------------------------------------
@@ -90,9 +102,15 @@ module team_05_Wrapper (
         .la_oenb(la_oenb),
         .gpio_in({gpio_in[37:5], gpio_in[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_out({gpio_out[37:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
-        .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}) //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
-
-        // Add request unit signals
+        .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        .DAT_I(DAT_I),
+		.ACK_I(ACK_I),
+		.ADR_O(ADR_O),
+		.DAT_O(DAT_O),
+		.SEL_O(SEL_O),
+		.WE_O(WE_O),
+		.STB_O(STB_O),
+		.CYC_O(CYC_O)
     );
 
 endmodule

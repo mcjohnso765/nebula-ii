@@ -37,7 +37,7 @@ module nebula_ii (
     
     // Number of teams (only sample project for now)
     // Replace sample project with your design for testing
-    localparam NUM_TEAMS = 1;
+    localparam NUM_TEAMS = 12;
 
     // LA outputs from all designs
     wire [127:0] designs_la_data_out [NUM_TEAMS:0];
@@ -88,7 +88,7 @@ module nebula_ii (
 
     // Sample Project Instance
     // (replace this with your team design instance when testing)
-    sample_team_proj_Wrapper sample_team_proj_Wrapper (
+    team_05_Wrapper inst_team05(
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
@@ -233,7 +233,7 @@ module nebula_ii (
 
     // Wishbone Decoder
     wishbone_decoder #(
-        .NUM_TEAMS(1)
+        .NUM_TEAMS(NUM_TEAMS)
     ) wb_decoder (
 
     `ifdef USE_POWER_PINS

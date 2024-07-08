@@ -13,21 +13,32 @@ module team_05 (
     input logic en, //This signal is an enable signal for your chip. Your design should disable if this is low.
 
     // Logic Analyzer - Grant access to all 128 LA
-    input wire [127:0] la_data_in,
-    output wire [127:0] la_data_out,
-    input wire [127:0] la_oenb,
+    input logic [127:0] la_data_in,
+    output logic  [127:0] la_data_out,
+    input logic [127:0] la_oenb,
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
-    input  wire [33:0] gpio_in, // Breakout Board Pins
-    output wire [33:0] gpio_out, // Breakout Board Pins
-    output wire [33:0] gpio_oeb, // Active Low Output Enable
+    input  logic [33:0] gpio_in, // Breakout Board Pins
+    output logic [33:0] gpio_out, // Breakout Board Pins
+    output logic [33:0] gpio_oeb, // Active Low Output Enable
     
-    output wire [31:0]ADR_O
     /*
     * Add other I/O ports that you wish to interface with the
     * Wishbone bus to the management core. For examples you can 
     * add registers that can be written to with the Wishbone bus
     */
+
+    //input from wishbone interconnect
+    input logic [31:0] DAT_I,
+    input logic        ACK_I,
+
+    //output to wishbone interconnect
+    output logic [31:0] ADR_O,
+    output logic [31:0] DAT_O,
+    output logic [3:0]  SEL_O,
+    output logic        WE_O,
+    output logic        STB_O,
+    output logic        CYC_O
 );
 
     // All outputs must have a value even if not used
@@ -38,21 +49,12 @@ module team_05 (
     * Place code and sub-module instantiations here.
     */
 
-    logic [31:0] DAT_I;
-    logic        ACK_I;
-
     logic [31:0] CPU_DAT_I;
     logic [31:0] ADR_I;
     logic [3:0]  SEL_I;
     logic        WRITE_I;
     logic        READ_I;
 
-   // logic [31:0] ADR_O;
-    logic [31:0] DAT_O;
-    logic [3:0]  SEL_O;
-    logic        WE_O;
-    logic        STB_O;
-    logic        CYC_O;
     logic [31:0] CPU_DAT_O;
     logic        BUSY_O;
 
@@ -118,8 +120,9 @@ typedef enum logic [2:0] {
     Wait = 6
 } state_t;
 
+
 module t05_cpu_core(
-        input logic [31:0] data_in_BUS,// pc_data,//input data from memory bus, memory starting point
+        input logic [31:0] data_in_BUS,
         input logic bus_full, //input from memory bus
         input logic clk, rst, //external clock, reset
         output logic [31:0] data_out_BUS, address_out,
@@ -186,7 +189,7 @@ module t05_cpu_core(
     logic [31:0] data_adr_o, data_bus_o, data_cpu_o;
 
     //(ALU or external reset) -> Program Counter 
-    logic [31:0] pc_data; //external reset value only now
+    // logic [31:0] pc_data; //external reset value only now
 
     //Program Counter -> Instruction Memory
     logic [31:0] pc_val;
@@ -338,7 +341,7 @@ module t05_cpu_core(
 
     // assign address_out = mem_adr_i;
     logic [31:0] pc_input;
-    assign pc_input = (pc_jump != 32'b0) ? pc_jump : pc_data;
+    // assign pc_input = (pc_jump != 32'b0) ? pc_jump : pc_data;
     t05_pc program_count(
         .clk(clk),
         .clr(rst),
@@ -346,7 +349,7 @@ module t05_cpu_core(
         .inc(data_good),
         .ALU_out(branch_ff),
         .Disable(instr_wait),
-        .data(pc_input),
+        .data(pc_jump),
         .imm_val(imm_32),
         .pc_val(pc_val));
 
@@ -813,7 +816,7 @@ module t05_register_file (
     output logic [31:0] reg1, reg2,
     output logic [31:0] register_out//array????
 );
-    reg[31:0][31:0] register;
+    logic [31:0] register [0:31];
     //reg[31:0][31:0] next_register; 
 
     logic [31:0] write_data;
@@ -836,7 +839,40 @@ module t05_register_file (
 
     always_ff @ (posedge clk, posedge rst) begin //reset pos or neg or no reset
         if (rst) begin
-            register <= '0;
+            register[0] <= 32'b0;
+            register[1] <= 32'b0;
+            register[2] <= 32'b0;
+            register[3] <= 32'b0;
+            register[4] <= 32'b0;
+            register[5] <= 32'b0;
+            register[6] <= 32'b0;
+            register[7] <= 32'b0;
+            register[8] <= 32'b0;
+            register[9] <= 32'b0;
+            register[10] <= 32'b0;
+            register[11] <= 32'b0;
+            register[12] <= 32'b0;
+            register[13] <= 32'b0;
+            register[14] <= 32'b0;
+            register[15] <= 32'b0;
+            register[16] <= 32'b0;
+            register[17] <= 32'b0;
+            register[18] <= 32'b0;
+            register[19] <= 32'b0;
+            register[20] <= 32'b0;
+            register[21] <= 32'b0;
+            register[22] <= 32'b0;
+            register[23] <= 32'b0;
+            register[24] <= 32'b0;
+            register[25] <= 32'b0;
+            register[26] <= 32'b0;
+            register[27] <= 32'b0;
+            register[28] <= 32'b0;
+            register[29] <= 32'b0;
+            register[30] <= 32'b0;
+            register[31] <= 32'b0;
+
+
         end
         else begin
             //register <= next_register;
@@ -915,7 +951,7 @@ module wishbone_manager(
 );
 
 typedef enum logic[1:0] {
-    IDLE,
+    W_IDLE,
     WRITE,
     READ
  } state;
@@ -938,7 +974,7 @@ logic        next_BUSY_O;
 always_ff @(posedge CLK, negedge nRST) begin : All_ffs
     if(~nRST) begin
         //state machine
-        curr_state <= IDLE;
+        curr_state <= W_IDLE;
 
         //registers for user project outputs
         CPU_DAT_O <= '0;
@@ -980,7 +1016,7 @@ always_comb begin
     next_BUSY_O = BUSY_O;    
     
     case(curr_state)
-        IDLE: begin
+        W_IDLE: begin
             if(WRITE_I && !READ_I) begin
                 next_BUSY_O = 1'b1;
                 next_state  = WRITE;
@@ -1000,7 +1036,7 @@ always_comb begin
             next_BUSY_O = 1'b1;
 
             if(ACK_I) begin
-                next_state = IDLE;
+                next_state = W_IDLE;
 
                 next_ADR_O  = '0;
                 next_DAT_O  = '0;
@@ -1021,7 +1057,7 @@ always_comb begin
             next_BUSY_O = 1'b1;
 
             if(ACK_I) begin
-                next_state = IDLE;
+                next_state = W_IDLE;
 
                 next_ADR_O  = '0;
                 next_DAT_O  = '0;

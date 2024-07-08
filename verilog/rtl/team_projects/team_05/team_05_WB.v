@@ -19,7 +19,7 @@
 
 /* THIS FILE IS GENERATED, DO NOT EDIT */
 
-`timescale			1ns/1ps
+//`timescale			1ns/1ps
 `default_nettype	none
 
 `define				WB_AW		32
@@ -34,13 +34,14 @@ module team_05_WB (
 	input	wire	[34-1:0]	gpio_in,
 	output	wire	[34-1:0]	gpio_out,
 	output	wire	[34-1:0]	gpio_oeb,
+	input  wire		[32-1:0] 	DAT_I,
+	input  wire		[1-1:0] 	ACK_I,
 	output	wire	[32-1:0]	ADR_O,
-	output	wire	[32-1:0]	A_ADR_I,
-	output	wire	[32-1:0]	A_DAT_I,
-	output	wire	[4-1:0]	A_SEL_I,
-	output	wire	[1-1:0]	A_WE_I,
-	output	wire	[1-1:0]	A_STB_I,
-	output	wire	[1-1:0]	A_CYC_I
+	output	wire	[32-1:0]	DAT_O,
+	output	wire	[4-1:0]		SEL_O,
+	output	wire	[1-1:0]		WE_O,
+	output	wire	[1-1:0]		STB_O,
+	output	wire	[1-1:0]		CYC_O
 );
 
 	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30050000;
@@ -57,6 +58,9 @@ module team_05_WB (
 	assign	en = EN_VAL_REG;
 	`WB_REG(EN_VAL_REG, 0, 1)
 
+	// Set IRQ to 0
+	assign IRQ = 0;
+
 	team_05 instance_to_wrap (
 		.clk(clk),
 		.nrst(nrst),
@@ -67,13 +71,15 @@ module team_05_WB (
 		.gpio_in(gpio_in),
 		.gpio_out(gpio_out),
 		.gpio_oeb(gpio_oeb),
+		.DAT_I(DAT_I),
+		.ACK_I(ACK_I),
 		.ADR_O(ADR_O),
-		.A_ADR_I(A_ADR_I),
-		.A_DAT_I(A_DAT_I),
-		.A_SEL_I(A_SEL_I),
-		.A_WE_I(A_WE_I),
-		.A_STB_I(A_STB_I),
-		.A_CYC_I(A_CYC_I)
+		.DAT_O(DAT_O),
+		.SEL_O(SEL_O),
+		.WE_O(WE_O),
+		.STB_O(STB_O),
+		.CYC_O(CYC_O)
+
 	);
 
 	assign	dat_o = 
