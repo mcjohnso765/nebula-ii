@@ -78,6 +78,13 @@ task reset_dut;
     @(posedge tb_clk);
 endtask
 
+task mem_busy_assert;
+    #10
+    mem_busy = 1'b1;
+    #10
+    mem_busy = 1'b0;
+endtask
+
 // //inject initial instructions
 // task write_initial_instructions;
 //     mem_busy = 1'b1;
@@ -104,10 +111,11 @@ initial begin
 
     mem_busy = 1'b0;
     reset_dut();
-    #10
-    mem_busy = 1'b1;
-    #10
-    mem_busy = 1'b0;
+    mem_busy_assert(); //for dummy instruction
+    mem_busy_assert(); //for   addi x1, x0, 7
+    mem_busy_assert(); //for   addi x2, x0, 21
+    mem_busy_assert(); //for   addi x1, x1, 8
+
     // write_initial_instructions();
     #200000;
 
