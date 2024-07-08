@@ -41,6 +41,9 @@
 // SRAM address space
 #define sram_space (*(volatile uint32_t*)0x33000000)
 
+// Team 4 Space
+#define reg_team_04_EN (*(volatile uint32_t*)0x30040000)
+
 
 /*
 	Sample Team Project Test:
@@ -118,6 +121,7 @@ void main()
 	reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
 
 	// Configure GPIOs outputs to be selected by sample project
+    // Change all the 1s to 4s
 	reg_gpio_PIN_0TO7 = 0x11111111;
 	reg_gpio_PIN_8TO15 = 0x11111111;
 	reg_gpio_PIN_16TO23 = 0x11111111;
@@ -125,10 +129,15 @@ void main()
 	reg_gpio_PIN_32TO37 = 0x111111;
 
     // Do stuff with SRAM
-    sram_space = 0xFEED0000;
-    *(&sram_space + 1) = 0xABCDEF78;
-    *(&sram_space + 3) = 0x12345678;
+    sram_space = 0xFEED0000; // write 0xFEED000 to address 0x33000000
+    *(&sram_space + 1) = 0xABCDEF78;  // write 0xABCDEF78 to address 0x33000004
+    *(&sram_space + 3) = 0x12345678;  // write 0x12345678 to address 0x3300000C
     reg_sample_proj_EN = (sram_space == 0xFEED0000);
     reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
     reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
+
+    // Write instructions in hex to SRAM
+
+    // Enable CPU
+    reg_team_04_EN = 1;
 }
