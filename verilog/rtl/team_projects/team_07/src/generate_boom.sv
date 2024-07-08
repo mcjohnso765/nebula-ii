@@ -10,7 +10,7 @@ logic boomDetect; // 1 bit since boolean 0 or 1
 
 logic [8:0] array_horX [15:0] ;
 logic [7:0] array_horY [15:0];
-logic [8:0] array_verX[16] ;
+logic [8:0] array_verX[16] ; 
 logic [7:0] array_verY [16] ;
 logic [8:0] SCo;
 logic [7:0] SPo;
