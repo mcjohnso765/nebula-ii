@@ -12,7 +12,7 @@ module snake_body_controller #(parameter MAX_LENGTH = 50) (
 
 logic [MAX_LENGTH - 1: 0][7:0] temp_body;
 logic pulse, snake_head, snake_body;
-direction_t direction;
+logic [2:0] direction;
 logic [3:0] direction_i, direction_a;
 logic [7:0] head;
 

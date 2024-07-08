@@ -1,7 +1,7 @@
 module update_body #(parameter MAX_LENGTH = 50)
 (
     input logic clk, nrst, pulse, sync,
-    input direction_t direction, 
+    input logic [2:0] direction, 
     input logic [7:0] curr_length,
     output logic [MAX_LENGTH - 1:0][7:0] body,
     output logic [7:0] head

@@ -2,10 +2,10 @@
 module fsm_direction (
     input logic [3:0] direction_a,
     input logic clk, nrst, sync, pulse,
-    output logic[2:0] direction
+    output logic [2:0] direction
 );
 
-    direction_t current, temp, temp_next, next;
+    logic [2:0] current, temp, temp_next, next;
 
     always_ff @(posedge clk, negedge nrst)
         if(~nrst) begin
