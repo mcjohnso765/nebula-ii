@@ -3,6 +3,11 @@
 module wishbone_arbitrator #(
     parameter NUM_MANAGERS = 6
 )(
+    `ifdef USE_POWER_PINS
+        inout vccd1,	// User area 1 1.8V supply
+        inout vssd1,	// User area 1 digital ground
+    `endif
+
     input logic CLK,
     input logic nRST,
     
@@ -83,7 +88,7 @@ always_comb begin
                 //we're in IDLE
                 for(req_idx = 0; req_idx < NUM_MANAGERS; req_idx++) begin
                     
-                    if(A_CYC_I[req_idx]) begin
+                    if(A_STB_I[req_idx] && A_CYC_I[req_idx]) begin
                         //one of the managers is requesting something
                         next_state = 1 << (req_idx + 1);
 

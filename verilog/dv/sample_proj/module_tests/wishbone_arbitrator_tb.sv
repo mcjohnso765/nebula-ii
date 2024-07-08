@@ -106,7 +106,7 @@ wishbone_arbitrator #(
     .CLK(tb_CLK),
     .nRST(tb_nRST),
 
-    //manager to arbitrator input
+    //manager to arbitrator, input
     .A_ADR_I({tb_ADR_O_2, tb_ADR_O_1}),
     .A_DAT_I({tb_DAT_O_2, tb_DAT_O_1}),
     .A_SEL_I({tb_SEL_O_2, tb_SEL_O_1}),
@@ -114,15 +114,15 @@ wishbone_arbitrator #(
     .A_STB_I({tb_STB_O_2, tb_STB_O_1}),
     .A_CYC_I({tb_CYC_O_2, tb_CYC_O_1}),
 
-    //arbitrator to manager output
+    //arbitrator to manager, output
     .A_DAT_O({tb_DAT_I_2, tb_DAT_I_1}),
     .A_ACK_O({tb_ACK_I_2, tb_ACK_I_1}),
 
-    //arbitrator to peripheral input
+    //arbitrator to peripheral, input
     .DAT_I(tb_DAT_I_P),
     .ACK_I(tb_ACK_I_P),
 
-    //arbitrator to peripheral output
+    //arbitrator to peripheral, output
     .ADR_O(tb_ADR_O_P),
     .DAT_O(tb_DAT_O_P),
     .SEL_O(tb_SEL_O_P),
