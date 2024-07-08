@@ -50,8 +50,8 @@ tippy_top everest(
 ram chicken (
    .clk(tb_clk), 
    .nrst(tb_nRst),
-    .data_address({2'b0, adr_to_mem[31:2]}), // alu result to be read or written -why are they using dis
-  .instruction_address(), // no brainer, it is the insturction address      -wanna use data_from_mem instead somehow??!
+    .data_address(), // alu result to be read or written -why are they using dis
+  .instruction_address({2'b0, adr_to_mem[31:2]}), // no brainer, it is the insturction address      -wanna use data_from_mem instead somehow??!
   .dm_read_en(mem_read), //we dont have a read enable
   .dm_write_en(mem_write), // enable ports for the read and enable
  .data_to_write(data_to_mem), // data to be written into memory  //=data_to_mem?
