@@ -166,7 +166,7 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_o_gpio),
         
         // GPIOs
-        .designs_gpio_out_flat(designs_gpio_out_flat),
+        .designs_gpio_out_flat(d'esigns_gpio_out_flat),
         .designs_gpio_oeb_flat(designs_gpio_oeb_flat),
         .gpio_out(io_out),
         .gpio_oeb(io_oeb)
