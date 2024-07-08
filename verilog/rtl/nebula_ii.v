@@ -1,4 +1,5 @@
-//This is just the sample project right now
+// This is just the sample project right now
+// When testing your design, please replace it with your design's instance
 
 module nebula_ii (
 `ifdef USE_POWER_PINS
@@ -35,35 +36,23 @@ module nebula_ii (
 );
     
     // Number of teams (only sample project for now)
+    // Replace sample project with your design for testing
     localparam NUM_TEAMS = 1;
-    
-    assign irq = 3'b0; // TODO: use interrupt from sample project?
-
-    // WB slave stb_i inputs to all designs, GPIO control, LA control
-    wire [NUM_TEAMS:0] designs_stb ;
-    wire gpio_control_stb;
-    wire la_control_stb;
-
-    // WB slave outputs from all designs, GPIO control, LA control
-    wire [NUM_TEAMS:0] designs_wbs_ack_o;
-    wire [31:0] designs_wbs_dat_o[NUM_TEAMS:0];
-    wire la_wbs_ack_o;
-    wire [31:0] la_wbs_dat_o;
-    wire gpio_wbs_ack_o;
-    wire [31:0] gpio_wbs_dat_o;
 
     // LA outputs from all designs
-    wire [127:0] designs_la_data_out[NUM_TEAMS:0];
+    wire [127:0] designs_la_data_out [NUM_TEAMS:0];
 
     // GPIO outputs from all designs
-    wire [37:0] designs_gpio_out[NUM_TEAMS:0]; // Breakout Board Pins
-    wire [37:0] designs_gpio_oeb[NUM_TEAMS:0]; // Active Low Output Enable
+    wire [37:0] designs_gpio_out [NUM_TEAMS:0]; // Breakout Board Pins
+    wire [37:0] designs_gpio_oeb [NUM_TEAMS:0]; // Active Low Output Enable
 
     // IRQ from all designs
-    wire [2:0] designs_irq[NUM_TEAMS:0];
+    // (not used unless a team wants to)
+    // wire [2:0] designs_irq [NUM_TEAMS:0];
+    assign irq = 3'b0; // Default of 0
 
     //all WB peripherals ports (p for peripheral):
-    //input WB
+    //input WB slave
     wire                   wbs_stb_i_p;
 
     wire                   wbs_cyc_i_p;
@@ -71,12 +60,12 @@ module nebula_ii (
     wire                   wbs_cyc_i_la;
     wire                   wbs_cyc_i_gpio;
     wire                   wbs_cyc_i_sram;
-    
+
     wire                   wbs_we_i_p;
     wire [3:0]             wbs_sel_i_p;
     wire [31:0]            wbs_dat_i_p;
     wire [31:0]            wbs_adr_i_p;
-    //output WB
+    //output WB slave
     wire                   wbs_ack_o_p;
     wire [NUM_TEAMS:0] wbs_ack_o_proj; //Must be individualized per project
     wire                   wbs_ack_o_la;
@@ -89,8 +78,16 @@ module nebula_ii (
     wire                  [31:0] wbs_dat_o_gpio;
     wire                  [31:0] wbs_dat_o_sram;
 
+    
+    // Assign default values to index 0 of output arrays
+    assign designs_la_data_out[0] = 'b0;
+    assign designs_gpio_out[0] = 'b0;
+    assign designs_gpio_oeb[0] = '1;
+    assign wbs_ack_o_proj[0] = 1'b0;
+    assign wbs_dat_o_proj[0] = 'b0;
+
     // Sample Project Instance
-    //fixme: replace with project wrapper instance
+    // (replace this with your team design instance when testing)
     sample_team_proj_Wrapper sample_team_proj_Wrapper (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
@@ -108,7 +105,7 @@ module nebula_ii (
         .wbs_ack_o(wbs_ack_o_proj[1]),
         .wbs_dat_o(wbs_dat_o_proj[1]),
 
-        // Logic Analyzer - 2 pins used here
+        // Logic Analyzer
         .la_data_in(la_data_in),
         .la_data_out(designs_la_data_out[1]),
         .la_oenb(la_oenb),
@@ -116,15 +113,14 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[1]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[1]), // Active Low Output Enable
-
-        // IRQ signal
-        .irq(designs_irq[1])
+        .gpio_oeb(designs_gpio_oeb[1]) // Active Low Output Enable
     );
 
+    // Flattened GPIO outputs
     reg [38*(NUM_TEAMS+1)-1:0] designs_gpio_out_flat;
     reg [38*(NUM_TEAMS+1)-1:0] designs_gpio_oeb_flat;
 
+    // Flattening of GPIO outputs
     integer i1;
     always @* begin
         for (i1 = 0; i1 <= NUM_TEAMS; i1 = i1 + 1) begin
@@ -160,8 +156,10 @@ module nebula_ii (
         .gpio_oeb(io_oeb)
     );
 
+    // Flattened LA outputs
     reg [128*(NUM_TEAMS+1)-1:0] designs_la_data_out_flat;
 
+    // Flattening of LA outputs
     integer i2;
     always @* begin
         for (i2 = 0; i2 <= NUM_TEAMS; i2 = i2 + 1) begin
@@ -173,11 +171,11 @@ module nebula_ii (
     la_control_Wrapper #(
         .NUM_TEAMS(NUM_TEAMS)
     ) la_control_wrapper (
-        // Wishbone Slave ports (WB MI A)
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        // Wishbone Slave ports (WB MI A)
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
         .wbs_stb_i(wbs_stb_i_p),
@@ -194,17 +192,8 @@ module nebula_ii (
         .la_data_out(la_data_out)
     );
 
-    reg [32*(NUM_TEAMS+1)-1:0] designs_wbs_dat_o_flat;
-
-    integer i3;
-    always @* begin
-        for (i3 = 0; i3 <= NUM_TEAMS; i3 = i3 + 1) begin
-            designs_wbs_dat_o_flat[i3*32 +: 32] = designs_wbs_dat_o[i3];//[38i:38(i+1)-1]
-        end
-    end
-
     // Wishbone Arbitrator
-    //everywhere with squigly brackets is where more manager signals can be concatinated
+    // everywhere with squigly brackets is where more manager signals can be concatinated!!!
     wishbone_arbitrator #(
         .NUM_MANAGERS(1)
     ) wb_arbitrator (
@@ -277,7 +266,7 @@ module nebula_ii (
     );
 
     // SRAM
-    SRAM_1024x32 mprj (
+    SRAM_1024x32 sram (
     `ifdef USE_POWER_PINS
         .VPWR(vccd1),	// User area 1 1.8V power
         .VGND(vssd1),	// User area 1 digital ground
