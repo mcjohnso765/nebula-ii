@@ -34,7 +34,7 @@ module tippy_top (
         .data_from_mem(mem_data_to_CPU),
 
         .alu_result(), //ignore
-        .reg_window(), //ignore
+        //.reg_window(), //ignore
         .err_flag(), //ignore
         
         .addr_to_mem(CPU_adr_to_mem),
@@ -187,7 +187,7 @@ module CPU (
     input logic clk, nrst, //timing & reset signals
     input logic [31:0] data_from_mem,
     output logic [31:0] alu_result,  //numerical/logical output of ALU
-    output reg [31:0] [31:0] reg_window,
+    //output reg [31:0] [31:0] reg_window,
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
     output logic err_flag, //ALU flag invalid operation, from ALU
     output logic [31:0] addr_to_mem, data_to_mem,//signals from memory handler to mem
@@ -226,6 +226,7 @@ module CPU (
 
     //from Regs
     logic [31:0] regA, regB;
+    logic [31:0] [31:0] reg_file;
 
     //from Mem Handler
     logic [31:0] MemData;
@@ -312,7 +313,7 @@ module CPU (
         .write_data(DataWrite), //value tobe written
         .clk(clk), 
         .nrst(nrst), 
-        .reg_file(reg_window), //testbenching array
+        .reg_file(), //testbenching array
         .enable(enable)
         );
 
