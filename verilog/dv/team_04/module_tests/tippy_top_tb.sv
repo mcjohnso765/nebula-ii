@@ -110,13 +110,10 @@ initial begin
     $dumpvars(0, tippy_top_tb); 
 
     mem_busy = 1'b0;
-    //mem_busy_assert(); //idk but 1st instruction isnt loading
+
     reset_dut();
     mem_busy_assert(); //for dummy instruction
-    // mem_busy_assert(); //for   addi x1, x0, 7
-    // mem_busy_assert(); //for   addi x2, x0, 21
-    // mem_busy_assert(); //for   addi x1, x1, 8
-    //mem_busy_assert(); // idk but to allow for more time
+
 
     // write_initial_instructions();
     #200000;
@@ -242,11 +239,17 @@ always_ff @(posedge clk, negedge nrst) begin
         mem[i] = 32'b0;
             case(i)
                 0: mem[i] = 32'h00000000;
-                1: mem[i] = 32'h00700093;
-                2: mem[i] = 32'h01500113;
-                3: mem[i] = 32'h00808093;
-                    // 1: mem[i] = 32';
-                    // 2: mem[i] = 32';
+                1: mem[i] = 32'h00000193; //addi x3, x0, 0
+                2: mem[i] = 32'h00300213; //addi x4, x0, 3
+                3: mem[i] = 32'h00118193; //addi x3, x3, 1
+                4: mem[i] = 32'h00418263; //beq x3, x4, 4
+                5: mem[i] = 32'h00419263; //bne x3, x4, 4
+                6: mem[i] = 32'h0041c263; //blt x3, x4, 4
+                7: mem[i] = 32'h0041d263; //bge x3, x4, 4
+                8: mem[i] = 32'h0041e263; //bltu x3, x4, 4
+                9: mem[i] = 32'h0041f263; //bgeu x3, x4, 4
+                10: mem[i] = 32'hfe5ff06f; //jal x0, -28
+
             endcase
         end
         data_read <= '0;
