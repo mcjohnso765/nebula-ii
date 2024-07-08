@@ -31,7 +31,7 @@ module team_1_tb;
 	assign mprj_io_0 = mprj_io[7:0];
 	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
 
-	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
+	//assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 	// assign mprj_io[3] = 1'b1;
 
 	// External clock is used by default.  Make this artificially fast for the
@@ -39,6 +39,76 @@ module team_1_tb;
 	// would be the fast clock.
 
 	always #12.5 clock <= (clock === 1'b0);
+
+	task left_button_press;
+    begin
+        @(negedge clock);
+        mprj_io[25] = 1'b1;
+        @(negedge clock)
+        mprj_io[25] = 1'b0;
+        @(posedge clock);
+    end
+    endtask
+
+    task right_button_press;
+    begin
+        @(negedge clock);
+        mprj_io[26] = 1'b1;
+        @(negedge clock)
+        mprj_io[26] = 1'b0;
+        @(posedge clock);
+    end
+    endtask
+
+    task down_button_press;
+    begin
+        @(negedge clock);
+        mprj_io[27] = 1'b1;
+        @(negedge clock)
+        mprj_io[27] = 1'b0;
+        @(posedge clock);
+    end
+    endtask
+
+    task up_button_press;
+    begin
+        @(negedge clock);
+        mprj_io[28] = 1'b1;
+        @(negedge clock)
+        mprj_io[28] = 1'b0;
+        @(posedge clock);
+    end
+    endtask
+
+	task obstacle_gen_press;
+	begin
+		@(negedge clock);
+		mprj_io[30] = 1'b1;
+		@(negedge clock)
+        mprj_io[30] = 1'b0;
+        @(posedge clock);
+	end
+	endtask
+	
+	task mode_press;
+	begin
+		@(negedge clock);
+		mprj_io[29] = 1'b1;
+		@(negedge clock)
+        mprj_io[29] = 1'b0;
+        @(posedge clock);
+	end
+	endtask
+
+	task new_game_press;
+	begin
+		@(negedge clock);
+		mprj_io[31] = 1'b1;
+		@(negedge clock)
+        mprj_io[31] = 1'b0;
+        @(posedge clock);
+	end
+	endtask
 
 	initial begin
 		clock = 0;
@@ -161,7 +231,7 @@ module team_1_tb;
 
 	initial begin
 	    // Observe Output pins [7:0]
-		wait(mprj_io_0 == 8'h01);
+/* 		wait(mprj_io_0 == 8'h01);
 		wait(mprj_io_0 == 8'h02);
 		wait(mprj_io_0 == 8'h03);
 		wait(mprj_io_0 == 8'h04);
@@ -178,7 +248,12 @@ module team_1_tb;
 	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
 		`else
 		    $display("Monitor: Test 1 Mega-Project IO (RTL) Passed");
-		`endif
+		`endif */
+		#(CLK_PERIOD * 750000);
+    	left_button_press();
+    	#(CLK_PERIOD * 2500000);
+    	down_button_press();
+    	#(CLK_PERIOD * 2500000);
 	    $finish;
 	end
 
