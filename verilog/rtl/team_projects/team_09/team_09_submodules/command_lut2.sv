@@ -1,5 +1,5 @@
 module command_lut2(
-    input update_t mode,
+    input logic[2:0] mode,
     input logic clk, nrst, 
     input logic [2:0] obj_code,
     input logic [3:0] X, Y,

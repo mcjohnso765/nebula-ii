@@ -1,9 +1,9 @@
 module fsm_mode (
     input logic signal, clk, nrst,
-    output mode_t mode
+    output [1:0] mode
 );
 
-mode_t current_mode, next_mode;
+logic [1:0] current_mode, next_mode;
 
 always_ff @(posedge clk, negedge nrst)
     if(~nrst)

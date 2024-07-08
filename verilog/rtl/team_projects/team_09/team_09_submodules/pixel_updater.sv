@@ -10,7 +10,7 @@ module pixel_updater (
     output logic [7:0] D
 );
 
-update_t mode;
+logic [2:0] mode;
 logic cmd_finished, pause;
 update_controller update(.init_cycle(init_cycle), .en_update(en_update), .clk(clk), .nrst(nrst), .cmd_finished(cmd_finished), .pause(pause),
                   .cmd_done(cmd_done), .wr(wr), .mode(mode));

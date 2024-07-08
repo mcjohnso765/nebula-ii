@@ -8,7 +8,7 @@ module variable_clock_divider (
 );
 
 logic button_a, signal, pulse;
-mode_t mode;
+logic [1:0] mode;
 logic [22:0] count, next_count;
 logic [22:0] MAX_COUNT;
 
