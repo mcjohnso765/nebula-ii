@@ -42,11 +42,11 @@ module core(
 
      
     logic i_ready, d_ready;
-    request_unit ru(.clk(keyclk1), .nRST(reset), .D_fetch(read_mem), .D_write(write_mem), .I_fetch(1'b1), .data_adr(result), .instr_adr(program_counter), .writedata(data_to_write), .i_done(i_ready), .d_done(d_ready), .instr(inst), .data(data_read), .busy_o(busy_o), .cpu_dat_o(CPU_DAT_O), .write_i(WRITE_I), .read_i(READ_I), .adr_i(ADR_I),  .cpu_dat_i(CPU_DAT_I), .sel_i(SEL_I));
+    request_unit ru(.clk(clock && en), .nRST(reset), .D_fetch(read_mem), .D_write(write_mem), .I_fetch(1'b1), .data_adr(result), .instr_adr(program_counter), .writedata(data_to_write), .i_done(i_ready), .d_done(d_ready), .instr(inst), .data(data_read), .busy_o(BUSY_O), .cpu_dat_o(CPU_DAT_O), .write_i(WRITE_I), .read_i(READ_I), .adr_i(ADR_I),  .cpu_dat_i(CPU_DAT_I), .sel_i(SEL_I));
 
 
     wire cpu_clock;
-    clock_controller clock_controller(.halt(1'b0), .cpu_clock(cpu_clock), .clock(clock), .reset(reset));
+    clock_controller clock_controller(.halt(1'b0), .cpu_clock(cpu_clock), .clock(clock && en), .reset(reset));
 
     //ram ram(.clk(clock), .rst(reset), .data_address(result), .instruction_address(program_counter), .dm_read_en(read_mem), .dm_write_en(write_mem),
     //    .data_to_write(data_to_write), .instruction_read(inst), .data_read(data_read), .pc_enable(pc_en));
