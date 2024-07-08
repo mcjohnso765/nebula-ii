@@ -28,7 +28,7 @@ endgenerate */
 always_ff @(posedge clk, negedge nrst) begin
     if(~nrst) begin
         {frame[0], frame[1], frame[2], frame[3], frame[4], frame[5], frame[6], frame[7],
-        frame[8], frame[9], frame[10], frame[11], frame[12], frame[13], frame[14], frame[15]} = 
+        frame[8], frame[9], frame[10], frame[11], frame[12], frame[13], frame[14], frame[15]} <= 
         {16*12{3'b000}};
     end
     else begin
