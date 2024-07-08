@@ -215,12 +215,12 @@ logic [31:0] mem [4095:0];
  `ifdef SYNTHESIS
 initial $readmemh("cpu.mem", mem, 0, 4095);
     `endif
-always_ff @(posedge clk) begin
-    if (dm_write_en && data_address[11]) begin
-        mem[data_address[11:0]] <= data_to_write;
-    end
+// always_ff @(posedge clk) begin
+//     // if (dm_write_en && data_address[11]) begin
+//     //     mem[data_address[11:0]] <= data_to_write;
+//     // end
 
-end
+// end
 
 always_ff @(posedge clk, negedge nrst) begin
     if (~nrst) begin
@@ -236,7 +236,9 @@ always_ff @(posedge clk, negedge nrst) begin
         //instruction_read <= mem[32'b0];
         instruction_read <= 32'h00000000;
     end
-
+    else if (dm_write_en && data_address[11]) begin
+        mem[data_address[11:0]] <= data_to_write;
+    end
     else if (dm_read_en) begin
         data_read <= mem[data_address[11:0]];
 
