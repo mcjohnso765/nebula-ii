@@ -20,7 +20,7 @@ tippy_top everest(
     .clk(tb_clk), 
     .nRst(tb_nRst),
     .button(button), 
-    .mem_busy(1'b0), //hardcoding to high
+    .mem_busy(mem_busy), //hardcoding to high
     .data_from_mem(data_from_mem),
     .mem_read(mem_read),
     .mem_write(mem_write),
@@ -102,8 +102,14 @@ initial begin
     //signal dump
     $dumpfile("tippy_top.vcd");
     $dumpvars(0, tippy_top_tb); 
-
+    
     reset_dut();
+    #10
+    mem_busy = 1'b0;
+    #10
+    mem_busy = 1'b1;
+    #10
+    mem_busy = 1'b0;
     // write_initial_instructions();
     #200000;
 
