@@ -14,32 +14,42 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Caravel user project includes
-#-v $(USER_PROJECT_VERILOG)/rtl/user_project_wrapper.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/user_project_wrapper.v
 #-v $(USER_PROJECT_VERILOG)/rtl/user_proj_example.v
-#-v $(USER_PROJECT_VERILOG)/rtl/nebula_ii.v
-#-v $(USER_PROJECT_VERILOG)/rtl/wb_interconnect.sv
+-v $(USER_PROJECT_VERILOG)/rtl/nebula_ii.v
 
 # Wishbone Bus Wrap includes
 -v $(USER_PROJECT_VERILOG)/rtl/wb_wrapper.vh
 -v $(USER_PROJECT_VERILOG)/dv/tb_macros.vh
 #-v $(USER_PROJECT_VERILOG)/dv/wb_tasks.vh
 
+# Wishbone Interconnect  
+-v $(USER_PROJECT_VERILOG)/rtl/wishbone_interconnect/wishbone_arbitrator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/wishbone_interconnect/wishbone_decoder.sv
+
 # Wishbone Manager Control
 #-v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
 
 # GPIO Control
 -v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_WB.sv
-#-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_Wrapper.v
-#-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control.sv
+-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_Wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control.sv
  
 # LA Control
-#-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_WB.v
-#-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_Wrapper.v
-#-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
+-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_Wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
 
 # Sample Team project
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_WB.v
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
+-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
+-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
+-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
+
+# SRAM
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/SRAM_1024x32.v
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/ram_controller.v
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper.v
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/beh_models/EF_SRAM_1024x32.tt_180V_25C.v
+#-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper_LVS.v

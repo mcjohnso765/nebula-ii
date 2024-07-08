@@ -22,7 +22,7 @@
 //`timescale			1ns/1ps
 `default_nettype	none
 
-`define				WB_AW		16
+`define				WB_AW		32
 
 // `include			"wb_wrapper.vh"
 
@@ -37,11 +37,11 @@ module gpio_control_WB #(
 	output	wire	[38-1:0]	muxxed_io_out
 );
 
-	localparam	PIN_0TO7_SEL_VAL_REG_OFFSET = `WB_AW'h0000;
-	localparam	PIN_8TO15_SEL_VAL_REG_OFFSET = `WB_AW'h0004;
-	localparam	PIN_16TO23_SEL_VAL_REG_OFFSET = `WB_AW'h0008;
-	localparam	PIN_24TO731_SEL_VAL_REG_OFFSET = `WB_AW'h000C;
-	localparam	PIN_32TO37_SEL_VAL_REG_OFFSET = `WB_AW'h0010;
+	localparam	PIN_0TO7_SEL_VAL_REG_OFFSET = `WB_AW'h32000000;
+	localparam	PIN_8TO15_SEL_VAL_REG_OFFSET = `WB_AW'h32000004;
+	localparam	PIN_16TO23_SEL_VAL_REG_OFFSET = `WB_AW'h32000008;
+	localparam	PIN_24TO731_SEL_VAL_REG_OFFSET = `WB_AW'h3200000C;
+	localparam	PIN_32TO37_SEL_VAL_REG_OFFSET = `WB_AW'h32000010;
 	wire		clk = clk_i;
 	wire		nrst = (~rst_i);
 
