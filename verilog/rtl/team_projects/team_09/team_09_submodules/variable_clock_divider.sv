@@ -1,5 +1,5 @@
 typedef enum logic [1:0]{
-    TURTLE = 0, SLOW = 1, FAST = 2, 
+    TURTLE = 0, SLOW = 1, FAST = 2 
 } mode_t;
 
 module variable_clock_divider (
