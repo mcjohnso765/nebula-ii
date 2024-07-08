@@ -17,17 +17,20 @@
 
 `timescale 1 ns / 1 ps
 
-module team_1_tb;
+module team_05_tb;
 	reg clock;
-	reg RSTB;
-	reg CSB;
+	reg RSTB;	//reset
+	reg CSB;	
 	reg power1, power2;
 	reg power3, power4;
 
 	wire gpio;
 	wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
+	reg [33:0] expected_io;
+	wire [33:0] checkbits;
 
+	assign checkbits = {mprj_io[37:5], mprj_io[0]};
 	assign mprj_io_0 = mprj_io[7:0];
 	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
 
@@ -141,11 +144,11 @@ module team_1_tb;
 	`endif 
 
 	initial begin
-		$dumpfile("io_ports.vcd");
-		$dumpvars(0, io_ports_tb);
+		$dumpfile("team_05_tb.vcd");
+		$dumpvars(0, team_05_tb);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
-		repeat (25) begin
+		repeat (1000) begin
 			repeat (1000) @(posedge clock);
 			// $display("+1000 cycles");
 		end
@@ -174,12 +177,38 @@ module team_1_tb;
 		wait(mprj_io_0 == 8'hFF);
 		wait(mprj_io_0 == 8'h00);
 		
+		
+	end
+
+	initial begin
+		wait(checkbits == 'b0);
+		$display("Monitor: NEBULA II-Team 05 Project Started");
+		$display("Correct GPIO output:");
+
+		// First iteration of outputs
+		for (integer i = 0; i <= 33; i++) begin
+			if (i == 0) expected_io = 1;
+			else expected_io = expected_io << 1;
+			wait(checkbits == expected_io);
+			$display("Correct GPIO output:");
+		end
+		
+		// End of first iteration
+		wait(checkbits == 'b0);
+		$display("Correct GPIO output:");
+
+		#300;
 		`ifdef GL
 	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
 		`else
 		    $display("Monitor: Test 1 Mega-Project IO (RTL) Passed");
 		`endif
 	    $finish;
+	end
+
+	// Print output after each GPIO goes high
+	always @(mprj_io) begin
+		#1 $display("{GPIO[37:5], GPIO[0]} = 34'h%h ", checkbits);
 	end
 
 	initial begin
@@ -206,9 +235,9 @@ module team_1_tb;
 		power4 <= 1'b1;
 	end
 
-	always @(mprj_io) begin
+	/*always @(mprj_io) begin
 		#1 $display("MPRJ-IO state = %b ", mprj_io[7:0]);
-	end
+	end*/
 
 	wire flash_csb;
 	wire flash_clk;
