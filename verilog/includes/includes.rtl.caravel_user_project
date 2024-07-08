@@ -41,11 +41,30 @@
 -v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
 
 # Sample Team project
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_WB.v
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/BorderGen.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/Body_Control.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/DirectionLogic.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/SyncEdge.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/apple_check_wall_mode.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/apple_gen_all.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/apple_luck_selector.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/apple_wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/assembly.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/body_wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/clock.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/collisionDetector.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/collisionLogic.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/collisionLogic_wall.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/gameMode.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/gameState.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/game_speed_selector.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/lcd1602.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/main_file.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/rand_wall_mode.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/random_num_gen.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/random_num_gen_wall_mode.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/two_apple_mode.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/submodules/wall-wrapper.sv
 
 # SRAM
 -v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/SRAM_1024x32.v
