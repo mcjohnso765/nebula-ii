@@ -228,6 +228,9 @@ always_ff @(posedge clk, negedge nrst) begin
         mem[i] = 32'b0;
             case(i)
                     0: mem[i] = 32'h00000000;
+                1: mem[i] = 32'h00700093;
+                2: mem[i] = 32'h01500113;
+                3: mem[i] = 32'h00808093;
                     // 1: mem[i] = 32';
                     // 2: mem[i] = 32';
             endcase
