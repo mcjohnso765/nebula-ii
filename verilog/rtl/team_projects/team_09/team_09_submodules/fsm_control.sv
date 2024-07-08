@@ -30,49 +30,49 @@ always_comb begin
     case (current)
         INIT: begin
             if(cmd_done) begin
-                next <= LOOP;
+                next = LOOP;
                 init_cycle = 1'b0;
             end
             else begin
-                next <= INIT;
+                next = INIT;
                 init_cycle = 1'b1;
             end
         end
         LOOP: begin
             if(diff) begin
-                next <= UPDATE;
+                next = UPDATE;
                 enable_loop = 1'b0;
             end
             else if(GameOver) begin
-                next <= OVER;
+                next = OVER;
                 enable_loop = 1'b0;
             end
             else begin
-                next <= LOOP;
+                next = LOOP;
                 enable_loop = 1'b1;
             end
         end
         UPDATE: begin
             if(cmd_done) begin
-                next <= LOOP;
+                next = LOOP;
                 en_update = 1'b0;
             end
             else if(GameOver) begin
-                next <= OVER;
+                next = OVER;
                 en_update = 1'b0;
             end
             else begin
-                next <= UPDATE;
+                next = UPDATE;
                 en_update = 1'b1;
             end
         end
         OVER: begin
             if(detect) begin
-                next <= INIT;
+                next = INIT;
                 sync_reset = 1'b0;
             end
             else 
-                next <= OVER;
+                next = OVER;
                 sync_reset = 1'b1;
         end
     
