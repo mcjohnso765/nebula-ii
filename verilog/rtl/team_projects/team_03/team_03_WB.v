@@ -48,6 +48,8 @@ module team_03_WB (
 	output	wire	[1-1:0]	CYC_O
 );
 
+	assign IRQ = 0;
+
 	localparam	EN_VAL_REG_OFFSET = `WB_AW'h0000;
 
         wire clk_g;
