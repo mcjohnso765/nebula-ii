@@ -49,20 +49,13 @@ module team_03 (
     assign gpio_out = 34'b0; //Inputs, but set low anyways
     assign gpio_oeb = '1;//All 1's inputs
 
- input logic clock, reset, en,
-  input logic [31:0] CPU_DAT_O, 
-  input logic BUSY_O,
-  output logic [31:0] CPU_DAT_I, ADR_I, 
-  output logic [3:0] SEL_I,
-  output logic WRITE_I, READ_I
-
     logic WRITE_I, READ_I, BUSY_O;
     
     logic [31:0] CPU_DAT_O;
 
     core core(.clock(clk), .reset(!nrst), .en(en), .CPU_DAT_O(CPU_DAT_O), .BUSY_O(BUSY_O), .CPU_DAT_I(CPU_DAT_I), .ADR_I(ADR_I), .SEL_I(SEL_I), .WRITE_I(WRITE_I), .READ_I(READ_I));
     
-    wishbone_manager wb(.CLK(clock)m .nRST(!nrst), .DAT_I(DAT_I), .ACK_I(ACK_I), .CPU_DAT_I(CPU_DAT_I), .ADR_I(ADR_I), .SEL_I(SEL_I), .WRITE_I(WRITE_I), .READ_I(READ_I), .ADR_O(ADR_O), .DAT_O(DAT_O), .SEL_O(SEL_O), .WE_O(WE_O), .STB_O(STB_O), .CYC_O(CYC_O), .CPU_DAT_O(CPU_DAT_O), .BUSY_O(BUSY_O))
+    wishbone_manager wb(.CLK(clock), .nRST(!nrst), .DAT_I(DAT_I), .ACK_I(ACK_I), .CPU_DAT_I(CPU_DAT_I), .ADR_I(ADR_I), .SEL_I(SEL_I), .WRITE_I(WRITE_I), .READ_I(READ_I), .ADR_O(ADR_O), .DAT_O(DAT_O), .SEL_O(SEL_O), .WE_O(WE_O), .STB_O(STB_O), .CYC_O(CYC_O), .CPU_DAT_O(CPU_DAT_O), .BUSY_O(BUSY_O));
 
     /*
     * Place code and sub-module instantiations here.
