@@ -124,6 +124,11 @@ void main()
 	reg_gpio_PIN_24TO31 = 0x11111111;
 	reg_gpio_PIN_32TO37 = 0x111111;
 
+    // Do stuff with SRAM
     sram_space = 0xFEED0000;
-
+    *(&sram_space + 1) = 0xABCDEF78;
+    *(&sram_space + 3) = 0x12345678;
+    reg_sample_proj_EN = (sram_space == 0xFEED0000);
+    reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
+    reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
 }
