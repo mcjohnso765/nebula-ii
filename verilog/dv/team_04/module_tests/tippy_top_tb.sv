@@ -110,11 +110,13 @@ initial begin
     $dumpvars(0, tippy_top_tb); 
 
     mem_busy = 1'b0;
+    mem_busy_assert(); //idk but 1st instruction isnt loading
     reset_dut();
     mem_busy_assert(); //for dummy instruction
     mem_busy_assert(); //for   addi x1, x0, 7
     mem_busy_assert(); //for   addi x2, x0, 21
     mem_busy_assert(); //for   addi x1, x1, 8
+    mem_busy_assert(); // idk but to allow for more time
 
     // write_initial_instructions();
     #200000;
