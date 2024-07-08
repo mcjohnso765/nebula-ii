@@ -81,7 +81,7 @@ module team_07_Wrapper (
         .stb_i(wbs_stb_i),
         .ack_o(wbs_ack_o),
         .we_i(wbs_we_i),
-        .IRQ(1'b0),//1 bit
+        // .IRQ(),//1 bit
         .la_data_in(la_data_in),
         .la_data_out(la_data_out),
         .la_oenb(la_oenb),

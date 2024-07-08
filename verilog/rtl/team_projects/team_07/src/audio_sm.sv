@@ -15,7 +15,7 @@ module audio_sm (
 
     // initialize Variables
     logic nxt_audio;
-    logic [3:0] nxt_count, count;
+    //logic [3:0] nxt_count, count;
     logic [15:0] cnt_e_freq;
     logic [15:0] nxt_cnt_e_freq;
     logic [6:0] cnt_e_leng;
@@ -132,7 +132,7 @@ module audio_sm (
     always_ff @ (posedge clk, negedge nrst) begin
         if (!nrst) begin
             audio <= '0;
-            count <= '0;
+            //count <= '0;
             cnt_s_freq <= '0;
             cnt_s_leng <= '0; 
             cnt_e_freq <= '0;
@@ -143,7 +143,7 @@ module audio_sm (
             count_delay <= '0;
         end else begin
             audio <= nxt_audio;
-            count <= nxt_count;
+            //count <= nxt_count;
             cnt_s_freq <= nxt_cnt_s_freq;
             cnt_s_leng <= nxt_cnt_s_leng; 
             cnt_e_freq <= nxt_cnt_e_freq;
