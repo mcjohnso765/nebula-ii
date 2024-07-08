@@ -1,4 +1,4 @@
-// // FPGA Top Level
+// FPGA Top Level
 
 `default_nettype none
 
@@ -57,7 +57,7 @@ module top (
   // Handles the logic that determines whether a good collision, a bad collision, or no collision have occured at a particular pixel
   collision coll(.clk(hwclk), .nRst(~reset), .snakeHead(snakeHead), .snakeBody(snakeBody), .border(border || obstacle), .apple(apple), .goodColl(goodColl), .badColl(badColl));
   
-  // Edge Detector to prevent issues with the score updating incorrectly when a good collision is triggered.
+  // Edge Detector to prevent issues with the score updating incorrectly when a good collision is triggered
   score_posedge_detector score_detect(.clk(hwclk), .nRst(~reset), .goodColl_i(goodColl), .badColl_i(badColl), .goodColl(good_coll), .badColl(bad_coll));
   
   // Keeps track of both the high score and current score during a game session. High score shows once player dies, and current score shows 
@@ -75,5 +75,6 @@ module top (
   // ssdec ssdec4(.in({3'b0, obstacleFlag}), .enable(1), .out(ss3[6:0])); // Shows if obstacle flag is active
   // ssdec ssdec5(.in(dispObs), .enable(1), .out(ss4[6:0])); // Shows the internal number of obstacles being accounted for
 
+  // Controls what sounds are synthesized based on conditions of the game
   sound_generator sound_gen(.clk(hwclk), .rst(reset), .goodColl_i(goodColl), .badColl_i(badColl), .button_i(1'b0), .soundOut({left[7:2], junk}));
 endmodule

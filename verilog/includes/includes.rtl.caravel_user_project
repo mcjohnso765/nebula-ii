@@ -53,3 +53,28 @@
 -v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper.v
 -v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/beh_models/EF_SRAM_1024x32.tt_180V_25C.v
 #-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper_LVS.v
+
+# Team 9 Snake Game
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/applegenerator2.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/border_generator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/command_lut2.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/dac_counter.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/fsm_control.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/fsm_direction.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/fsm_mode.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/location_check.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/obstacle_random.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/obstacle_sync_edge.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/obstaclegen2.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/obstacleMode.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/oscillator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/pixel_updater.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/rainbowRand.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/score_posedge_detector.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/score_tracker2.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/snake_body_controller.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/sound_top.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/ssdec.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/toggle_screen.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/update_body.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team-4-snake-folder/team-4-snake-folder-sub-folder/variable_clock_divider.sv
