@@ -11,9 +11,6 @@ module team_07_Wrapper (
     inout vssd1,	// User area 1 digital ground
 `endif
 
-    // Chip Select (Active Low)
-    input wire ncs,
-
     /*
     *--------------------------------------------------------------
     * NOTE: You may not need to include all of these.
