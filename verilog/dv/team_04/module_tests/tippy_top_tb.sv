@@ -72,10 +72,10 @@ end
 //power-on reset task
 task reset_dut;  
     @(negedge tb_clk);
-    tb_nRst = 1'b0; 
+    tb_nRst = 1'b1; 
     @(negedge tb_clk);
     @(negedge tb_clk);
-    tb_nRst = 1'b1;
+    tb_nRst = 1'b0;
     @(posedge tb_clk);
 endtask
 
