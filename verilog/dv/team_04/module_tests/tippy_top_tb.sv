@@ -214,7 +214,7 @@ module ram ( //og gonna change this up
 logic [31:0] mem [4095:0];
  `ifndef SYNTHESIS
 initial $readmemh("cpu.mem", mem, 0, 4095);
-    `endef
+    `endif
 always_ff @(posedge clk) begin
     if (dm_write_en && data_address[11]) begin
         mem[data_address[11:0]] <= data_to_write;
