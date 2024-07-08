@@ -56,7 +56,7 @@ module team_04_WB (
 	assign	en = EN_VAL_REG;
 	`WB_REG(EN_VAL_REG, 0, 1)
 
-	None instance_to_wrap (
+	team_04 instance_to_wrap (
 		.clk(clk),
 		.nrst(nrst),
 		.en(en),

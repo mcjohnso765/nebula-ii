@@ -32,7 +32,15 @@ module nebula_ii (
     output [37:0] io_oeb,
 
     // IRQ
-    output [2:0] irq
+    output [2:0] irq,
+
+    // Wishbone Master Signals
+    output [31:0] ADR_O,
+    output [31:0] DAT_O,
+    output [3:0]  SEL_O,
+    output        WE_O,
+    output        STB_O,
+    output        CYC_O
 );
     
     // Number of teams (only sample project for now)
@@ -88,7 +96,7 @@ module nebula_ii (
 
     // Sample Project Instance
     // (replace this with your team design instance when testing)
-    sample_team_proj_Wrapper sample_team_proj_Wrapper (
+    team_04_Wrapper team_04_Wrapper(
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
@@ -113,7 +121,15 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[1]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[1]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[1]), // Active Low Output Enable
+
+        // Wishbone master signals
+        .ADR_O(ADR_O),
+        .DAT_O(DAT_O),
+		.SEL_O(SEL_O),
+		.WE_O(WE_O),
+		.STB_O(STB_O),
+		.CYC_O(CYC_O)
     );
 
     // Flattened GPIO outputs

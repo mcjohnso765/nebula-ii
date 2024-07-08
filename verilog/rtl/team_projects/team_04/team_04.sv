@@ -19,13 +19,22 @@ module team_04 (
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
     output wire [33:0] gpio_out, // Breakout Board Pins
-    output wire [33:0] gpio_oeb // Active Low Output Enable
+    output wire [33:0] gpio_oeb, // Active Low Output Enable
     
     /*
     * Add other I/O ports that you wish to interface with the
     * Wishbone bus to the management core. For examples you can 
     * add registers that can be written to with the Wishbone bus
     */
+
+    // Wishbone Master signals
+    output wire [31:0] ADR_O,
+    output wire [31:0] DAT_O,
+    output wire [3:0]  SEL_O,
+    output wire        WE_O,
+    output wire        STB_O,
+    output wire        CYC_O
+
 );
 
     // All outputs must have a value even if not used
@@ -49,13 +58,13 @@ module team_04 (
     logic [3:0]  SEL_I;
     logic        WRITE_I;
     logic        READ_I;
-    //output to wishbone interconnect
-    logic [31:0] ADR_O;
-    logic [31:0] DAT_O;
-    logic [3:0]  SEL_O;
-    logic        WE_O;
-    logic        STB_O;
-    logic        CYC_O;
+    // //output to wishbone interconnect
+    // logic [31:0] ADR_O;
+    // logic [31:0] DAT_O;
+    // logic [3:0]  SEL_O;
+    // logic        WE_O;
+    // logic        STB_O;
+    // logic        CYC_O;
     //output to user design
     logic [31:0] CPU_DAT_O;
     logic        BUSY_O;
