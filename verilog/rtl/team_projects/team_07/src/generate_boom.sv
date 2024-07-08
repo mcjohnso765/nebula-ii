@@ -15,8 +15,8 @@ logic [7:0] array_verY [16] ;
 logic [8:0] SCo;
 logic [7:0] SPo;
 
-logic [8:0] startX = 82;
-logic [7:0] startY = 96;
+logic [8:0] startX;
+logic [7:0] startY;
 
 logic [8:0] topBx;
 logic [7:0] topBy;
@@ -27,6 +27,8 @@ logic [7:0] botBy;
 
 // toprigM toplefM botrigO toprigO botlefO toplefO botB topB
 initial begin
+  startX = 82;
+  startY = 96;
 array_horX[0] = 9'd004;
 array_horX[1] = 9'd027;
 array_horX[2] = 9'd060;
