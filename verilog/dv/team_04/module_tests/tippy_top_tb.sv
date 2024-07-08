@@ -212,8 +212,9 @@ module ram ( //og gonna change this up
 );
 
 logic [31:0] mem [4095:0];
+ `ifndef SYNTHESIS
 initial $readmemh("cpu.mem", mem, 0, 4095);
-
+    `endef
 always_ff @(posedge clk) begin
     if (dm_write_en && data_address[11]) begin
         mem[data_address[11:0]] <= data_to_write;
@@ -232,7 +233,8 @@ always_ff @(posedge clk, negedge nrst) begin
             endcase
         end
         data_read <= '0;
-        instruction_read <= mem[32'b0];
+        //instruction_read <= mem[32'b0];
+        intruction_read <= 32'h00000000;
     end
 
     else if (dm_read_en) begin
