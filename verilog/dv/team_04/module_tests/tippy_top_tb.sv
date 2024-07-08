@@ -244,17 +244,23 @@ always_ff @(posedge clk, negedge nrst) begin
                 3: mem[i] = 32'h00118193; //addi x3, x3, 1
                 4: mem[i] = 32'h00418463; //beq x3, x4, 8
                 5: mem[i] = 32'h00000000;
-                6: mem[i] = 32'h00419463; //bne x3, x4, 8
-                7: mem[i] = 32'h00000000;
-                8: mem[i] = 32'h0041c463; //blt x3, x4, 8
+                6: mem[i] = 32'h00000000;
+                7: mem[i] = 32'h00419463; //bne x3, x4, 8
+                8: mem[i] = 32'h00000000;
                 9: mem[i] = 32'h00000000;
-                10: mem[i] = 32'h0041d463; //bge x3, x4, 8
+                10: mem[i] = 32'h0041c463; //blt x3, x4, 8
                 11: mem[i] = 32'h00000000;
-                12: mem[i] = 32'h0041e463; //bltu x3, x4, 8
-                13: mem[i] = 32'h00000000;
-                14: mem[i] = 32'h0041f463; //bgeu x3, x4, 8
+                12: mem[i] = 32'h00000000;
+                13: mem[i] = 32'h0041d463; //bge x3, x4, 8
+                14: mem[i] = 32'h00000000;
                 15: mem[i] = 32'h00000000;
-                16: mem[i] = 32'hfe5ff06f; //jal x0, -28
+                16: mem[i] = 32'h0041e463; //bltu x3, x4, 8
+                17: mem[i] = 32'h00000000;
+                18: mem[i] = 32'h00000000;
+                19: mem[i] = 32'h0041f463; //bgeu x3, x4, 8
+                20: mem[i] = 32'h00000000;
+                21: mem[i] = 32'h00000000;
+                22: mem[i] = 32'hfe5ff06f; //jal x0, -28
 
             endcase
         end
