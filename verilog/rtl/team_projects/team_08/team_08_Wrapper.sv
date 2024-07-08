@@ -4,7 +4,7 @@
 // Author:      <Creighton Bennett>
 // Description: <This is our module that we are using >
 
-module team_08_Wrapper (
+module team_08_Wrapper ( 
 
 `ifdef USE_POWER_PINS
     inout vccd1,	// User area 1 1.8V supply
