@@ -212,7 +212,7 @@ module ram ( //og gonna change this up
 );
 
 logic [31:0] mem [4095:0];
- `ifdef SYNTHESIS
+ `ifdef NOSYNTHESIS
 initial $readmemh("cpu.mem", mem, 0, 4095);
     `endif
 // always_ff @(posedge clk) begin
