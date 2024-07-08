@@ -24,7 +24,7 @@
 
 `define				WB_AW		16
 
-`include			"wb_wrapper.vh"
+//`include			"wb_wrapper.vh"
 
 module team_09_WB (
 `ifdef USE_POWER_PINS
