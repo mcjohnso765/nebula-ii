@@ -27,7 +27,7 @@ module team_1_tb;
 	wire gpio;
 	wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
-
+	
 	assign mprj_io_0 = mprj_io[7:0];
 	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
 
