@@ -159,6 +159,7 @@ delay_loop:
 
 /////////////////////////////////////Working with only left and right and adding shoot//////////////////////////////////
 
+
 .global _center
 .global _check_button
 .global _move_up
@@ -186,6 +187,8 @@ li x16,  0x70000000
 
 addi x17, x0, 2        /* Gun location */
 
+addi x18, x0, 0
+
 _center:
     sw x2, 0(x1) 
 	sw x17, -4(x1)
@@ -200,12 +203,21 @@ _check_button:
     j _check_button
 
 _shoot:
-	li x1, 341          /* Load the delay count */
-shoot_loop:
-    addi x1, x1, -4        /* Decrement the counter */
-    sw x17, -4(x1)           /* clear current pixel */
-    bnez x18, shoot_loop    /* Loop until the counter reaches zero */
-    j _check_button
+	addi x18, x1, 0
+	shoot_loop:
+    addi x18, x18, -4      
+    addi x19, x17, 0
+    sw x19, -8(x18)          
+    sw x0, -4(x18)
+    
+    li x6, 100000          /* Load the delay count */
+delay_loops:
+    addi x6, x6, -1        /* Decrement the counter */
+    bnez x6, delay_loops    /* Loop until the counter reaches zero */
+    
+    bge x18, x0, shoot_loop  
+    
+    j _delay_loop
 
 _move_left:
     sw x0, 0(x1)           /* clear current pixel */
