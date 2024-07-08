@@ -1,7 +1,6 @@
 module GPIOPins(
     input logic [33:0] in,
     output logic [33:0] out,
-    output logic blinkToggle,
     input logic clk, reset
 );
 
@@ -28,7 +27,7 @@ logic [7:0] data;
 
     .ones_score(ones_score), 
     .tens_score(tens_score),
-    .blinkToggle(blinkToggle));
+    .blinkToggle(out[32]));
 
 
 always_comb begin
