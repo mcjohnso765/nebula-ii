@@ -15,7 +15,7 @@ always_comb begin
     regA_data = registers_state[regA_address];
     regB_data = registers_state[regB_address];
 
-    if (register_write_en && rd_address != 5'b0) begin
+    if (register_write_en && rd_address != 5'b0 && (rd_address != 5'd29) && (rd_address != 5'd30) && (rd_address != 5'd31)) begin
         next_registers_state[rd_address] = register_write_data;
     end
 end
@@ -28,6 +28,9 @@ always_ff @(posedge clk, posedge rst) begin
         //end
         //registers_state <= '{default:'0};
         registers_state <= '0;
+        registers_state[29] <= 32'hFFFFFFFC;
+        registers_state[30] <= 32'hFFFFFFFD;
+        registers_state[31] <= 32'hFFFFFFFF;
     end
 
     else if (en) begin
