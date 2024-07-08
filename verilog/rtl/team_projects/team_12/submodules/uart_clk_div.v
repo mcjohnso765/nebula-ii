@@ -1,6 +1,8 @@
+`default_nettype none
 module uart_clk_div (
 	MHz10,
 	nrst,
+	en,
 	enable,
 	clear,
 	at_max
@@ -8,6 +10,7 @@ module uart_clk_div (
 	reg _sv2v_0;
 	input wire MHz10;
 	input wire nrst;
+	input wire en;
 	input wire enable;
 	input wire clear;
 	output reg at_max;
@@ -25,13 +28,15 @@ module uart_clk_div (
 			;
 		at_max = 0;
 		next_count = count;
-		if (clear)
-			next_count = 0;
-		else if (enable) begin
-			next_count = count + 1;
-			if (count >= max) begin
+		if (en) begin
+			if (clear)
 				next_count = 0;
-				at_max = 1;
+			else if (enable) begin
+				next_count = count + 1;
+				if (count >= max) begin
+					next_count = 0;
+					at_max = 1;
+				end
 			end
 		end
 	end

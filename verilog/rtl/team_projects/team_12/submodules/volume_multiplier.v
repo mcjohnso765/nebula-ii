@@ -1,3 +1,4 @@
+`default_nettype none
 module volume_multiplier (
 	velocity,
 	wave_table_output,

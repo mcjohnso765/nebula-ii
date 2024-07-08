@@ -19,7 +19,7 @@ module envelope_clk_div (
 			count <= 0;
 			envelope_pulse <= 0;
 		end
-		else if (en) begin
+		else begin
 			count <= next_count;
 			envelope_pulse <= next_envelope_pulse;
 		end
@@ -28,13 +28,15 @@ module envelope_clk_div (
 			;
 		next_count = count;
 		next_envelope_pulse = envelope_pulse;
-		if (samp_enable)
-			next_count = count + 1;
-		if (count == 2081)
-			next_envelope_pulse = 1;
-		else if (count >= 2082) begin
-			next_count = 0;
-			next_envelope_pulse = 0;
+		if (en) begin
+			if (samp_enable)
+				next_count = count + 1;
+			if (count == 2081)
+				next_envelope_pulse = 1;
+			else if (count >= 2082) begin
+				next_count = 0;
+				next_envelope_pulse = 0;
+			end
 		end
 	end
 	initial _sv2v_0 = 0;

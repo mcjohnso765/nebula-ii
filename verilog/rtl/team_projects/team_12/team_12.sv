@@ -96,15 +96,13 @@ localparam N = 75;
 			sustain_in_p <= 0;
 			current_pedal_depth <= 0;
 		end
-		else if (en) begin
-			if ((status[7:4] == 4'hb) && (note == 8'h40)) begin
-				if (velocity >= 8'h40) begin
-					sustain_in_p <= 1;
-					current_pedal_depth <= velocity[5:2];
-				end
-				else
-					sustain_in_p <= 0;
+		else if ((status[7:4] == 4'hb) && (note == 8'h40)) begin
+			if (velocity >= 8'h40) begin
+				sustain_in_p <= 1;
+				current_pedal_depth <= velocity[5:2];
 			end
+			else
+				sustain_in_p <= 0;
 		end
 	sync syncend(
 		.MHz10(MHz10),
@@ -167,7 +165,6 @@ localparam N = 75;
 	start_arbitrator #(.N(N)) arbitrator(
 		.MHz10(MHz10),
 		.nrst(nrst),
-		.en(en),
 		.start_in(start_note),
 		.avail(avail),
 		.start_out(start_out)
@@ -233,6 +230,7 @@ localparam N = 75;
 		.MHz10(MHz10),
 		.nrst(nrst),
 		.ready(ready),
+		.en(en),
 		.in(velocity_sel[6:2]),
 		.exp_out(table_output)
 	);
@@ -257,7 +255,7 @@ localparam N = 75;
 		.MHz10(MHz10),
 		.nrst(nrst),
 		.en(en),
-		.start(start | 0),
+		.start(start|0),
 		.count(selected_count),
 		.max(selected_max),
 		.count_nm(normalized_out),

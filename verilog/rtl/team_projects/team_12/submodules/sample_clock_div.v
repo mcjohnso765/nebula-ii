@@ -1,3 +1,4 @@
+`default_nettype none
 module sample_clock_div (
 	MHz10,
 	nrst,
@@ -14,16 +15,18 @@ module sample_clock_div (
 	always @(posedge MHz10 or negedge nrst)
 		if (!nrst)
 			count <= 0;
-		else if (en)
+		else
 			count <= next_count;
 	always @(*) begin
 		if (_sv2v_0)
 			;
 		samp_enable = 0;
 		next_count = count + 1;
-		if (count >= 226) begin
-			next_count = 0;
-			samp_enable = 1;
+		if (en) begin
+			if (count >= 226) begin
+				next_count = 0;
+				samp_enable = 1;
+			end
 		end
 	end
 	initial _sv2v_0 = 0;

@@ -1,3 +1,4 @@
+`default_nettype none
 module saw_counter (
 	MHz10,
 	nrst,
@@ -47,7 +48,7 @@ module saw_counter (
 			current_sustaining <= 0;
 			key_pressed <= 0;
 		end
-		else if (en) begin
+		else begin
 			current_max <= next_max;
 			current_velocity <= next_velocity;
 			current_sustaining <= next_sustaining;
@@ -66,55 +67,58 @@ module saw_counter (
 		available = current_max <= 'd16;
 		ended_note = current_ended_note;
 		next_key_pressed = key_pressed;
-		if (sustain_in)
-			ended_note = 0;
-		if (current_velocity <= 'd16) begin
-			available = 1;
-			ended_note = 0;
-			next_max = 0;
-		end
-		if (new_note_velocity == 0)
-			next_velocity = current_velocity;
-		else
-			next_velocity = new_note_velocity;
-		if (clear) begin
-			next_max = 0;
-			next_velocity = 0;
-		end
-		else if (start_note) begin
-			next_max = new_max;
-			next_velocity = velocity;
-			next_key_pressed = 1;
-		end
-		else if (end_note && (current_max == new_max)) begin
-			next_key_pressed = 0;
-			if (sustain_in) begin
-				next_sustaining = 1;
+		next_velocity = new_note_velocity;
+		if (en) begin
+			if (sustain_in)
 				ended_note = 0;
+			if (current_velocity <= 'd16) begin
+				available = 1;
+				ended_note = 0;
+				next_max = 0;
 			end
-			else
+			if (new_note_velocity == 0)
+				next_velocity = current_velocity;
+			if (clear) begin
+				next_max = 0;
+				next_velocity = 0;
+			end
+			else if (start_note) begin
+				next_max = new_max;
+				next_velocity = velocity;
+				next_key_pressed = 1;
+			end
+			else if (end_note && (current_max == new_max)) begin
+				next_key_pressed = 0;
+				if (sustain_in) begin
+					next_sustaining = 1;
+					ended_note = 0;
+				end
+				else
+					ended_note = 1;
+			end
+			if (current_sustaining && !sustain_in) begin
+				next_sustaining = 0;
 				ended_note = 1;
-		end
-		if (current_sustaining && !sustain_in) begin
-			next_sustaining = 0;
-			ended_note = 1;
+			end
 		end
 	end
 	always @(posedge MHz10 or negedge nrst)
 		if (!nrst)
 			current_count <= 0;
-		else if (en)
+		else
 			current_count <= next_count;
 	always @(*) begin
 		if (_sv2v_0)
 			;
 		next_count = current_count;
-		if (clear)
-			next_count = 0;
-		else begin
-			next_count = current_count + 1;
-			if (current_count >= current_max)
+		if (en) begin
+			if (clear)
 				next_count = 0;
+			else begin
+				next_count = current_count + 1;
+				if (current_count >= current_max)
+					next_count = 0;
+			end
 		end
 	end
 	initial _sv2v_0 = 0;

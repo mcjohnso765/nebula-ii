@@ -1,3 +1,4 @@
+`default_nettype none
 module vol_pipe (
 	MHz10,
 	nrst,

@@ -1,3 +1,4 @@
+`default_nettype none
 module vol2 (
 	MHz10,
 	nrst,

@@ -1,3 +1,4 @@
+`default_nettype none
 module posedge_detector (
 	MHz10,
 	nrst,
@@ -10,26 +11,26 @@ module posedge_detector (
 	input wire nrst;
 	input wire en;
 	input wire in;
-	output reg out;
+	output wire out;
 	reg Q1;
 	reg Q2;
+	reg next_in;
 	always @(posedge MHz10 or negedge nrst)
-		if (!nrst)
-			Q1 <= 1;
-		else if (en)
-			Q1 <= in;
-	always @(posedge MHz10 or negedge nrst)
-		if (!nrst)
-			Q2 <= 1;
-		else if (en)
+		if (!nrst) begin
+			Q1 <= 0;
+			Q2 <= 0;
+		end
+		else begin
+			Q1 <= next_in;
 			Q2 <= Q1;
+		end
+	assign out = Q1 && !Q2;
 	always @(*) begin
 		if (_sv2v_0)
 			;
-		if (Q1 && !Q2)
-			out = 1;
-		else
-			out = 0;
+		next_in = Q1;
+		if (en)
+			next_in = in;
 	end
 	initial _sv2v_0 = 0;
 endmodule

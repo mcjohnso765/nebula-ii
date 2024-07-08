@@ -19,10 +19,10 @@
 
 /* THIS FILE IS GENERATED, DO NOT EDIT */
 
-`timescale			1ns/1ps
+// `timescale			1ns/1ps
 `default_nettype	none
 
-`define				WB_AW		16
+`define				WB_AW		32
 
 // `include			"wb_wrapper.vh"
 
@@ -36,7 +36,7 @@ module team_12_WB (
 	output	wire	[34-1:0]	gpio_oeb
 );
 
-	localparam	EN_VAL_REG_OFFSET = `WB_AW'h0000;
+	localparam	EN_VAL_REG_OFFSET = `WB_AW'h300C0000;
 	wire		clk = clk_i;
 	wire		nrst = (~rst_i);
 

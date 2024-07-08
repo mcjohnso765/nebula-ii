@@ -1,3 +1,4 @@
+`default_nettype none
 module wave_selector (
 	MHz10,
 	nrst,
@@ -22,20 +23,28 @@ module wave_selector (
 	localparam VIOLIN = 6;
 	reg sync1;
 	reg sync2;
+	reg next_wave_mode_pb;
 	always @(posedge MHz10 or negedge nrst)
 		if (!nrst) begin
 			sync1 <= 0;
 			sync2 <= 0;
 		end
-		else if (en) begin
-			sync1 <= wave_mode_pb;
+		else begin
+			sync1 <= next_wave_mode_pb;
 			sync2 <= sync1;
 		end
+	always @(*) begin
+		if (_sv2v_0)
+			;
+		next_wave_mode_pb = sync1;
+		if (en)
+			next_wave_mode_pb = wave_mode_pb;
+	end
 	reg [1:0] edge1;
 	always @(posedge MHz10 or negedge nrst)
 		if (!nrst)
 			edge1 <= 0;
-		else if (en) begin
+		else begin
 			edge1[1] <= edge1[0];
 			edge1[0] <= sync2;
 		end
@@ -45,68 +54,70 @@ module wave_selector (
 	always @(posedge MHz10 or negedge nrst) begin : synchronizer
 		if (!nrst)
 			lockstate <= SAWTOOTH;
-		else if (en)
+		else
 			lockstate <= n_lockstate;
 	end
 	always @(*) begin : state_machine
 		if (_sv2v_0)
 			;
 		n_lockstate = lockstate;
-		case (lockstate)
-			SAWTOOTH: begin
-				wave_mode = 3'd0;
-				if ((sync2 == 1) && intermediate)
-					n_lockstate = SQUARE;
-				else
-					n_lockstate = SAWTOOTH;
-			end
-			SQUARE: begin
-				wave_mode = 3'd1;
-				if ((sync2 == 1) && intermediate)
-					n_lockstate = REVERSE_SAWTOOTH;
-				else
-					n_lockstate = SQUARE;
-			end
-			REVERSE_SAWTOOTH: begin
-				wave_mode = 3'd2;
-				if ((sync2 == 1) && intermediate)
-					n_lockstate = TRIANGLE;
-				else
-					n_lockstate = REVERSE_SAWTOOTH;
-			end
-			TRIANGLE: begin
-				wave_mode = 3'd3;
-				if ((sync2 == 1) && intermediate)
-					n_lockstate = SINE;
-				else
-					n_lockstate = TRIANGLE;
-			end
-			SINE: begin
-				wave_mode = 3'd4;
-				if ((sync2 == 1) && intermediate)
-					n_lockstate = TRUMPET;
-				else
-					n_lockstate = SINE;
-			end
-			TRUMPET: begin
-				wave_mode = 3'd5;
-				if ((sync2 == 1) && intermediate)
-					n_lockstate = VIOLIN;
-				else
-					n_lockstate = TRUMPET;
-			end
-			VIOLIN: begin
-				wave_mode = 3'd6;
-				if ((sync2 == 1) && intermediate)
-					n_lockstate = SAWTOOTH;
-				else
-					n_lockstate = VIOLIN;
-			end
-			default: begin
-				wave_mode = 3'd0;
-				n_lockstate = lockstate;
-			end
-		endcase
+		wave_mode = 0;
+		if (en)
+			case (lockstate)
+				SAWTOOTH: begin
+					wave_mode = 3'd0;
+					if ((sync2 == 1) && intermediate)
+						n_lockstate = SQUARE;
+					else
+						n_lockstate = SAWTOOTH;
+				end
+				SQUARE: begin
+					wave_mode = 3'd1;
+					if ((sync2 == 1) && intermediate)
+						n_lockstate = REVERSE_SAWTOOTH;
+					else
+						n_lockstate = SQUARE;
+				end
+				REVERSE_SAWTOOTH: begin
+					wave_mode = 3'd2;
+					if ((sync2 == 1) && intermediate)
+						n_lockstate = TRIANGLE;
+					else
+						n_lockstate = REVERSE_SAWTOOTH;
+				end
+				TRIANGLE: begin
+					wave_mode = 3'd3;
+					if ((sync2 == 1) && intermediate)
+						n_lockstate = SINE;
+					else
+						n_lockstate = TRIANGLE;
+				end
+				SINE: begin
+					wave_mode = 3'd4;
+					if ((sync2 == 1) && intermediate)
+						n_lockstate = TRUMPET;
+					else
+						n_lockstate = SINE;
+				end
+				TRUMPET: begin
+					wave_mode = 3'd5;
+					if ((sync2 == 1) && intermediate)
+						n_lockstate = VIOLIN;
+					else
+						n_lockstate = TRUMPET;
+				end
+				VIOLIN: begin
+					wave_mode = 3'd6;
+					if ((sync2 == 1) && intermediate)
+						n_lockstate = SAWTOOTH;
+					else
+						n_lockstate = VIOLIN;
+				end
+				default: begin
+					wave_mode = 3'd0;
+					n_lockstate = lockstate;
+				end
+			endcase
 	end
 	initial _sv2v_0 = 0;
 endmodule

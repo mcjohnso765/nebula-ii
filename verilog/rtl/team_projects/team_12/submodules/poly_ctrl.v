@@ -56,33 +56,35 @@ module poly_ctrl (
 		clr = 1'b0;
 		start_vol = 0;
 		next_acc = 0;
-		if (state == START_DIV) begin
-			next_acc = {acc_delay[22:0], 1'b0};
-			next_state = START_DIV;
-			start_vol = 0;
-			if (ready) begin
-				next_state = DONE_DIV;
-				start = 1'b1;
+		if (en) begin
+			if (state == START_DIV) begin
+				next_acc = {acc_delay[22:0], 1'b0};
+				next_state = START_DIV;
+				start_vol = 0;
+				if (ready) begin
+					next_state = DONE_DIV;
+					start = 1'b1;
+				end
 			end
-		end
-		else if (state == DONE_DIV) begin
-			next_acc = {acc_delay[22:0], 1'b1};
-			next_osc_num = osc_num + 1;
-			start_vol = 1;
-			if (next_osc_num < N)
-				next_state = START_DIV;
-			else
+			else if (state == DONE_DIV) begin
+				next_acc = {acc_delay[22:0], 1'b1};
+				next_osc_num = osc_num + 1;
+				start_vol = 1;
+				if (next_osc_num < N)
+					next_state = START_DIV;
+				else
+					next_state = HOLD_SAMP;
+			end
+			else if (state == HOLD_SAMP) begin
+				next_acc = {acc_delay[22:0], 1'b0};
 				next_state = HOLD_SAMP;
-		end
-		else if (state == HOLD_SAMP) begin
-			next_acc = {acc_delay[22:0], 1'b0};
-			next_state = HOLD_SAMP;
-			start_vol = 0;
-			if (samp_enable) begin
-				store_samp = 1'b1;
-				clr = 1'b1;
-				next_osc_num = 0;
-				next_state = START_DIV;
+				start_vol = 0;
+				if (samp_enable) begin
+					store_samp = 1'b1;
+					clr = 1'b1;
+					next_osc_num = 0;
+					next_state = START_DIV;
+				end
 			end
 		end
 	end

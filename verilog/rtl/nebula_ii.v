@@ -37,7 +37,8 @@ module nebula_ii (
     
     // Number of teams (only sample project for now)
     // Replace sample project with your design for testing
-    localparam NUM_TEAMS = 1;
+    localparam NUM_TEAMS = 12;
+    localparam NUM_MANAGERS = 1;
 
     // LA outputs from all designs
     wire [127:0] designs_la_data_out [NUM_TEAMS:0];
@@ -88,7 +89,7 @@ module nebula_ii (
 
     // Sample Project Instance
     // (replace this with your team design instance when testing)
-    sample_team_proj_Wrapper sample_team_proj_Wrapper (
+    team_12_Wrapper t12 (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
@@ -97,13 +98,13 @@ module nebula_ii (
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
         .wbs_stb_i(wbs_stb_i_p),
-        .wbs_cyc_i(wbs_cyc_i_proj[1]),
+        .wbs_cyc_i(wbs_cyc_i_proj[12]),
         .wbs_we_i(wbs_we_i_p),
         .wbs_sel_i(wbs_sel_i_p),
         .wbs_dat_i(wbs_dat_i_p),
         .wbs_adr_i(wbs_adr_i_p),
-        .wbs_ack_o(wbs_ack_o_proj[1]),
-        .wbs_dat_o(wbs_dat_o_proj[1]),
+        .wbs_ack_o(wbs_ack_o_proj[12]),
+        .wbs_dat_o(wbs_dat_o_proj[12]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -112,8 +113,8 @@ module nebula_ii (
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
-        .gpio_out(designs_gpio_out[1]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[1]) // Active Low Output Enable
+        .gpio_out(designs_gpio_out[12]), // Breakout Board Pins
+        .gpio_oeb(designs_gpio_oeb[12]) // Active Low Output Enable
     );
 
     // Flattened GPIO outputs
@@ -195,7 +196,7 @@ module nebula_ii (
     // Wishbone Arbitrator
     // everywhere with squigly brackets is where more manager signals can be concatinated!!!
     wishbone_arbitrator #(
-        .NUM_MANAGERS(1)
+        .NUM_MANAGERS(NUM_MANAGERS)
     ) wb_arbitrator (
         
     `ifdef USE_POWER_PINS
@@ -233,7 +234,7 @@ module nebula_ii (
 
     // Wishbone Decoder
     wishbone_decoder #(
-        .NUM_TEAMS(1)
+        .NUM_TEAMS(NUM_TEAMS)
     ) wb_decoder (
 
     `ifdef USE_POWER_PINS

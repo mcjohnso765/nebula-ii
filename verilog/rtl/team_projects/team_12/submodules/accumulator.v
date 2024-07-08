@@ -19,16 +19,18 @@ module accumulator (
 	always @(posedge MHz10 or negedge nrst)
 		if (!nrst)
 			current_sum <= 0;
-		else if (en)
+		else
 			current_sum <= next_sum;
 	always @(*) begin
 		if (_sv2v_0)
 			;
 		next_sum = current_sum;
-		if (clear)
-			next_sum = 0;
-		else if (accumulate)
-			next_sum = current_sum + {3'b000, sample_mono};
+		if (en) begin
+			if (clear)
+				next_sum = 0;
+			else if (accumulate)
+				next_sum = current_sum + {3'b000, sample_mono};
+		end
 	end
 	initial _sv2v_0 = 0;
 endmodule

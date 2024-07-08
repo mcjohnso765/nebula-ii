@@ -1,3 +1,4 @@
+`default_nettype none
 module sample_register (
 	MHz10,
 	nrst,
@@ -19,16 +20,18 @@ module sample_register (
 	always @(posedge MHz10 or negedge nrst)
 		if (!nrst)
 			samp_out <= 0;
-		else if (en)
+		else
 			samp_out <= next_samp_out;
 	always @(*) begin
 		if (_sv2v_0)
 			;
 		next_samp_out = samp_out;
-		if (clear)
-			next_samp_out = 0;
-		else if (store_samp)
-			next_samp_out = samp_acc;
+		if (en) begin
+			if (clear)
+				next_samp_out = 0;
+			else if (store_samp)
+				next_samp_out = samp_acc;
+		end
 	end
 	initial _sv2v_0 = 0;
 endmodule

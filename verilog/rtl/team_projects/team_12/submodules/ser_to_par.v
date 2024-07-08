@@ -1,6 +1,8 @@
+`default_nettype none
 module ser_to_par (
 	MHz10,
 	nrst,
+	en,
 	enable,
 	clear,
 	serial,
@@ -9,6 +11,7 @@ module ser_to_par (
 	reg _sv2v_0;
 	input wire MHz10;
 	input wire nrst;
+	input wire en;
 	input wire enable;
 	input wire clear;
 	input wire serial;
@@ -28,8 +31,10 @@ module ser_to_par (
 		if (_sv2v_0)
 			;
 		next_state = current_state;
-		if (enable)
-			next_state = {serial, current_state[7:1]};
+		if (en) begin
+			if (enable)
+				next_state = {serial, current_state[7:1]};
+		end
 	end
 	assign parOut = current_state;
 	initial _sv2v_0 = 0;

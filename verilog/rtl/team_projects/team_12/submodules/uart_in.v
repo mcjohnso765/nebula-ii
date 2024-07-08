@@ -1,3 +1,4 @@
+`default_nettype none
 module uart_in (
 	MHz10,
 	nrst,
@@ -92,7 +93,8 @@ module uart_in (
 	uart_clk_div UARTclk(
 		.MHz10(MHz10),
 		.nrst(nrst),
-		.enable((en && (beginSample == 1)) && (current_state == 2'd1)),
+		.en(en),
+		.enable((beginSample == 1) && (current_state == 2'd1)),
 		.clear(current_state == 2'd0),
 		.at_max(baudClk)
 	);
@@ -113,7 +115,8 @@ module uart_in (
 	ser_to_par register(
 		.MHz10(MHz10),
 		.nrst(nrst),
-		.enable((en && baudClk) && (current_state == 2'd1)),
+		.en(en),
+		.enable(baudClk && (current_state == 2'd1)),
 		.serial(serIn),
 		.parOut(dataOut),
 		.clear(current_state == 2'd3)
