@@ -251,11 +251,11 @@ always_ff @(posedge clk, negedge nrst) begin
         //instruction_read <= mem[32'b0];
         instruction_read <= 32'h00000000;
     end
-    else if (dm_write_en && data_address[11]) begin
-        mem[data_address[11:0]] <= data_to_write;
+    else if (dm_write_en ) begin
+        mem[data_address] <= data_to_write;
     end
     else if (dm_read_en) begin
-        data_read <= mem[data_address[11:0]];
+        data_read <= mem[data_address];
 
     end
     
