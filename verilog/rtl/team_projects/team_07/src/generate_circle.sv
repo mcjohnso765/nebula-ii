@@ -19,7 +19,8 @@ module generate_circle (
   `define CUBE 12
   
     ////x 5, y 4
-  logic [1:0][2:0] circle_x, circle_y;  // first dim: 2 bit, 0 - for the 1st circle, 1 - for the 2nd circle 
+  logic [2:0] circle_x[1:0];
+  logic [2:0]circle_y [1:0];  // first dim: 2 bit, 0 - for the 1st circle, 1 - for the 2nd circle 
   logic circleDetect; // 1 bit since boolean 0 or 1
   logic [8:0] SCo;
   logic [7:0] SPo;
@@ -57,8 +58,10 @@ module generate_circle (
         circle_y[1] = 0; 
       end
       default: begin
-        circle_x = '0;
-        circle_y = '0;
+        circle_x[0] = '0;
+        circle_y[0] = '0;
+        circle_x[1] = '0;
+        circle_y[1] = '0;
       end
     endcase
     // clk is needed for each of the coordinates to specify the range update is cycling through
