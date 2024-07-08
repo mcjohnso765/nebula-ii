@@ -31,19 +31,22 @@ module team_06 (
 
     // All outputs must have a value even if not used
     assign la_data_out = 128'b0;
-    assign gpio_out = 34'b0; //Inputs, but set low anyways
+    // assign gpio_out = 34'b0; //Inputs, but set low anyways
 
     always_comb begin
-
+        gpio_oeb = '1;
         if (en == 1'b1) begin
-             gpio_oeb [5:0] = '1;//Push button pins as input pins
-             gpio_oeb [27:0] = '0;//Snake Game Display, Score Display, and sound output pins all are output pins here
+            gpio_oeb [17:6] = '0;//Snake Game Display, Score Display, and sound output pins all are output pins here
+            gpio_out[5:0] = '0;
+            gpio_out[33:18] = '0;
         end
-        else begin
-             gpio_oeb == '1;
-        end
+    end
     /*
     * Place code and sub-module instantiations here.
     */
+    // Top level module
+
+  assembly game (.clk(clk), .nrst(~nrst), .enable(en), .keyenc(gpio_in[0]), .button_right_in(gpio_in[1]), .button_left_in(gpio_in[2]), .button_up_in(gpio_in[3]), .button_down_in(gpio_in[4]),
+                     .button_start_pause_in(gpio_in[5]), .d(gpio_out[13:6]), .wr(gpio_out[14]), .dcx(gpio_out[15]), .song(gpio_out[16]), .rert(gpio_out[17]));
 
 endmodule
