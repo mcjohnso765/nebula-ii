@@ -32,7 +32,9 @@ module team_06 (
     // All outputs must have a value even if not used
     assign la_data_out = 128'b0;
     assign gpio_out = 34'b0; //Inputs, but set low anyways
-    assign gpio_oeb = '1;//All 1's inputs
+    assign gpio_oeb [5:0] = '1;//Push button pins as input pins
+    assign gpio_oeb [27:0] = '0;//Snake Game Display, Score Display, and sound output pins all are output pins here
+    
     /*
     * Place code and sub-module instantiations here.
     */
