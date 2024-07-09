@@ -228,3 +228,4 @@ always_ff @(posedge clk) begin
 boomPixel <= boomDetect;
 end
 endmodule
+*/

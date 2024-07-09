@@ -25,7 +25,7 @@
     Description:
         generage the gray squares of the entire map based on the 
     input template
-// */
+ */
 module generate_border
 (
     input logic nrst,
@@ -37,7 +37,7 @@ module generate_border
 );
 `define WIDTH 216
 `define HEIGHT 216
-`define CUBE 1 
+// `define CUBE 1 
 `define OFFSET 36
 logic synchronized_rectangle_pixel;
 // logic jumpX ,jumpY = 6;
@@ -82,3 +82,4 @@ always_ff @( posedge clk ) begin
 end
 
 endmodule
+*/
