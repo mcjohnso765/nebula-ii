@@ -24,7 +24,7 @@
 
 `define				WB_AW		32
 
-`include			"wb_wrapper.vh"
+// `include			"wb_wrapper.vh"
 
 module team_04_WB (
 `ifdef USE_POWER_PINS
@@ -65,6 +65,8 @@ module team_04_WB (
         .CLK(clk_i)
         );
         
+	assign IRQ = '0;
+	
 	wire		clk = clk_g;
 	wire		nrst = (~rst_i);
 
