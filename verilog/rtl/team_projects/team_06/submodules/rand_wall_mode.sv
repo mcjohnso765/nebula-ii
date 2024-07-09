@@ -534,11 +534,11 @@ always_ff @(posedge input2, posedge good_spot, negedge nreset) begin ///added en
 
 end
 
-always_ff @(posedge input2, negedge nreset) begin
+always_ff @(posedge system_clk, negedge nreset) begin
       if (~nreset) begin
         start_enable = 0;
     end
-    else begin
+    else if (input2) begin
         start_enable = 1;
     end
 

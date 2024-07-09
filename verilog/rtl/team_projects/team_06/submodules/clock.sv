@@ -86,10 +86,10 @@ assign clk_main_display = system_clk;
 always_comb begin /// movement clk
 
 case (game_speed) 
-NORMAL_SPEED: max_count = 2000000; ///variables to change game speed////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-FAST_SPEED: max_count = 1500000; // 10000
-SLOW_SPEED: max_count = 2500000;
-default: max_count = 2000000;
+NORMAL_SPEED: max_count = 2500000; ///variables to change game speed////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+FAST_SPEED: max_count = 2000000; // 10000
+SLOW_SPEED: max_count = 3000000;
+default: max_count = 2500000;
 endcase
 if ( (game_state == WAIT) || (game_state == PAUSE)) begin
   next_counter = 0;

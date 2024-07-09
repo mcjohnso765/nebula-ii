@@ -124,7 +124,7 @@ module sound (
 );
 
 logic [18:0] max_inOFF = 19'd0;
-logic [18:0] goodSound = DNOTE1;
+logic [18:0] goodSound = CNOTE;
 
 //Losing Sound
 logic [18:0] badSound =  BFLAT;

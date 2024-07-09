@@ -54,7 +54,7 @@ always_ff @(posedge clk, negedge nrst) begin
         badCollision <= (badCollision_n | badCollision_n2 | collision_n);// | collision_n | badCollision_n2);// | badCollision_n2
     end else begin
         goodCollision <= goodCollision;
-        good_collision2 <= goodCollision;
+        good_collision2 <= good_collision2;
         badCollision <= badCollision;// | collision_n | badCollision_n2);// | badCollision_n2
     end
 end

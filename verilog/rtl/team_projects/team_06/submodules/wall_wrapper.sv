@@ -24,7 +24,7 @@ rand_wall_mode rand_wall(.good_collision(good_collision), .system_clk(system_clk
 random_num_gen_wall_mode abc(.enable(enable_out), .system_clk(system_clk), .nreset(nrst), .number_out(apple_possible));
 
 
-collisionLogic_wall wallcollision(.next_wall({x,y}), .walls(wall_locations), .collision(collision));
+collisionLogic_wall wallcollision(.next_wall({y,x}), .walls(wall_locations), .collision(collision));
 
 assign wall = ((x >= xmax) | (y >= ymax) | (x <= xmin) | (y <= ymin) | (collision));
  

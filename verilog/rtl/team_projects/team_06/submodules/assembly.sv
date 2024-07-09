@@ -372,7 +372,7 @@ always_comb begin
         SC = Y * 20;
         EC = (Y + 1) * 20;
         case(obj_code)
-            3'b001  : color = 16'hf800;   //head
+            3'b001  : color = 16'hf0f8;   //head
             3'b010  : color = 16'hf800;   //body
             3'b011  : color = 16'h00f8;   //apple
             3'b100  : color = 16'h0000;   //border

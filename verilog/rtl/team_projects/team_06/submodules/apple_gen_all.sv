@@ -5,12 +5,12 @@ module apple_gen_all(
     input APPLE_LUCK apple_luck,
     input [3:0] snake_head_x, snake_head_y,  XMAX, XMIN, YMAX, YMIN, 
     input logic [7:0] apple_possible, //random number from rand_num_gen
-    input logic [139:0] [3:0] snakeArrayX, snakeArrayY,
+    input logic [MAX_LENGTH - 1:0] [3:0] snakeArrayX, snakeArrayY,
     input logic [24:0] [7:0] wall_locations,
     output logic [7:0] apple_location, //valid apple position
     output logic enable //enable to rand_apple_gen
 );
-
+    parameter MAX_LENGTH = 30;
     logic [3:0] x_next, y_next, x_final, y_final, x_difference, y_difference, x_last, y_last;
 logic enable_next , good_spot, good_spot_next, logic_enable, lucky_spot, unlucky_spot;
     logic [3:0] count;
@@ -363,14 +363,14 @@ else begin
 
 //////////////////////////////// START OF FF LOGIC /////////////////////////////////////////////////////////
 
-always_ff @(posedge good_spot, negedge nreset) begin   
+always_ff @(posedge system_clk, negedge nreset) begin   
 
         if (~nreset) begin //update apple location output when good_pot is triggered
             apple_location <= 8'h55;  // default location!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 end
 
-else begin
+else if (good_spot) begin
    // if ({y_final, x_final} == apple_possible) begin
             if (start_enable == 1) begin
                 apple_location <= {y_final, x_final};  // update apple position if it is valid\
@@ -383,7 +383,9 @@ else begin
                 apple_location <= 8'h55; /// default location!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             end
 
-        end
+end else begin
+    apple_location <= apple_location; 
+end
     end
 ////////////////////////// END OF FF LOGIC ////////////////////////////////////////////////////////
 
@@ -411,25 +413,15 @@ else begin
     enable = enable_next;
         end
     end
-    // else begin
-    //     good_spot = good_spot;
-    //     x_final = x_final;
-    //     y_final = y_final;
-    //     collisions = collisions;
-    //     count = count;
-    //     enable = enable;
-    // end
 
 /// stop finding a spot when a new one is chosen and start again when it needs to 
     always_ff @(posedge system_clk, negedge nreset) begin ///added enbale error
         if (~nreset) begin
             logic_enable <= 1;
-        end else if (good_collision) begin
-            logic_enable <= 1;
-        end else if (start_enable == 0) begin
-            logic_enable <= 1;
-        end else if (good_spot) begin
+        end else if (good_spot_next) begin
             logic_enable <= 0;
+        end else begin
+            logic_enable <= 1;
         end
     end
 
