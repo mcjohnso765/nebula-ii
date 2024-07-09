@@ -15,8 +15,8 @@ module generate_circle (
 
   // internal variables
 
-  `define JUMP 36
-  `define CUBE 12
+  `define JUMP_CIRCLE 36
+  `define CUBE_CIRCLE 12
   
     ////x 5, y 4
   logic [2:0] circle_x[1:0];
@@ -24,9 +24,9 @@ module generate_circle (
   logic circleDetect; // 1 bit since boolean 0 or 1
   logic [8:0] SCo;
   logic [7:0] SPo;
-  assign circlePixel = 0;
-endmodule
-/*
+//   assign circlePixel = 0;
+// endmodule
+
   always_comb begin
     case(map_select)
       0: begin 
@@ -70,8 +70,8 @@ endmodule
     // circleDetect = circlePixel;
     circleDetect = 0;
     for (integer i = 0; i < 2; i++) begin 
-      SCo = `CUBE + `JUMP* circle_x[i]; // beginning x ///0
-      SPo = `CUBE + `JUMP* circle_y[i]; // beginning y ///3
+      SCo = `CUBE_CIRCLE + `JUMP_CIRCLE* circle_x[i]; // beginning x ///0
+      SPo = `CUBE_CIRCLE + `JUMP_CIRCLE* circle_y[i]; // beginning y ///3
 
     // if(x > 20 && y< 40)begin 
     // circleDetect = 1;
@@ -116,4 +116,3 @@ endmodule
   end
 
 endmodule
-*/

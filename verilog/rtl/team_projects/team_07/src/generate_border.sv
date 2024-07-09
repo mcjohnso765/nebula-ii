@@ -35,15 +35,15 @@ module generate_border
     output logic borderPixel    
 
 );
-`define WIDTH 216
-`define HEIGHT 216
+// `define WIDTH 216
+// `define HEIGHT 216
 // `define CUBE 1 
-`define OFFSET 36
+// `define OFFSET 36
 logic synchronized_rectangle_pixel;
-// logic jumpX ,jumpY = 6;
-assign borderPixel = 0;
-endmodule
-/*
+// logic [7:0] jumpX ,jumpY;
+// assign borderPixel = 0;
+// endmodule
+
 //Looping across the entire screen 
 always_comb begin
 //Jumping across each squares distance Y step all first then X step
@@ -82,4 +82,3 @@ always_ff @( posedge clk ) begin
 end
 
 endmodule
-*/
