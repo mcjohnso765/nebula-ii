@@ -65,21 +65,29 @@ logic [2:0] state1, state2;
 // ***********
 // Global 
 // ***********
+
+logic [3:0] col_temp;
+
 always_comb begin
     if (gpio_in[33]) begin // pb[19]
-        gpio_out[13:6] = lcd_data_player; // ss7
-        gpio_out[32:29] = play_col; // left[4:1]
+        //gpio_out[13:6] = lcd_data_player; // ss7
+        //gpio_out[32:29] 
+        col_temp = play_col; // left[4:1]
         final_row1 = play_row1;
         final_row2 = play_row2;
         final_state = 8'b01010000;
     end else begin
-        gpio_out[13:6] = lcd_data_player; //lcd_data_host; // ss7
-        gpio_out[32:29] = host_col; // left[4:1]
+        //gpio_out[13:6] = lcd_data_player; //lcd_data_host; // ss7
+        //gpio_out[32:29] 
+        col_temp = host_col; // left[4:1]
         final_row1 = host_row1;
         final_row2 = host_row2;
         final_state = 8'b01001000;
     end
 end
+
+assign gpio_out[13:6] = lcd_data_player;
+assign gpio_out[32:29] = col_temp;
 
 t10_clock_divider clock_div (.clk (clk), .nRst (~nrst), .clear (~nrst), .max (30'd100000), .at_max (new_clk));
 
