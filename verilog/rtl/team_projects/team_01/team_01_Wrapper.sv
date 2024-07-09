@@ -10,10 +10,6 @@ module team_01_Wrapper (
     inout vccd1,	// User area 1 1.8V supply
     inout vssd1,	// User area 1 digital ground
 `endif
-
-    // Chip Select (Active Low)
-    input wire ncs,
-
     /*
     *--------------------------------------------------------------
     * NOTE: You may not need to include all of these.
@@ -47,7 +43,18 @@ module team_01_Wrapper (
     output wire [37:0] gpio_oeb, // Active Low Output Enable
 
     // IRQ signal
-    output wire [2:0] irq
+    output wire [2:0] irq,
+
+    //input from wishbone interconnect
+    input logic [31:0] DAT_I,
+    input logic        ACK_I,
+
+    output logic [31:0] ADR_O,
+    output logic [31:0] DAT_O,
+    output logic [3:0]  SEL_O,
+    output logic        WE_O,
+    output logic        STB_O,
+    output logic        CYC_O
 );
     /*
     *--------------------------------------------------------------
@@ -73,6 +80,10 @@ module team_01_Wrapper (
 
     // Instantiate Bus Wrapper module here
     team_01_WB team_01_WB (
+        `ifdef USE_POWER_PINS
+            .VPWR(vccd1),	// User area 1 1.8V power
+            .VGND(vssd1),	// User area 1 digital ground
+        `endif
         .ext_clk(wb_clk_i),
         .clk_i(wb_clk_i),
         .rst_i(wb_rst_i),
@@ -90,7 +101,15 @@ module team_01_Wrapper (
         .la_oenb(la_oenb),
         .gpio_in({gpio_in[37:5], gpio_in[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_out({gpio_out[37:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
-        .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}) //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        .DAT_I(DAT_I),
+        .ACK(ACK),
+        .ADR_O(ADR_O),
+        .DATO(DAT_O),
+        .SEL_O(SEL_O),
+        .WE_O(WE_O),
+        .STB_O(STB_O),
+        .CYC_O(CYC_O)
     );
 
 endmodule
