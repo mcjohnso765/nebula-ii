@@ -40,7 +40,9 @@ module nebula_ii (
     output [3:0]  SEL_O,
     output        WE_O,
     output        STB_O,
-    output        CYC_O
+    output        CYC_O,
+    input [31:0] DAT_I,
+    input         ACK_I
 );
     
     // Number of teams (only sample project for now)
@@ -129,7 +131,9 @@ module nebula_ii (
 		.SEL_O(SEL_O),
 		.WE_O(WE_O),
 		.STB_O(STB_O),
-		.CYC_O(CYC_O)
+		.CYC_O(CYC_O),
+        .DAT_I(DAT_I),
+        .ACK_I(ACK_I)
     );
 
     // Flattened GPIO outputs
