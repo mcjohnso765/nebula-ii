@@ -114,7 +114,7 @@ control_unit CU0 (.opcode(instruction[6:0]),
 );
 
 // COUNTER (for clock) : DONE
-counter c0(.clk(hwclk), 
+counter c0(.clk(clk), 
            .nrst(nRST), 
            .enable(1'b1), 
            .clear(1'b0), 
@@ -185,8 +185,8 @@ instruction_memory IM0 (.clk(clk),
 // KEYPAD : DONE
 keypad K0 (.clk(clk),
            .nRST(nRST),
-           .rows(pb[3:0]),
-           .cols(left[7:4]),
+           .rows(rows),
+           .cols(cols),
            .data(data_received),
            .keyvalid(keyvalid),
            .enable(strobe)
@@ -197,10 +197,10 @@ lcd1602 LCD0 (.clk(hwclk),
               .rst(nRST), 
               .row_1(unsorted), 
               .row_2(shift_reg), 
-              .lcd_en(left[2]), 
-              .lcd_rw(left[1]), 
-              .lcd_rs(left[0]), 
-              .lcd_data(right[7:0])
+              .lcd_en(lcd_en), 
+              .lcd_rw(lcd_rw), 
+              .lcd_rs(lcd_rs), 
+              .lcd_data(lcd_data)
 ); 
 
 // MUXES 
