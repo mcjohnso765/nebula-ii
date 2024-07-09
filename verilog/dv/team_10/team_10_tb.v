@@ -19,6 +19,8 @@
 
 module team_10_tb;
 	reg clock;
+	wire tb_clk;
+
 	reg RSTB;
 	reg CSB;
 	reg power1, power2;
@@ -38,6 +40,7 @@ module team_10_tb;
 	// simulation.  Normally this would be a slow clock and the digital PLL
 	// would be the fast clock.
 
+	assign tb_clk = clock;
 	always #12.5 clock <= (clock === 1'b0);
 
 	initial begin
@@ -141,8 +144,8 @@ module team_10_tb;
 	`endif 
 
 	initial begin
-		$dumpfile("io_ports.vcd");
-		$dumpvars(0, io_ports_tb);
+		$dumpfile("team_10.vcd");
+		$dumpvars(0, team_10_tb);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (25) begin
@@ -253,7 +256,7 @@ module team_10_tb;
 	);
 
 	spiflash #(
-		.FILENAME("io_ports.hex")
+		.FILENAME("team_10.hex")
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),
@@ -262,16 +265,6 @@ module team_10_tb;
 		.io2(),			// not used
 		.io3()			// not used
 	);
-
-
-
-
-
-
-
-
-
-
 
 // Testbench ports
 // localparam CLK_PERIOD = 10; // 100 Hz clk
