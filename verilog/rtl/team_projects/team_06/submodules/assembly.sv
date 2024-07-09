@@ -166,9 +166,9 @@ always_comb begin
              (temp_obj_code == 3'b011) ? ~(~border & ~head & ~body & apple) :
              (temp_obj_code == 3'b100) ? ~(border) : 1'b0;
 
-    if (temp_obj_code > 4) begin
-        {next_frame[current_X][current_Y], obj_code} = {3'b000, 3'b000};
-    end
+//    if (temp_obj_code > 4) begin
+//        {next_frame[current_X][current_Y], obj_code} = {3'b000, 3'b000};
+//    end
 
     {x, y, diff} = {current_X, current_Y, next_d};
 end

@@ -46,8 +46,6 @@ module frame_tracker (
 	always @(*) begin
 		if (_sv2v_0)
 			;
-		{next_X, next_Y} = {current_X, current_Y};
-		next_frame = frame;
 		if (enable) begin
 			if ((current_X == 4'd15) && (current_Y == 4'd11))
 				{next_X, next_Y} = 8'b00000000;
@@ -65,8 +63,8 @@ module frame_tracker (
 		next_frame[((current_X * 12) + current_Y) * 3+:3] = (border ? 3'b100 : (head ? 3'b001 : (body ? 3'b010 : (apple ? 3'b011 : 3'b000))));
 		obj_code = (border ? 3'b100 : (head ? 3'b001 : (body ? 3'b010 : (apple ? 3'b011 : 3'b000))));
 		next_d = (temp_obj_code == 3'b000 ? ~(((~border & ~head) & ~body) & ~apple) : (temp_obj_code == 3'b001 ? ~(~border & head) : (temp_obj_code == 3'b010 ? ~((~border & ~head) & body) : (temp_obj_code == 3'b011 ? ~(((~border & ~head) & ~body) & apple) : (temp_obj_code == 3'b100 ? ~border : 1'b0)))));
-		if (temp_obj_code > 4)
-			{next_frame[((current_X * 12) + current_Y) * 3+:3], obj_code} = 6'b000000;
+		//if (temp_obj_code > 4)
+		//	{next_frame[((current_X * 12) + current_Y) * 3+:3], obj_code} = 6'b000000;
 		{x, y, diff} = {current_X, current_Y, next_d};
 	end
 	initial _sv2v_0 = 0;

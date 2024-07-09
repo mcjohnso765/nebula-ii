@@ -42,25 +42,10 @@ module team_06_WB (
 
 	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30060000;
 
-        wire clk_g;
-        wire clk_gated_en = GCLK_REG[0];
-
-    (* keep *) sky130_fd_sc_hd__dlclkp_4 clk_gate(
-    `ifdef USE_POWER_PINS 
-        .VPWR(VPWR), 
-        .VGND(VGND), 
-        .VNB(VGND),
-		.VPB(VPWR),
-    `endif 
-        .GCLK(clk_g), 
-        .GATE(clk_gated_en), 
-        .CLK(clk_i)
-        );
-        
-	wire		clk = clk_g;
+    wire clk = clk_i;
 	wire		nrst = (~rst_i);
 
-
+	assign IRQ = '0;
 	`WB_CTRL_SIGNALS
 
 	wire [1-1:0]	en;
@@ -69,10 +54,6 @@ module team_06_WB (
 	reg [0:0]	EN_VAL_REG;
 	assign	en = EN_VAL_REG;
 	`WB_REG(EN_VAL_REG, 0, 1)
-
-	localparam	GCLK_REG_OFFSET = `WB_AW'hFF10;
-	reg [0:0] GCLK_REG;
-	`WB_REG(GCLK_REG, 0, 1)
 
 	team_06 instance_to_wrap (
 		.clk(clk),

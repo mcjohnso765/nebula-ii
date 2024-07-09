@@ -35,12 +35,9 @@ module team_06 (
 
     //o is output 
     //1 is input
-    always_comb begin
-        gpio_oeb = '1;
-        if (en == 1'b1) begin
-            gpio_oeb [17:6] = '0;//Snake Game Display, Score Display, and sound output pins all are output pins here
-            gpio_out[33:18] = '0;
-        end
+    always @(*) begin
+        gpio_oeb = (en) ? 34'b11_1111_0000_0000_0000_0000_0000_0011_1111 : '1;
+        {gpio_out[33:29], gpio_out[5:0]} = '0;
     end
     /*
     * Place code and sub-module instantiations here.
