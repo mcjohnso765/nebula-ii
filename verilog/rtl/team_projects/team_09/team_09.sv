@@ -44,7 +44,7 @@ module team_09 (
     logic [7:0] curr_length, dispScore;
     logic [3:0] bcd_ones, bcd_tens, bcd_hundreds, displayOut, dispObs;
     logic isGameComplete;
-    logic [77:0][7:0] body;
+    logic [7:0] body [MAX_LENGTH - 1:0];
     logic [1:0] blinkToggle;
     logic [1:0] junk;
 
