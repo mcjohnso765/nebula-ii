@@ -29,11 +29,11 @@ module DirectionLogic(
 
     always_comb begin
         casez({left, right, down, up}) //using casez to cover button prioritizations
-            4'b???1: direction = (directionOut != RIGHT) ? LEFT : DirectionOut; // Syntax errors right now because module with enum definitions are not linked 
-            4'b?1?0: direction = (directionOut != LEFT) ? RIGHT : DirectionOut;
-            4'b?010: direction = (directionOut != UP) ? DOWN : DirectionOut;
-            4'b1000: direction = (directionOut != DOWN) ? UP: DirectionOut;
-            default: direction = directionOut;
+            4'b???1 : direction = (directionOut != DOWN) ? UP : directionOut;// Syntax errors right now because module with enum definitions are not linked 
+            4'b?1?0 : direction = (directionOut != LEFT) ? RIGHT : directionOut;
+            4'b?010 : direction = (directionOut != UP) ? DOWN : directionOut;
+            4'b1000 : direction = (directionOut != RIGHT) ? LEFT : directionOut;
+            default : direction = directionOut;
         endcase
     end
 

@@ -1,6 +1,6 @@
 
 module collisionDetector (
-    input logic  clk, nrst,
+    input logic  clk, nrst, check_enable,
     //Snake head, border, and apple coordinates
     input logic [3:0] snakeHeadX, snakeHeadY, borderXMin, borderXMax, borderYMax, borderYMin, AppleX, AppleY, AppleX2, AppleY2,
     //'Array'. Long bit number split into 4 bits, representing X, Y coordinate of each snake segment 
@@ -48,10 +48,14 @@ always_ff @(posedge clk, negedge nrst) begin
         goodCollision <= 0;
         badCollision <=  0;
         good_collision2 <= 0;
-    end else begin
+    end else if (check_enable) begin
         goodCollision <= goodCollision_n;
         good_collision2 <= goodCollision_n2;
         badCollision <= (badCollision_n | badCollision_n2 | collision_n);// | collision_n | badCollision_n2);// | badCollision_n2
+    end else begin
+        goodCollision <= goodCollision;
+        good_collision2 <= goodCollision;
+        badCollision <= badCollision;// | collision_n | badCollision_n2);// | badCollision_n2
     end
 end
 // why can you not edit settings in wait mode sometimes? just after starting(without manual reset) no longer die instantly after adding logic to direction

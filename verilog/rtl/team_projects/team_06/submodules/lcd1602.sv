@@ -2,38 +2,7 @@
 `default_nettype none
 // Empty top module
 
-// typedef enum logic [1:0] {
-//         RUN = 2'b00,
-//         WAIT = 2'b01, 
-//         PAUSE = 2'b10,
-//         END_GAME = 2'b11
-//     } GAME_STATE; 
 
-// typedef enum logic [1:0] {
-//         TWO_APPLE = 2'b00,
-//         NORMAL_MODE = 2'b01, 
-//         WALL_SPAWN = 2'b10,
-//         WALL_INCREASE = 2'b11
-//     } GAME_MODE; 
-
-// typedef enum logic [1:0] {
-//         NORMAL_SPEED = 2'b00,
-//         FAST_SPEED = 2'b01, 
-//         SLOW_SPEED = 2'b10
-//     } GAME_SPEED; 
-
-// typedef enum logic [1:0] {
-//         APPLE_NORMAL = 2'b00,
-//         APPLE_LUCKY = 2'b01, 
-//         APPLE_UNLUCKY = 2'b10
-//     } APPLE_LUCK; 
-
-// typedef enum logic [1:0] {
-//         UP = 2'b00,
-//         DOWN = 2'b01, 
-//         LEFT = 2'b10,
-//         RIGHT = 2'b11
-//     } DIRECTION; 
 
 
 typedef enum logic [7:0] {
@@ -49,42 +18,62 @@ typedef enum logic [7:0] {
    } MODE;
 
 
-module top (
-// I/O ports
-// input logic hwclk,
-input  logic hwclk, reset,
-input  logic [20:0] pb,
-output logic [7:0] left, right,
-      ss7, ss6, ss5, ss4, ss3, ss2, ss1, ss0,
-output logic red, green, blue,
+// module top (
+// // I/O ports
+// // input logic hwclk,
+// input  logic hwclk, reset,
+// input  logic [20:0] pb,
+// output logic [7:0] left, right,
+//       ss7, ss6, ss5, ss4, ss3, ss2, ss1, ss0,
+// output logic red, green, blue,
 
 
-// UART ports
-output logic [7:0] txdata,
-input  logic [7:0] rxdata,
-output logic txclk, rxclk,
-input  logic txready, rxready
+// // UART ports
+// output logic [7:0] txdata,
+// input  logic [7:0] rxdata,
+// output logic txclk, rxclk,
+// input  logic txready, rxready
 
 
+// );
+
+
+// logic [4:0] tempOut;
+// logic [4:0] out;
+// logic strobe;
+// logic [31:0] sequence_num;
+// logic [127:0] row_top;
+
+
+// display dis (.gameState(WAIT), .gameMode(WALL_SPAWN), .appleLuck(), .gameSpeed(), .score(8'd139), .row_top(row_top), .row_bot());
+// //Game State(pixels 1-4), Score(pixel 8-10), 
+
+// //row needs to have 16 characters
+// lcd1602 L1 (.clk(hwclk), .rst(~reset), .row_1(row_top), .row_2("       SUS      "), .lcd_en(left[1]), .lcd_rw(left[0]), .lcd_rs(left[3]), .lcd_data(right));
+
+
+// //print("Number: %d", number);
+
+
+// endmodule
+
+module display_wrapper(
+input logic [7:0] score,
+input logic clk, nreset,
+input GAME_MODE game_mode,
+input GAME_SPEED game_speed,
+input GAME_STATE game_state,
+input APPLE_LUCK apple_luck,
+output logic out1, out2, out3, 
+output logic [7:0] out4
 );
+logic [127:0] row_top, row_bot;
 
-
-logic [4:0] tempOut;
-logic [4:0] out;
-logic strobe;
-logic [31:0] sequence_num;
-logic [127:0] row_top;
-
-
-display dis (.gameState(WAIT), .gameMode(), .appleLuck(), .gameSpeed(), .score(8'd130), .row_top(row_top), .row_bot());
+display dis (.gameState(game_state), .gameMode(game_mode), .appleLuck(apple_luck), .gameSpeed(game_speed), .score(score), .row_top(row_top), .row_bot(row_bot));
 //Game State(pixels 1-4), Score(pixel 8-10), 
 
 //row needs to have 16 characters
-lcd1602 L1 (.clk(hwclk), .rst(~reset), .row_1(row_top), .row_2("       SUS      "), .lcd_en(left[1]), .lcd_rw(left[0]), .lcd_rs(left[3]), .lcd_data(right));
-
-
-//print("Number: %d", number);
-
+lcd1602 L1 (.clk(clk), .rst(nreset), .row_1(row_top), .row_2("       SUS      "), .lcd_en(out1), .lcd_rw(out2), .lcd_rs(out3), .lcd_data(out4));
 
 endmodule
 
@@ -107,17 +96,16 @@ always_comb begin
             row_top[103:96] = 8'd84; //T
             row_top[95:88] = 8'd32;
             row_top[87:80] = 8'd32;
-            row_top[79:72] = 8'd32;
-            row_top[71:64] = 8'd32;
-            row_top[63:56] = 8'd32;
+            // row_top[79:72] = 8'd32;
+            // row_top[71:64] = 8'd32;
+            // row_top[63:56] = 8'd32;
             row_top[55:48] = 8'd32;
-            row_top[47:40] = 8'd32;
-            row_top[39:32] = 8'd32;
-            row_top[31:24] = 8'd32;
-            row_top[23:16] = 8'd32;
-            row_top[23:16] = 8'd32;
-            row_top[15:8] = 8'd32;
-            row_top[7:0] = 8'd32;
+            row_top[47:40] = 8'd77;
+            row_top[39:32] = 8'd58;
+            // row_top[31:24] = 8'd32;
+            // row_top[23:16] = 8'd32;
+            // row_top[15:8] = 8'd32;
+            // row_top[7:0] = 8'd32;
         end
 
         RUN: begin
@@ -127,17 +115,16 @@ always_comb begin
             row_top[103:96] = 8'd32; 
             row_top[95:88] = 8'd32;
             row_top[87:80] = 8'd32;
-            row_top[79:72] = 8'd32;
-            row_top[71:64] = 8'd32;
-            row_top[63:56] = 8'd32;
+            // row_top[79:72] = 8'd32;
+            // row_top[71:64] = 8'd32;
+            // row_top[63:56] = 8'd32;
             row_top[55:48] = 8'd32;
-            row_top[47:40] = 8'd32;
-            row_top[39:32] = 8'd32;
-            row_top[31:24] = 8'd32;
-            row_top[23:16] = 8'd32;
-            row_top[23:16] = 8'd32;
-            row_top[15:8] = 8'd32;
-            row_top[7:0] = 8'd32;
+            row_top[47:40] = 8'd77;
+            row_top[39:32] = 8'd58;
+            // row_top[31:24] = 8'd32;
+            // row_top[23:16] = 8'd32;
+            // row_top[15:8] = 8'd32;
+            // row_top[7:0] = 8'd32;
         end
 
         PAUSE: begin
@@ -147,17 +134,16 @@ always_comb begin
             row_top[103:96] = 8'd69; 
             row_top[95:88] = 8'd32;
             row_top[87:80] = 8'd32;
-            row_top[79:72] = 8'd32;
-            row_top[71:64] = 8'd32;
-            row_top[63:56] = 8'd32;
+            // row_top[79:72] = 8'd32;
+            // row_top[71:64] = 8'd32;
+            // row_top[63:56] = 8'd32;
             row_top[55:48] = 8'd32;
-            row_top[47:40] = 8'd32;
-            row_top[39:32] = 8'd32;
-            row_top[31:24] = 8'd32;
-            row_top[23:16] = 8'd32;
-            row_top[23:16] = 8'd32;
-            row_top[15:8] = 8'd32;
-            row_top[7:0] = 8'd32;
+            row_top[47:40] = 8'd77;
+            row_top[39:32] = 8'd58;
+            // row_top[31:24] = 8'd32;
+            // row_top[23:16] = 8'd32;
+            // row_top[15:8] = 8'd32;
+            // row_top[7:0] = 8'd32;
         end
 
         END_GAME: begin
@@ -167,17 +153,16 @@ always_comb begin
             row_top[103:96] = 8'd32; 
             row_top[95:88] = 8'd32;
             row_top[87:80] = 8'd32;
-            row_top[79:72] = 8'd32;
-            row_top[71:64] = 8'd32;
-            row_top[63:56] = 8'd32;
+            // row_top[79:72] = 8'd32;
+            // row_top[71:64] = 8'd32;
+            // row_top[63:56] = 8'd32;
             row_top[55:48] = 8'd32;
-            row_top[47:40] = 8'd32;
-            row_top[39:32] = 8'd32;
-            row_top[31:24] = 8'd32;
-            row_top[23:16] = 8'd32;
-            row_top[23:16] = 8'd32;
-            row_top[15:8] = 8'd32;
-            row_top[7:0] = 8'd32;
+            row_top[47:40] = 8'd77;
+            row_top[39:32] = 8'd58;
+            // row_top[31:24] = 8'd32;
+            // row_top[23:16] = 8'd32;
+            // row_top[15:8] = 8'd32;
+            // row_top[7:0] = 8'd32;
         end
 
 
@@ -189,14 +174,49 @@ always_comb begin
             row_top[103:96] = 8'd32;
             row_top[95:88] = 8'd32;
             row_top[87:80] = 8'd32;
-            row_top[79:72] = 8'd32;
-            row_top[71:64] = 8'd32;
-            row_top[63:56] = 8'd32;
+            // row_top[79:72] = 8'd32;
+            // row_top[71:64] = 8'd32;
+            // row_top[63:56] = 8'd32;
             row_top[55:48] = 8'd32;
             row_top[47:40] = 8'd32;
             row_top[39:32] = 8'd32;
+            // row_top[31:24] = 8'd32;
+            // row_top[23:16] = 8'd32;
+            // row_top[15:8] = 8'd32;
+            // row_top[7:0] = 8'd32;
+        end
+    endcase
+end
+always_comb begin
+    case(gameMode)
+        TWO_APPLE: begin //2APP
+            row_top[31:24] = 8'd50;
+            row_top[23:16] = 8'd65;
+            row_top[15:8] = 8'd80;
+            row_top[7:0] = 8'd80;
+        end
+        NORMAL_MODE: begin //NORM
+            row_top[31:24] = 8'd78;
+            row_top[23:16] = 8'd79;
+            row_top[15:8] = 8'd82;
+            row_top[7:0] = 8'd77;
+        end
+
+        WALL_SPAWN: begin //WALL
+            row_top[31:24] = 8'd87;
+            row_top[23:16] = 8'd65;
+            row_top[15:8] = 8'd76;
+            row_top[7:0] = 8'd76;
+        end
+
+        SLOW_SPEED: begin //SLOW 
+            row_top[31:24] = 8'd83;
+            row_top[23:16] = 8'd76;
+            row_top[15:8] = 8'd79;
+            row_top[7:0] = 8'd87;
+        end
+        default: begin 
             row_top[31:24] = 8'd32;
-            row_top[23:16] = 8'd32;
             row_top[23:16] = 8'd32;
             row_top[15:8] = 8'd32;
             row_top[7:0] = 8'd32;
@@ -204,8 +224,9 @@ always_comb begin
     endcase
 end
 
-//integer dScore = {24'b0, score};
-integer i;
+
+
+//Score Digit Logic
 logic [7:0] digit1;
 logic [7:0] digit2;
 logic [7:0] digit3;
@@ -220,25 +241,29 @@ temp = 8'b0;
 temp2 = 8'b0;
 
 if (score >= 100) begin
-    digit1 = score % 10 + 48;
+    digit3 = score % 10 + 48;
     temp = score / 10;
     digit2 = temp % 10 + 48; 
     temp2 = temp/ 10;
-    digit3 = temp2 % 10 + 48;
+    digit1 = temp2 % 10 + 48;
 end
 else if (score >= 10) begin
-    digit1 = score % 10 + 48;
+    digit3 = score % 10 + 48;
     temp = score / 10;
     digit2 = temp % 10 + 48;
+    digit1 = 32;
+    
 end
 else begin
-    digit1 = score;
+    digit3 = score + 48;
+    digit2 = 32;
+    digit1 = 32;
 end
 
 
-row_top [71:64] = digit1;
-row_top [63:56] = digit2;
-row_top [55:48] = digit1;
+row_top [79:72] = digit1;
+row_top [71:64] = digit2;
+row_top [63:56] = digit3;
 end
 
 endmodule 
@@ -268,7 +293,7 @@ module lcd1602 #(parameter clk_div = 24_000)(
     localparam TIME_20MS = TIME_500HZ * 10;
     
     // Set lcd_data accroding to datasheet
-    localparam IDLE = 8'h00,                
+    localparam IDLE_LCD = 8'h00,                
                SET_FUNCTION = 8'h01,       
                DISP_OFF = 8'h03,
                DISP_CLEAR = 8'h02,
@@ -341,7 +366,7 @@ module lcd1602 #(parameter clk_div = 24_000)(
 
     always  @(posedge clk) begin
         if(!rst)
-            currentState <= IDLE;
+            currentState <= IDLE_LCD;
         else if (lcd_ctrl)
             currentState <= nextState;
         else
@@ -350,7 +375,7 @@ module lcd1602 #(parameter clk_div = 24_000)(
 
     always  @(*) begin
         case (currentState)
-            IDLE: nextState = SET_FUNCTION;
+            IDLE_LCD: nextState = SET_FUNCTION;
             SET_FUNCTION: nextState = DISP_OFF;
             DISP_OFF: nextState = DISP_CLEAR;
             DISP_CLEAR: nextState = ENTRY_MODE;
@@ -390,7 +415,7 @@ module lcd1602 #(parameter clk_div = 24_000)(
             ROW2_D: nextState = ROW2_E;
             ROW2_E: nextState = ROW2_F;
             ROW2_F: nextState = ROW1_ADDR;
-            default: nextState = IDLE;
+            default: nextState = IDLE_LCD;
         endcase 
     end   
 
@@ -418,7 +443,7 @@ module lcd1602 #(parameter clk_div = 24_000)(
         end
         else if(lcd_ctrl) begin
             case(nextState)
-                IDLE: lcd_data <= 8'hxx;
+                IDLE_LCD: lcd_data <= 8'hxx;
                 SET_FUNCTION: lcd_data <= 8'h38; //2 lines and 5×7 matrix
                 DISP_OFF: lcd_data <= 8'h08;
                 DISP_CLEAR: lcd_data <= 8'h01;
