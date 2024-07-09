@@ -14,7 +14,7 @@ module top (
     logic baud_edge;
     logic [8:0]show_internal;
 
-    second_counter secondcount(.clk(new_clk), .nrst(nrst), .falling_edge(falling_edge), .max(4'b1001),  .no_count(no_count), .countout());
+    idle_counter secondcount(.clk(new_clk), .nrst(nrst), .falling_edge(falling_edge), .max(4'b1001),  .no_count(no_count), .countout());
 
     shift_register shifting_in(.clk(clk), .nrst(nrst), .Reg_Start(Reg_Start), .receive_ready(send), .Din(rx_din), .data_receive(data_receive), .show_internal(show_internal), .baud_edge(baud_edge));
 
