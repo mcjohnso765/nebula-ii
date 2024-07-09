@@ -17,7 +17,7 @@
 
 `timescale 1 ns / 1 ps
 
-module team_1_tb;
+module team_04_tb;
 	reg clock;
 	reg RSTB;
 	reg CSB;
