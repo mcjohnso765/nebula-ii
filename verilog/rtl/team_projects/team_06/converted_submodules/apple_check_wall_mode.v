@@ -32,6 +32,7 @@ module apple_check_wall_mode (
 	wire collision_downn;
 	wire collision_leftn;
 	wire collision_rightn;
+	wire collision_on;
 	collisionLogic_wall above(
 		.next_wall(up),
 		.walls(wall_locations),
@@ -51,6 +52,11 @@ module apple_check_wall_mode (
 		.next_wall(left),
 		.walls(wall_locations),
 		.collision(collision_leftn)
+	);
+	collisionLogic_wall something_else (
+		.next_wall(apple_possible),
+		.walls(wall_locations),
+		.collision(collision_on)
 	);
 	always @(*) begin
 		if (_sv2v_0)
@@ -90,7 +96,7 @@ module apple_check_wall_mode (
 			collision_left <= collision_leftn;
 			collision_up <= collision_upn;
 			collision_right <= collision_rightn;
-			impossible <= error_counter >= 3;
+			impossible <= ((error_counter >= 3) | collision_on);
 		end
 	initial _sv2v_0 = 0;
 endmodule

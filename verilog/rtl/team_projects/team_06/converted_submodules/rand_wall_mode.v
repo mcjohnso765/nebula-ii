@@ -302,7 +302,7 @@ module rand_wall_mode (
 			inputa <= 0;
 			count1 <= 0;
 		end
-		else if (good_collision & (counter <= 5'd24)) begin
+		else if (good_collision & (apple_locations[24] == 8'b0)) begin
 			if (count1) begin
 				inputa <= 1;
 				count1 <= 0;
