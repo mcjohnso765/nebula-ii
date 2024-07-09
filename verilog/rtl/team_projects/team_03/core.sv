@@ -44,9 +44,13 @@ module core(
     //this is a test
 
      
-    logic i_ready, d_ready;
-    request_unit ru(.en(en), .clk(clock), .nRST(reset), .D_fetch(read_mem), .D_write(write_mem), .I_fetch(1'b1), .data_adr(result), .instr_adr(program_counter), .writedata(data_to_write), .i_done(i_ready), .d_done(d_ready), .instr(inst), .data(data_to_IO), .busy_o(BUSY_O), .cpu_dat_o(CPU_DAT_O), .write_i(WRITE_I), .read_i(READ_I), .adr_i(ADR_I),  .cpu_dat_i(CPU_DAT_I), .sel_i(SEL_I));
-
+    logic i_hit;
+  request_unit ru(.clk(clock), .rst(reset), .memread(read_mem), .memwrite(write_mem), 
+  .data_to_write(data_to_write), .instruction_address(program_counter), 
+  .data_address(result), .busy_o(BUSY_O), .cpu_dat_o(CPU_DAT_O), 
+  .read_i(READ_I), .write_i(WRITE_I), .cpu_dat_i(CPU_DAT_I), 
+  .instruction(inst), .adr_i(ADR_I), .data_read(data_read), 
+  .sel_i(SEL_I), .i_hit(i_hit));
 
     wire cpu_clock;
     //clock_controller clock_controller(.halt(1'b0), .cpu_clock(cpu_clock), .clock(clock && en), .reset(reset));
@@ -61,7 +65,7 @@ module core(
 
     branch_logic branch_logic(.branch_type(branch_type), .ALU_neg_flag(N), .ALU_overflow_flag(V), .ALU_zero_flag(Z), .b_out(branch_choice));
 
-    pc pc(.en(en), .pc_out(program_counter), .pc_add_out(program_counter_out), .generated_immediate(imm_gen), .branch_decision(branch_choice), .pc_write_value(regA_data), .pc_add_write_value(pc_add_write_value), .in_en(pc_en), .auipc_in(alu_mux_en), .clock(clock), .reset(reset));
+    pc pc(.en(en), .pc_out(program_counter), .pc_add_out(program_counter_out), .generated_immediate(imm_gen), .branch_decision(branch_choice), .pc_write_value(regA_data), .pc_add_write_value(pc_add_write_value), .in_en(i_hit), .auipc_in(alu_mux_en), .clock(clock), .reset(reset));
 
     register_file register_file(.en(en), .clk(clock), .rst(reset), .regA_address(regA), .regB_address(regB), .rd_address(rd), .register_write_en(reg_write_en), .register_write_data(register_write_data), .regA_data(regA_data), .regB_data(regB_data));
 
