@@ -137,25 +137,75 @@ endtask
         check_out(exp_val,register_write_data);
 
         #6;
+
+        check_type = "xori";
         inst = 32'h0040c413;
+        exp_val = 3;
         #6;
+        check_out(exp_val,register_write_data);
+        #6;
+
+        check_type = "ori";
         inst = 32'h0040e413;
+        exp_val = 7;
         #6;
+        check_out(exp_val,register_write_data);
+        #6;
+
+        check_type = "andi";
         inst = 32'h0040f413;
+        exp_val = 4;
         #6;
+        check_out(exp_val,register_write_data);
+        #6;
+
+        check_type = "slli";
         inst = 32'h00209413;
+        exp_val = 28;
         #6;
+        check_out(exp_val,register_write_data);
+        #6;
+
+        check_type = "srli";
         inst = 32'h00215413;
+        exp_val = 3;
         #6;
+        check_out(exp_val,register_write_data);
+        #6;
+
+        check_type = "srai";
         inst = 32'h4010d413;
+        exp_val = 3;
         #6;
+        check_out(exp_val,register_write_data);
+        #6;
+
+        check_type = "srai";
         inst = 32'h4040d413;
+        exp_val = 2;
         #6;
+        check_out(exp_val,register_write_data);
+        #6;
+
+        check_type = "slti";
         inst = 32'h0080a413;
+        exp_val = 1;
         #6;
+        check_out(exp_val,register_write_data);
+        #6;
+
+        check_type = "sltiu";
         inst = 32'h0080b413;
+        exp_val = 1;
         #6;
+        check_out(exp_val,register_write_data);
+        #6;
+
+        check_type = "xori";
         inst = 32'h00500193;
+        exp_val = 7;
+        #6;
+        check_out(exp_val,register_write_data);
         #6;
 
 
