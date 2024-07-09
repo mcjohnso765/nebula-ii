@@ -109,9 +109,9 @@ module team_08_dinoGame (input clk, input up, input rst,
     team_08_score_display flash(/*inputs*/.clk(clk), .reset(rst), .bcd_ones(bcd_ones), .bcd_tens(bcd_tens), 
     /*outputs*/.displayOut(displayOut), .blinkToggle(blinkToggle));
 
-    ssdec ones(.in(displayOut), .enable(~blinkToggle), .out(ones_score));
+    team_08_ssdec ones(.in(displayOut), .enable(~blinkToggle), .out(ones_score));
 
-    ssdec tens(.in(displayOut), .enable(blinkToggle), .out(tens_score));
+    team_08_ssdec tens(.in(displayOut), .enable(blinkToggle), .out(tens_score));
 
     ///add synthesizer module 
     //.synthesizer sound(.clk(clk), .reset(rst), .trigger(dinoJumpGood));

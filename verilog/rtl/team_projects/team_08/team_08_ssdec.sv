@@ -1,4 +1,4 @@
-module ssdec (
+module team_08_ssdec (
     input logic [3:0] in,
     input logic enable,
     output logic [6:0] out

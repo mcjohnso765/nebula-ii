@@ -1,4 +1,4 @@
-module score_display(
+module team_08_score_display(
     input logic clk, reset,
     input logic [3:0] bcd_ones, bcd_tens,
     output logic [3:0] displayOut,
