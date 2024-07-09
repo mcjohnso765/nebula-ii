@@ -26,7 +26,6 @@ end
 always_comb begin
     if (enable_in) begin
         if (score > 100) begin
-<<<<<<< HEAD
             xmax_n = 4'd14;
             xmin_n = 4'd0;
             ymax_n = 4'd10;
@@ -67,54 +66,11 @@ always_comb begin
             xmin_n = 4'd0;
             ymax_n = 4'd4;
             ymin_n = 4'd0;
-=======
-            XMAX = 4'd14;
-            XMIN = 4'd0;
-            YMAX = 4'd10;
-            YMIN = 4'd0;
-        end
-        else if (score > 80) begin 
-            XMAX = 4'd13;
-            XMIN = 4'd0;
-            YMAX = 4'd9;
-            YMIN = 4'd0;
-        end
-        else if (score > 60) begin 
-            XMAX = 4'd12;
-            XMIN = 4'd0;
-            YMAX = 4'd8;
-            YMIN = 4'd0;
-        end
-        else if (score > 40) begin 
-            XMAX = 4'd11;
-            XMIN = 4'd0;
-            YMAX = 4'd7;
-            YMIN = 4'd0;
-        end
-        else if (score > 20) begin 
-            XMAX = 4'd10;
-            XMIN = 4'd0;
-            YMAX = 4'd6;
-            YMIN = 4'd0;
-        end
-        else if (score > 10) begin 
-            XMAX = 4'd9;
-            XMIN = 4'd0;
-            YMAX = 4'd5;
-            YMIN = 4'd0;
-        end
-        else begin 
-            XMAX = 4'd8;
-            XMIN = 4'd0;
-            YMAX = 4'd4;
-            YMIN = 4'd0;
->>>>>>> eafd326048b7e39a19916c5d763d0ea7c41dde9e
         end
     end
 
 
     else begin //default locations
-<<<<<<< HEAD
         xmax_n = 4'd15;
         xmin_n = 4'd0;
         ymax_n = 4'd11;
@@ -123,13 +79,3 @@ always_comb begin
     end
 end
 endmodule 
-=======
-        XMAX = 4'd14;
-        XMIN = 4'd0;
-        YMAX = 4'd10;
-        YMIN = 4'd0;
-
-    end
-end
-endmodule 
->>>>>>> eafd326048b7e39a19916c5d763d0ea7c41dde9e
