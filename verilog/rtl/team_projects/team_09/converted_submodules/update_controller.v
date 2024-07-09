@@ -1,3 +1,4 @@
+`default_nettype none
 module update_controller (
 	init_cycle,
 	en_update,

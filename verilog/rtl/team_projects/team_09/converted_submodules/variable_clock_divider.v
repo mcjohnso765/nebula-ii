@@ -1,3 +1,4 @@
+`default_nettype none
 module variable_clock_divider (
 	clk,
 	nrst,
