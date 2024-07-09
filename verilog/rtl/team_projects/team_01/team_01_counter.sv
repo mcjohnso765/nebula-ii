@@ -5,7 +5,7 @@ Description: Counts to a flexible amount. Has strobe at max and controls for wra
 
 module counter
 #(
-    parameter N = 7 // Size of counter (i.e. number of bits at the output). Maximum count is 2^N - 1
+    parameter N = 17 // Size of counter (i.e. number of bits at the output). Maximum count is 2^N - 1
 )
 (
     input logic clk,            // Clock

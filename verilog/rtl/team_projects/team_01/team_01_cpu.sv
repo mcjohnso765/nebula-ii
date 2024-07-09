@@ -4,7 +4,7 @@
 
 module team_01_cpu (
   // input logic[31:0] instruction,
-  input logic clk, nRst, pc_enable,
+  input logic clk, nRst,
   // input logic [31:0]store,
     //from wishbone
   input logic         busy_o,                     // Wishbone is busy with a transaction, low = transaction complete

@@ -1,31 +1,27 @@
+// DONE
+
 /*
     Module Name: register_file
     Description: allows the CPU to hold temporary memory. It holds the memory the CPU has to process immediately. 
-    */
-
+*/
 
 module register_file (
-    input logic clk, nRst, regWrite,
-    input logic [4:0] readReg1, readReg2, writeReg,
-    input logic [31:0] write_data,
-    output logic [31:0] readData1, readData2, output_reg
+    input   logic        clk, nRST, RegWrite,
+    input   logic [4:0]  ReadReg1, ReadReg2, WriteReg,
+    input   logic [31:0] WriteData,
+    output  logic [31:0] ReadData1, ReadData2
 );
-    // Write your code here!
-    logic [31:0] registers [31:0];
+    logic [31:0] [31:0] registers;
     
-    
-    always_ff @(posedge clk, negedge nRst) begin
-        if (~nRst) begin
-            for (int i = 0; i < 32; i++) begin
-            registers[i] <= 0;
-            end  
-        end else if (regWrite && writeReg != 0) begin
-                registers[writeReg] <= write_data;
+    always_ff @(posedge clk, negedge nRST) begin
+        if (~nRST) begin
+            registers <= 0;        
+        end else if (RegWrite && WriteReg != 0) begin
+            registers[WriteReg] <= WriteData;
         end
     end
     
-    assign output_reg = registers[5'd6];
-    assign readData1 = registers[readReg1];
-    assign readData2 = registers[readReg2];
+    assign ReadData1 = registers[ReadReg1];
+    assign ReadData2 = registers[ReadReg2];
 
 endmodule
