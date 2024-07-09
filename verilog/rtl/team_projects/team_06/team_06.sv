@@ -37,7 +37,6 @@ module team_06 (
         gpio_oeb = '1;
         if (en == 1'b1) begin
             gpio_oeb [17:6] = '0;//Snake Game Display, Score Display, and sound output pins all are output pins here
-            gpio_out[5:0] = '0;
             gpio_out[33:18] = '0;
         end
     end
