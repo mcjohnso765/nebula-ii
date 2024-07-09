@@ -40,7 +40,7 @@ module core(
     logic [31:0] data_to_write, data_read, data_to_IO;
     logic pc_en;
     logic slt;
-    logic u;
+    logic u, d_hit;;
     //this is a test
 
      
@@ -50,7 +50,7 @@ module core(
   .data_address(result), .busy_o(BUSY_O), .cpu_dat_o(CPU_DAT_O), 
   .read_i(READ_I), .write_i(WRITE_I), .cpu_dat_i(CPU_DAT_I), 
   .instruction(inst), .adr_i(ADR_I), .data_read(data_read), 
-  .sel_i(SEL_I), .i_hit(i_hit));
+  .sel_i(SEL_I), .i_hit(i_hit), .d_hit(d_hit));
 
     wire cpu_clock;
     //clock_controller clock_controller(.halt(1'b0), .cpu_clock(cpu_clock), .clock(clock && en), .reset(reset));
@@ -67,7 +67,7 @@ module core(
 
     pc pc(.en(en), .pc_out(program_counter), .pc_add_out(program_counter_out), .generated_immediate(imm_gen), .branch_decision(branch_choice), .pc_write_value(regA_data), .pc_add_write_value(pc_add_write_value), .in_en(i_hit), .auipc_in(alu_mux_en), .clock(clock), .reset(reset));
 
-    register_file register_file(.en(en), .clk(clock), .rst(reset), .regA_address(regA), .regB_address(regB), .rd_address(rd), .register_write_en(reg_write_en), .register_write_data(register_write_data), .regA_data(regA_data), .regB_data(regB_data));
+    register_file register_file(.en(en), .clk(clock), .rst(reset), .regA_address(regA), .regB_address(regB), .rd_address(rd), .register_write_en(register_file_en), .register_write_data(register_write_data), .regA_data(regA_data), .regB_data(regB_data));
 
     writeback writeback(.memory_value(data_read), .ALU_value(result), .pc_4_value(program_counter_out), .mem_to_reg(mem_to_reg), .load_byte(load_byte), .read_pc_4(1'b0), .register_write(register_write_data), .slt(slt), .ALU_neg_flag(N), .ALU_overflow_flag(V));
 
@@ -80,5 +80,17 @@ module core(
     ALU ALU(.srda(regA_data), .fop(alu_op), .result(result), .Z(Z), .N(N), .V(V), .imm_gen(imm_gen), .srdb(regB_data), .alu_mux_en(alu_mux_en), .rda_u(regA_data), .rdb_u(regB_data), .u(u));
 
     imm_generator imm_generator(.inst(inst), .type_i(i_type), .imm_gen(imm_gen));
+
+    logic register_file_en;
+    always_comb begin
+      register_file_en = '0;
+      if(reg_write_en) begin
+        if(read_mem) begin
+          register_file_en = d_hit;
+        end else begin
+          register_file_en = 1'b1;
+        end
+      end
+    end
 
 endmodule

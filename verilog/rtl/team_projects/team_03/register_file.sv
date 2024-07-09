@@ -33,7 +33,7 @@ always_ff @(posedge clk, posedge rst) begin
         registers_state[31] <= 32'hFFFFFFFF;
     end
 
-    else if (en) begin
+    else if (en & register_write_en) begin
         registers_state <= next_registers_state;
     end
 

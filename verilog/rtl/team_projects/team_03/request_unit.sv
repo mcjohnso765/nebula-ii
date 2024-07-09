@@ -16,7 +16,7 @@ module request_unit(
     output logic [31:0] adr_i,
     output logic [31:0] data_read,
     output logic [3:0] sel_i,
-    output logic i_hit // pc enable signal 
+    output logic i_hit, d_hit // pc enable signal 
 );
 
 typedef enum logic [1:0] {
@@ -25,7 +25,7 @@ typedef enum logic [1:0] {
 
 logic [31:0] next_adr, next_cpu_dat, next_instruction;
 state_t state, next_state;
-logic d_hit, next_read, next_write;
+logic next_read, next_write;
 logic [31:0] next_data_read;
 logic request_type, next_request_type, next_i_hit, next_d_hit; // if 1, we are requesting data from memory (like IF or DF so on and so forth so yeah)
 
