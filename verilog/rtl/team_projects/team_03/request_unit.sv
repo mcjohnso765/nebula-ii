@@ -76,21 +76,21 @@ always_comb begin
                     next_state = MEM_WRITE;
                     read_i = 1'b0;
                     write_i = 1'b1;
-                    next_adr = {24'b0, data_address[7:0]};
+                    next_adr = data_address;
                     next_cpu_dat = data_to_write;
                     next_instruction = instruction;
                 end else if (memread && !d_hit) begin
                     next_state = MEM_READ;
                     read_i = 1'b1;
                     write_i = 1'b0;
-                    next_adr = {24'b0, data_address[7:0]};
+                    next_adr = data_address;
                     next_cpu_dat = 32'b0;
                     next_instruction = instruction;
                 end else if (!i_hit) begin
                     next_state = INSTRUCTION_READ;
                     read_i = 1'b1;
                     write_i = 1'b0;
-                    next_adr = {24'b0, instruction_address[9:2]};
+                    next_adr = instruction_address;
                     //next_cpu_dat = '0;
            end 
         end
