@@ -105,6 +105,17 @@ module nebula_ii (
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[1]), // Breakout Board Pins
         .gpio_oeb(designs_gpio_oeb[1]) // Active Low Output Enable
+
+        // Add master ports
+        .ADR_O(adr_cpu),
+        .DAT_I(dat_i_cpu),
+        .SEL_O(sel_cpu),
+        .WE_O(we_cpu), 
+        .STB_O(stb_cpu),
+        .CYC_O(cyc_cpu),
+        .DAT_O(dat_o_cpu)
+        .ACK_I(ack_cpu)
+
     );
 
     // Flattened GPIO outputs
@@ -198,16 +209,16 @@ module nebula_ii (
         .nRST(~wb_rst_i),
 
         //manager to arbitrator, input
-        .A_ADR_I({wbs_adr_i}),
-        .A_DAT_I({wbs_dat_i}),
-        .A_SEL_I({wbs_sel_i}),
-        .A_WE_I({wbs_we_i}),
-        .A_STB_I({wbs_stb_i}),
-        .A_CYC_I({wbs_cyc_i}),
+        .A_ADR_I({adr_cpu ,wbs_adr_i}),
+        .A_DAT_I({dat_i_cpu, wbs_dat_i}),
+        .A_SEL_I({sel_cpu, wbs_sel_i}),
+        .A_WE_I({we_cpu, wbs_we_i}),
+        .A_STB_I({stb_cpu, wbs_stb_i}),
+        .A_CYC_I({cyc_cpu, wbs_cyc_i}),
 
         //arbitrator to manager, output
-        .A_DAT_O({wbs_dat_o}),
-        .A_ACK_O({wbs_ack_o}),
+        .A_DAT_O({dat_o_cpu, wbs_dat_o}),
+        .A_ACK_O({ack_cpu, wbs_ack_o}),
 
         //arbitrator to peripheral, input
         .DAT_I(wbs_dat_o_m),
