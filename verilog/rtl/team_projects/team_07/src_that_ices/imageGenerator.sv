@@ -49,7 +49,7 @@ module imageGenerator (
     input logic stagePixel,
     input logic buttonHighlightPixel,
 
-    input logic [2:0] wire_color[5:0],
+    input logic [5:0][2:0] wire_color,
     output wire [8:0] x,                     // current x coordinate
     output wire [7:0] y,                     // current y coordinate
 

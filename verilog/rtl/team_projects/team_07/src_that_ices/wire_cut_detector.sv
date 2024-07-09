@@ -31,7 +31,7 @@ module wire_cut_detector(
     input logic strobe,
     input logic [5:0] button,
     input logic [2:0] wire_num,         // number of wires: from 3 to 6
-    input logic [2:0] wire_color[5:0],  // 6 colors: red, white, yellow, blue, grey, no_wire; 6 wires
+    input logic [5:0][2:0] wire_color,  // 6 colors: red, white, yellow, blue, grey, no_wire; 6 wires
     input logic [2:0] wire_pos,         // wire position
     output logic [5:0] wire_status,     // wire status, 0 - uncut, 1 - cut
     output logic wire_clear,            // wire game clear strobe signal

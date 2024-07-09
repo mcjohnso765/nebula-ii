@@ -11,7 +11,7 @@ module random_gen_wire_color
     input logic nrst,
     input logic [17:0] random_seed,
     input logic [2:0] wire_num,
-    output logic [2:0] wire_color[5:0]
+    output logic [5:0][2:0] wire_color
 );
     // color: 0:red, 1:white, 2:blue, 3:yellow, 4:grey
     localparam NUM_BITS = 18;

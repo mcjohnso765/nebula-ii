@@ -229,7 +229,7 @@ module bomb_game(
         .wire_error(wire_error),
         .wire_clear(wire_clear),
         .wire_num(wire_num),
-        .wire_color(wire_color[5:0]),
+        .wire_color(wire_color),
         .wire_status(wire_status),
         .wire_pos(wire_pos)
     );
@@ -295,7 +295,7 @@ module bomb_game(
         .boomPixel(boomPixel),
         .wirePixel(wirePixel),
         .wireHighlightPixel(wireHighlightPixel),
-        .wire_color(wire_color[5:0]),
+        .wire_color(wire_color),
         .displayPixel(displayPixel), 
         .buttonPixel(buttonPixel), 
         .labelPixel(labelPixel), 

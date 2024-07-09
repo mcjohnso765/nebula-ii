@@ -14,17 +14,10 @@ module wire_game (
     output logic wire_error,
     output logic wire_clear,
     output logic [2:0] wire_num,
-    output logic [2:0] wire_color[5:0],
+    output logic [5:0][2:0] wire_color,
     output logic [5:0] wire_status,
     output logic [2:0] wire_pos
 );
-
-
-// always_comb begin
-//   for (int i = 0; i < 6; i++) begin
-//     wire_color[i] = '0;
-//   end
-// end
     // assign wire_num = 3'd3;
     // assign wire_color = {3'd5, 3'd5, 3'd5, 3'd2, 3'd1, 3'd0};   // wire 6 first, then 5, 4, 3, 2, 1
 

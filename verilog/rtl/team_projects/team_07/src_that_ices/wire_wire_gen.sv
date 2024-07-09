@@ -9,10 +9,10 @@ module wire_wire_gen (
     input logic clk,
     input logic activate_rand,
     output logic [2:0] wire_num,
-    output logic [2:0] wire_color[5:0]
+    output logic [5:0][2:0] wire_color
 );
     logic [2:0] rand_wire_num;
-    logic [2:0] rand_wire_color[5:0];
+    logic [5:0][2:0] rand_wire_color;
     logic activate_rand_delay_1;
     logic activate_rand_delay_2;
     
@@ -31,19 +31,17 @@ module wire_wire_gen (
     );
 
     logic [2:0] nxt_wire_num;
-    logic [2:0] nxt_wire_color[5:0];
+    logic [5:0][2:0] nxt_wire_color;
 
     always_ff @(posedge clk, negedge nrst) begin 
         if(!nrst) begin
             wire_num <= 3'd0;
-            wire_color[5:0] <='{default: 3'b000};
+            wire_color <= 18'd0;
             activate_rand_delay_1 <= 1'b0;
             activate_rand_delay_2 <= 1'b0;
         end else begin
             wire_num <= nxt_wire_num;
-            for (int i = 0; i < 6; i++) begin
-              wire_color[i] = nxt_wire_color[i];
-            end
+            wire_color <= nxt_wire_color;
             activate_rand_delay_1 <= activate_rand;
             activate_rand_delay_2 <= activate_rand_delay_1;
         end
@@ -51,16 +49,12 @@ module wire_wire_gen (
 
     always_comb begin
         nxt_wire_num = wire_num;
-            for (int i = 0; i < 6; i++) begin
-              nxt_wire_color[i] = wire_color[i];
-            end
+        nxt_wire_color = wire_color;
         if(activate_rand) begin
             nxt_wire_num = rand_wire_num;
         end 
         if (activate_rand_delay_2) begin
-            for (int i = 0; i < 6; i++) begin
-              nxt_wire_color[i] = rand_wire_color[i];
-            end
+            nxt_wire_color = rand_wire_color;
         end
     end
 endmodule
