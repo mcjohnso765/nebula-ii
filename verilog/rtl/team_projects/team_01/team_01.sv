@@ -97,16 +97,20 @@ module team_01 (
    .lcd_rs(gpio_out[2]),
    .lcd_rw(gpio_out[3]),
    .lcd_data(gpio_out[11:4]),
-   .rows(gpio_in[23:20]),  //in
-   .cols(gpio_out[33:30])
+   .rows(gpio_in[15:12]),  //in
+   .cols(gpio_out[19:16])
    );
 
     assign gpio_oeb [1] = '0;
     assign gpio_oeb [2] = '0;
     assign gpio_oeb [3] = '0;
     assign gpio_oeb [11:4] = '0;
-    assign gpio_oeb [23:20] = 4'b1111;
-    assign gpio_oeb [33:30] = '0;
+    assign gpio_oeb [15:12] = 4'b1111;
+    assign gpio_oeb [19:16] = '0;
+
+    assign gpio_oeb [33:20] = '1;
+    assign gpio_out [33:20] = '0;
+    assign gpio_out [15:12] = '0;
 
 
 endmodule
