@@ -14,15 +14,15 @@ module mem_game (
     output logic mem_error,
     output logic mem_clear,
     output logic [1:0] mem_pos,
-    output logic [4:0][1:0] display_num,
-    output logic [3:0][4:0][1:0] label_num,
+    output logic [1:0] display_num[4:0],
+    output logic [1:0] label_num[3:0][4:0],
     output logic [2:0] stage
 );
-    assign display_num = {2'd0, 2'd1, 2'd2, 2'd3, 2'd1};
-    assign label_num[0] = {2'd0, 2'd0, 2'd0, 2'd0, 2'd0};
-    assign label_num[1] = {2'd1, 2'd1, 2'd1, 2'd1, 2'd1};
-    assign label_num[2] = {2'd2, 2'd2, 2'd2, 2'd2, 2'd2};
-    assign label_num[3] = {2'd3, 2'd3, 2'd3, 2'd3, 2'd3}; 
+    assign display_num = '{2'd0, 2'd1, 2'd2, 2'd3, 2'd1};
+    assign label_num[0] = '{2'd0, 2'd0, 2'd0, 2'd0, 2'd0};
+    assign label_num[1] = '{2'd1, 2'd1, 2'd1, 2'd1, 2'd1};
+    assign label_num[2] = '{2'd2, 2'd2, 2'd2, 2'd2, 2'd2};
+    assign label_num[3] = '{2'd3, 2'd3, 2'd3, 2'd3, 2'd3}; 
 
     // color code: 0 - red, 1 - white, 2 - yellow, 3 - blue, 4 - gray, 5 - no wire
     // wire_wire_gen wire_wire_gen_0 (

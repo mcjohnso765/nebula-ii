@@ -237,8 +237,8 @@ module bomb_game(
     logic mem_error;
     logic mem_clear;
     logic [1:0] mem_pos;
-    logic [4:0][1:0] display_num;
-    logic [3:0][4:0][1:0] label_num;
+    logic [1:0] display_num[4:0];
+    logic [1:0] label_num[3:0][4:0];
     logic [2:0] stage;
     mem_game mem_game_0 (
         .nrst(nrst),

@@ -32,15 +32,15 @@ module mem_select_detector(
     input logic activate_rand,
     input logic strobe,
     input logic [5:0] button,
-    input logic [4:0][1:0] display_num,     // display number for stage 1-5, each vary from 1-4
-    input logic [3:0][4:0][1:0] label_num,  // display number for position 1-4, stage 1-5, vary from 1-4
+    input logic [1:0] display_num[4:0],     // display number for stage 1-5, each vary from 1-4
+    input logic [1:0] label_num[3:0][4:0],  // display number for position 1-4, stage 1-5, vary from 1-4
     input logic [1:0] mem_pos,  // current selected position
     output logic mem_error,     // memory game error strobe signal
     output logic mem_clear,     // memory game clear strobe signal
     output logic [2:0] stage
 );
     logic [2:0] nxt_stage;      // logic to update the stage
-    logic [4:0][1:0] right_pos; // correct position for stage 1-5, position vary from 1-4
+    logic [1:0] right_pos[4:0]; // correct position for stage 1-5, position vary from 1-4
 
     always_ff @ (negedge nrst, posedge clk) begin
         if(!nrst) begin
@@ -51,7 +51,7 @@ module mem_select_detector(
     end
 
     always_comb begin
-        right_pos = 10'd0;
+        right_pos ='{default: 2'b00};
         mem_clear = 1'b0;
         mem_error = 1'b0;
         nxt_stage = stage;
