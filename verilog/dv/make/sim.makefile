@@ -67,6 +67,8 @@ ifeq ($(SIM),RTL)
 		iverilog -Ttyp -DFUNCTIONAL -DSIM -DUSE_POWER_PINS -DUNIT_DELAY=#1 \
 		-g2005-sv \
         -f$(VERILOG_PATH)/includes/includes.rtl.caravel \
+		-pfileline=1 \
+		-Wall \
         -f$(USER_PROJECT_VERILOG)/includes/includes.rtl.$(CONFIG) -o $@ $<
     else
 		iverilog -Ttyp -DFUNCTIONAL -DSIM -DUSE_POWER_PINS -DUNIT_DELAY=#1 \
@@ -109,8 +111,10 @@ endif
 %.vcd: %.vvp
 
 ifeq ($(SIM),RTL)
-	vvp  $<
+	echo "BIP"
+	vvp -l out.log -v $<
 	 mv $@ RTL-$@
+	cp $* copy_$*
 endif
 ifeq ($(SIM),GL)
 	vvp  $<
