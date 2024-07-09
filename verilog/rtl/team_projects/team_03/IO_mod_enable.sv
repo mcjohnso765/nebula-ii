@@ -1,4 +1,4 @@
-module IO_mod(
+module IO_mod_enable(
      input logic clk, rst,
     input logic write_mem, read_mem,
     input logic [31:0] data_from_mem,
