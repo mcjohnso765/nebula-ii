@@ -1,54 +1,21 @@
-// $Id: $
-// File name:   team_12.sv
-// Created:     MM/DD/YYYY
-// Author:      Hassan Al-alawi
-// Description: poly_synth
-
 `default_nettype none
-
-module team_12 (
-    // HW
-    input wire clk, nrst,
-    
-    input wire en, //This signal is an enable signal for your chip. Your design should disable if this is low.
-
-    // Logic Analyzer - Grant access to all 128 LA
-    input wire [127:0] la_data_in,
-    output wire [127:0] la_data_out,
-    input wire [127:0] la_oenb,
-
-    // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
-    input  wire [33:0] gpio_in, // Breakout Board Pins
-    output wire [33:0] gpio_out, // Breakout Board Pins
-    output wire [33:0] gpio_oeb // Active Low Output Enable
-    
-    /*
-    * Add other I/O ports that you wish to interface with the
-    * Wishbone bus to the management core. For examples you can 
-    * add registers that can be written to with the Wishbone bus
-    */
+module poly_synth (
+	MHz10,
+	nrst,
+	en,
+	serIn,
+	wave_mode_pb,
+	clear,
+	latch_output
 );
-
-    // All outputs must have a value even if not used
-    assign la_data_out = 128'b0;
-    assign gpio_oeb = 34'h000000007;// First 3 Pins input, rest are outputs
-
-
-    wire MHz10;
-	wire serIn;
-	wire wave_mode_pb;
-	wire clear;
-	wire [11:0] latch_output;
-
-	assign MHz10 = clk;
-
-
-    assign gpio_out = {19'b0,latch_output,3'b0}; //DAC output routed to pins 7-18
-    assign serIn = gpio_in[0]; //MIDI serial in mapped to GPIO 0
-    assign clear = gpio_in[1]; //Clear mapped to GPIO 5
-    assign wave_mode_pb = gpio_in[2]; //Wave mode button mapped to GPIO 6
-
-localparam N = 75;
+	input wire MHz10;
+	input wire nrst;
+	input wire en;
+	input wire serIn;
+	input wire wave_mode_pb;
+	input wire clear;
+	output wire [11:0] latch_output;
+	localparam N = 75;
 	wire baudClk;
 	wire done;
 	wire [7:0] uart_out;

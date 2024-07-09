@@ -4,7 +4,6 @@ module poly_ctrl (
 	en,
 	ready,
 	samp_enable,
-	vol_done,
 	start,
 	acc,
 	store_samp,
@@ -19,7 +18,6 @@ module poly_ctrl (
 	input wire en;
 	input wire ready;
 	input wire samp_enable;
-	input wire vol_done;
 	output reg start;
 	output reg acc;
 	output reg store_samp;
