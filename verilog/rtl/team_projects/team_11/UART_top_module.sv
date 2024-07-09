@@ -2,7 +2,6 @@ module top (
   input logic clk, nrst, rx_din,
   output logic success, receive_ready,
   output logic [7:0]data_receive, 
-  output logic [8:0]show_internal,
   output [127:0] msg
 );
 
@@ -13,6 +12,7 @@ module top (
     logic send;
     logic start;
     logic baud_edge;
+    logic [8:0]show_internal;
 
     second_counter secondcount(.clk(new_clk), .nrst(nrst), .falling_edge(falling_edge), .max(4'b1001),  .no_count(no_count), .countout());
 
