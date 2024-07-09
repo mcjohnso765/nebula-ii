@@ -36,7 +36,7 @@ module team_08 (
     assign gpio_oeb[18:0] = 19'b0;
      assign gpio_oeb[33:22] = 12'b0;
 
-    GPIOPins allocation(.in(gpio_in), .out(gpio_out), .clk(clk), .rst(nrst));
+    team_08_GPIOPins allocation(.in(gpio_in), .out(gpio_out), .clk(clk), .rst(nrst));
 
 
 
