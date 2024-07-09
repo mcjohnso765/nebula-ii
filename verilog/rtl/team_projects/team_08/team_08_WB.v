@@ -44,6 +44,7 @@ module team_08_WB (
 	`WB_CTRL_SIGNALS
 
 	wire [1-1:0]	en;
+	assign IRQ = 0;
 
 	// Register Definitions
 	reg [0:0]	EN_VAL_REG;

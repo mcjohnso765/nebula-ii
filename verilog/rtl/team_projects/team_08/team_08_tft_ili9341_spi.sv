@@ -3,7 +3,7 @@
 // * 'Idle' will be set to 0 once buffer copy is complete
 // * Data is only copied if 'dataAvailable' is set to 1
 // * SPI CLK will stop (high state) if no data is being sent
-module tft_ili9341_spi(
+module team_08_tft_ili9341_spi(
 		input spiClk, input[8:0] data, input dataAvailable,
 		output wire tft_sck, output reg tft_sdi, output reg tft_dc, output wire tft_cs,
 		output reg idle

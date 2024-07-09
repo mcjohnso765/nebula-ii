@@ -22,6 +22,10 @@ module team_08_dinoGame (input clk, input up, input rst,
     output logic blinkToggle
     );
 
+    assign dac_sdi = 0;
+    assign dac_cs = 0;
+    assign dac_sck = 0;
+
 
     // Required registers and wires
     wire[8:0] x;
@@ -65,11 +69,11 @@ module team_08_dinoGame (input clk, input up, input rst,
     end
 
     assign edge_det = sync1 && !det;
-    /*parallelDisplay controller(
+    team_08_parallelDisplay controller(
     .clk(clk), .rst(rst), .move_enable({cactusMovement, dinoMovement}), .dinoY(dinoY), .cactusX1(cactusX), 
     .cactusH1(cactusHeight1),.cactusH2(cactusHeight2), .v(v), .cs(cs), .cd(cd), .wr(wr), .x_dist(x_dist),
     .rd(rd), .data(data), .received({drawDoneCactus, drawDoneDino})
-     );*/
+     );
 
     team_08_GameState game(/*inputs*/.clk(clk), .reset(rst), .collision_detect(collides), .button_pressed(edge_det), .score(score), 
     /*outputs*/.state(state)); 

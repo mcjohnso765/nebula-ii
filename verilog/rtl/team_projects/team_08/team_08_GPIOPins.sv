@@ -29,6 +29,8 @@ logic [7:0] data;
     .tens_score(tens_score),
     .blinkToggle(out[32]));
 
+assign out[31:20] = 0;
+
 
 always_comb begin
     if(!blinkToggle) begin

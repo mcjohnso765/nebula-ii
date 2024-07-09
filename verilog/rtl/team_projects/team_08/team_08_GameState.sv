@@ -21,7 +21,7 @@ module team_08_GameState (
 //state transition logic
 always_ff @(posedge clk, negedge reset) begin
   if(!reset) begin
-    state <= 0;
+    state <= IDLE;
   end else begin
     state <= next_state;
   end
