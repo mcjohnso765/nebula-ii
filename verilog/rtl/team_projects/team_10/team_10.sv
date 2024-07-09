@@ -51,7 +51,7 @@ logic [7:0] msg, tx_byte, cur_key_player;
 logic [3:0] scan_col_player;
 
 // Local Variable Declarations - Host 
-logic strobe_host, gameEnd_host, key_ready, rec_ready_host, toggle_state_host, mistake, rx_ready, red_busy, game_rdy;
+logic strobe_host, gameEnd_host, key_ready, rec_ready_host, toggle_state_host, mistake, rx_ready, game_rdy;
 logic [3:0] scan_col_host;
 logic [7:0] cur_key_host, setLetter, guess, letter, rx_byte;
 logic [39:0] temp_word; 
@@ -110,7 +110,7 @@ t10_host_msg_reg host_message_reg (.clk(clk), .nRst(~nrst), .key_ready(key_ready
 t10_uart_Rx uart_receiver (.clk(clk), .nRst(~nrst), .rx_serial(gpio_in[20]), .rec_ready(rec_ready_host), .rx_ready(rx_ready), .rx_byte(rx_byte), 
                            .error_led(gpio_out[19]));
 t10_buffer buffer (.clk(clk), .nRst(~nrst), .Rx_byte(rx_byte), .rx_ready(rx_ready), .game_rdy(game_rdy), .guess(guess));
-t10_game_logic gamelogic (.clk(clk), .nRst(~nrst), .guess(guess), .setWord(temp_word), .toggle_state(toggle_state_host), .letter(letter), .red(gpio_out[18]), .green(gpio_out[17]), .mistake(mistake), .red_busy(red_busy), .game_rdy(game_rdy), .incorrect(incorrect), .correct(correct), .indexCorrect(indexCorrect), .gameEnd(gameEnd_host));
+t10_game_logic gamelogic (.clk(clk), .nRst(~nrst), .guess(guess), .setWord(temp_word), .toggle_state(toggle_state_host), .letter(letter), .red(gpio_out[18]), .green(gpio_out[17]), .mistake(mistake), .game_rdy(game_rdy), .incorrect(incorrect), .correct(correct), .indexCorrect(indexCorrect), .gameEnd(gameEnd_host));
 t10_host_disp hostdisp (.clk(clk), .nRst(~nrst), .indexCorrect(indexCorrect), .letter(letter), .incorrect(incorrect), .correct(correct), .temp_word(temp_word), .setLetter(setLetter), .toggle_state(toggle_state_host), .gameEnd_host(gameEnd_host), .mistake(mistake), .top(host_row1), .bottom(host_row2));
     
 /*
@@ -914,7 +914,7 @@ module game_logic (
     input logic [39:0] setWord,
     input logic toggle_state,
     output logic [7:0] letter,
-    output logic red, green, mistake, red_busy, game_rdy,
+    output logic red, green, mistake, game_rdy,
     output logic [2:0] incorrect, correct,
     output logic [4:0] indexCorrect
 );
@@ -962,7 +962,6 @@ module game_logic (
         tempGreen = green;//for latch
         placehold = letter;//for latch
 
-        red_busy = 0;
         mistake = 0;
         game_rdy = 0;
         pulse = 0;
@@ -991,7 +990,6 @@ module game_logic (
                 end               
             end
             L0: begin
-                red_busy = 1;
                 game_rdy = 0;
                 if(letter == setWord[39:32] & indexCorrect[4] != 1)begin
                     nextIndexCorrect[4] = 1;
@@ -1001,7 +999,6 @@ module game_logic (
                 nextState = L1;
             end
             L1: begin
-                red_busy = 1;
                 game_rdy = 0;
                 if(letter == setWord[31:24] & indexCorrect[3] != 1)begin
                     nextIndexCorrect[3] = 1;
@@ -1011,7 +1008,6 @@ module game_logic (
                 nextState = L2;
             end
             L2: begin
-                red_busy = 1;
                 game_rdy = 0;
                 if(letter == setWord[23:16] & indexCorrect[2] != 1)begin
                     nextIndexCorrect[2] = 1;
@@ -1021,7 +1017,6 @@ module game_logic (
                 nextState = L3;
             end
             L3: begin
-                red_busy = 1;
                 game_rdy = 0;
                 if(letter == setWord[15:8] & indexCorrect[1] != 1)begin
                     nextIndexCorrect[1] = 1;
@@ -1031,7 +1026,6 @@ module game_logic (
                 nextState = L4;
             end
             L4: begin
-                red_busy = 1;
                 game_rdy = 0;
                 if(letter == setWord[7:0] & indexCorrect[0] != 1)begin
                     nextIndexCorrect[0] = 1;
@@ -1051,7 +1045,6 @@ module game_logic (
                     mistakeCount = mistakeCount + 1;
                 end
                 end
-                red_busy = 0;
                 game_rdy = 1;
                 nextState = IDLE;
             end
