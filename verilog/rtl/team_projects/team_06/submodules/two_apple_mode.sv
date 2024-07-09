@@ -376,11 +376,11 @@ else begin
   //  else begin
     //    apple_location <= {4'd5 , 4'd5}; ///does this, but does not find a new number// also broke starting number gpoes to 1,1
    // end
-   else if (enable_in) begin
-        apple_location <= 8'h55;
+   else if (start_enable) begin
+        apple_location <= 8'h68;
    end
    else begin
-                apple_location <= 8'h00; /// default location!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                apple_location <= 8'h77; /// default location!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             end
 
         end

@@ -59,7 +59,7 @@ clock clock1(.system_clk(clk), .nreset(reset_button), .game_state(game_state), .
 display_wrapper kyle( .score(score), .clk(main_clk), .nreset(reset_button), .game_mode(game_mode), .game_speed(game_speed), .game_state(game_state), 
 .apple_luck(apple_luck), .out1(en), .out2(rw), .out3(rs), .out4(lcd8));
 
-PWM randy(.clk(main_clk), .nrst(reset_button), .enable(game_state == RUN | game_state == END_GAME), .goodCollision(good_collision || good_collision2), .badCollision(bad_collision), .out(song), .light());
+PWM randy(.clk(main_clk), .nrst(reset_button), .enable(game_state == RUN | game_state == END_GAME), .goodCollision(good_collision || good_collision2), .badCollision(bad_collision), .out(song));
 
 gameMode modea(.button(right_direction), .nrst(reset_button), .state(game_state), .mode(game_mode), .system_clk(main_clk));
 //right button to change game_mode

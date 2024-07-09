@@ -10,15 +10,26 @@ output logic apple,
 output logic [7:0] apple_location1, apple_location2
 );
 
-logic [7:0] out_random, out_random_2;
+logic [7:0] out_random, out_random_2, apple_location2a;
 logic enablea2, enablea;
 parameter MAX_LENGTH = 30;
 
 two_apple_mode twoapples (.good_collision(good_collision2), .enable_in(enable_in), .system_clk(system_clk), .nreset(nreset), .apple_luck(apple_luck), 
-.snake_head_x(snake_head_x), .snake_head_y(snake_head_y), .snakeArrayX(snakeArrayX), .snakeArrayY(snakeArrayY), .XMAX(XMAX), 
+.snake_head_x(snake_head_x), .snake_head_y(snake_head_y), .snakeArrayX(snakeArrayX), .snakeArrayY(snakeArrayY), .XMAX(xmax), 
 .XMIN(xmin), .YMAX(ymax), .YMIN(ymin), .apple_possible(out_random_2), .apple_location(apple_location2), .enable(enablea2));
 
 random_num_gen twomode(.enable(enablea2), .system_clk(system_clk), .nreset(nreset), .number_out(out_random_2));
+
+always_comb begin
+
+    if (enable_in) begin
+        apple_location2a = apple_location2;
+    end
+    else begin
+        apple_location2a = 8'd0;
+    end
+
+end
 
 
 apple_gen_all ab (.good_collision(good_collision), .wall_locations(wall_locations), .system_clk(system_clk), .nreset(nreset), .apple_luck(apple_luck), .snake_head_x(snake_head_x), 
@@ -27,7 +38,7 @@ apple_gen_all ab (.good_collision(good_collision), .wall_locations(wall_location
 
 random_num_gen normal1(.enable(enablea), .system_clk(system_clk), .nreset(nreset), .number_out(out_random));
 
-assign apple = (({y,x} ==  apple_location1) || ({y,x} == apple_location2));
+assign apple = (({y,x} ==  apple_location1) || ({y,x} == apple_location2a));
 
 
 endmodule
