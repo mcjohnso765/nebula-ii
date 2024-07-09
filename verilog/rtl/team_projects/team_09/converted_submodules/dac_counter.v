@@ -1,4 +1,3 @@
-`default_nettype none
 module dac_counter (
 	clk,
 	nRst,

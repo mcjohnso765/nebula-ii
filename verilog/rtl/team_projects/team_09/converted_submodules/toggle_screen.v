@@ -1,4 +1,3 @@
-`default_nettype none
 module toggle_screen (
 	clk,
 	rst,
