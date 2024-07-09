@@ -18,7 +18,7 @@ module team_01_cpu (
   output logic        write_i,
   output logic        read_i,
   //to kp
-  output logic [3:0] cols,
+  output logic [3:0] columns,
   //to lcd
   output logic lcd_en,
   output logic lcd_rw,
@@ -56,8 +56,7 @@ logic ihit;
 //Keypad/LCD Signals
 logic keyvalid, pc_enable_kp;
 logic [127:0] shift_reg, unsorted;
-logic [15:0] data_received;
-logic [7:0]lcd_display_data;
+logic [7:0] data_received, lcd_display_data;
 
 //Assembly File Signals
 logic asm_read_i, asm_write_i;
@@ -69,25 +68,26 @@ logic [31:0] fsm_write_data, fsm_data_adr;
 
 logic strobe;
 logic [16:0] count;
-counter c0(.clk(clk), 
-                      .nrst(nRst), 
-                      .enable(1'b1), 
-                      .clear(1'b0), 
-                      .wrap(1'b1), 
-                      .max(17'd99999), 
-                      .count(count), 
-                      .at_max(strobe));
+counter c0(.clk(clk), .nrst(nRst), .enable(1'b1), .clear(1'b0), .wrap(1'b1), .max(17'd99999), .count(count), .at_max(strobe));
 
 // Program Counter
-program_counter PC0 (.next_pc(next_pc), 
-                    .pc(pc), 
-                     .clk(clk), 
-                     .nRst(nRst)
+program_counter PC0 (.clk(clk),
+                     .nRST(nRst), 
+                     .Jump(Jump[1]),
+                     .enable(pc_enable),
+                     .in1(ALUResult),
+                     .in2(muxout3),
+                     .next_pc(next_pc), 
+                     .pc(pc)
 );
 
 // Instruction Memory
-instruction_memory IM0 (.address(pc),
-                        .instr(ru_instr_out),
+instruction_memory IM0 (.clk(clk),
+                        .nRST(nRst),
+                        .ihit(ihit),
+                        .hold(),
+                        .pc(pc),
+                        .FetchedInstr(ru_instr_out),
                         .address_IM(ru_instr_adr),
                         .instruction(instruction)
 );
@@ -112,26 +112,17 @@ control_unit CU0 (.opcode(instruction[6:0]),
 mux M1 (.in1(muxout2), .in2(pc + 32'd1), .select(|Jump), .out(WriteData));
 mux M2 (.in2(data_DM_o), .in1(AluResult), .select(MemToReg), .out(muxout2));
 mux M3 (.in1(pc + $signed(32'd1)), .in2(pc + $signed($signed(Immediate) >>> 1)), .select(Jump[0] | branch_enable), .out(muxout3));
-
-// PC Enable Logic
-always_comb begin
-    if (ihit) begin
-        next_pc = Jump[1] ? AluResult : muxout3;
-    end else begin
-        next_pc = pc;
-    end
-end
  
 // Register File
 register_file RF0 (.clk(clk), 
-                   .nRST(nRst), 
-                   .RegWrite(register_en), 
-                   .ReadReg1(instruction[19:15]), 
-                   .ReadReg2(instruction[24:20]),
-                   .WriteReg(instruction[11:7]),
-                   .WriteData(WriteData),
-                   .ReadData1(ReadData1),
-                   .ReadData2(ReadData2)
+                   .nRst(nRst), 
+                   .regWrite(register_en), 
+                   .readReg1(instruction[19:15]), 
+                   .readReg2(instruction[24:20]),
+                   .writeReg(instruction[11:7]),
+                   .write_data(WriteData),
+                   .readData1(ReadData1),
+                   .readData2(ReadData2)
 );
 
 // Immediate Generator
@@ -140,15 +131,15 @@ immediate_generator IG0 (.Instr(instruction),
 );
 
 // ALU
-alu ALU0 (.AluOP(AluOP),
-          .Data1(AUIPC ? pc : ReadData1),
-          .Data2(AluSRC ? Immediate : ReadData2),
-          .Zero(Zero),
-          .Negative(Negative),
-          .Overflow(Overflow),
-          .AluResult(AluResult)
+alu ALU0 (.aluOp(AluOP),
+          .readData1(AUIPC ? pc : ReadData1),
+          .readData2(AluSRC ? Immediate : ReadData2),
+          .zero(Zero),
+          .negative(Negative),
+          .overflow(Overflow),
+          .aluResult(AluResult)
 );
-logic [1:0] dm_state;
+
 // Data Memory
 data_memory DM0 (.clk(clk),
                  .nRST(nRst),
@@ -194,7 +185,7 @@ request_unit RU0 (.clk(clk),
                   .read_i(read_i),
                   .adr_i(adr_i),
                   .cpu_dat_i(cpu_dat_i),
-                  .sel_i(sel_i),
+                  .sel_i(sel_i)
 );
 
 
@@ -220,9 +211,8 @@ end
 keypad kp(.clk(clk),
              .nRST(nRst),
              .rows(rows),
-             .cols(cols),
-             .code(data_received[7:0]),
-             .data(data_received[15:8]),
+             .cols(columns),
+             .data(data_received),
              .keyvalid(keyvalid),
              .enable(strobe)
 );
@@ -234,7 +224,7 @@ logic [31:0] num_int;
 //FSM Module
 fsm f0(.clk(clk),
        .nRST(nRst),
-       .data(data_received[15:8]),
+       .data(data_received),
        .keyvalid(keyvalid),
        .done(dhit),
        .read_data(ru_data_o),
@@ -253,8 +243,8 @@ fsm f0(.clk(clk),
        .lcd_en(shift)
        );
 
-shift_reg sr0 (.clk(clk), .nRST(nRst), .char_in(ru_writedata_i[7:0]), .shift_register(unsorted), .enable(dhit && fsm_state == 3'b001));
-shift_reg sr1 (.clk(clk), .nRST(nRst), .char_in(lcd_display_data[7:0]), .shift_register(shift_reg), .enable(shift));
+shift_reg sr0 (.clk(clk), .nrst(nRst), .char_in(ru_writedata_i[7:0]), .shift_register(unsorted), .enable(dhit && fsm_state == 3'b001));
+shift_reg sr1 (.clk(clk), .nrst(nRst), .char_in(lcd_display_data[7:0]), .shift_register(shift_reg), .enable(shift));
 
 lcd1602 lcd(.clk(hwclk), .rst(nRst), .row_1(unsorted), .row_2(shift_reg), .lcd_en(lcd_en), .lcd_rw(lcd_rw), .lcd_rs(lcd_rs), .lcd_data(lcd_data)); 
 
