@@ -24,10 +24,10 @@ logic [8:0] lasTopDx;
 logic [7:0] lasBotDy;
 logic [7:0] lasTopDy;
 
-assign defusedPixel = 0;
-endmodule
+// assign defusedPixel = 0;
+// endmodule
 
-/*
+
 
 initial begin
 // Initialize array_horX
@@ -244,4 +244,3 @@ always_ff @(posedge clk) begin
 defusedPixel <= defusedDetect;
 end
 endmodule
-*/
