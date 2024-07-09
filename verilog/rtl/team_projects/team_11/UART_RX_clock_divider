@@ -25,12 +25,12 @@ module clock_divider (
   end
 
   always_comb begin
-    next_clk = new_clk;
+    next_clk = 0;
     next_count = count + 1;
 
     if (count == DIV_FACTOR -1) begin
       next_count = 0;
-      next_clk = ~new_clk;
+      next_clk = 1;
     end
   end
 endmodule
