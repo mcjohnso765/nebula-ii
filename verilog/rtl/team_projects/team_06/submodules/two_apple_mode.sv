@@ -360,14 +360,14 @@ else begin
 
 //////////////////////////////// START OF FF LOGIC /////////////////////////////////////////////////////////
 
-always_ff @(posedge good_spot, negedge nreset) begin   
+always_ff @(posedge system_clk, negedge nreset) begin   
 
         if (~nreset) begin //update apple location output when good_pot is triggered
             apple_location <= 8'h55;  // default location!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 end
 
-else begin
+else if (~good_spot & good_spot_next) begin
    // if ({y_final, x_final} == apple_possible) begin
             if (start_enable == 1 & enable_in) begin
                 apple_location <= {y_final, x_final};  // update apple position if it is valid\
@@ -383,7 +383,9 @@ else begin
                 apple_location <= 8'h77; /// default location!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             end
 
-        end
+end else begin
+    apple_location <= apple_location;
+end
     end
 ////////////////////////// END OF FF LOGIC ////////////////////////////////////////////////////////
 

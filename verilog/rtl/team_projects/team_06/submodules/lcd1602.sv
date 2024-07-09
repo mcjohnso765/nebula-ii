@@ -168,8 +168,9 @@ always_comb begin
         end
     endcase
 
-    row_bot[63:56] = 8'd83;
-    row_bot[55:48] = 8'd80;
+    row_bot[71:64] = 8'd83;
+    row_bot[63:56] = 8'd80;
+    row_bot[55:48] = 8'd68;
     row_bot[47:40] = 8'd58;
     row_bot[39:32] = 8'd32;
     case(gameSpeed)

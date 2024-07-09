@@ -370,7 +370,7 @@ always_ff @(posedge system_clk, negedge nreset) begin
 
 end
 
-else if (good_spot) begin
+else if (~good_spot & good_spot_next) begin
    // if ({y_final, x_final} == apple_possible) begin
             if (start_enable == 1) begin
                 apple_location <= {y_final, x_final};  // update apple position if it is valid\
@@ -418,10 +418,12 @@ end
     always_ff @(posedge system_clk, negedge nreset) begin ///added enbale error
         if (~nreset) begin
             logic_enable <= 1;
-        end else if (good_spot_next) begin
-            logic_enable <= 0;
-        end else begin
+        end else if (good_collision) begin
             logic_enable <= 1;
+        end else if (start_enable == 0) begin
+            logic_enable <= 1;
+        end else if (good_spot) begin
+            logic_enable <= 0;
         end
     end
 

@@ -99,7 +99,7 @@ else begin
 
 if (counter != max_count) begin // did not work when next_counter
 
-  next_counter = counter + 22'd1;
+  next_counter = counter + 14'd1;
   next_body_clk = 0;
 end 
 else begin
