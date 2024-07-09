@@ -568,8 +568,8 @@ module fsm (
   logic [18:0] length, next_length;
   logic [18:0] REST = 30;
 
-  clk_div  c1 (.max_i(length), .count(), .clk(clk), .nrst(nrst), .atmax_o(out_clk));
-  clk_enable a1 (.max_i(16'd50000), .clk(clk), .nrst(nrst), .enable(enable), .count(), .out_enable(out_enable));
+  clk_div  c1 (.max_i(length), .clk(clk), .nrst(nrst), .atmax_o(out_clk));
+  clk_enable a1 (.max_i(16'd50000), .clk(clk), .nrst(nrst), .enable(enable), .out_enable(out_enable));
 
   always_comb begin
     if (goodCollision == 1) begin
@@ -679,12 +679,11 @@ module clk_div (
 input logic clk,
 input logic nrst,
 input logic [18:0]max_i,
-output logic [18:0] count,
 output logic atmax_o
 );
 
 
-logic [18:0] innerCount;
+logic [18:0] innerCount, count;
 
 
 always_comb begin
@@ -718,12 +717,11 @@ input logic clk,
 input logic nrst,
 input logic [15:0] max_i,
 input logic enable,
-output logic [15:0] count,
 output logic out_enable
 );
 
 
-logic [15:0] innerCount;
+logic [15:0] innerCount, count;
 
 always_comb begin
 

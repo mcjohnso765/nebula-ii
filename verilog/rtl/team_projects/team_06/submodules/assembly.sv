@@ -236,7 +236,7 @@ module command_lut2(
     output logic dcx, pause
 );
 
-logic [16:0] count, next_count, SC, EC, SP, EP, color;
+logic [15:0] count, next_count, SC, EC, SP, EP, color;
 logic [4:0] cmd_num, next_cmd_num;
 
 always_ff @(posedge clk, negedge nrst) begin
