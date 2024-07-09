@@ -18,7 +18,7 @@ module register_file (
         if (~nRst) begin
             for (int i = 0; i < 32; i++) begin
             registers[i] <= 0;
-        end  
+            end  
         end else if (regWrite && writeReg != 0) begin
                 registers[writeReg] <= write_data;
         end

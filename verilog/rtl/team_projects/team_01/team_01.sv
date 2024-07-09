@@ -80,17 +80,25 @@ module team_01 (
     .CPU_DAT_O(cpu_dat_o),
     .BUSY_O(busy_o));
     
+    //
 
     team_01_cpu cpu(
    .clk(clk), 
-   .reset(nrst), 
+   .nRst(nrst), 
    .busy_o(busy_o),
    .cpu_dat_o(cpu_dat_o),
    .cpu_dat_i(cpu_dat_i),
    .adr_i(adr_i),
    .sel_i(sel_i),
    .write_i(write_i),
-   .read_i(read_i)
+   .read_i(read_i),
+   //lcd outputs
+   .lcd_en(gpio_out[1]), 
+   .lcd_rs(gpio_out[2]),
+   .lcd_rw(gpio_out[3]),
+   .lcd_data(gpio_out[11:4]),
+   .rows(gpio_in[23:20]),  //in
+   .columns(gpio_out[33:30])
    );
 
 

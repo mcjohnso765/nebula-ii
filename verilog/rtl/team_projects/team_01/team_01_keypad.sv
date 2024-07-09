@@ -1,5 +1,5 @@
 module keypad (
-    input logic clk, nRST,
+    input logic clk, nRST, enable,
     input logic [3:0] rows,
     output logic [3:0] cols,
     output logic [7:0] code,
@@ -55,7 +55,7 @@ module keypad (
             if (rows != 4'b0000) begin
                 code <= {rows, cols};
                 // keyvalid <= 1'b1;
-            end else begin
+            end else if (enable) begin
                 count <= (count == 2'b11) ? 2'b00 : (count + 1'b1);
                 // keyvalid <= 1'b0;
             end
