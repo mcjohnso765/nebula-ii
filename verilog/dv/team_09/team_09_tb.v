@@ -17,7 +17,8 @@
 
 `timescale 1 ns / 1 ps
 
-module team_1_tb;
+module team_09_tb;
+	localparam CLK_PERIOD = 25;
 	reg clock;
 	reg RSTB;
 	reg CSB;
@@ -39,7 +40,6 @@ module team_1_tb;
 	// would be the fast clock.
 
 	always #12.5 clock <= (clock === 1'b0);
-
 	task left_button_press;
     begin
         @(negedge clock);
@@ -115,7 +115,7 @@ module team_1_tb;
 	end
 
 
-	`ifdef ENABLE_SDF
+	/* `ifdef ENABLE_SDF
 		initial begin
 			$sdf_annotate("../../../sdf/user_proj_example.sdf", uut.mprj) ;
 			$sdf_annotate("../../../sdf/user_project_wrapper.sdf", uut.mprj.mprj) ;
@@ -208,11 +208,11 @@ module team_1_tb;
 			$sdf_annotate("../../../caravel/sdf/gpio_defaults_block.sdf", uut.gpio_defaults_block_36) ;
 			$sdf_annotate("../../../caravel/sdf/gpio_defaults_block.sdf", uut.gpio_defaults_block_37) ;
 		end
-	`endif 
+	`endif  */
 
 	initial begin
 		$dumpfile("io_ports.vcd");
-		$dumpvars(0, io_ports_tb);
+		$dumpvars(0, team_09_tb);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (25) begin
