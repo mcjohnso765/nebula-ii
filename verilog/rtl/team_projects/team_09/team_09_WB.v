@@ -19,18 +19,14 @@
 
 /* THIS FILE IS GENERATED, DO NOT EDIT */
 
-`timescale			1ns/1ps
+//`timescale			1ns/1ps
 `default_nettype	none
 
-`define				WB_AW		16
+`define				WB_AW		32
 
 //`include			"wb_wrapper.vh"
 
 module team_09_WB (
-`ifdef USE_POWER_PINS
-	inout VPWR,
-	inout VGND,
-`endif
 	`WB_SLAVE_PORTS,
 	input	wire	[128-1:0]	la_data_in,
 	output	wire	[128-1:0]	la_data_out,
@@ -40,27 +36,11 @@ module team_09_WB (
 	output	wire	[34-1:0]	gpio_oeb
 );
 
-	localparam	EN_VAL_REG_OFFSET = `WB_AW'h0000;
-
-        wire clk_g;
-        wire clk_gated_en = GCLK_REG[0];
-
-    (* keep *) sky130_fd_sc_hd__dlclkp_4 clk_gate(
-    `ifdef USE_POWER_PINS 
-        .VPWR(VPWR), 
-        .VGND(VGND), 
-        .VNB(VGND),
-		.VPB(VPWR),
-    `endif 
-        .GCLK(clk_g), 
-        .GATE(clk_gated_en), 
-        .CLK(clk_i)
-        );
-        
-	wire		clk = clk_g;
+	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30090000;
+	wire		clk = clk_i;
 	wire		nrst = (~rst_i);
 
-	assign IRQ = '0;
+
 	`WB_CTRL_SIGNALS
 
 	wire [1-1:0]	en;
@@ -69,10 +49,6 @@ module team_09_WB (
 	reg [0:0]	EN_VAL_REG;
 	assign	en = EN_VAL_REG;
 	`WB_REG(EN_VAL_REG, 0, 1)
-
-	localparam	GCLK_REG_OFFSET = `WB_AW'hFF10;
-	reg [0:0] GCLK_REG;
-	`WB_REG(GCLK_REG, 0, 1)
 
 	team_09 instance_to_wrap (
 		.clk(clk),
@@ -89,7 +65,7 @@ module team_09_WB (
 	assign	dat_o = 
 			(adr_i[`WB_AW-1:0] == EN_VAL_REG_OFFSET)	? EN_VAL_REG :
 			32'hDEADBEEF;
-
+	assign IRQ = '0;
 	always @ (posedge clk_i or posedge rst_i)
 		if(rst_i)
 			ack_o <= 1'b0;
