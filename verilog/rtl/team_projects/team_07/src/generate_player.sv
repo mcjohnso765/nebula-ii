@@ -11,7 +11,9 @@ module generate_player (
   // borders are still not implemented, when it is, there will be a 12 pixel shift
 
   // internal variables
-
+assign playerPixel = '0;
+endmodule
+/*
     // must be given randomly by RNG of game logic
     `define JUMP 36
     `define CUBE 12

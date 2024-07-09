@@ -41,7 +41,10 @@ module generate_mod_square
     `define HEIGHT 216
     `define CUBE 1 
     `define OFFSET 36
-
+    assign modHighlightPixel = 0;
+    assign modSquaresPixel = 0;
+endmodule
+/*
     logic modSquaresDetect;
     logic modHighlightDetect;
     logic [7:0] jumpX ,jumpY;

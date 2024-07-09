@@ -24,12 +24,11 @@ logic [8:0] lasTopDx;
 logic [7:0] lasBotDy;
 logic [7:0] lasTopDy;
 
-// bottomD topD bottomE middleE topE bottomS middleS topS bottomU middleF topF bottomE middleE topE bottomD topD
-// assign array_horX [15:0] = {9'd004, 9'd004, 9'd033, 9'd033, 9'd033, 9'd066, 9'd066, 9'd066, 9'd101, 9'd128, 9'd128, 9'd157, 9'd157, 9'd157, 9'd190, 9'd190};
-// assign array_horY [15:0] = {8'd042, 8'd000, 8'd000, 8'd021, 8'd042, 8'd000, 8'd021, 8'd042, 8'd000, 8'd021, 8'd042, 8'd000, 8'd021, 8'd042, 8'd000, 8'd042};
-// // botRigD topRigD botLefE topLefE botRigS topLefS botRigU topRigU botLefu topLefU botLefF topLefF botLefE topLefE botRigD topRigD
-// assign array_verX [15:0] = {9'd000, 9'd000, 9'd052, 9'd052, 9'd062, 9'd085, 9'd095, 9'd095, 9'd118, 9'd118, 9'd147, 9'd147, 9'd176, 9'd176, 9'd186, 9'd186};
-// assign array_verY [15:0] = {8'd003, 8'd024, 8'd003, 8'd024, 8'd003, 8'd024, 8'd003, 8'd024, 8'd003, 8'd024, 8'd003, 8'd024, 8'd003, 8'd024, 8'd003, 8'd024};
+assign defusedPixel = 0;
+endmodule
+
+/*
+
 initial begin
 // Initialize array_horX
 array_horX[0] = 9'd004;

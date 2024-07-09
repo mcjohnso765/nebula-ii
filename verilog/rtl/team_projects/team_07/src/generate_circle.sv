@@ -24,7 +24,9 @@ module generate_circle (
   logic circleDetect; // 1 bit since boolean 0 or 1
   logic [8:0] SCo;
   logic [7:0] SPo;
-
+  assign circlePixel = 0;
+endmodule
+/*
   always_comb begin
     case(map_select)
       0: begin 

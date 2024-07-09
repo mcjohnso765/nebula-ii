@@ -14,6 +14,10 @@ module generate_play_button (
   // half screen                = 160 x 120
   // starting point for sprite  = 125,   90
 
+
+  assign playButtonPixel = 0;
+  endmodule
+/*
   logic playButtonDetect; // 1 bit since boolean 0 or 1
 
   always_comb begin

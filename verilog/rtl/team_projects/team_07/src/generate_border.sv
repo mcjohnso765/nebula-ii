@@ -41,7 +41,9 @@ module generate_border
 `define OFFSET 36
 logic synchronized_rectangle_pixel;
 // logic jumpX ,jumpY = 6;
-
+assign borderPixel = 0;
+endmodule
+/*
 //Looping across the entire screen 
 always_comb begin
 //Jumping across each squares distance Y step all first then X step

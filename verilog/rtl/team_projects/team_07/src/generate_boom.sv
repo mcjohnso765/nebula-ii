@@ -24,7 +24,9 @@ logic [8:0] midBx;
 logic [7:0] midBy;
 logic [8:0] botBx;
 logic [7:0] botBy;
-
+assign boomPixel = 0;
+endmodule
+/*
 // toprigM toplefM botrigO toprigO botlefO toplefO botB topB
 initial begin
   startX = 82;
