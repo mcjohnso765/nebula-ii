@@ -101,18 +101,18 @@ module team_01 (
    .cols(gpio_out[23:20])
    );
 
-    assign gpio_oeb [5] = '0;
-    assign gpio_oeb [6] = '0;
-    assign gpio_oeb [7] = '0;
-    assign gpio_oeb [15:8] = '0;
-    assign gpio_oeb [19:16] = 4'b1111;
-    assign gpio_oeb [23:20] = '0;
+    assign gpio_oeb [1] = '0;
+    assign gpio_oeb [2] = '0;
+    assign gpio_oeb [3] = '0;
+    assign gpio_oeb [11:4] = '0;
+    assign gpio_oeb [15:12] = 4'b1111;
+    assign gpio_oeb [19:16] = '0;
 
-    assign gpio_oeb [4:0] = '0;
-    assign gpio_out [4:0] = '0;
-    assign gpio_out [19:16] = '0;
-    assign gpio_oeb[33:24] = 0;
-    assign gpio_out[33:24] = 0;
+    assign gpio_oeb [33:20] = '1;
+    assign gpio_out [33:20] = '0;
+    assign gpio_out [15:12] = '0;
+    assign gpio_oeb[0] = 0;
+    assign gpio_out[0] = 0;
 
 
 endmodule
