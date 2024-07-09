@@ -1,14 +1,14 @@
 ---
 info:
-  name: 
-  description: 
+  name: team_02
+  description: team_02 - Cool CPU
   repo: STARS-Design-Track-2024/Project_Template.git
   owner: Purdue University
   license: APACHE 2.0
-  author: 
-  email: 
+  author: Wayne
+  email: hsieh81@purdue.edu
   version: v1.0.0
-  date: 
+  date: 07-03-2024
   category: digital
   tags:
     - team02
@@ -30,6 +30,10 @@ ports:
     width: 1
     direction: input
     description: Enables or disables team design
+  - name: start_addr
+    width: 32
+    direction: input
+    description: Dictates the starting address for the CPU PC upon enabling design.
 
 external_interface:
   - name: la_data_in
@@ -62,6 +66,47 @@ external_interface:
     width: 34
     direction: output
     description: Output enables to GPIO
+  - name: ADR_O
+    port: ADR_O
+    width: 32
+    direction: output
+    description: Output Address
+  - name: DAT_O
+    port: DAT_O
+    width: 32
+    direction: output
+    description: Output Data
+  - name: SEL_O
+    port: SEL_O
+    width: 4
+    direction: output
+    description: Output Selection index
+  - name: WE_O
+    port: WE_O
+    width: 1
+    direction: output
+    description: Output WE
+  - name: STB_O
+    port: STB_O
+    width: 1
+    direction: output
+    description: Output STB
+  - name: CYC_O
+    port: CYC_O
+    width: 1
+    direction: output
+    description: Output CYC
+  - name: ACK_I
+    port: ACK_I
+    width: 1
+    direction: input
+    description: input ACK
+  - name: DAT_I
+    port: DAT_I
+    width: 32
+    direction: input
+    description: input Data 
+  
 
 clock:
   name: clk
@@ -79,3 +124,12 @@ registers:
     bit_access: false
     write_port: en
     description: Enables or disables team design
+  - name: START_ADDR_VAL
+    size: 32
+    mode: w
+    fifo: false
+    offset: 4
+    bit_access: false
+    init: "'h30020004"
+    write_port: start_addr
+    description: Stores start address for progrram counter upon enabling
