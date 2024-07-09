@@ -18,7 +18,8 @@ module fsm (
     // (For LCD)
     output logic [7:0]  display,
     output logic [2:0]  fsm_state,
-    output logic [31:0] numbers     
+    output logic [31:0] numbers,    
+    output lcd_en
 );
     typedef enum logic [2:0] {INIT, WRITE, NUM, ASM, DISPLAY, FETCH, FLASH, FINISH} StateType;
 

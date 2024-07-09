@@ -166,7 +166,9 @@ data_memory DM0 (.address(AluResult),
                  .read_o(ru_read_i),
                  .write_o(ru_write_i)
 );
-
+logic shift;
+logic [2:0] fsm_state;
+logic [31:0] num_int;
 // Branch Logic 
 branch_logic BL0 (.branch(Branch),
                   .negative(Negative),
@@ -195,8 +197,6 @@ fsm f0(.clk(clk),
        .lcd_en(shift)
        );
 
-logic shift;
-logic [31:0] num_int;
 synckey sk(.in(), .clk(clk), .nRst(nRst), .strobe()); 
 keypad kp(.clk(clk), .nRST(nRst), .rows(), .cols(), .code(), .data());
 

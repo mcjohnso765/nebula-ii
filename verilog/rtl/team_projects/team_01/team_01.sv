@@ -85,6 +85,7 @@ module team_01 (
     
 
     team_01_cpu cpu(
+    .instruction(32'h0),
    .clk(clk), 
    .reset(nrst), 
    .busy_o(busy_o),
