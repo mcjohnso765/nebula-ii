@@ -28,7 +28,6 @@ module score_tracker3 (
 	reg [7:0] currScore;
 	reg [7:0] highScore;
 	reg [7:0] nextDispScore;
-	wire isGameComplete_nxt;
 	reg last_collision;
 	reg current_collision;
 	wire [3:0] carry;

@@ -1,7 +1,6 @@
 module oscillator (
 	clk,
 	nRst,
-	state,
 	goodColl,
 	badColl,
 	at_max
@@ -10,7 +9,6 @@ module oscillator (
 	parameter N = 8;
 	input wire clk;
 	input wire nRst;
-	input state;
 	input wire goodColl;
 	input wire badColl;
 	output reg at_max;

@@ -19,13 +19,11 @@ module sound_generator (
 	wire [3:0] newDirection;
 	wire [7:0] freq;
 	wire playSound;
-	wire mode_o;
 	wire at_max;
 	sound_posedge_detector posDetector1(
 		.clk(clk),
 		.nRst(~rst),
 		.button_i(button_i),
-		.button(toggleMode),
 		.goodColl_i(goodColl_i),
 		.badColl_i(badColl_i),
 		.goodColl(goodColl),
@@ -35,7 +33,6 @@ module sound_generator (
 		.at_max(at_max),
 		.clk(clk),
 		.nRst(~rst),
-		.state(mode_o),
 		.goodColl(goodColl),
 		.badColl(badColl)
 	);

@@ -5,8 +5,7 @@ module sound_posedge_detector (
 	badColl_i,
 	button_i,
 	goodColl,
-	badColl,
-	button
+	badColl
 );
 	input wire clk;
 	input wire nRst;
@@ -15,7 +14,6 @@ module sound_posedge_detector (
 	input wire button_i;
 	output wire goodColl;
 	output wire badColl;
-	output wire button;
 	reg [1:0] N;
 	reg [1:0] sig_out;
 	wire [1:0] posEdge;
