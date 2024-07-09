@@ -1,5 +1,5 @@
 module apple_wrapper( 
-input logic system_clk, nreset, good_collision, 
+input logic system_clk, nreset, good_collision, good_collision2,
 input APPLE_LUCK apple_luck,
 input logic [3:0] snake_head_x, snake_head_y, xmax, xmin, ymax, ymin,
 input logic [MAX_LENGTH - 1:0] [3:0] snakeArrayX, snakeArrayY,
@@ -14,7 +14,7 @@ logic [7:0] out_random, out_random_2;
 logic enablea2, enablea;
 parameter MAX_LENGTH = 30;
 
-two_apple_mode twoapples (.good_collision(good_collision), .enable_in(enable_in), .system_clk(system_clk), .nreset(nreset), .apple_luck(apple_luck), 
+two_apple_mode twoapples (.good_collision(good_collision2), .enable_in(enable_in), .system_clk(system_clk), .nreset(nreset), .apple_luck(apple_luck), 
 .snake_head_x(snake_head_x), .snake_head_y(snake_head_y), .snakeArrayX(snakeArrayX), .snakeArrayY(snakeArrayY), .XMAX(XMAX), 
 .XMIN(xmin), .YMAX(ymax), .YMIN(ymin), .apple_possible(out_random_2), .apple_location(apple_location2), .enable(enablea2));
 

@@ -1,8 +1,8 @@
 module assembly (
     input logic clk, nrst, enable,
     input logic keyenc, button_right_in, button_left_in, button_up_in, button_down_in, button_start_pause_in,
-    output logic [7:0] d,
-    output logic wr, dcx, rert);
+    output logic [7:0] d, lcd8,
+    output logic wr, dcx, song, rert, rs, rw, en);
 
     logic [3:0] x, y;
     logic head, body, apple, wall, gameover;
@@ -12,7 +12,7 @@ module assembly (
                           .sync(button_reset_in), .wr(wr), .dcx(dcx), .D(d), .x(x), .y(y));
     main_file CPU (.clk(clk), .nrst(nrst), .button_right_in(button_right_in), .button_left_in(button_left_in), .button_up_in(button_up_in), .button_down_in(button_down_in),
                    .button_reset_in(button_reset_in), .button_start_pause_in(button_start_pause_in), .enable_total(enable), .x(x), .y(y),
-                   .apple(apple), .wall(wall), .body(body), .head(head), .gameover(gameover), .rert(rert));
+                   .apple(apple), .wall(wall), .body(body), .head(head), .gameover(gameover), .song(song), .rert(rert), .rs(rs), .rw(rw), .en(en), .lcd8(lcd8));
 endmodule
 
 module image_generator (
@@ -25,9 +25,9 @@ module image_generator (
     logic cmd_done, enable_loop, init_cycle, en_update, diff;
     logic [2:0] obj_code;
 
-    fsm_control control(.GameOver(GameOver), .cmd_done(cmd_done), .diff(diff), .clk(clk), .nrst(nrst | sync), .mode_pb(KeyEnc),
+    fsm_control control(.GameOver(GameOver), .cmd_done(cmd_done), .diff(diff), .clk(clk), .nrst(nrst), .mode_pb(KeyEnc),
                         .enable_loop(enable_loop), .init_cycle(init_cycle), .en_update(en_update), .sync_reset(sync));
-    frame_tracker tracker(.body(snakeBody), .head(snakeHead), .apple(apple), .border(border), .enable(enable_loop), .clk(clk), .nrst(sync | nrst), .sync(sync), 
+    frame_tracker tracker(.body(snakeBody), .head(snakeHead), .apple(apple), .border(border), .enable(enable_loop), .clk(clk), .nrst(nrst), .sync(sync), 
                         .obj_code(obj_code), .x(x), .y(y), .diff(diff));
     pixel_updater updater(.init_cycle(init_cycle), .en_update(en_update), .clk(clk), .nrst(nrst), .x(x), .y(y), .obj_code(obj_code), 
                         .cmd_done(cmd_done), .wr(wr), .dcx(dcx), .D(D));
@@ -148,6 +148,10 @@ always_comb begin
         end else begin
             {next_X, next_Y} = {current_X + 4'd1, current_Y};
         end
+    end else if (sync) begin
+        {next_X, next_Y} = {4'b0, 4'b0};
+    end else begin
+        {next_X, next_Y} = {current_X, current_Y};
     end
 
     temp_obj_code = frame[current_X][current_Y];
@@ -234,9 +238,6 @@ module command_lut2(
 
 logic [16:0] count, next_count, SC, EC, SP, EP, color;
 logic [4:0] cmd_num, next_cmd_num;
-logic [15:0] rainbowRNG;
-
-rainbowRand rR1 (.clk(clk), .reset(nrst), .rainbowRNG(rainbowRNG));
 
 always_ff @(posedge clk, negedge nrst) begin
     if(~nrst) begin
@@ -294,10 +295,10 @@ always_comb begin
             end
 
             if(count < 17'd4320) begin
-                color = 16'h0814;
+                color = 16'h0000;
             end
             else begin
-                color = 16'h1408;
+                color = 16'he581;
             end
         end
         else begin
@@ -371,11 +372,11 @@ always_comb begin
         SC = Y * 20;
         EC = (Y + 1) * 20;
         case(obj_code)
-            3'b001  : color = 16'h901E;   //head
-            3'b010  : color = rainbowRNG; //body
-            3'b011  : color = 16'hf800;   //apple
-            3'b100  : color = 16'h0814;   //border
-            default : color = 16'h1408;
+            3'b001  : color = 16'hf800;   //head
+            3'b010  : color = 16'hf800;   //body
+            3'b011  : color = 16'h00f8;   //apple
+            3'b100  : color = 16'h0000;   //border
+            default : color = 16'he581;
         endcase
 
         cmd_finished = 1'b0;
@@ -404,27 +405,5 @@ always_comb begin
         endcase
     end
 end
-
-endmodule
-
-module rainbowRand(
-    input logic clk,
-    input logic reset,
-    output logic [15:0] rainbowRNG
-);
-
-    logic feedback;
-
-    always_ff @(posedge clk, negedge reset) begin
-        if (~reset) begin
-            // Initialize LFSR with a non-zero value
-            rainbowRNG <= 16'h5a08;
-        end else begin
-            // Calculate feedback
-            feedback = rainbowRNG[15] ^ rainbowRNG[13] ^ rainbowRNG[12] ^ rainbowRNG[10];
-            // Shift left and insert the feedback bit
-            rainbowRNG <= {rainbowRNG[14:0], feedback};
-        end
-    end
 
 endmodule

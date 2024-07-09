@@ -36,7 +36,7 @@ module clock (
 
 
 logic next_clk_display, next_clk, next_body_clk;
-logic [20:0] counter, next_counter, max_count;
+logic [21:0] counter, next_counter, max_count;
 
 // always_ff @(posedge system_clk, posedge reset) begin //// display clk
 //         if (reset) begin
@@ -87,9 +87,9 @@ always_comb begin /// movement clk
 
 case (game_speed) 
 NORMAL_SPEED: max_count = 2000000; ///variables to change game speed////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-FAST_SPEED: max_count = 1000; // 10000
-SLOW_SPEED: max_count = 1000;
-default: max_count = 1000;
+FAST_SPEED: max_count = 1500000; // 10000
+SLOW_SPEED: max_count = 2500000;
+default: max_count = 2000000;
 endcase
 if ( (game_state == WAIT) || (game_state == PAUSE)) begin
   next_counter = 0;
