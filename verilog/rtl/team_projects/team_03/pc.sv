@@ -34,7 +34,7 @@ end
 
 always_ff @(posedge clock, posedge reset) begin
     if(reset) begin
-        current_pc <= '0; //placeholder constant for initialization
+        current_pc <= 32'h33000000; //placeholder constant for initialization
     end
     else if (en) begin
         current_pc <= next_pc;

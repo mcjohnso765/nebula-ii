@@ -28,6 +28,9 @@
 #define reg_sample_proj_RIS (*(volatile uint32_t*)0x3001FF08)
 #define reg_sample_proj_IC (*(volatile uint32_t*)0x3001FF0C)
 
+#define reg_team_03_proj_EN (*(volatile uint32_t*)0x30030000)
+
+
 // GPIO Control
 #define reg_gpio_PIN_0TO7 (*(volatile uint32_t*)0x32000000)
 #define reg_gpio_PIN_8TO15 (*(volatile uint32_t*)0x32000004)
@@ -125,10 +128,15 @@ void main()
 	reg_gpio_PIN_32TO37 = 0x111111;
 
     // Do stuff with SRAM
-    sram_space = 0xFEED0000;
-    *(&sram_space + 1) = 0xABCDEF78;
-    *(&sram_space + 3) = 0x12345678;
-    reg_sample_proj_EN = (sram_space == 0xFEED0000);
-    reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
-    reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
+    sram_space = 0x00500513; // li x10, 5
+    *(&sram_space + 1) = 0x00800613; // li x11, 8
+    *(&sram_space + 2) = 0x00c50663; // beq x10, x11
+    *(&sram_space + 3) = 0x00250593; // li x12, 2
+    *(&sram_space + 4) = 0x00008067; // ret
+    *(&sram_space + 5) = 0x00350593; // li x12, 5
+    *(&sram_space + 6) = 0x00008067; // ret
+
+    reg_team_03_proj_EN = 0x1; // enabling the design
+ //   reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
+  //  reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
 }
