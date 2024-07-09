@@ -17,7 +17,7 @@ module top (
 
 logic reseta;
   assembly game (.clk(hz100), .nrst(reset), .enable(1'b1), .keyenc(pb[0]), .button_right_in(pb[5]), .button_left_in(pb[7]), .button_up_in(pb[10]), .button_down_in(pb[6]),
-                     .button_start_pause_in(pb[1]), .d({ss7[7], ss7[6], ss7[5], ss7[4], ss7[3], ss7[2], ss7[1], ss7[0]}), .wr(ss6[7]), .dcx(ss6[6]), .song(left[7]), .rert(reseta), .rs(ss1[1]), .rw(ss1[0]), .en(ss1[2]), .lcd8(ss0));
+                     .button_start_pause_in(pb[1]), .d({ss7[7], ss7[6], ss7[5], ss7[4], ss7[3], ss7[2], ss7[1], ss7[0]}), .wr(ss6[7]), .dcx(ss6[6]), .song(left[1]), .rert(reseta), .rs(ss1[1]), .rw(ss1[0]), .en(ss1[2]), .lcd8(ss0));
 
 // assign left[6] = reseta;
 endmodule

@@ -73,7 +73,7 @@ display dis (.gameState(game_state), .gameMode(game_mode), .appleLuck(apple_luck
 //Game State(pixels 1-4), Score(pixel 8-10), 
 
 //row needs to have 16 characters
-lcd1602 L1 (.clk(clk), .rst(nreset), .row_1(row_top), .row_2("       SUS      "), .lcd_en(out1), .lcd_rw(out2), .lcd_rs(out3), .lcd_data(out4));
+lcd1602 L1 (.clk(clk), .rst(nreset), .row_1(row_top), .row_2(row_bot), .lcd_en(out1), .lcd_rw(out2), .lcd_rs(out3), .lcd_data(out4));
 
 endmodule
 
@@ -87,85 +87,41 @@ module display(
     output logic [127:0] row_bot
 );
 
+
+//Score Digit Logic
+logic [7:0] digit1;
+logic [7:0] digit2;
+logic [7:0] digit3;
+logic [7:0] temp;
+logic [7:0] temp2;
+
 always_comb begin
+    row_top = {16{8'h20}};
+    row_bot = {16{8'h20}};
     case(gameState)
         WAIT: begin
             row_top[127:120] = 8'd87; //W, far left most digit
             row_top[119:112] = 8'd65; //A, secon from left digit
             row_top[111:104] = 8'd73; //I
             row_top[103:96] = 8'd84; //T
-            row_top[95:88] = 8'd32;
-            row_top[87:80] = 8'd32;
-            // row_top[79:72] = 8'd32;
-            // row_top[71:64] = 8'd32;
-            // row_top[63:56] = 8'd32;
-            row_top[55:48] = 8'd32;
-            row_top[47:40] = 8'd77;
-            row_top[39:32] = 8'd58;
-            // row_top[31:24] = 8'd32;
-            // row_top[23:16] = 8'd32;
-            // row_top[15:8] = 8'd32;
-            // row_top[7:0] = 8'd32;
         end
-
         RUN: begin
             row_top[127:120] = 8'd82;
             row_top[119:112] = 8'd85; 
             row_top[111:104] = 8'd78; 
-            row_top[103:96] = 8'd32; 
-            row_top[95:88] = 8'd32;
-            row_top[87:80] = 8'd32;
-            // row_top[79:72] = 8'd32;
-            // row_top[71:64] = 8'd32;
-            // row_top[63:56] = 8'd32;
-            row_top[55:48] = 8'd32;
-            row_top[47:40] = 8'd77;
-            row_top[39:32] = 8'd58;
-            // row_top[31:24] = 8'd32;
-            // row_top[23:16] = 8'd32;
-            // row_top[15:8] = 8'd32;
-            // row_top[7:0] = 8'd32;
         end
-
         PAUSE: begin
             row_top[127:120] = 8'd80;
             row_top[119:112] = 8'd65; 
             row_top[111:104] = 8'd85; 
-            row_top[103:96] = 8'd69; 
-            row_top[95:88] = 8'd32;
-            row_top[87:80] = 8'd32;
-            // row_top[79:72] = 8'd32;
-            // row_top[71:64] = 8'd32;
-            // row_top[63:56] = 8'd32;
-            row_top[55:48] = 8'd32;
-            row_top[47:40] = 8'd77;
-            row_top[39:32] = 8'd58;
-            // row_top[31:24] = 8'd32;
-            // row_top[23:16] = 8'd32;
-            // row_top[15:8] = 8'd32;
-            // row_top[7:0] = 8'd32;
+            row_top[103:96] = 8'd83; 
+            row_top[95:88] = 8'd69;
         end
-
         END_GAME: begin
             row_top[127:120] = 8'd69;
             row_top[119:112] = 8'd78; 
             row_top[111:104] = 8'd68; 
-            row_top[103:96] = 8'd32; 
-            row_top[95:88] = 8'd32;
-            row_top[87:80] = 8'd32;
-            // row_top[79:72] = 8'd32;
-            // row_top[71:64] = 8'd32;
-            // row_top[63:56] = 8'd32;
-            row_top[55:48] = 8'd32;
-            row_top[47:40] = 8'd77;
-            row_top[39:32] = 8'd58;
-            // row_top[31:24] = 8'd32;
-            // row_top[23:16] = 8'd32;
-            // row_top[15:8] = 8'd32;
-            // row_top[7:0] = 8'd32;
         end
-
-
 
         default: begin
             row_top[127:120] = 8'd32;
@@ -174,20 +130,9 @@ always_comb begin
             row_top[103:96] = 8'd32;
             row_top[95:88] = 8'd32;
             row_top[87:80] = 8'd32;
-            // row_top[79:72] = 8'd32;
-            // row_top[71:64] = 8'd32;
-            // row_top[63:56] = 8'd32;
-            row_top[55:48] = 8'd32;
-            row_top[47:40] = 8'd32;
-            row_top[39:32] = 8'd32;
-            // row_top[31:24] = 8'd32;
-            // row_top[23:16] = 8'd32;
-            // row_top[15:8] = 8'd32;
-            // row_top[7:0] = 8'd32;
         end
     endcase
-end
-always_comb begin
+
     case(gameMode)
         TWO_APPLE: begin //2APP
             row_top[31:24] = 8'd50;
@@ -209,11 +154,11 @@ always_comb begin
             row_top[7:0] = 8'd76;
         end
 
-        SLOW_SPEED: begin //SLOW 
-            row_top[31:24] = 8'd83;
-            row_top[23:16] = 8'd76;
-            row_top[15:8] = 8'd79;
-            row_top[7:0] = 8'd87;
+        BORDER_CHANGE: begin //BORD
+            row_top[31:24] = 8'd66;
+            row_top[23:16] = 8'd79;
+            row_top[15:8] = 8'd82;
+            row_top[7:0] = 8'd68;
         end
         default: begin 
             row_top[31:24] = 8'd32;
@@ -222,48 +167,105 @@ always_comb begin
             row_top[7:0] = 8'd32;
         end
     endcase
-end
+
+    row_bot[63:56] = 8'd83;
+    row_bot[55:48] = 8'd80;
+    row_bot[47:40] = 8'd58;
+    row_bot[39:32] = 8'd32;
+    case(gameSpeed)
+        NORMAL_SPEED: begin //NORM
+            row_bot[31:24] = 8'd78;
+            row_bot[23:16] = 8'd79;
+            row_bot[15:8] = 8'd82;
+            row_bot[7:0] = 8'd77;
+        end
+        FAST_SPEED: begin //FAST
+            row_bot[31:24] = 8'd70;
+            row_bot[23:16] = 8'd65;
+            row_bot[15:8] = 8'd83;
+            row_bot[7:0] = 8'd84;
+        end
+
+        SLOW_SPEED: begin //SLOW
+            row_bot[31:24] = 8'd83;
+            row_bot[23:16] = 8'd76;
+            row_bot[15:8] = 8'd79;
+            row_bot[7:0] = 8'd87;
+        end
+        default: begin 
+            row_top[31:24] = 8'd32;
+            row_top[23:16] = 8'd32;
+            row_top[15:8] = 8'd32;
+            row_top[7:0] = 8'd32;
+        end
+    endcase
+
+    case(appleLuck)
+        APPLE_NORMAL: begin
+            row_bot[127:120] = 8'd78; //W, far left most digit
+            row_bot[119:112] = 8'd79; //A, secon from left digit
+            row_bot[111:104] = 8'd82; //I
+            row_bot[103:96] = 8'd77; //T
+            row_bot[95:88] = 8'd65;
+            row_bot[87:80] = 8'd76;
+        end
+          APPLE_LUCKY: begin
+            row_bot[127:120] = 8'd76; //W, far left most digit
+            row_bot[119:112] = 8'd85; //A, secon from left digit
+            row_bot[111:104] = 8'd67; //I
+            row_bot[103:96] = 8'd75; //T
+            row_bot[95:88] = 8'd89;
+          end
+          APPLE_UNLUCKY: begin
+            row_bot[127:120] = 8'd85; //W, far left most digit
+            row_bot[119:112] = 8'd78; //A, secon from left digit
+            row_bot[111:104] = 8'd76; //I
+            row_bot[103:96] = 8'd85; //T
+            row_bot[95:88] = 8'd67;
+            row_bot[87:80] = 8'd75;
+            row_bot[79:72] = 8'd89;
+
+        end
+        default: begin
+            row_bot[127:120] = 8'd32;
+            row_bot[119:112] = 8'd32;
+            row_bot[111:104] = 8'd32;
+            row_bot[103:96] = 8'd32;
+            row_bot[95:88] = 8'd32;
+            row_bot[87:80] = 8'd32;
+        end
+    endcase
+
+    digit1 = 8'b0; //ones place
+    digit2 = 8'b0; //tens place
+    digit3 = 8'b0; // hundreds place
+    temp = 8'b0;
+    temp2 = 8'b0;
+
+    if (score >= 100) begin
+        digit3 = score % 10 + 48;
+        temp = score / 10;
+        digit2 = temp % 10 + 48; 
+        temp2 = temp/ 10;
+        digit1 = temp2 % 10 + 48;
+    end
+    else if (score >= 10) begin
+        digit3 = score % 10 + 48;
+        temp = score / 10;
+        digit2 = temp % 10 + 48;
+        digit1 = 32;
+        
+    end
+    else begin
+        digit3 = score + 48;
+        digit2 = 32;
+        digit1 = 32;
+    end
 
 
-
-//Score Digit Logic
-logic [7:0] digit1;
-logic [7:0] digit2;
-logic [7:0] digit3;
-logic [7:0] temp;
-logic [7:0] temp2;
-
-always_comb begin
-digit1 = 8'b0; //ones place
-digit2 = 8'b0; //tens place
-digit3 = 8'b0; // hundreds place
-temp = 8'b0;
-temp2 = 8'b0;
-
-if (score >= 100) begin
-    digit3 = score % 10 + 48;
-    temp = score / 10;
-    digit2 = temp % 10 + 48; 
-    temp2 = temp/ 10;
-    digit1 = temp2 % 10 + 48;
-end
-else if (score >= 10) begin
-    digit3 = score % 10 + 48;
-    temp = score / 10;
-    digit2 = temp % 10 + 48;
-    digit1 = 32;
-    
-end
-else begin
-    digit3 = score + 48;
-    digit2 = 32;
-    digit1 = 32;
-end
-
-
-row_top [79:72] = digit1;
-row_top [71:64] = digit2;
-row_top [63:56] = digit3;
+    row_top [79:72] = digit1;
+    row_top [71:64] = digit2;
+    row_top [63:56] = digit3;
 end
 
 endmodule 

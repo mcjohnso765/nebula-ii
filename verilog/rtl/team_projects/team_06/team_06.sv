@@ -47,7 +47,11 @@ module team_06 (
     */
     // Top level module
 
+<<<<<<< HEAD
   assembly game (.clk(clk), .nrst(~nrst), .enable(en), .rs(gpio_out[18]), .rw(gpio_out[19]), .en(gpio_out[20]), .lcd8(gpio_out[28:21]), .keyenc(gpio_in[0]), .button_right_in(gpio_in[1]), .button_left_in(gpio_in[2]), .button_up_in(gpio_in[3]), .button_down_in(gpio_in[4]),
+=======
+    assembly game (.clk(clk), .nrst(~nrst), .rs(gpio_out[18]), .rw(gpio_out[19]), .en(gpio_out[20]), .lcd8(gpio_out[28:21]), .enable(en), .keyenc(gpio_in[0]), .button_right_in(gpio_in[1]), .button_left_in(gpio_in[2]), .button_up_in(gpio_in[3]), .button_down_in(gpio_in[4]),
+>>>>>>> 3f2e9094efc8ea148ccdefbe6910ac920e5c89e9
                      .button_start_pause_in(gpio_in[5]), .d(gpio_out[13:6]), .wr(gpio_out[14]), .dcx(gpio_out[15]), .song(gpio_out[16]), .rert(gpio_out[17]));
 
 endmodule
