@@ -28,7 +28,7 @@
 -v $(USER_PROJECT_VERILOG)/rtl/wishbone_interconnect/wishbone_decoder.sv
 
 # Wishbone Manager Control
-#-v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
+-v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
 
 # GPIO Control
 -v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_WB.sv
@@ -56,3 +56,6 @@
 
 # Team 04
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/tippy_top.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04.sv
