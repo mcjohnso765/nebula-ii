@@ -4,7 +4,7 @@ module t10_game_logic (
     input logic [39:0] setWord,
     input logic toggle_state,
     output logic [7:0] letter,
-    output logic red, green, mistake, red_busy, game_rdy,
+    output logic red, green, mistake, game_rdy,
     output logic [2:0] incorrect, correct,
     output logic [4:0] indexCorrect
 );
@@ -52,7 +52,6 @@ module t10_game_logic (
         tempGreen = green;//for latch
         placehold = letter;//for latch
 
-        red_busy = 0;
         mistake = 0;
         game_rdy = 0;
         pulse = 0;
@@ -81,7 +80,6 @@ module t10_game_logic (
                 end               
             end
             L0: begin
-                red_busy = 1;
                 game_rdy = 0;
                 if(letter == setWord[39:32] & indexCorrect[4] != 1)begin
                     nextIndexCorrect[4] = 1;
@@ -91,7 +89,6 @@ module t10_game_logic (
                 nextState = L1;
             end
             L1: begin
-                red_busy = 1;
                 game_rdy = 0;
                 if(letter == setWord[31:24] & indexCorrect[3] != 1)begin
                     nextIndexCorrect[3] = 1;
@@ -101,7 +98,6 @@ module t10_game_logic (
                 nextState = L2;
             end
             L2: begin
-                red_busy = 1;
                 game_rdy = 0;
                 if(letter == setWord[23:16] & indexCorrect[2] != 1)begin
                     nextIndexCorrect[2] = 1;
@@ -111,7 +107,6 @@ module t10_game_logic (
                 nextState = L3;
             end
             L3: begin
-                red_busy = 1;
                 game_rdy = 0;
                 if(letter == setWord[15:8] & indexCorrect[1] != 1)begin
                     nextIndexCorrect[1] = 1;
@@ -121,7 +116,6 @@ module t10_game_logic (
                 nextState = L4;
             end
             L4: begin
-                red_busy = 1;
                 game_rdy = 0;
                 if(letter == setWord[7:0] & indexCorrect[0] != 1)begin
                     nextIndexCorrect[0] = 1;
@@ -141,7 +135,6 @@ module t10_game_logic (
                     mistakeCount = mistakeCount + 1;
                 end
                 end
-                red_busy = 0;
                 game_rdy = 1;
                 nextState = IDLE;
             end
