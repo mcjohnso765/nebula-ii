@@ -32,7 +32,7 @@
 #define reg_sample_proj_RIS (*(volatile uint32_t*)0x3001FF08)
 #define reg_sample_proj_IC (*(volatile uint32_t*)0x3001FF0C)
 
-#define reg_team_03_proj_EN (*(volatile uint32_t*)0x30030000)
+#define reg_team_03_proj_EN (*(volatile uint32_t*)0x30020000)
 
 
 // GPIO Control

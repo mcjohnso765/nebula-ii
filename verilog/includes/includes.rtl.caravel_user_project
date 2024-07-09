@@ -28,7 +28,7 @@
 -v $(USER_PROJECT_VERILOG)/rtl/wishbone_interconnect/wishbone_decoder.sv
 
 # Wishbone Manager Control
-#-v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
+-v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
 
 # GPIO Control
 -v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_WB.sv
@@ -46,6 +46,29 @@
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
+
+# Team 03 project
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/IO_mod_enable.sv
+
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/core.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/ALU.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/branch_logic.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/byte_demux.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/clock_controller.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/control_logic_unit.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/decoder.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/imm_generator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/pc.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/register_file.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/request_unit.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/typedef.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/writeback.sv
+
+
+
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03_WB.v
 
 # SRAM
 -v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/SRAM_1024x32.v
