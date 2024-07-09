@@ -12,8 +12,6 @@
 
 `define MOD 3'b000
 `define MAZE 3'b001
-`define WIRE 3'b010
-`define MEM 3'b011
 
 `define SELECT 6'b000001
 `define UP 6'b000010
@@ -25,31 +23,14 @@
 
 module imageGenerator (
     input logic clk,                          // system clock
-    input logic nrst,                         // active low reset
+    input logic nrst,                          // active low reset
     input logic tft_sdo,                      // NOT USED 
 
     // Items to draw on the LCD
     input logic [2:0] game_state,             // game state
     input logic [2:0] playing_state,
-
-    // OVERALL game input
-    input logic heartPixel, playButtonPixel, modSquaresPixel, modHighlightPixel, defusedPixel, boomPixel,   
-
-    // MAZE game input
-    input logic circlePixel, borderPixel, flagPixel, playerPixel,
-
-    // WIRE game input
-    input logic [5:0] wirePixel,
-    input logic wireHighlightPixel,
-
-    // MEMORY game input
-    input logic displayPixel,
-    input logic buttonPixel,
-    input logic [3:0] labelPixel,
-    input logic stagePixel,
-    input logic buttonHighlightPixel,
-
-    input logic [5:0][2:0] wire_color,
+    input logic circlePixel, borderPixel, flagPixel, playerPixel, heartPixel, 
+    input logic playButtonPixel, modSquaresPixel, modHighlightPixel, defusedPixel, boomPixel,
     output wire [8:0] x,                     // current x coordinate
     output wire [7:0] y,                     // current y coordinate
 
@@ -101,32 +82,9 @@ module imageGenerator (
                     circlePixel ? 16'h47AB:             // green
                     flagPixel ? 16'hF800:               // red
                     playerPixel ? 16'hFFFF:             // white
-                    borderPixel ? 16'hAD58 : 16'd0;     // gray : black
-            end else if (playing_state == `WIRE) begin
-                if (heartPixel) begin
-                    currentPixel = 16'hF800;    // red
-                end else if (wireHighlightPixel) begin
-                    currentPixel = 16'h07ff;    // cyan
-                end else begin
-                    currentPixel = 16'd0;       // black
-                    for (integer i = 0; i < 6; i++) begin
-                        if (wirePixel[i]) begin
-                            currentPixel = (wire_color[i] == 3'd0) ? 16'hF800 : // red
-                            (wire_color[i] == 3'd1) ? 16'hFFFF :        // white
-                            (wire_color[i] == 3'd2) ? 16'hF81F :        // yellow
-                            (wire_color[i] == 3'd3) ? 16'h07E0 :        // blue
-                            (wire_color[i] == 3'd4) ? 16'h47AB : 16'd0; // gray : black
-                        end 
-                    end
-                end
-            end else if (playing_state == `MEM) begin
-                currentPixel = heartPixel ? 16'hF800 :  // red
-                    displayPixel ? 16'hF800 :           // red
-                    (|labelPixel) ? 16'hF800 :          // red
-                    buttonPixel ? 16'hFFFF :            // white
-                    stagePixel ? 16'hF81F :             // yellow
-                    buttonHighlightPixel ? 16'h07ff : 16'h0;    // cyan : black
-                ;
+                    borderPixel ? 16'hAD58 : 16'd0;     // grey : black
+            end else begin
+                currentPixel = 16'h001F;    // green
             end
         end else if (game_state == `WON) begin
             currentPixel = defusedPixel ? 16'hF800 : 16'h0000;  // red

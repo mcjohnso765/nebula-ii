@@ -12,8 +12,6 @@
 
 `define MOD 3'b000
 `define MAZE 3'b001
-`define WIRE 3'b010
-`define MEM 3'd3
 
 `define SELECT 6'b000001
 `define UP 6'b000010
@@ -41,7 +39,7 @@ module fsm_playing(
     } game_state_t;
 
     typedef enum logic [2:0] {
-        MOD = 3'd0, MAZE = 3'd1, WIRE = 3'd2, MEM = 3'd3
+        MOD = 3'd0, MAZE = 3'd1 
     } playing_state_t;
 
     playing_state_t next_playing_state, playing_state;
@@ -51,9 +49,9 @@ module fsm_playing(
 
     playing_state_t mod_select[2][2];
     assign mod_select[0][0] = MAZE;
-    assign mod_select[0][1] = WIRE;
-    assign mod_select[1][0] = MEM;
-    assign mod_select[1][1] = MEM;
+    assign mod_select[0][1] = MAZE;
+    assign mod_select[1][0] = MAZE;
+    assign mod_select[1][1] = MAZE;
 
     always_ff @(negedge nrst, posedge clk) begin
         if (!nrst) begin
@@ -79,7 +77,7 @@ module fsm_playing(
                         next_playing_state = mod_select[mod_row][mod_col];
                     end
                 end
-                MAZE, WIRE, MEM: begin
+                MAZE: begin
                     if (strobe && (button == `BACK)) begin        // press BACK to move from SUB to MOD
                         next_playing_state = MOD;
                     end else if (submodule_clear_edge) begin    // if submodule_clear_edge, add num_clear by one

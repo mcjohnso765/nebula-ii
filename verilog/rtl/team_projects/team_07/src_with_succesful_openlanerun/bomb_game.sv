@@ -18,37 +18,33 @@ module bomb_game(
     output logic tft_cs,
     output logic [2:0] tft_state,
     output logic audio
+    // testing output
+    // output logic [2:0] game_state_top,
+    // output logic [2:0] playing_state_top
+    // output logic [1:0] lives_out,
+    // output logic error_out
 ); 
-    logic submodule_clear_edge;
-    logic error;
-    assign submodule_clear_edge = maze_clear_edge | wire_clear | mem_clear;
-    assign error = maze_error | wire_error | mem_error;
+    // testing output
+    // assign game_state_top = game_state;
+    // assign playing_state_top = playing_state;
+    // assign lives_out = lives;
+    // assign error_out = error;
+
     audio_sm audio_0 (
         .nrst(nrst), 
         .clk(clk), 
-        .s_strobe(s_strobe),
-        .s_strobe_fast(s_strobe_fast), 
-        .s_strobe_faster(s_strobe_faster),
-        .cnt_min(cnt_min),
-        .cnt_sec_ten(cnt_sec_ten),
-        .cnt_sec_one(cnt_sec_one),
-        .submodule_clear_edge(submodule_clear_edge),
-        .game_clear(game_clear),
+        .s_strobe(s_strobe), 
         .error(error), 
         .audio(audio)
     );
 
     logic s_strobe;
-    logic s_strobe_fast;
-    logic s_strobe_faster;
     logic [23:0] cnt;
     timer_sec_divider timer_sec_divider_0 (
         .clk(clk),
         .nrst(nrst),
         .clear(timer_clear),
         .s_strobe(s_strobe),
-        .s_strobe_fast(s_strobe_fast),
-        .s_strobe_faster(s_strobe_faster),
         .cnt(cnt)
     );
 
@@ -59,7 +55,7 @@ module bomb_game(
         .clk(clk),
         .nrst(nrst),
         .s_strobe(s_strobe),
-        .max_min(3'd2),
+        .max_min(3'd1),
         .max_sec_ten(3'd0),
         .max_sec_one(4'd0),
         .clear(timer_clear),
@@ -122,6 +118,7 @@ module bomb_game(
         .reg_edge_back(reg_edge_back)
     );
 
+    logic error;
     logic game_clear;
     logic [2:0] game_state;
     logic [1:0] lives;
@@ -174,7 +171,7 @@ module bomb_game(
         .mod_num(mod_num),
         .mod_row(mod_row),
         .mod_col(mod_col),
-        .submodule_clear_edge(submodule_clear_edge),
+        .submodule_clear_edge(maze_clear_edge),
         .playing_state_out(playing_state),
         .game_clear(game_clear)
     );
@@ -184,16 +181,16 @@ module bomb_game(
     logic [2:0] dest_x;
     logic [2:0] dest_y;
     logic [2:0] map_select;
-    logic maze_error;
     maze DUT_maze(
         .nrst(nrst),
         .clk(clk),
         .button(sync_button),
         .strobe(strobe),
+        .game_state_in(game_state),
         .playing_state_in(playing_state),
         .activate_rand(activate_rand),
         .map_select(map_select),
-        .error(maze_error),
+        .error(error),
         .pos_x(pos_x),
         .pos_y(pos_y),
         .dest_x(dest_x),
@@ -210,57 +207,10 @@ module bomb_game(
         .out(maze_clear_edge)
     );
 
-    logic [2:0] wire_num;
-    logic [5:0] wire_status;
-    logic [2:0] wire_pos;
-    logic [5:0][2:0] wire_color;
-    logic [5:0] wirePixel;
-    logic wireHighlightPixel;
-    logic wire_error;
-    logic wire_clear;
-    wire_game wire_game_0 (
-        .nrst(nrst),
-        .clk(clk),
-        .button(sync_button),
-        .strobe(strobe),
-        .game_state_in(game_state),
-        .playing_state_in(playing_state),
-        .activate_rand(activate_rand),
-        .wire_error(wire_error),
-        .wire_clear(wire_clear),
-        .wire_num(wire_num),
-        .wire_color(wire_color),
-        .wire_status(wire_status),
-        .wire_pos(wire_pos)
-    );
-
-    logic mem_error;
-    logic mem_clear;
-    logic [1:0] mem_pos;
-    logic [4:0][1:0] display_num;
-    logic [3:0][4:0][1:0] label_num;
-    logic [2:0] stage;
-    mem_game mem_game_0 (
-        .nrst(nrst),
-        .clk(clk),
-        .button(sync_button),
-        .strobe(strobe),
-        .game_state_in(game_state),
-        .playing_state_in(playing_state),
-        .activate_rand(activate_rand),
-        .mem_error(mem_error),
-        .mem_clear(mem_clear),
-        .mem_pos(mem_pos),
-        .display_num(display_num),
-        .label_num(label_num),
-        .stage(stage)
-    );
-
     logic [8:0] x;
     logic [7:0] y;
     logic flagPixel, playerPixel, circlePixel, borderPixel, heartPixel, playButtonPixel, modSquaresPixel, modHighlightPixel;
-    logic defusedPixel, boomPixel, displayPixel, buttonPixel, stagePixel, buttonHighlightPixel;
-    logic [3:0] labelPixel;
+    logic defusedPixel, boomPixel;
     generate_flag recFLAG(.clk(clk), .nrst(nrst), .flagPixel(flagPixel), .flag_x(dest_x), .flag_y(dest_y), .x(x), .y(y));
     generate_player recPLAYER(.clk(clk), .nrst(nrst), .playerPixel(playerPixel), .pos_x(pos_x), .pos_y(pos_y),  .x(x), .y(y));
     generate_circle recGen(.clk(clk), .nrst(nrst), .circlePixel(circlePixel), .map_select(map_select), .x(x), .y(y));
@@ -271,14 +221,11 @@ module bomb_game(
         .modSquaresPixel(modSquaresPixel), .modHighlightPixel(modHighlightPixel));
     generate_defused defusedGen(.clk(clk), .nrst(nrst), .x(x), .y(y), .defusedPixel(defusedPixel));
     generate_boom boomGen(.clk(clk), .nrst(nrst), .x(x), .y(y), .boomPixel(boomPixel));
-    generate_wire wireGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .wire_num(wire_num), .wire_status(wire_status), .wire_pos(wire_pos),
-       .wirePixel(wirePixel), .wireHighlightPixel(wireHighlightPixel));
-    generate_mem memGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .display_num(display_num), .label_num(label_num), .stage(stage), .mem_pos(mem_pos),
-        .displayPixel(displayPixel), .buttonPixel(buttonPixel), .labelPixel(labelPixel), .stagePixel(stagePixel), .buttonHighlightPixel(buttonHighlightPixel));
 
     logic tft_sdo;
+    // logic tft_rst;
     logic tftstate;
-    assign tft_sdo = '0;
+    initial tft_sdo = 0;
     imageGenerator lcdOutput(
         .clk(clk), 
         .nrst(nrst), 
@@ -293,14 +240,6 @@ module bomb_game(
         .modHighlightPixel(modHighlightPixel),
         .defusedPixel(defusedPixel),
         .boomPixel(boomPixel),
-        .wirePixel(wirePixel),
-        .wireHighlightPixel(wireHighlightPixel),
-        .wire_color(wire_color),
-        .displayPixel(displayPixel), 
-        .buttonPixel(buttonPixel), 
-        .labelPixel(labelPixel), 
-        .stagePixel(stagePixel), 
-        .buttonHighlightPixel(buttonHighlightPixel),
         .game_state(game_state), 
         .playing_state(playing_state),
         .x(x), 

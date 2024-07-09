@@ -24,6 +24,7 @@ module maze_mazer_locator(
     input logic nrst,
     input logic clk,
     input logic [5:0] button,
+    input logic [2:0] game_state_in,
     input logic [2:0] playing_state_in,
     input logic strobe,
     input logic enable_move,
@@ -56,6 +57,9 @@ module maze_mazer_locator(
         if (activate_rand_delay) begin
             next_pos_x = start_pos_x;
             next_pos_y = start_pos_y;
+        end else if (game_state_in == `WON || game_state_in == `LOST) begin
+            next_pos_x = 3'd7;
+            next_pos_y = 3'd7;
         end 
         if (playing_state_in == `MAZE && enable_move) begin
             if (button == `UP) begin

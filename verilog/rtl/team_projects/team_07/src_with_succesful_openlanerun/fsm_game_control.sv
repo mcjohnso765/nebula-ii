@@ -47,7 +47,7 @@ module fsm_game_control(
     logic [2:0] num_clear;
     
     assign game_state_out = game_state;
-    assign mod_num = 3'd3;
+    assign mod_num = 3'd1;
     assign max_min = 3'd3;
     assign max_sec_ten = 3'd0;
     assign max_sec_one = 4'd0;
