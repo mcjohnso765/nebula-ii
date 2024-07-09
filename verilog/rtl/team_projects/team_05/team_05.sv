@@ -84,6 +84,7 @@ module team_05 (
     t05_cpu_core core(
         .data_in_BUS(CPU_DAT_O),
         .bus_full(BUSY_O),
+        .en(en),
         .clk(clk),
         .rst(~nrst),
         .data_out_BUS(CPU_DAT_I),
@@ -123,7 +124,7 @@ typedef enum logic [2:0] {
 
 module t05_cpu_core(
         input logic [31:0] data_in_BUS,
-        input logic bus_full, //input from memory bus
+        input logic bus_full, en, //input from memory bus
         input logic clk, rst, //external clock, reset
         output logic [31:0] data_out_BUS, address_out,
         output logic data_write, mem_read
@@ -135,6 +136,19 @@ module t05_cpu_core(
         //output logic [31:0] pc_val, pc_jump,
        // output logic branch_ff, branch, load_pc
 );
+    always_comb begin
+        if(!en) begin
+            data_out_BUS = 32'b0;
+            address_out = 32'b0;
+            data_write = 1'b0;
+            mem_read = 1'b0;
+        end else begin
+            data_out_BUS = data_out_BUS_int;
+            address_out = address_out_int;
+            data_write = data_write_int;
+            mem_read = mem_read_int;
+        end
+    end
     //Instruction Memory -> Control Unit
     logic [31:0] instruction;
 
@@ -207,11 +221,14 @@ module t05_cpu_core(
     logic branch_ff;
     logic instr_wait;
     logic memToReg_flipflop;
+
+    logic [31:0] data_out_BUS_int, address_out_int;
+    logic data_write_int, mem_read_int;
     
     always_comb begin
         mem_adr_i = (data_adr_o | instruction_adr_o);
-        data_en = data_read | data_write;
-        mem_read = data_read | instr_fetch;
+        data_en = data_read | data_write_int;
+        mem_read_int = data_read | instr_fetch;
         instr_wait = ((~(read_address == 32'b0) | ~(write_address == 32'b0)) & ~data_good);
     end
 
@@ -314,7 +331,7 @@ module t05_cpu_core(
         .rst(rst),
         .data_good(data_good),
         .data_read(data_read),
-        .data_write(data_write),
+        .data_write(data_write_int),
         .data_adr_o(data_adr_o),
         .data_bus_o(data_bus_o),
         .data_cpu_o(data_cpu_o));
@@ -327,15 +344,15 @@ module t05_cpu_core(
         .data_en(data_en),
         .instr_en(instr_fetch),
         .bus_full(bus_full), //external info
-        .memWrite(data_write),
-        .memRead(mem_read),
+        .memWrite(data_write_int),
+        .memRead(mem_read_int),
         .clk(clk),
         .rst(rst),
         // outputs
         .state(state),
-        .address_out(address_out), //to external output
+        .address_out(address_out_int), //to external output
         .data_out_CPU(data_out_CPU), //to data mem
-        .data_out_BUS(data_out_BUS), //to external output
+        .data_out_BUS(data_out_BUS_int), //to external output
         .data_out_INSTR(data_out_INSTR), //to instr mem
         .bus_full_CPU(bus_full_CPU)); 
 
@@ -346,7 +363,7 @@ module t05_cpu_core(
         .clk(clk),
         .clr(rst),
         .load(load_pc),
-        .inc(data_good),
+        .inc(data_good & en),
         .ALU_out(branch_ff),
         .Disable(instr_wait),
         .data(pc_jump),
@@ -672,12 +689,12 @@ module t05_memcontrol(
     input logic data_en, instr_en, bus_full, memWrite, memRead,
     input logic clk, rst,
     // outputs
-    output state_t state,
+    output logic [2:0] state,
     output logic bus_full_CPU,
     output logic [31:0] address_out, data_out_CPU, data_out_BUS, data_out_INSTR
 );
 
-    state_t next_state, prev_state;
+    logic [2:0] next_state, prev_state;
 
     always_ff @(posedge clk, posedge rst) begin : startFSM
         if (rst) begin
@@ -775,7 +792,7 @@ module t05_pc(
     always_ff @(posedge clk, posedge clr) begin
 
         if (clr) begin
-            pc_val <= 32'd0;
+            pc_val <= 32'h33000000;
         end
 
         else begin
