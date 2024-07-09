@@ -6,7 +6,7 @@ module assembly (
 
     logic [3:0] x, y;
     logic head, body, apple, wall, gameover;
-    logic button_reset_in, sync;
+    logic button_reset_in;
 
     image_generator writer (.clk(clk), .nrst(~nrst), .snakeBody(body), .snakeHead(head), .apple(apple), .border(wall), .KeyEnc(keyenc), .GameOver(gameover), 
                           .sync(button_reset_in), .wr(wr), .dcx(dcx), .D(d), .x(x), .y(y));
@@ -368,10 +368,10 @@ always_comb begin
             next_count = count;
             next_cmd_num = cmd_num;
         end
-        SP = X * 20;
-        EP = (X + 1) * 20;
-        SC = Y * 20;
-        EC = (Y + 1) * 20;
+        SP = {12'b0, X} * 16'd20;
+        EP = ({12'b0, X} + 1) * 16'd20;
+        SC = {12'b0, Y} * 16'd20;
+        EC = ({12'b0, Y} + 1) * 16'd20;
         case(obj_code)
             3'b001  : color = 16'hf0f8;   //head
             3'b010  : color = 16'hf800;   //body

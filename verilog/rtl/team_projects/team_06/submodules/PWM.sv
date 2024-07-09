@@ -15,26 +15,25 @@ output logic out
 );
 
 logic [8:0] state;
-logic [8:0] state_n;
 logic [18:0] max_in, ratio_in;
-logic [99:0][18:0] ratio_lookup;
-logic [18:0] count;
+logic [18:0] ratio_lookup;
+// logic [18:0] count;
 state_t note;
 
 fsm f1 (.clk(clk), .enable(enable), .goodCollision(goodCollision), .badCollision(badCollision), .nrst(nrst), .state(note));
 sound notes (.note(note), .max_in(max_in), .ratio_lookup(ratio_lookup));
-counter counter1 (.clk(clk), .enable(enable), .nrst(nrst), .max(max_in), .ratio(ratio_in), .count(count), .out(out));
+counter counter1 (.clk(clk), .enable(enable), .nrst(nrst), .max(max_in), .ratio(ratio_in), .out(out));
 
 always_comb begin
-        for (integer i = 0; i < 100; i++) begin
-            if (state_n == i[8:0]) begin
+//        for (integer i = 0; i < 100; i++) begin
+//            if (state_n == i[8:0]) begin
     //max_in = max_lookup[i];
-                ratio_in = ratio_lookup[i];
-            end 
-            else begin
-               ratio_in = ratio_lookup[0];
-            end
-        end
+//                ratio_in = ratio_lookup[i];
+//            end 
+//            else begin
+               ratio_in = ratio_lookup;
+//            end
+//        end
 
 end
 
@@ -42,9 +41,9 @@ always_ff @(posedge clk, negedge nrst) begin
     if (nrst == 1'b0) begin
         state <= 9'b0;
     end
-      else if (count == max_in) begin
-        state <= state_n;
-    end 
+//      else if (count == max_in) begin
+//        state <= state_n;
+//    end 
         else begin
         state <= state;
 end
@@ -58,12 +57,11 @@ input logic nrst,
 input logic [18:0] max,
 input logic enable,
 input logic [18:0] ratio,
-output logic [18:0] count,
 output logic out
 );
 
 //logic [14:0] count;
-logic [18:0] count_n;
+logic [18:0] count_n, count;
 logic [18:0] count1;
 logic [18:0] count1_n;
 
@@ -120,7 +118,7 @@ BFLAT2 = 5000, OFF = 0
 module sound (
     input state_t note,
     output logic [18:0] max_in,
-    output logic [99:0][18:0] ratio_lookup
+    output logic [18:0] ratio_lookup
 );
 
 logic [18:0] max_inOFF = 19'd0;
@@ -241,27 +239,9 @@ note_t max_in30 = BNOTE;
 note_t max_in31 = OFF;
 
 
-logic [99:0][18:0] restArray = {19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0,
-                            19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0,
-                            19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0,
-                            19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0,
-                            19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0,
-                            19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0,
-                            19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0,
-                            19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0,
-                            19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0,
-                            19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0, 19'd0};    
+logic [18:0] restArray = 19'd0;    
 
-logic [99:0][18:0] soundArray = {19'd181818, 19'd193234, 19'd204606, 19'd215887, 19'd227034, 19'd238003, 19'd248750, 19'd259232, 19'd269409, 19'd279241,
-    19'd288688, 19'd297713, 19'd306281, 19'd314358, 19'd321911, 19'd328912, 19'd335332, 19'd341146, 19'd346332, 19'd350868,
-    19'd354737, 19'd357924, 19'd360416, 19'd362202, 19'd363277, 19'd363636, 19'd363277, 19'd362202, 19'd360416, 19'd357924,
-    19'd354737, 19'd350868, 19'd346332, 19'd341146, 19'd335332, 19'd328912, 19'd321911, 19'd314358, 19'd306281, 19'd297713,
-    19'd288688, 19'd279241, 19'd269409, 19'd259232, 19'd248750, 19'd238003, 19'd227034, 19'd215887, 19'd204606, 19'd193234,
-    19'd181818, 19'd170402, 19'd159030, 19'd147749, 19'd136602, 19'd125633, 19'd114886, 19'd104404, 19'd94227,  19'd84395,
-    19'd74948,  19'd65923,  19'd57355,  19'd49278,  19'd41725,  19'd34724,  19'd28304,  19'd22490,  19'd17304,  19'd12768,
-    19'd8899,   19'd5712,   19'd3220,   19'd1434,   19'd359,    19'd0,      19'd359,    19'd1434,   19'd3220,   19'd5712,
-    19'd8899,   19'd12768,  19'd17304,  19'd22490,  19'd28304,  19'd34724,  19'd41725,  19'd49278,  19'd57355,  19'd65923,
-    19'd74948,  19'd84395,  19'd94227,  19'd104404, 19'd114886, 19'd125633, 19'd136602, 19'd147749, 19'd159030, 19'd170402};
+logic [18:0] soundArray = 19'd170402;
     
 always_comb begin
     case(note) 
@@ -568,8 +548,8 @@ module fsm (
   logic [18:0] length, next_length;
   logic [18:0] REST = 30;
 
-  clk_div  c1 (.max_i(length), .count(), .clk(clk), .nrst(nrst), .atmax_o(out_clk));
-  clk_enable a1 (.max_i(16'd50000), .clk(clk), .nrst(nrst), .enable(enable), .count(), .out_enable(out_enable));
+  clk_div  c1 (.max_i(length), .clk(clk), .nrst(nrst), .atmax_o(out_clk));
+  clk_enable a1 (.max_i(16'd50000), .clk(clk), .nrst(nrst), .enable(enable), .out_enable(out_enable));
 
   always_comb begin
     if (goodCollision == 1) begin
@@ -679,12 +659,11 @@ module clk_div (
 input logic clk,
 input logic nrst,
 input logic [18:0]max_i,
-output logic [18:0] count,
 output logic atmax_o
 );
 
 
-logic [18:0] innerCount;
+logic [18:0] innerCount, count;
 
 
 always_comb begin
@@ -718,12 +697,11 @@ input logic clk,
 input logic nrst,
 input logic [15:0] max_i,
 input logic enable,
-output logic [15:0] count,
 output logic out_enable
 );
 
 
-logic [15:0] innerCount;
+logic [15:0] innerCount, count;
 
 always_comb begin
 

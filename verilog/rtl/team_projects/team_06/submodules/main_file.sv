@@ -49,9 +49,9 @@ GAME_STATE game_state;
 GAME_MODE game_mode;
 APPLE_LUCK apple_luck;
 logic [3:0] snake_head_x, snake_head_y, xmin, xmax, ymax, ymin;
-logic [MAX_LENGTH - 1:0] [3:0] snakeArrayX, snakeArrayY;
+logic [(MAX_LENGTH - 1):0][3:0] snakeArrayX, snakeArrayY;
 logic [7:0] score, apple_location, apple_location2;
-logic [24:0] [7:0] wall_locations;
+logic [24:0][7:0] wall_locations;
 
 clock clock1(.system_clk(clk), .nreset(reset_button), .game_state(game_state), .clk(pause_clk), .clk_main_display(main_clk), .clk_body(clk_body), 
 .game_speed(game_speed));

@@ -16,7 +16,7 @@ logic enable_next , good_spot, good_spot_next, logic_enable, lucky_spot, unlucky
     logic [3:0] count;
 logic [7:0] count_luck, count_luck_next, total_difference;
 
-    logic collisions_n,collisions, ready, start_enable;
+    logic collisions_n,collisions, start_enable;
 
     logic impossible;
 

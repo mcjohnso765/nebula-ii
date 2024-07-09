@@ -37,7 +37,7 @@ logic count1, inputa, input2;
 parameter MAX_LENGTH = 30;
 //last 2 are for input slection
 
-logic collisions_n,collisions, ready, start_enable, collisions_n2;
+logic collisions_n,collisions, start_enable, collisions_n2;
 //logic [199:0] apple_locations_last;
 
 collisionLogic absxs (.next_head({y_next, x_next}), .body_x(snakeArrayX), .body_y(snakeArrayY), .collision(collisions_n));////

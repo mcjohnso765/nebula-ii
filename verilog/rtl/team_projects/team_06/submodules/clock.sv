@@ -35,7 +35,7 @@ module clock (
 );
 
 
-logic next_clk_display, next_clk, next_body_clk;
+logic next_clk, next_body_clk;
 logic [21:0] counter, next_counter, max_count;
 
 // always_ff @(posedge system_clk, posedge reset) begin //// display clk
@@ -99,7 +99,7 @@ else begin
 
 if (counter != max_count) begin // did not work when next_counter
 
-  next_counter = counter + 14'd1;
+  next_counter = counter + 22'd1;
   next_body_clk = 0;
 end 
 else begin

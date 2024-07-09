@@ -17,7 +17,7 @@ logic [3:0] count;
 logic [7:0] count_luck, count_luck_next, total_difference;
 parameter MAX_LENGTH = 30;
 
-logic collisions_n,collisions, ready, start_enable;
+logic collisions_n,collisions, start_enable;
 
 collisionLogic absxs (.next_head({y_next, x_next}), .body_x(snakeArrayX), .body_y(snakeArrayY), .collision(collisions_n));////
 always_comb begin

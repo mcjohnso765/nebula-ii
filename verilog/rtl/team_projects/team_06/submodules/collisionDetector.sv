@@ -10,7 +10,7 @@ module collisionDetector (
     output logic badCollision, goodCollision, good_collision2//, ready
 );
 
-logic collision, collision_n, goodCollision_n, badCollision_n, goodCollision_n2, badCollision_n2;
+logic collision_n, goodCollision_n, badCollision_n, goodCollision_n2, badCollision_n2;
 parameter MAX_LENGTH = 30;
 collisionLogic snakeLogic (.next_head({snakeHeadY, snakeHeadX}), .body_x(snakeArrayX), .body_y(snakeArrayY), .collision(collision_n));
 collisionLogic_wall rndwall (.next_wall({snakeHeadY, snakeHeadX}), .walls(wall_array), .collision(badCollision_n2));
