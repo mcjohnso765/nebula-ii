@@ -18,9 +18,9 @@ module team_10 (
     input wire [127:0] la_oenb,
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
-    input  wire [33:0] gpio_in, // Breakout Board Pins
-    output wire [33:0] gpio_out, // Breakout Board Pins
-    output wire [33:0] gpio_oeb // Active Low Output Enable
+    input logic [33:0] gpio_in, // Breakout Board Pins
+    output logic [33:0] gpio_out, // Breakout Board Pins
+    output logic [33:0] gpio_oeb // Active Low Output Enable
     
     /*
     * Add other I/O ports that you wish to interface with the
