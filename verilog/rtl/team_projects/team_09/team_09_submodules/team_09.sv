@@ -86,9 +86,7 @@ module team_09 (
     toggle_screen toggle1(.displayOut(displayOut), .blinkToggle(blinkToggle), .clk(clk), .rst(nrst), .bcd_ones(bcd_ones), .bcd_tens(bcd_tens), .bcd_hundreds(bcd_hundreds));
   
     // Make sure these are outputting to 3-8 decoder and physical seven segment displays 
-    ssdec ssdec1(.in(displayOut), .enable(blinkToggle == 1), .out(gpio_out[22:16]));
-    ssdec ssdec2(.in(displayOut), .enable(blinkToggle == 2), .out(gpio_out[22:16]));
-    ssdec ssdec3(.in(displayOut), .enable(blinkToggle == 0), .out(gpio_out[22:16]));
+    ssdec ssdec1(.in(displayOut), .enable(1), .out(gpio_out[22:16]));
 
     assign gpio_out[24:23] = blinkToggle;
 

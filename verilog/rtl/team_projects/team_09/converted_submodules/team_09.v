@@ -170,17 +170,7 @@ module team_09 (
 	);
 	ssdec ssdec1(
 		.in(displayOut),
-		.enable(blinkToggle == 1),
-		.out(gpio_out[22:16])
-	);
-	ssdec ssdec2(
-		.in(displayOut),
-		.enable(blinkToggle == 2),
-		.out(gpio_out[22:16])
-	);
-	ssdec ssdec3(
-		.in(displayOut),
-		.enable(blinkToggle == 0),
+		.enable(1),
 		.out(gpio_out[22:16])
 	);
 	assign gpio_out[24:23] = blinkToggle;
