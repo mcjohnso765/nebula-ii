@@ -38,12 +38,12 @@ module team_12 (
 	wire serIn;
 	wire wave_mode_pb;
 	wire clear;
-	wire [11:0] latch_output;
+	wire [15:0] latch_output;
 
 	assign MHz10 = clk;
 
 
-    assign gpio_out = {19'b0,latch_output,3'b0}; //DAC output routed to pins 7-18
+    assign gpio_out = {15'b0,latch_output,3'b0}; //DAC output routed to pins 7-22
     assign serIn = gpio_in[0]; //MIDI serial in mapped to GPIO 0
     assign clear = gpio_in[1]; //Clear mapped to GPIO 5
     assign wave_mode_pb = gpio_in[2]; //Wave mode button mapped to GPIO 6

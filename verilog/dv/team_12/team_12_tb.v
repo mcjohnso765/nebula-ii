@@ -39,7 +39,7 @@ module team_12_tb;
 	reg tb_wave_mode_pb_reg;
 	reg tb_clear_reg;
 
-	wire [11:0] tb_latch_output;
+	wire [15:0] tb_latch_output;
 
 	reg finish_monitor;
 	integer fd;
@@ -57,7 +57,7 @@ module team_12_tb;
 	// External clock is used by default.  Make this artificially fast for the
 	// simulation.  Normally this would be a slow clock and the digital PLL
 	// would be the fast clock.
-	assign tb_latch_output = mprj_io[18:7];
+	assign tb_latch_output = mprj_io[22:7];
 	assign clk2 = clock;
 	always #12.5 clock <= (clock === 1'b0);
 	always #SAMPLE_CLK_HALF_PERIOD sample_clk <= (sample_clk === 1'b0);
@@ -242,7 +242,7 @@ module team_12_tb;
 		tb_wave_mode_pb_reg = 1'b0;
 
 	    // Observe Output pins [18:7]
-		wait(tb_latch_output == 12'h000);
+		wait(tb_latch_output == 16'h0000);
 
 		#(14 * SAMPLE_CLK_HALF_PERIOD);
 	
