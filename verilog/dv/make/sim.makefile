@@ -109,7 +109,7 @@ endif
 %.vcd: %.vvp
 
 ifeq ($(SIM),RTL)
-	vvp  $<
+	vvp $<
 	 mv $@ RTL-$@
 endif
 ifeq ($(SIM),GL)

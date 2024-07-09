@@ -131,4 +131,16 @@ void main()
     reg_sample_proj_EN = (sram_space == 0xFEED0000);
     reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
     reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
+
+
+    // write sram
+    // write
+    // write
+    // write
+
+    // write your design (enable)
+
+    // your design:
+    // read from sram
+    
 }
