@@ -368,9 +368,9 @@ always_comb begin
             next_cmd_num = cmd_num;
         end
         SP = X * 20;
-        EP = (X + 1) * 20;
+        EP = (X + 4'b1) * 20;
         SC = Y * 20;
-        EC = (Y + 1) * 20;
+        EC = (Y + 4'b1) * 20;
         case(obj_code)
             3'b001  : color = 16'hf0f8;   //head
             3'b010  : color = 16'hf800;   //body
