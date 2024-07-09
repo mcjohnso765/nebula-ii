@@ -14,9 +14,9 @@ module generate_heart (
  logic [7:0] SPo3    = SPo1 - (spacing * 2);   // third  heart y coordinates
 
 
-assign heartPixel = 0;
-endmodule
-/*
+// assign heartPixel = 0;
+// endmodule
+
  logic heartDetect; // 1 bit since boolean 0 or 1
  //logic [1:0] death;
 
@@ -181,4 +181,3 @@ endmodule
    heartPixel <= heartDetect;
  end
 endmodule
-*/

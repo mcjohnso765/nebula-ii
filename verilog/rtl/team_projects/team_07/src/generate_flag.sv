@@ -14,9 +14,9 @@ module generate_flag (
     // must be given randomly by RNG of game logic
     // for now, for testbench purposes, flag is in (5,5)
   `define JUMP 36
-  // `define CUBE 18
-  logic [8:0] SCo = `CUBE + `JUMP * flag_x; // beginning x
-  logic [7:0] SPo = `CUBE + `JUMP * flag_y; // beginning y
+  `define CUBE_FOR_FLAG 18
+  logic [8:0] SCo = `CUBE_FOR_FLAG + `JUMP * flag_x; // beginning x
+  logic [7:0] SPo = `CUBE_FOR_FLAG + `JUMP * flag_y; // beginning y
   logic flagDetect; // 1 bit since boolean 0 or 1
 
     // clk is needed for each of the coordinates to specify the range update is cycling through
