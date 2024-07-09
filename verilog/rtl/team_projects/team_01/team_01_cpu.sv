@@ -253,8 +253,8 @@ fsm f0(.clk(clk),
        .lcd_en(shift)
        );
 
-shift_reg sr0 (.clk(clk), .nrst(nRst), .char_in(ru_writedata_i[7:0]), .shift_register(unsorted), .enable(dhit && fsm_state == 3'b001));
-shift_reg sr1 (.clk(clk), .nrst(nRst), .char_in(lcd_display_data[7:0]), .shift_register(shift_reg), .enable(shift));
+shift_reg sr0 (.clk(clk), .nRST(nRst), .char_in(ru_writedata_i[7:0]), .shift_register(unsorted), .enable(dhit && fsm_state == 3'b001));
+shift_reg sr1 (.clk(clk), .nRST(nRst), .char_in(lcd_display_data[7:0]), .shift_register(shift_reg), .enable(shift));
 
 lcd1602 lcd(.clk(hwclk), .rst(nRst), .row_1(unsorted), .row_2(shift_reg), .lcd_en(lcd_en), .lcd_rw(lcd_rw), .lcd_rs(lcd_rs), .lcd_data(lcd_data)); 
 
