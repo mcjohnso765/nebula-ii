@@ -11,12 +11,12 @@ module register_file (
     output logic [31:0] readData1, readData2, output_reg
 );
     // Write your code here!
-    logic [31:0][31:0] registers;
+    logic [31:0] registers [31:0];
     
     
     always_ff @(posedge clk, negedge nRst) begin
         if (~nRst) begin
-            registers <= 0;        
+            registers <= '{default:'0};    
         end else if (regWrite && writeReg != 0) begin
                 registers[writeReg] <= write_data;
         end
