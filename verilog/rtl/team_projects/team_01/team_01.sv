@@ -31,7 +31,7 @@ module team_01 (
     output logic [3:0]  SEL_O,
     output logic        WE_O,
     output logic        STB_O,
-    output logic        CYC_O,
+    output logic        CYC_O
     
     /*
     * Add other I/O ports that you wish to interface with the
@@ -56,7 +56,7 @@ module team_01 (
     logic [31:0] cpu_dat_i, adr_i;
     logic [3:0] sel_i;
     logic write_i, read_i;
-    logic cpu_dat_o;
+    logic [31:0] cpu_dat_o;
     logic busy_o;
 
 
@@ -84,7 +84,7 @@ module team_01 (
     .BUSY_O(busy_o));
     
 
-    cpu cpu(
+    team_01_cpu cpu(
    .clk(clk), 
    .reset(nrst), 
    .busy_o(busy_o),

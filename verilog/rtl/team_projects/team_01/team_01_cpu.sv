@@ -2,7 +2,7 @@
 
 `default_nettype none
 
-module cpu (
+module team_01_cpu (
   input  logic[31:0] instruction,
   input logic clk, reset, pc_enable,
   input logic [31:0]store,
