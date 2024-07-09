@@ -48,8 +48,6 @@ module team_01 (
     assign gpio_out = 34'b0; //Inputs, but set low anyways
     assign gpio_oeb = '1;//All 1's inputs
 
-
-
     /*
     * Place code and sub-module instantiations here.
     */
@@ -58,7 +56,6 @@ module team_01 (
     logic write_i, read_i;
     logic [31:0] cpu_dat_o;
     logic busy_o;
-
 
     wishbone_manager a1(
      .CLK(clk),    
@@ -85,7 +82,7 @@ module team_01 (
     
 
     team_01_cpu cpu(
-    .instruction(32'h0),
+    .instruction(gpio_in[31:0]),
    .clk(clk), 
    .reset(nrst), 
    .busy_o(busy_o),
@@ -95,7 +92,7 @@ module team_01 (
    .sel_i(sel_i),
    .write_i(write_i),
    .read_i(read_i)
-);
+   );
 
 
 

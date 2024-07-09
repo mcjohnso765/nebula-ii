@@ -3,7 +3,7 @@
 `default_nettype none
 
 module team_01_cpu (
-  input logic[31:0] instruction_i,
+  input logic[31:0] instruction,
   input logic clk, reset, pc_enable,
   input logic [31:0]store,
     //from wishbone
@@ -27,7 +27,7 @@ logic Negative, Zero, Overflow;
 
 //Register File Signals
 logic [31:0] WriteData, ReadData1, ReadData2;
-logic [31:0] instruction;
+// logic [31:0] instruction;
 //MUX Output Signals
 logic [31:0] muxout2, muxout3;
 
