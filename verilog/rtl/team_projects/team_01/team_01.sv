@@ -82,7 +82,6 @@ module team_01 (
     
 
     team_01_cpu cpu(
-    .instruction(gpio_in[31:0]),
    .clk(clk), 
    .reset(nrst), 
    .busy_o(busy_o),
