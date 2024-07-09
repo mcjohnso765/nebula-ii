@@ -45,7 +45,14 @@ logic MemRead, MemToReg, MemWrite, AluSRC, RegWrite, AUIPC, branch_enable;
 
 //Sequential Signals
 logic nRst;
-
+//Keypad/LCD Signals
+logic keyvalid, pc_enable_kp;
+logic [127:0] shift_reg, unsorted;
+logic [15:0] data_received;
+logic [7:0]lcd_display_data;
+//request unit
+logic dhit;
+logic ihit;
 assign nRst = reset;
 
 //counter c0(.clk(hz100), .nrst(nRst), .enable(1'b1), .clear(1'b0), .wrap(1'b1), .max(7'd99), .count(count), .at_max(clk));
