@@ -51,40 +51,31 @@ module nebula_ii (
     // wire [2:0] designs_irq [NUM_TEAMS:0];
     assign irq = 3'b0; // Default of 0
 
-    //all WB peripherals ports (p for peripheral):
-    //input WB slave
-    wire                   wbs_stb_i_p;
+    //to arbitrator
+    wire        wbs_ack_o_m;
+    wire [31:0] wbs_dat_o_m;
+    //from arbitrator
+    wire        wbs_cyc_i_m;
+    wire        wbs_stb_i_m;
+    wire        wbs_we_i_m;
+    wire [31:0] wbs_adr_i_m;
+    wire [31:0] wbs_dat_i_m;
+    wire [3:0]  wbs_sel_i_m;
 
-    wire                   wbs_cyc_i_p;
-    wire [NUM_TEAMS:0] wbs_cyc_i_proj; //Must be individualized per project
-    wire                   wbs_cyc_i_la;
-    wire                   wbs_cyc_i_gpio;
-    wire                   wbs_cyc_i_sram;
+    wire        wbs_ack_i_samp, wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
+    wire [31:0] wbs_dat_i_samp, wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
 
-    wire                   wbs_we_i_p;
-    wire [3:0]             wbs_sel_i_p;
-    wire [31:0]            wbs_dat_i_p;
-    wire [31:0]            wbs_adr_i_p;
-    //output WB slave
-    wire                   wbs_ack_o_p;
-    wire [NUM_TEAMS:0] wbs_ack_o_proj; //Must be individualized per project
-    wire                   wbs_ack_o_la;
-    wire                   wbs_ack_o_gpio;
-    wire                   wbs_ack_o_sram;
-
-    wire                  [31:0] wbs_dat_o_p;
-    wire [NUM_TEAMS:0][31:0] wbs_dat_o_proj; //Must be individualized per project
-    wire                  [31:0] wbs_dat_o_la;
-    wire                  [31:0] wbs_dat_o_gpio;
-    wire                  [31:0] wbs_dat_o_sram;
-
+    wire        wbs_cyc_o_samp, wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_sram;
+    wire        wbs_stb_o_samp, wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_sram;
+    wire        wbs_we_o_samp, wbs_we_o_la, wbs_we_o_sram;
+    wire [31:0] wbs_adr_o_samp, wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
+    wire [31:0] wbs_dat_o_samp, wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
+    wire [3:0]  wbs_sel_o_samp, wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
     
     // Assign default values to index 0 of output arrays
     assign designs_la_data_out[0] = 'b0;
     assign designs_gpio_out[0] = 'b0;
     assign designs_gpio_oeb[0] = '1;
-    assign wbs_ack_o_proj[0] = 1'b0;
-    assign wbs_dat_o_proj[0] = 'b0;
 
     // Sample Project Instance
     // (replace this with your team design instance when testing)
@@ -96,14 +87,14 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_i_p),
-        .wbs_cyc_i(wbs_cyc_i_proj[1]),
-        .wbs_we_i(wbs_we_i_p),
-        .wbs_sel_i(wbs_sel_i_p),
-        .wbs_dat_i(wbs_dat_i_p),
-        .wbs_adr_i(wbs_adr_i_p),
-        .wbs_ack_o(wbs_ack_o_proj[1]),
-        .wbs_dat_o(wbs_dat_o_proj[1]),
+        .wbs_stb_i(wbs_stb_o_samp),
+        .wbs_cyc_i(wbs_cyc_o_samp),
+        .wbs_we_i(wbs_we_o_samp),
+        .wbs_sel_i(wbs_sel_o_samp),
+        .wbs_dat_i(wbs_dat_o_samp),
+        .wbs_adr_i(wbs_adr_o_samp),
+        .wbs_ack_o(wbs_ack_i_samp),
+        .wbs_dat_o(wbs_dat_i_samp),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -140,14 +131,14 @@ module nebula_ii (
     `endif
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_i_p),
-        .wbs_cyc_i(wbs_cyc_i_gpio),
-        .wbs_we_i(wbs_we_i_p),
-        .wbs_sel_i(wbs_sel_i_p),
-        .wbs_dat_i(wbs_dat_i_p),
-        .wbs_adr_i(wbs_adr_i_p),
-        .wbs_ack_o(wbs_ack_o_gpio),
-        .wbs_dat_o(wbs_dat_o_gpio),
+        .wbs_stb_i(wbs_stb_o_gpio),
+        .wbs_cyc_i(wbs_cyc_o_gpio),
+        .wbs_we_i(wbs_we_o_gpio),
+        .wbs_sel_i(wbs_sel_o_gpio),
+        .wbs_dat_i(wbs_dat_o_gpio),
+        .wbs_adr_i(wbs_adr_o_gpio),
+        .wbs_ack_o(wbs_ack_i_gpio),
+        .wbs_dat_o(wbs_dat_i_gpio),
         
         // GPIOs
         .designs_gpio_out_flat(designs_gpio_out_flat),
@@ -178,14 +169,14 @@ module nebula_ii (
         // Wishbone Slave ports (WB MI A)
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_i_p),
-        .wbs_cyc_i(wbs_cyc_i_la),
-        .wbs_we_i(wbs_we_i_p),
-        .wbs_sel_i(wbs_sel_i_p),
-        .wbs_dat_i(wbs_dat_i_p),
-        .wbs_adr_i(wbs_adr_i_p),
-        .wbs_ack_o(wbs_ack_o_la),
-        .wbs_dat_o(wbs_dat_o_la),
+        .wbs_stb_i(wbs_stb_o_la),
+        .wbs_cyc_i(wbs_cyc_o_la),
+        .wbs_we_i(wbs_we_o_la),
+        .wbs_sel_i(wbs_sel_o_la),
+        .wbs_dat_i(wbs_dat_o_la),
+        .wbs_adr_i(wbs_adr_o_la),
+        .wbs_ack_o(wbs_ack_i_la),
+        .wbs_dat_o(wbs_dat_i_la),
         
         // LA
         .designs_la_data_out_flat(designs_la_data_out_flat),
@@ -219,50 +210,51 @@ module nebula_ii (
         .A_ACK_O({wbs_ack_o}),
 
         //arbitrator to peripheral, input
-        .DAT_I(wbs_dat_o_p),
-        .ACK_I(wbs_ack_o_p),
+        .DAT_I(wbs_dat_o_m),
+        .ACK_I(wbs_ack_o_m),
 
         //arbitrator to peripheral, output
-        .ADR_O(wbs_adr_i_p),
-        .DAT_O(wbs_dat_i_p),
-        .SEL_O(wbs_sel_i_p),
-        .WE_O(wbs_we_i_p),
-        .STB_O(wbs_stb_i_p),
-        .CYC_O(wbs_cyc_i_p)
+        .ADR_O(wbs_adr_i_m),
+        .DAT_O(wbs_dat_i_m),
+        .SEL_O(wbs_sel_i_m),
+        .WE_O(wbs_we_i_m),
+        .STB_O(wbs_stb_i_m),
+        .CYC_O(wbs_cyc_i_m)
     );
 
-    // Wishbone Decoder
     wishbone_decoder #(
-        .NUM_TEAMS(1)
+        .NUM_TEAMS(NUM_TEAMS)
     ) wb_decoder (
 
     `ifdef USE_POWER_PINS
         .vccd1(vccd1),	// User area 1 1.8V power
         .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        
+
         .CLK(wb_clk_i),
         .nRST(~wb_rst_i),
 
-        .wbs_adr_i_p(wbs_adr_i_p),
+        //muxxing signals that go to manager
+        .wbs_ack_i_periph({wbs_ack_i_samp, wbs_ack_i_la, wbs_ack_i_gpio, wbs_ack_i_sram}),
+        .wbs_dat_i_periph({wbs_dat_i_samp, wbs_dat_i_la, wbs_dat_i_gpio, wbs_dat_i_sram}),
 
-        .wbs_ack_i_proj(wbs_ack_o_proj),
-        .wbs_ack_i_la  (wbs_ack_o_la),
-        .wbs_ack_i_gpio(wbs_ack_o_gpio),
-        .wbs_ack_i_sram(wbs_ack_o_sram),
-        .wbs_ack_o_p   (wbs_ack_o_p),
+        .wbs_ack_o_m(wbs_ack_o_m),
+        .wbs_dat_o_m(wbs_dat_o_m),
 
-        .wbs_dat_i_proj(wbs_dat_o_proj),
-        .wbs_dat_i_la  (wbs_dat_o_la),
-        .wbs_dat_i_gpio(wbs_dat_o_gpio),
-        .wbs_dat_i_sram(wbs_dat_o_sram),
-        .wbs_dat_o_p   (wbs_dat_o_p),
+        //muxxing signals that come from manager
+        .wbs_cyc_i_m(wbs_cyc_i_m),
+        .wbs_stb_i_m(wbs_stb_i_m),
+        .wbs_we_i_m(wbs_we_i_m),
+        .wbs_adr_i_m(wbs_adr_i_m),
+        .wbs_dat_i_m(wbs_dat_i_m),
+        .wbs_sel_i_m(wbs_sel_i_m),
 
-        .wbs_cyc_i_p   (wbs_cyc_i_p),
-        .wbs_cyc_o_proj(wbs_cyc_i_proj),
-        .wbs_cyc_o_la  (wbs_cyc_i_la),
-        .wbs_cyc_o_gpio (wbs_cyc_i_gpio),
-        .wbs_cyc_o_sram(wbs_cyc_i_sram)
+        .wbs_cyc_o_periph({wbs_cyc_o_samp, wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_sram}),
+        .wbs_stb_o_periph({wbs_stb_o_samp, wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_sram}),
+        .wbs_we_o_periph({wbs_we_o_samp, wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_sram}),
+        .wbs_adr_o_periph({wbs_adr_o_samp, wbs_adr_o_la, wbs_adr_o_gpio, wbs_adr_o_sram}),
+        .wbs_dat_o_periph({wbs_dat_o_samp, wbs_dat_o_la, wbs_dat_o_gpio, wbs_dat_o_sram}),
+        .wbs_sel_o_periph({wbs_sel_o_samp, wbs_sel_o_la, wbs_sel_o_gpio, wbs_sel_o_sram})
     );
 
     // SRAM
@@ -277,14 +269,14 @@ module nebula_ii (
 
         // MGMT SoC Wishbone Slave
 
-        .wbs_stb_i(wbs_stb_i_p),
-        .wbs_cyc_i(wbs_cyc_i_sram),
-        .wbs_we_i(wbs_we_i_p),
-        .wbs_sel_i(wbs_sel_i_p),
-        .wbs_dat_i(wbs_dat_i_p),
-        .wbs_adr_i(wbs_adr_i_p),
-        .wbs_ack_o(wbs_ack_o_sram),
-        .wbs_dat_o(wbs_dat_o_sram)
+        .wbs_stb_i(wbs_stb_o_sram),
+        .wbs_cyc_i(wbs_cyc_o_sram),
+        .wbs_we_i(wbs_we_o_sram),
+        .wbs_sel_i(wbs_sel_o_sram),
+        .wbs_dat_i(wbs_dat_o_sram),
+        .wbs_adr_i(wbs_adr_o_sram),
+        .wbs_ack_o(wbs_ack_i_sram),
+        .wbs_dat_o(wbs_dat_i_sram)
     );
 endmodule
 
