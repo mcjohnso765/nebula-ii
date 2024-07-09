@@ -258,7 +258,7 @@ module score_tracker3 (
 		end
 		if ((goodColl == 0) || (last_collision == 1))
 			current_collision = 0;
-		if (!isGameComplete_nxt)
+		if (!isGameComplete)
 			nextDispScore = nextCurrScore;
 		else begin
 			nextDispScore = nextHighScore;
