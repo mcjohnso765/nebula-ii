@@ -147,7 +147,7 @@ localparam N = 75;
 	wire [19:0] selected_max;
 	wire [7:0] normalized_out;
 	wire [8:0] wave_table_output;
-	wire [11:0] accumulator_sum;
+	wire [15:0] accumulator_sum;
 	wire [6:0] table_output;
 	wire envelope_pulse;
 	wire [74:0] ended_note;
@@ -206,8 +206,7 @@ localparam N = 75;
 		.acc(accumulate),
 		.store_samp(store_samp),
 		.clr(clear_accumulator),
-		.osc_num(osc_num),
-		.start_vol(start_vol)
+		.osc_num(osc_num)
 	);
 	osc_sel #(.N(N)) oscillator_selector(
 		.key_pressed(key_pressed),
@@ -273,7 +272,7 @@ localparam N = 75;
 		.MHz10(MHz10),
 		.nrst(nrst),
 		.en(en),
-		.sample_mono({3'b000, volume_output[15:10]}),
+		.sample_mono(volume_output[15:7]),
 		.accumulate(accumulate),
 		.clear(clear_accumulator),
 		.current_sum(accumulator_sum)

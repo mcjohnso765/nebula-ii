@@ -14,9 +14,9 @@ module sample_register (
 	input wire en;
 	input wire clear;
 	input wire store_samp;
-	input wire [11:0] samp_acc;
-	output reg [11:0] samp_out;
-	reg [11:0] next_samp_out;
+	input wire [15:0] samp_acc;
+	output reg [15:0] samp_out;
+	reg [15:0] next_samp_out;
 	always @(posedge MHz10 or negedge nrst)
 		if (!nrst)
 			samp_out <= 0;

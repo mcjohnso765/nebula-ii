@@ -8,7 +8,6 @@ module poly_ctrl (
 	acc,
 	store_samp,
 	clr,
-	start_vol,
 	osc_num
 );
 	reg _sv2v_0;
@@ -22,7 +21,6 @@ module poly_ctrl (
 	output reg acc;
 	output reg store_samp;
 	output reg clr;
-	output reg start_vol;
 	output reg [6:0] osc_num;
 	localparam START_DIV = 0;
 	localparam DONE_DIV = 1;
@@ -52,13 +50,11 @@ module poly_ctrl (
 		start = 1'b0;
 		store_samp = 1'b0;
 		clr = 1'b0;
-		start_vol = 0;
 		next_acc = 0;
 		if (en) begin
 			if (state == START_DIV) begin
 				next_acc = {acc_delay[22:0], 1'b0};
 				next_state = START_DIV;
-				start_vol = 0;
 				if (ready) begin
 					next_state = DONE_DIV;
 					start = 1'b1;
@@ -67,7 +63,6 @@ module poly_ctrl (
 			else if (state == DONE_DIV) begin
 				next_acc = {acc_delay[22:0], 1'b1};
 				next_osc_num = osc_num + 1;
-				start_vol = 1;
 				if (next_osc_num < N)
 					next_state = START_DIV;
 				else
@@ -76,7 +71,6 @@ module poly_ctrl (
 			else if (state == HOLD_SAMP) begin
 				next_acc = {acc_delay[22:0], 1'b0};
 				next_state = HOLD_SAMP;
-				start_vol = 0;
 				if (samp_enable) begin
 					store_samp = 1'b1;
 					clr = 1'b1;
