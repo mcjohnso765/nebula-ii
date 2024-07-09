@@ -34,8 +34,8 @@ module team_08_imageGenerator (
 	end
 
     // X,Y calc
-	wire[8:0] x = 9'(framebufferIndex / 240);
-	wire[7:0] y = 8'(framebufferIndex % 240);
+	assign x = 9'(framebufferIndex / 240);
+	assign y = 8'(framebufferIndex % 240);
 
     // Output the images
     // Cycles through all pixels and sets it to the correct color
