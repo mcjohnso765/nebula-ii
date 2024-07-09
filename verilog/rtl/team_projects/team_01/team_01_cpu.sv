@@ -71,7 +71,7 @@ program_counter PC0 (.next_pc(next_pc),
 instruction_memory IM0 (.address(pc),
                         .instr(ru_instr_out),
                         .address_IM(ru_instr_adr),
-                        .instruction(32'h0)//didnt know what to put
+                        .instruction(instruction)//didnt know what to put
 );
 
 //Request Unit
