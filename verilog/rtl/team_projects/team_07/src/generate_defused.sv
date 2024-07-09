@@ -244,3 +244,4 @@ always_ff @(posedge clk) begin
 defusedPixel <= defusedDetect;
 end
 endmodule
+*/
