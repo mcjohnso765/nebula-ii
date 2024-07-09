@@ -33,7 +33,7 @@ module team_07 (
     assign la_data_out = 128'b0;
    // assign gpio_out = 34'b0; //Inputs, but set low anyways
     assign gpio_oeb = 34'h3FFFC003F;///34'b1111111111111111000000000000111111;//All 1's inputs
-    assign gpio_out[34:18] = '0;
+    assign gpio_out[33:18] = '0;
     assign gpio_out[5:0] = '0;
     /*
     * Place code and sub-module instantiations here.
