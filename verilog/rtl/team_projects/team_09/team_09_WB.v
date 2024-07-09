@@ -60,7 +60,7 @@ module team_09_WB (
 	wire		clk = clk_g;
 	wire		nrst = (~rst_i);
 
-
+	assign IRQ = '0;
 	`WB_CTRL_SIGNALS
 
 	wire [1-1:0]	en;
