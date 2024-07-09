@@ -19,8 +19,8 @@ module apple_luck_selector (
     output APPLE_LUCK apple_luck
 );
 
-GAME_MODE Qa;
-GAME_MODE Qna;
+APPLE_LUCK Qa;
+APPLE_LUCK Qna;
 
 always_comb begin 
     case (Qa)

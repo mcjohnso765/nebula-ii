@@ -13,17 +13,17 @@
 
 module gameState (
     input logic button, badCollision, clk, nrst,
-    input GAME_MODE gameMode,
+    input GAME_STATE gameMode,
     output GAME_STATE state
 );
 
 GAME_STATE Q, Qn;
 
 always_comb begin
-    case (Q)
+    case (gameMode)
         WAIT: Qn = ((button == 1)) ? RUN : WAIT;
-        RUN: Qn = ((button == 1) && (badCollision == 0)) ? PAUSE : badCollision ? END_GAME : RUN;
-        PAUSE: Qn = ((button == 1) && (badCollision == 0)) ? RUN : badCollision ? END_GAME : PAUSE;
+        RUN: Qn = (badCollision) ? END_GAME : (button) ? PAUSE : RUN;
+        PAUSE: Qn = (button) ? RUN : PAUSE;
         END_GAME: Qn = ((button == 1)) ? WAIT : END_GAME;
         default: Qn = WAIT;
     endcase

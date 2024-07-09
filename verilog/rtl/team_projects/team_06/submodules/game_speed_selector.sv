@@ -21,7 +21,7 @@ module game_speed_selector (
     output GAME_SPEED game_speed
 );
 
-GAME_MODE Qa,Qna;
+GAME_SPEED Qa,Qna;
 
 always_comb begin 
     case (Qa)

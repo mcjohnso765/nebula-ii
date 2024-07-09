@@ -64,7 +64,7 @@ PWM randy(.clk(main_clk), .nrst(reset_button), .enable(game_state == RUN | game_
 gameMode modea(.button(right_direction), .nrst(reset_button), .state(game_state), .mode(game_mode), .system_clk(main_clk));
 //right button to change game_mode
 
-gameState state1(.button(start_pause_button), .badCollision(bad_collision), .clk(main_clk), .nrst(reset_button), .gameMode(game_mode), .state(game_state));
+gameState state1(.button(start_pause_button), .badCollision(bad_collision), .clk(main_clk), .nrst(reset_button), .gameMode(game_state), .state(game_state));
 
 collisionDetector detectabc(.clk(main_clk), .wall_array(wall_locations), .nrst(reset_button), .check_enable(clk_body), .snakeHeadX(snake_head_x), .snakeHeadY(snake_head_y), .borderXMin(xmin), 
 .borderXMax(xmax), .borderYMax(ymax), .borderYMin(ymin),  .AppleX2(apple_location2[3:0]), .AppleY2(apple_location2[7:4]), .AppleX(apple_location[3:0]), 
