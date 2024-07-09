@@ -4,7 +4,7 @@
 
 module team_01_cpu (
   // input logic[31:0] instruction,
-  input logic clk, nRst,
+  input logic clk, nRST,
   // input logic [31:0]store,
     //from wishbone
   input logic         busy_o,                     // Wishbone is busy with a transaction, low = transaction complete
@@ -193,7 +193,7 @@ keypad K0 (.clk(clk),
 );
 
 // LCD : DONE
-lcd1602 LCD0 (.clk(hwclk), 
+lcd1602 LCD0 (.clk(clk), 
               .rst(nRST), 
               .row_1(unsorted), 
               .row_2(shift_reg), 

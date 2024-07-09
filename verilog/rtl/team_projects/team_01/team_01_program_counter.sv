@@ -1,6 +1,6 @@
 module program_counter (
     input   logic        clk, nRST,
-    input   logic        Jump, enable,
+    input   logic        enable,
     input   logic [31:0] new_pc,  
     output  logic [31:0] pc
 );
