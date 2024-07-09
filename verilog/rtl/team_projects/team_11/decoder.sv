@@ -13,7 +13,6 @@ module decoder(
 
   logic [127:0]next_data_received;
 
-  
 
   always_ff @(posedge clk, negedge nrst)  //shift register to make the values move to the left after each letter is confirmed or each number is pressed
     if(!nrst)

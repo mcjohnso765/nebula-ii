@@ -7,8 +7,8 @@ input logic [7:0] data_send,
 output logic bit_out
 );
 
-logic [7:0] next_out;
-logic [7:0] shifted_data;
+logic [10:0] next_out;
+logic [10:0] shifted_data;
 
 always_ff @(posedge clk, negedge nrst) begin
     if(!nrst) begin
@@ -21,24 +21,10 @@ end
 
 always_comb begin
     if(tx_ctrl) begin
-        shifted_data = data_send;
+        shifted_data = {1'b1, 1'b0, data_send, 1'b0};
     end
     else if(enable_s) begin
-        if(count == 4'd1) begin 
-            shifted_data = {next_out[6:0], 1'b0};
-        end
-        else if(count == 4'd2) begin
-            shifted_data = data_send;
-        end
-        else if(count == 4'd0) begin
-            shifted_data = {next_out[6:0], 1'b1};
-        end
-        else if(count == 4'd10) begin 
-            shifted_data = {next_out[6:0], 1'b0};
-        end
-        else begin 
-            shifted_data = {1'b0, next_out[7:1]};
-        end
+        shifted_data = {next_out[9:0], 1'b1};
     end
     else begin
         shifted_data = '1;
@@ -46,6 +32,6 @@ always_comb begin
     end
 end
 
-assign bit_out = next_out[0];
+assign bit_out = next_out[10];
  
 endmodule

@@ -1,4 +1,3 @@
-typedef enum logic [1:0] {IDLE= 0, TRANSFER = 1, STOP= 2} State_t;
 
 module Tx_fsm(
 
@@ -11,6 +10,8 @@ module Tx_fsm(
   output logic transmit_ready
 
 );
+
+    typedef enum logic [1:0] {IDLE= 0, TRANSFER = 1, STOP= 2} State_t;
 
     logic nxt_enable_t;
     logic nxt_enable_s;
@@ -38,7 +39,6 @@ module Tx_fsm(
         next_state = current_state;
         tx_dout = 0;
         transmit_ready = 1;
-
 
         case(current_state) 
             IDLE: begin
