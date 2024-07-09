@@ -95,7 +95,10 @@ module tippy_top (
     logic VGA_read;
     logic [31:0] data_to_VGA;
     logic [31:0] VGA_adr;
+
+    logic VGA_enable;
     
+
     CPU cpu(
         .instruction(CPU_instructions),
 
@@ -119,13 +122,12 @@ module tippy_top (
         .enable(CPU_enable)
     );
 
+    
     VGA_data_controller VGA_data_control(
         .clk(clk),
         .nrst(nRst),
         .VGA_request_address(VGA_request_address),
-        //.VGA_request_address(32'd8),
         .data_from_SRAM(mem_data_to_VGA),
-        //.data_from_SRAM(data_to_mem),
         .h_count(h_count),
         .VGA_state(VGA_state),
         .byte_select_out(), //ignore
@@ -135,10 +137,11 @@ module tippy_top (
     );
 
 
-    logic VGA_enable;
+    
     VGA_out vga(
-        //.SRAM_data_in(32'hffffffff),
         .SRAM_data_in(data_to_VGA),
+        //.SRAM_data_in({4{uart_out}}), 
+        //.SRAM_data_in({32{1'b1}}), 
         .SRAM_busy(1'b0),
         
         .clk(clk),
@@ -158,14 +161,6 @@ module tippy_top (
         .v_state() //ignore
     );
 
-    // ram ranch(
-    //     .din(),
-    //     .addr_r(), 
-    //     .addr_w(), 
-    //     .write_en(), 
-    //     .clk(clk), 
-    //     .dout()
-    // );
 
     logic [7:0] uart_out;
     logic uart_data_ready; // flags that the UART data is ready to be received
@@ -186,15 +181,6 @@ module tippy_top (
         .parity_error() // ignore
     );
 
-    // logic [31:0] UART_flag;
-    // UARTMem UARTMem(
-    //     .clk(clk),
-    //     .nRst(nRst),
-
-    //     .button(button),
-    //     .flag(UART_flag)
-    // );
-
     request_handler #(.UART_ADDRESS(1000)) reqhand
     (
         .clk(clk),
@@ -206,9 +192,11 @@ module tippy_top (
         .VGA_enable(VGA_enable),
 
         .VGA_read(VGA_read),
-        .VGA_adr(VGA_adr),
+        // .VGA_adr(VGA_adr),
+        .VGA_adr(VGA_adr*4+32'd2000),
+        // .data_to_VGA(VGA_adr),
         .data_to_VGA(mem_data_to_VGA),
-
+        
         .data_from_UART({24'b0, uart_out}),
 
         .CPU_instr_adr(CPU_instr_adr),
@@ -1204,8 +1192,7 @@ module VGA_out(
     logic [31:0] current_word, next_word; // used for calling the next line of info from SRAM and having it on standby
     
     //assign word_address_base = 32'h3E80; // Word address base for the actual SRAM
-    assign word_address_base = 32'd2000; // Word address base for test benching purposes
-    // TODO: DETERMINE THE VGA BASE ADDRESS LATER
+    assign word_address_base = 32'h0; // Word address base for test benching purposes
 
     // Enum for H_STATES
     typedef enum logic [1:0] {
@@ -1254,7 +1241,7 @@ module VGA_out(
     always_comb begin
         if ((v_current_state == v_active) & (v_count < 384)) begin
             VGA_state = 2'b10;
-        end else if ((v_current_state == v_backporch) & (v_count == 9'd32)) begin
+        end else if ((v_current_state == v_backporch) & (v_count > 9'd31)) begin
             VGA_state = 2'b01;
         end else begin
             VGA_state = 2'b00;
@@ -1437,7 +1424,7 @@ module VGA_data_controller (
     output logic [31:0] data_to_VGA, SRAM_address
 );
 
-    logic [31:0] next_data;
+    logic [31:0] next_data, next_address;
 
     always_comb begin
         if (VGA_state > 0) begin
@@ -1461,41 +1448,47 @@ module VGA_data_controller (
         if(~nrst) begin
             state <= IDLE;
             data_to_VGA <= 32'b0;
+            SRAM_address <= 32'b0;
         end else begin
             state <= next_state;
             data_to_VGA <= next_data;
+            SRAM_address <= next_address;
         end
     end
 
     always_comb begin
         next_data = data_to_VGA;
-        SRAM_address = VGA_request_address;
+        next_address = SRAM_address;
             case (state)
                 IDLE: begin
                     next_data = data_from_SRAM;
                     next_state = LOAD_NEW_REGISTER;
-                    SRAM_address = VGA_request_address;
+                    next_address = SRAM_address;
                 end
 
                 LOAD_NEW_REGISTER: begin
                     next_data = data_from_SRAM;
-                    SRAM_address = VGA_request_address + 1;
+                    next_address = SRAM_address;
                     next_state = PREPARE_DATA;
                 end
 
                 PREPARE_DATA: begin
                     if (VGA_state == 1) begin // preparing first word 
                       //SRAM_address <= 32'h3E80; // base of SRAM storage
-                        SRAM_address = 32'd2000; // TODO: DETERMINE THE VGA BASE ADDRESS LATER
+                        next_address = 32'h0; // TESTBENCH CASE
                         next_data = data_from_SRAM;
                         next_state = LOAD_NEW_REGISTER;
                     end
                     
                     else if (h_count[5:0] == 62) begin
                         next_state = LOAD_NEW_REGISTER;
+                    end else if (h_count[7:6] == 3)begin
+                        next_address = VGA_request_address - 3; // preparing next word 
+                        next_data = next_data;
+                        next_state = PREPARE_DATA;
                     end else begin
-                        SRAM_address = VGA_request_address + 1; // preparing next word 
-                        next_data = data_to_VGA;
+                        next_address = VGA_request_address + 1; // preparing next word 
+                        next_data = next_data;
                         next_state = PREPARE_DATA;
                     end
 
@@ -1506,41 +1499,6 @@ module VGA_data_controller (
         end
 
 endmodule
-
-// module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
-//   parameter addr_width = 32;
-//   parameter data_width = 32;
-//   input [addr_width-1:0] addr_r, addr_w;
-//   input [data_width-1:0] din;
-//   input write_en, clk;
-//   output [data_width-1:0] dout;
-
-//   reg [data_width-1:0] dout; // Register for output.
-//   reg [data_width-1:0] mem [384-1:0];
-//   always @(posedge clk)
-//   begin
-//     if (write_en)
-//     mem[(addr_w)] <= din;
-//     dout = mem[addr_r]; // Output register controlled by clock.
-//   end
-// endmodule
-
-// module UARTMem (
-//     input logic  clk, nRst, 
-//     input logic button, //uart input signal
-//     output logic [31:0] flag //uart output signal
-// );
-
-//     always_ff @( posedge clk, negedge nRst) begin
-//         if(~nRst) begin
-//             flag <= 0;
-//         end else if (button) begin
-//             flag <= 32'hffffffff;
-//         end else begin
-//             flag <= 0;
-//         end
-//     end
-// endmodule
 
 
 
