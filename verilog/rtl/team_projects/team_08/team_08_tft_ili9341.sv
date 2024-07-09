@@ -1,5 +1,5 @@
 /** Simple frame-buffer based driver for the ILI9341 TFT module */
-module tft_ili9341(
+module team_08_tft_ili9341(
 		input clk,
 		input tft_sdo, output wire tft_sck, output wire tft_sdi, 
 		output wire tft_dc, output reg tft_reset, output wire tft_cs,

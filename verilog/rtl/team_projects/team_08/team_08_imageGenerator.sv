@@ -44,6 +44,6 @@ module team_08_imageGenerator (
     // border ? 16'b011111_01111_01111 : 16'd0);
 	 wire [15:0] currentPixel = r_floor ? 16'd0: r_cactus ? 16'b0000000000011111 : r_dino ? 16'b0000011111100000 : r_cloud ? 16'd0 : r_win ? 16'd0 : r_idle ? 16'd0 : r_over ? 16'd0 : 16'b111111_1111_1111;
 	// *************************** TFT Module ************************
-	tft_ili9341 #(.INPUT_CLK_MHZ(12)) tft(tft_clk, tft_sdo, tft_sck, tft_sdi, tft_dc, tft_reset, tft_cs, currentPixel, fbClk, tftstate);
+	team_08_tft_ili9341 #(.INPUT_CLK_MHZ(12)) tft(tft_clk, tft_sdo, tft_sck, tft_sdi, tft_dc, tft_reset, tft_cs, currentPixel, fbClk, tftstate);
 
 endmodule
