@@ -103,9 +103,9 @@ module team_01_Wrapper (
         .gpio_out({gpio_out[37:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .DAT_I(DAT_I),
-        .ACK(ACK),
+        .ACK_I(ACK_I),
         .ADR_O(ADR_O),
-        .DATO(DAT_O),
+        .DAT_O(DAT_O),
         .SEL_O(SEL_O),
         .WE_O(WE_O),
         .STB_O(STB_O),
