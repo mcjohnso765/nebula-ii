@@ -55,6 +55,10 @@ logic dhit;
 logic ihit;
 assign nRst = reset;
 
+//FSM Signals
+logic fsm_read_i, fsm_write_i;
+logic [31:0] fsm_write_data, fsm_data_adr;
+
 //counter c0(.clk(hz100), .nrst(nRst), .enable(1'b1), .clear(1'b0), .wrap(1'b1), .max(7'd99), .count(count), .at_max(clk));
 // Program Counter
 program_counter PC0 (.next_pc(next_pc), 
@@ -170,6 +174,29 @@ branch_logic BL0 (.branch(Branch),
                   .branch_enable(branch_enable)
 );
 
+fsm f0(.clk(clk),
+       .nRST(nRst),
+       .data(data_received[15:8]),
+       .keyvalid(keyvalid),
+       .done(dhit),
+       .read_data(ru_data_o),
+       .write_i(fsm_write_i),
+       .read_i(fsm_read_i),
+       .write_data(fsm_write_data),
+       .data_adr(fsm_data_adr),
+       .read_adr(32'h400),
+       .write_adr(32'h200),
+       .num_adr(32'h300),
+       .MemWrite(MemWrite),
+       .pc_enable(pc_enable_kp),
+       .display(lcd_display_data),
+       .fsm_state(fsm_state),
+       .numbers(num_int),
+       .lcd_en(shift)
+       );
+
+logic shift;
+logic [31:0] num_int;
 synckey sk(.in(), .clk(clk), .nRst(nRst), .strobe()); 
 keypad kp(.clk(clk), .nRST(nRst), .rows(), .cols(), .code(), .data());
 
