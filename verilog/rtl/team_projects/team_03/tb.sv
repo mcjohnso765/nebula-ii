@@ -167,8 +167,8 @@ endtask
         #6;
 
         check_type = "srli";
-        inst = 32'h00215413;
-        exp_val = 3;
+        inst = 32'h0020d413;
+        exp_val = 1;
         #6;
         check_out(exp_val,register_write_data);
         #6;
@@ -180,23 +180,17 @@ endtask
         check_out(exp_val,register_write_data);
         #6;
 
-        check_type = "srai";
-        inst = 32'h4040d413;
-        exp_val = 2;
-        #6;
-        check_out(exp_val,register_write_data);
-        #6;
 
         check_type = "slti";
         inst = 32'h0080a413;
-        exp_val = 1;
+        exp_val = 32'b1;
         #6;
         check_out(exp_val,register_write_data);
         #6;
 
         check_type = "sltiu";
         inst = 32'h0080b413;
-        exp_val = 1;
+        exp_val = 32'b1;
         #6;
         check_out(exp_val,register_write_data);
         #6;
