@@ -93,12 +93,12 @@ module team_01 (
    .write_i(write_i),
    .read_i(read_i),
    //lcd outputs
-   .lcd_en(gpio_out[5]), 
-   .lcd_rs(gpio_out[6]),
-   .lcd_rw(gpio_out[7]),
-   .lcd_data(gpio_out[15:8]),
-   .rows(gpio_in[19:16]),  //in
-   .cols(gpio_out[23:20])
+   .lcd_en(gpio_out[1]), 
+   .lcd_rs(gpio_out[2]),
+   .lcd_rw(gpio_out[3]),
+   .lcd_data(gpio_out[11:4]),
+   .rows(gpio_in[15:12]),  //in
+   .cols(gpio_out[19:16])
    );
 
     assign gpio_oeb [1] = '0;
