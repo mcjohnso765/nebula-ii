@@ -4,11 +4,13 @@ module register_file (
     input   logic [31:0] WriteData,
     output  logic [31:0] ReadData1, ReadData2
 );
-    logic [31:0] [31:0] registers;
+    logic [31:0] registers [31:0];
     
     always_ff @(posedge clk, negedge nRST) begin
         if (~nRST) begin
-            registers <= 0;        
+            for(int i = 0; i < 32; i++) begin
+                registers[i] <= 0;
+            end     
         end else if (RegWrite && WriteReg != 0) begin
             registers[WriteReg] <= WriteData;
         end
