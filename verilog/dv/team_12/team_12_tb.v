@@ -43,6 +43,7 @@ module team_12_tb;
 
 	reg finish_monitor;
 	integer fd;
+	integer volume;
 
 	assign mprj_io_0 = mprj_io[7:0];
 	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
@@ -208,8 +209,8 @@ module team_12_tb;
 		$dumpvars(0, team_12_tb);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
-		repeat (100) begin
-			repeat (1000) @(posedge clock);
+		repeat (1000) begin
+			repeat (2000) @(posedge clock);
 			// $display("+1000 cycles");
 		end
 		$display("%c[1;31m",27);
@@ -247,11 +248,17 @@ module team_12_tb;
 	
 		press_mode(4);
 
-		send_MIDI(144); // start note
-		send_MIDI(84); // note C6
-		send_MIDI(32); // velocity 64
+		volume = 127;
+		for(integer i = 108; i > 108- 75; i++) begin
 
-		#(SAMPLE_CLK_HALF_PERIOD * 1000 * 2);
+			send_MIDI(144); // start note
+			send_MIDI(i); // note C8
+			send_MIDI(volume); // velocity 64
+			// if(vol == 0) begin vol = 35 end;0
+			#(SAMPLE_CLK_HALF_PERIOD * 20 * 2);
+		end
+
+		#(SAMPLE_CLK_HALF_PERIOD * 10000 * 2);
 
 		`ifdef GL
 	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
