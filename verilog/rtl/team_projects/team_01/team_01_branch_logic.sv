@@ -1,11 +1,3 @@
-// DONE
-
-/*
-    Module Name: branch_logic
-    Description: Takes the Branch signals and ALU flag indicators to determine whether or not to Branch the program counter.
-    Author: Andrew
-*/
-
 module branch_logic (
     input   logic [2:0] Branch,
     input   logic Negative, Zero,

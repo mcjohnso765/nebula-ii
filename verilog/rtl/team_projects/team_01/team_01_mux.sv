@@ -1,10 +1,3 @@
-/*
-    Module Name: mux
-    Description: mux.
-    Author: Johnny
-*/
-
-
 module mux (
     input logic [31:0]in1, in2, 
     input logic select,

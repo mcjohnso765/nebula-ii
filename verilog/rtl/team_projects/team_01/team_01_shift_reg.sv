@@ -1,5 +1,3 @@
-// DONE
-
 module shift_reg (
     input   logic         clk, nRST, enable,
     input   logic [7:0]   char_in, 

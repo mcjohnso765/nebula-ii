@@ -1,11 +1,3 @@
-// DONE
-
-/*
-    Module Name: alu
-    Author: Johnny
-    Description: responsible for all arithmetic and logical operations in CPU.
-*/
-
 module alu (
     input   logic [3:0]  AluOP,
     input   logic [31:0] Data1, Data2,

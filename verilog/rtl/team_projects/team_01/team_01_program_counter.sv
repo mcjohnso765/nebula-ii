@@ -1,15 +1,7 @@
-// DONE
-
-/*
-    Module Name: program_counter
-    Description: keeps track of where we are in the program, adding 4 bits every normal cycle and accounting for jumps and branches. Contains an enable flag, coming from the request unit, to make sure the instruction has been fetched before updating.
-    Author: Johnny, Andrew
-*/
-
 module program_counter (
     input   logic        clk, nRST,
     input   logic        Jump, enable,
-    input   logic [31:0] in1, in2,  
+    input   logic [31:0] new_pc,  
     output  logic [31:0] pc
 );
     logic [31:0] next_pc;
@@ -25,7 +17,7 @@ module program_counter (
     always_comb begin
         next_pc = pc;
         if (enable) begin
-            next_pc = Jump ? in1 : in2;
+            next_pc = new_pc;
         end
     end
 endmodule

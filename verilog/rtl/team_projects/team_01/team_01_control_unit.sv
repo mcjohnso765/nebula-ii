@@ -1,11 +1,3 @@
-/*
-    Module Name: control_unit
-    Description: Uses the opcode from the fetched Instruction to determine the what signals to enable for that particular instruction cycle.
-    Input: bit_30[30], funct3[14:12], opcode[6:0]
-*/
-
-
-
 module control_unit (
 input logic [6:0] opcode,
 input logic [2:0] funct3,

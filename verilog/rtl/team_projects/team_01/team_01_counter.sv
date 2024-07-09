@@ -1,8 +1,3 @@
-/*
-Module name: counter
-Description: Counts to a flexible amount. Has strobe at max and controls for wrapping, enable, and clear.
-*/
-
 module counter
 #(
     parameter N = 17 // Size of counter (i.e. number of bits at the output). Maximum count is 2^N - 1

@@ -8,7 +8,7 @@ module team_01_cpu (
   // input logic [31:0]store,
     //from wishbone
   input logic         busy_o,                     // Wishbone is busy with a transaction, low = transaction complete
-  input logic [31:0]  cpu_dat_o,                  // Data Fetched = Instruction or Data at adr_i
+  input logic [31:0]  cpu_dat_o,              // Data Fetched = Instruction or Data at adr_i
   //to kp
   input logic [3:0] rows,
   //to wishbone
@@ -27,7 +27,7 @@ module team_01_cpu (
 );
 
 //Counter Signals
-logic [31:0] pc, next_pc;
+logic [31:0] pc;
 
 //Alu Signals
 logic [31:0] Immediate, AluResult;
@@ -37,12 +37,11 @@ logic Negative, Zero, Overflow;
 logic [31:0] instruction, WriteData, ReadData1, ReadData2;
 
 //MUX Output Signals
-logic [31:0] muxout2, muxout3;
+logic [31:0] MemToReg_Out, JB_address;
 
 //Request Unit Signals
-logic [31:0] ru_instr_out, ru_instr_adr, ru_data_o, ru_data_adr, ru_writedata_i, ru_cpu_data_o, ru_cpu_data_i, ru_adr_o, data_DM_o;
-logic ru_read_i, ru_write_i, ru_read_o, ru_write_o, ru_busy_o, ru_busy_i, dhit;
-logic[3:0] ru_sel_o;
+logic [31:0] FetchedInstr, InstrAddress, FetchedData, DataAddress, DataToWrite, DataToReg;
+logic DataRead, DataWrite, ru_busy_o, dhit;
 
 //Control Signals
 logic [3:0] AluOP;
@@ -51,12 +50,13 @@ logic [1:0] Jump, DataWidth;
 logic MemRead, MemToReg, MemWrite, AluSRC, RegWrite, AUIPC, branch_enable;
 
 //Sequential Signals
-logic ihit, register_en, dm_enable;
+logic ihit;
 
 //Keypad/LCD Signals
-logic keyvalid, pc_enable_kp;
+logic keyvalid, assembly_en;
 logic [127:0] shift_reg, unsorted;
-logic [7:0] data_received, lcd_display_data;
+logic [7:0] data_received;
+logic [7:0]lcd_display_data;
 
 //Assembly File Signals
 logic asm_read_i, asm_write_i;
@@ -64,36 +64,41 @@ logic [31:0] asm_write_data, asm_data_adr;
 
 //FSM Signals
 logic fsm_read_i, fsm_write_i;
-logic [2:0] fsm_state;
 logic [31:0] fsm_write_data, fsm_data_adr;
+logic [2:0] fsm_state;
+
+logic register_en;
+logic dm_enable;
+
+logic shift;
+logic [31:0] num_int;
 
 logic strobe;
+// logic [31:0] ssdec_data;
 logic [16:0] count;
-counter c0(.clk(clk), .nrst(nRst), .enable(1'b1), .clear(1'b0), .wrap(1'b1), .max(17'd99999), .count(count), .at_max(strobe));
 
-// Program Counter
-program_counter PC0 (.clk(clk),
-                     .nRST(nRst), 
-                     .Jump(Jump[1]),
-                     .enable(pc_enable_kp),
-                     .in1(AluResult),
-                     .in2(muxout3), 
-                     .pc(pc)
+logic [31:0] next_pc;
+logic pc_enable;
+
+// ALU : DONE
+alu ALU0 (.AluOP(AluOP),
+          .Data1(AUIPC ? pc : ReadData1),
+          .Data2(AluSRC ? Immediate : ReadData2),
+          .Zero(Zero),
+          .Negative(Negative),
+          .Overflow(Overflow),
+          .AluResult(AluResult)
 );
 
-// Instruction Memory
-instruction_memory IM0 (.clk(clk),
-                        .nRST(nRst),
-                        .ihit(ihit),
-                        .hold(MemRead && !dm_enable),
-                        .pc(pc),
-                        .FetchedInstr(ru_instr_out),
-                        .address_IM(ru_instr_adr),
-                        .instruction(instruction)
+// BRANCH LOGIC : DONE 
+branch_logic BL0 (.Branch(Branch),
+                  .Negative(Negative),
+                  .Zero(Zero),
+                  .Enable(branch_enable)
 );
 
-// Control Unit
-control_unit CU0 (.opcode(instruction[6:0]),
+// CONTROL UNIT : DONE
+control_unit CU0 (.opcode(instruction[6:0]), 
                   .funct3(instruction[14:12]),
                   .bit30(instruction[30]),
                   .datawidth(DataWidth),
@@ -108,48 +113,27 @@ control_unit CU0 (.opcode(instruction[6:0]),
                   .auipc(AUIPC)
 );
 
-// MUXES 
-mux M1 (.in1(muxout2), .in2(pc + 32'd1), .select(|Jump), .out(WriteData));
-mux M2 (.in2(data_DM_o), .in1(AluResult), .select(MemToReg), .out(muxout2));
-mux M3 (.in1(pc + $signed(32'd1)), .in2(pc + $signed($signed(Immediate) >>> 1)), .select(Jump[0] | branch_enable), .out(muxout3));
- 
-// Register File
-register_file RF0 (.clk(clk), 
-                   .nRST(nRst), 
-                   .RegWrite(register_en), 
-                   .ReadReg1(instruction[19:15]), 
-                   .ReadReg2(instruction[24:20]),
-                   .WriteReg(instruction[11:7]),
-                   .WriteData(WriteData),
-                   .ReadData1(ReadData1),
-                   .ReadData2(ReadData2)
-);
+// COUNTER (for clock) : DONE
+counter c0(.clk(hwclk), 
+           .nrst(nRST), 
+           .enable(1'b1), 
+           .clear(1'b0), 
+           .wrap(1'b1), 
+           .max(17'd99999), 
+           .count(count), 
+           .at_max(strobe));
 
-// Immediate Generator
-immediate_generator IG0 (.Instr(instruction),
-                         .Imm(Immediate)
-);
-
-// ALU
-alu ALU0 (.AluOP(AluOP),
-          .Data1(AUIPC ? pc : ReadData1),
-          .Data2(AluSRC ? Immediate : ReadData2),
-          .Zero(Zero),
-          .Negative(Negative),
-          .Overflow(Overflow),
-          .AluResult(AluResult)
-);
 
 // Data Memory
 data_memory DM0 (.clk(clk),
-                 .nRST(nRst),
+                 .nRST(nRST),
                  .address(AluResult),
                  .writedata(ReadData2),
                  .datawidth(DataWidth),
                  .MemWrite(MemWrite),
                  .MemRead(MemRead),
-                 .data_i(ru_data_o),
-                 .readdata(data_DM_o),
+                 .data_i(FetchedData),
+                 .readdata(DataToReg),
                  .address_DM(asm_data_adr),
                  .writedata_o(asm_write_data),
                  .DataRead(asm_read_i),
@@ -159,26 +143,112 @@ data_memory DM0 (.clk(clk),
                  .enable(dm_enable)
 );
 
-// Branch Logic 
-branch_logic BL0 (.Branch(Branch),
-                  .Negative(Negative),
-                  .Zero(Zero),
-                  .Enable(branch_enable)
+// FSM : DONE 
+fsm f0(.clk(clk),
+       .nRST(nRST),
+       .data(data_received),
+       .keyvalid(keyvalid),
+       .done(dhit),
+       .read_data(FetchedData),
+       .Instruction(FetchedInstr),
+       .write_i(fsm_write_i),
+       .read_i(fsm_read_i),
+       .write_data(fsm_write_data),
+       .data_adr(fsm_data_adr),
+       .read_adr(32'h400),
+       .write_adr(32'h200),
+       .num_adr(32'h300),
+       .MemWrite(MemWrite),
+       .pc_enable(assembly_en),
+       .display(lcd_display_data),
+       .fsm_state(fsm_state),
+       .lcd_en(shift)
 );
 
-// Request Unit
+// IMMEDIATE GENERATOR : DONE
+immediate_generator IG0 (.Instr(instruction),
+                         .Imm(Immediate)
+);
+
+// INSTRUCTION MEMORY
+instruction_memory IM0 (.clk(clk),
+                        .nRST(nRST),
+                        .ihit(ihit),
+                        .hold(MemRead && !dm_enable),
+                        .pc_enable(pc_enable),
+                        .pc(pc),
+                        .FetchedInstr(FetchedInstr),
+                        .address_IM(InstrAddress),
+                        .instruction(instruction)
+);
+
+// KEYPAD : DONE
+keypad K0 (.clk(clk),
+           .nRST(nRST),
+           .rows(pb[3:0]),
+           .cols(left[7:4]),
+           .data(data_received),
+           .keyvalid(keyvalid),
+           .enable(strobe)
+);
+
+// LCD : DONE
+lcd1602 LCD0 (.clk(hwclk), 
+              .rst(nRST), 
+              .row_1(unsorted), 
+              .row_2(shift_reg), 
+              .lcd_en(left[2]), 
+              .lcd_rw(left[1]), 
+              .lcd_rs(left[0]), 
+              .lcd_data(right[7:0])
+); 
+
+// MUXES 
+mux M1 (.in1(MemToReg_Out), 
+        .in2(pc + 32'd4), 
+        .select(|Jump), 
+        .out(WriteData)
+);
+
+mux M2 (.in1(AluResult), 
+        .in2(DataToReg), 
+        .select(MemToReg), 
+        .out(MemToReg_Out)
+);
+
+// PROGRAM COUNTER : DONE
+program_counter PC0 (.clk(clk),
+                     .nRST(nRST),
+                     .enable(pc_enable),
+                     .new_pc(next_pc),
+                     .pc(pc)
+);
+
+// REGISTER FILE : DONE
+register_file RF0 (.clk(clk), 
+                   .nRST(nRST), 
+                   .RegWrite(register_en), 
+                   .ReadReg1(instruction[19:15]), 
+                   .ReadReg2(instruction[24:20]),
+                   .WriteReg(instruction[11:7]),
+                   .WriteData(WriteData),
+                   .ReadData1(ReadData1),
+                   .ReadData2(ReadData2)
+);
+
+// REQUEST UNIT : DONE
 request_unit RU0 (.clk(clk),
-                  .nRST(nRst),
-                  .InstrRead(pc_enable_kp),
-                  .DataRead(ru_read_i),
-                  .DataWrite(ru_write_i),
-                  .DataAddress(ru_data_adr),
-                  .InstrAddress(ru_instr_adr),
-                  .DataToWrite(ru_writedata_i),
+                  .nRST(nRST),
+                  .InstrRead(assembly_en),
+                  .DataRead(DataRead),
+                  .DataWrite(DataWrite),
+                  .DataAddress(DataAddress),
+                  .InstrAddress(InstrAddress >> 2),
+                  .DataToWrite(DataToWrite),
                   .ihit(ihit),
                   .dhit(dhit),
-                  .FetchedInstr(ru_instr_out),
-                  .FetchedData(ru_data_o),
+                  .FetchedInstr(FetchedInstr),
+                  .FetchedData(FetchedData),
                   .busy_o(busy_o),
                   .cpu_dat_o(cpu_dat_o),
                   .write_i(write_i),
@@ -188,65 +258,36 @@ request_unit RU0 (.clk(clk),
                   .sel_i(sel_i)
 );
 
-
-// logic strobe2;
-
-always_comb begin
-  if (pc_enable_kp) begin
-    ru_read_i = asm_read_i;
-    ru_write_i = asm_write_i;
-    ru_data_adr = asm_data_adr;
-    ru_writedata_i = asm_write_data;
-  end else begin
-    ru_read_i = fsm_read_i;
-    ru_write_i = fsm_write_i;
-    ru_data_adr = fsm_data_adr;
-    ru_writedata_i = fsm_write_data;
-  end
-end
-
-
-
-// // Keypad Module
-keypad kp(.clk(clk),
-             .nRST(nRst),
-             .rows(rows),
-             .cols(cols),
-             .data(data_received),
-             .keyvalid(keyvalid),
-             .enable(strobe)
+// SHIFT REGISTER 1 (for LCD row 1) : DONE
+shift_reg SR0 (.clk(clk), 
+               .nRST(nRST), 
+               .char_in(DataToWrite[7:0]), 
+               .shift_register(unsorted), 
+               .enable(dhit && fsm_state == 3'b001)
 );
 
-// assign right[7] = keyvalid;
+// SHIFT REGISTER 2 (for LCD row 2) : DONE
+shift_reg SR1 (.clk(clk), 
+               .nRST(nRST), 
+               .char_in(lcd_display_data[7:0]), 
+               .shift_register(shift_reg), 
+               .enable(shift)
+);
 
-logic shift;
-logic [31:0] num_int;
-//FSM Module
-fsm f0(.clk(clk),
-       .nRST(nRst),
-       .data(data_received),
-       .keyvalid(keyvalid),
-       .done(dhit),
-       .read_data(ru_data_o),
-       .write_i(fsm_write_i),
-       .read_i(fsm_read_i),
-       .write_data(fsm_write_data),
-       .data_adr(fsm_data_adr),
-       .read_adr(32'h400),
-       .write_adr(32'h200),
-       .num_adr(32'h300),
-       .MemWrite(MemWrite),
-       .pc_enable(pc_enable_kp),
-       .display(lcd_display_data),
-       .fsm_state(fsm_state),
-       .numbers(num_int),
-       .lcd_en(shift)
-       );
-
-shift_reg sr0 (.clk(clk), .nRST(nRst), .char_in(ru_writedata_i[7:0]), .shift_register(unsorted), .enable(dhit && fsm_state == 3'b001));
-shift_reg sr1 (.clk(clk), .nRST(nRst), .char_in(lcd_display_data[7:0]), .shift_register(shift_reg), .enable(shift));
-
-lcd1602 lcd(.clk(clk), .rst(nRst), .row_1(unsorted), .row_2(shift_reg), .lcd_en(lcd_en), .lcd_rw(lcd_rw), .lcd_rs(lcd_rs), .lcd_data(lcd_data)); 
+// ASSEMBLY OR FSM
+always_comb begin
+    if (assembly_en) begin
+        DataRead    = asm_read_i;
+        DataWrite   = asm_write_i;
+        DataAddress = asm_data_adr;
+        DataToWrite = asm_write_data;
+    end else begin
+        DataRead    = fsm_read_i;
+        DataWrite   = fsm_write_i;
+        DataAddress = fsm_data_adr;
+        DataToWrite = fsm_write_data;
+    end
+end
 
 // REGISTER ENABLE LOGIC
 always_comb begin
@@ -258,6 +299,17 @@ always_comb begin
         end
     end else begin
         register_en = 1'b0;
+    end
+end
+
+// Next PC based on current instruction
+always_comb begin
+    if (Jump[1]) begin
+        next_pc = AluResult;
+    end else if (Jump[0] || branch_enable) begin
+        next_pc = pc + $signed(Immediate);
+    end else begin
+        next_pc = pc + 32'd4;
     end
 end
 

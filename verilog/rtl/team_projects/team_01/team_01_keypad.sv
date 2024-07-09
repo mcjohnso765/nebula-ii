@@ -1,5 +1,3 @@
-// DONE
-
 module keypad (
     input   logic       clk, nRST,
     input   logic [3:0] rows,

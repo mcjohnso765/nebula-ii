@@ -1,5 +1,3 @@
-// DONE
-
 module request_unit (
     input   logic        clk, nRST,
     // From CPU
@@ -88,7 +86,6 @@ module request_unit (
                 end else if (InstrRead && !ihit) begin
                     next_read_i     = 1'b1;
                     next_write_i    = 1'b0;
-                    next_adr_i      = InstrAddress;
                     next_state      = WAIT_READ_INSTR;
                 end
             end 
@@ -106,7 +103,7 @@ module request_unit (
                 end
             end
             WAIT_READ_INSTR: begin
-                next_adr_i = adr_i;
+                next_adr_i = InstrAddress;
                 next_state = READ_INSTR;
             end
             READ_INSTR: begin

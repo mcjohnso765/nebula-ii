@@ -1,5 +1,3 @@
-// NOT DONE
-
 typedef enum logic [1:0] {BYTE, HALFWORD, WORD} data_width;
 
 module data_memory (
@@ -56,13 +54,13 @@ module data_memory (
             READ: begin
                 DataRead   = 1'b1;
                 if (dhit) begin
-                    // case(datawidth)
-                    //     BYTE:     next_readdata = {{24{data_i[7]}}, data_i[7:0]};
-                    //     HALFWORD: next_readdata = {{16{data_i[15]}}, data_i[15:0]};
-                    //     WORD:     next_readdata = data_i;
-                    //     default:  next_readdata = data_i;
-                    // endcase
-                    next_readdata   = data_i;
+                    case(datawidth)
+                        BYTE:     next_readdata = {{24{data_i[7]}}, data_i[7:0]};
+                        HALFWORD: next_readdata = {{16{data_i[15]}}, data_i[15:0]};
+                        WORD:     next_readdata = data_i;
+                        default:  next_readdata = data_i;
+                    endcase
+                    // next_readdata   = data_i;
                     next_enable     = 1'b1;
                     next_state      = IDLE;
                 end 
