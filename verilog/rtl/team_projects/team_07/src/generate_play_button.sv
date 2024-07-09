@@ -15,9 +15,9 @@ module generate_play_button (
   // starting point for sprite  = 125,   90
 
 
-  assign playButtonPixel = 0;
-  endmodule
-/*
+  // assign playButtonPixel = 0;
+  // endmodule
+
   logic playButtonDetect; // 1 bit since boolean 0 or 1
 
   always_comb begin
@@ -139,4 +139,3 @@ module generate_play_button (
     playButtonPixel <= playButtonDetect;
   end
 endmodule
-*/
