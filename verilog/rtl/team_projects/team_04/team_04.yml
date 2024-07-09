@@ -92,6 +92,17 @@ external_interface:
     width: 1
     direction: output
     description: Output to WB
+  - name: DAT_I
+    port: DAT_I
+    width: 32
+    direction: input
+    description: Input to WB
+  - name: ACK_I
+    port: ACK_I
+    width: 1
+    direction: input
+    description: Input to WB
+    
 
 
 clock:

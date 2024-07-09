@@ -85,7 +85,8 @@ module team_04 (
         .mem_write(WRITE_I),
         .adr_to_mem(ADR_I),
         .data_to_mem(CPU_DAT_I),
-        .sel_to_mem(SEL_I)
+        .sel_to_mem(SEL_I),
+        .data_from_mem(CPU_DAT_O)
 
     );
 
