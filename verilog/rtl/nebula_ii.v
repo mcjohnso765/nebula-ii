@@ -52,7 +52,7 @@ module nebula_ii (
     assign irq = 3'b0; // Default of 0
 
     //to arbitrator
-    wire        wbs_ack_o_m;
+    wire        wbs_ack_o_m, wbm_ack_i_team_03;
     wire [31:0] wbs_dat_o_m;
     //from arbitrator
     wire        wbs_cyc_i_m;
@@ -137,14 +137,14 @@ module nebula_ii (
 
         .irq(irq),
         // master side signals 
-        .ADR_O(wbm_adr_o_team_03),
-        .DAT_O(wbm_dat_o_team_03),
-        .SEL_O(wbm_sel_o_team_03),
-        .WE_O(wbm_we_o_team_03),
+        .ADR_O(wbm_adr_i_team_03),
+        .DAT_O(wbm_dat_i_team_03),
+        .SEL_O(wbm_sel_i_team_03),
+        .WE_O(wbm_we_i_team_03),
         .STB_O(wbm_stb_o_team_03),
         .CYC_O(wbm_cyc_o_team_03),
 
-        .DAT_I(wbm_dat_i_team_03),
+        .DAT_I(wbm_dat_o_team_03),
         .ACK_I(wbm_ack_i_team_03)
     );
 
@@ -247,12 +247,12 @@ module nebula_ii (
         .A_DAT_I({wbm_dat_i_team_03, wbs_dat_i}),
         .A_SEL_I({wbm_sel_i_team_03, wbs_sel_i}),
         .A_WE_I({wbm_we_i_team_03, wbs_we_i}),
-        .A_STB_I({wbm_stb_i_team_03, wbs_stb_i}),
-        .A_CYC_I({wbm_cyc_i_team_03, wbs_cyc_i}),
+        .A_STB_I({wbm_stb_o_team_03, wbs_stb_i}),
+        .A_CYC_I({wbm_cyc_o_team_03, wbs_cyc_i}),
 
         //arbitrator to manager, output
         .A_DAT_O({wbm_dat_o_team_03, wbs_dat_o}),
-        .A_ACK_O({wbm_ack_o_team_03, wbs_ack_o}),
+        .A_ACK_O({wbm_ack_i_team_03, wbs_ack_o}),
 
         //arbitrator to peripheral, input
         .DAT_I(wbs_dat_o_m),
