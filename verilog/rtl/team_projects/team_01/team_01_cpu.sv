@@ -18,7 +18,7 @@ module team_01_cpu (
   output logic        write_i,
   output logic        read_i,
   //to kp
-  output logic [3:0] columns,
+  output logic [3:0] cols,
   //to lcd
   output logic lcd_en,
   output logic lcd_rw,
@@ -51,7 +51,7 @@ logic [1:0] Jump, DataWidth;
 logic MemRead, MemToReg, MemWrite, AluSRC, RegWrite, AUIPC, branch_enable;
 
 //Sequential Signals
-logic ihit;
+logic ihit, register_en, dm_enable;
 
 //Keypad/LCD Signals
 logic keyvalid, pc_enable_kp;
@@ -64,6 +64,7 @@ logic [31:0] asm_write_data, asm_data_adr;
 
 //FSM Signals
 logic fsm_read_i, fsm_write_i;
+logic [2:0] fsm_state;
 logic [31:0] fsm_write_data, fsm_data_adr;
 
 logic strobe;
@@ -74,10 +75,9 @@ counter c0(.clk(clk), .nrst(nRst), .enable(1'b1), .clear(1'b0), .wrap(1'b1), .ma
 program_counter PC0 (.clk(clk),
                      .nRST(nRst), 
                      .Jump(Jump[1]),
-                     .enable(pc_enable),
-                     .in1(ALUResult),
-                     .in2(muxout3),
-                     .next_pc(next_pc), 
+                     .enable(pc_enable_kp),
+                     .in1(AluResult),
+                     .in2(muxout3), 
                      .pc(pc)
 );
 
@@ -85,7 +85,7 @@ program_counter PC0 (.clk(clk),
 instruction_memory IM0 (.clk(clk),
                         .nRST(nRst),
                         .ihit(ihit),
-                        .hold(),
+                        .hold(MemRead && !dm_enable),
                         .pc(pc),
                         .FetchedInstr(ru_instr_out),
                         .address_IM(ru_instr_adr),
@@ -115,14 +115,14 @@ mux M3 (.in1(pc + $signed(32'd1)), .in2(pc + $signed($signed(Immediate) >>> 1)),
  
 // Register File
 register_file RF0 (.clk(clk), 
-                   .nRst(nRst), 
-                   .regWrite(register_en), 
-                   .readReg1(instruction[19:15]), 
-                   .readReg2(instruction[24:20]),
-                   .writeReg(instruction[11:7]),
-                   .write_data(WriteData),
-                   .readData1(ReadData1),
-                   .readData2(ReadData2)
+                   .nRST(nRst), 
+                   .RegWrite(register_en), 
+                   .ReadReg1(instruction[19:15]), 
+                   .ReadReg2(instruction[24:20]),
+                   .WriteReg(instruction[11:7]),
+                   .WriteData(WriteData),
+                   .ReadData1(ReadData1),
+                   .ReadData2(ReadData2)
 );
 
 // Immediate Generator
@@ -131,13 +131,13 @@ immediate_generator IG0 (.Instr(instruction),
 );
 
 // ALU
-alu ALU0 (.aluOp(AluOP),
-          .readData1(AUIPC ? pc : ReadData1),
-          .readData2(AluSRC ? Immediate : ReadData2),
-          .zero(Zero),
-          .negative(Negative),
-          .overflow(Overflow),
-          .aluResult(AluResult)
+alu ALU0 (.AluOP(AluOP),
+          .Data1(AUIPC ? pc : ReadData1),
+          .Data2(AluSRC ? Immediate : ReadData2),
+          .Zero(Zero),
+          .Negative(Negative),
+          .Overflow(Overflow),
+          .AluResult(AluResult)
 );
 
 // Data Memory
@@ -211,7 +211,7 @@ end
 keypad kp(.clk(clk),
              .nRST(nRst),
              .rows(rows),
-             .cols(columns),
+             .cols(cols),
              .data(data_received),
              .keyvalid(keyvalid),
              .enable(strobe)
@@ -243,9 +243,22 @@ fsm f0(.clk(clk),
        .lcd_en(shift)
        );
 
-shift_reg sr0 (.clk(clk), .nrst(nRst), .char_in(ru_writedata_i[7:0]), .shift_register(unsorted), .enable(dhit && fsm_state == 3'b001));
-shift_reg sr1 (.clk(clk), .nrst(nRst), .char_in(lcd_display_data[7:0]), .shift_register(shift_reg), .enable(shift));
+shift_reg sr0 (.clk(clk), .nRST(nRst), .char_in(ru_writedata_i[7:0]), .shift_register(unsorted), .enable(dhit && fsm_state == 3'b001));
+shift_reg sr1 (.clk(clk), .nRST(nRst), .char_in(lcd_display_data[7:0]), .shift_register(shift_reg), .enable(shift));
 
-lcd1602 lcd(.clk(hwclk), .rst(nRst), .row_1(unsorted), .row_2(shift_reg), .lcd_en(lcd_en), .lcd_rw(lcd_rw), .lcd_rs(lcd_rs), .lcd_data(lcd_data)); 
+lcd1602 lcd(.clk(clk), .rst(nRst), .row_1(unsorted), .row_2(shift_reg), .lcd_en(lcd_en), .lcd_rw(lcd_rw), .lcd_rs(lcd_rs), .lcd_data(lcd_data)); 
+
+// REGISTER ENABLE LOGIC
+always_comb begin
+    if (RegWrite) begin
+        if (MemRead) begin
+            register_en = dm_enable;
+        end else begin
+            register_en = 1'b1;
+        end
+    end else begin
+        register_en = 1'b0;
+    end
+end
 
 endmodule
