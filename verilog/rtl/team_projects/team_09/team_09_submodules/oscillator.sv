@@ -4,7 +4,6 @@ module oscillator
 )
 (
     input logic clk, nRst,
-    input state,
     input logic goodColl, badColl,
     output logic at_max
 );

@@ -7,7 +7,7 @@ module score_tracker3(
 );
     logic [7:0] nextCurrScore, nextHighScore, maxScore, deconcatenate;
     logic [7:0] currScore, highScore, nextDispScore;
-    logic isGameComplete_nxt, last_collision, current_collision;
+    logic last_collision, current_collision;
     logic [3:0] carry, next_bcd_ones, next_bcd_tens, next_bcd_hundreds;
     assign maxScore = 8'd140;
    

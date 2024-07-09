@@ -1,6 +1,6 @@
 module sound_posedge_detector (
     input logic clk, nRst, goodColl_i, badColl_i, button_i,
-    output logic goodColl, badColl, button
+    output logic goodColl, badColl
 );
 
 logic [1:0] N;

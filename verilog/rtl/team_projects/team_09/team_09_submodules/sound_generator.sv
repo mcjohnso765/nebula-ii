@@ -13,11 +13,10 @@ module sound_generator
 
     logic [7:0] freq;
     logic playSound;
-    logic mode_o;
     logic at_max;
 
     sound_posedge_detector posDetector1 (.clk(clk), .nRst(~rst), .button_i(button_i), .button(toggleMode), .goodColl_i(goodColl_i), .badColl_i(badColl_i),  .goodColl(goodColl), .badColl(badColl));
     
-    oscillator osc1 (.at_max(at_max), .clk(clk), .nRst(~rst), .state(mode_o), .goodColl(goodColl), .badColl(badColl));
+    oscillator osc1 (.at_max(at_max), .clk(clk), .nRst(~rst), .goodColl(goodColl), .badColl(badColl));
     dac_counter dac1 (.dacCount(soundOut), .clk(clk), .nRst(~rst), .at_max(at_max));
 endmodule
