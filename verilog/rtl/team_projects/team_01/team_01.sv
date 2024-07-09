@@ -45,8 +45,8 @@ module team_01 (
 
     // All outputs must have a value even if not used
     assign la_data_out = 128'b0;
-    assign gpio_out = 34'b0; //Inputs, but set low anyways
-    assign gpio_oeb = '1;//All 1's inputs
+    // assign gpio_out = 34'b0; //Inputs, but set low anyways
+    // assign gpio_oeb = '1;//All 1's inputs
 
     /*
     * Place code and sub-module instantiations here.
@@ -98,12 +98,15 @@ module team_01 (
    .lcd_rw(gpio_out[3]),
    .lcd_data(gpio_out[11:4]),
    .rows(gpio_in[23:20]),  //in
-   .columns(gpio_out[33:30])
+   .cols(gpio_out[33:30])
    );
 
+    assign gpio_oeb [1] = '0;
+    assign gpio_oeb [2] = '0;
+    assign gpio_oeb [3] = '0;
+    assign gpio_oeb [11:4] = '0;
+    assign gpio_oeb [23:20] = 4'b1111;
+    assign gpio_oeb [33:30] = '0;
 
 
-
-
-    
 endmodule

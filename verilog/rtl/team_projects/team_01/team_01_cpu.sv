@@ -18,7 +18,7 @@ module team_01_cpu (
   output logic        write_i,
   output logic        read_i,
   //to kp
-  output logic [3:0] columns,
+  output logic [3:0] cols,
   //to lcd
   output logic lcd_en,
   output logic lcd_rw,
@@ -69,11 +69,18 @@ logic [31:0] fsm_write_data, fsm_data_adr;
 
 logic strobe;
 logic [16:0] count;
-counter c0(.clk(clk), .nrst(nRst), .enable(1'b1), .clear(1'b0), .wrap(1'b1), .max(17'd99999), .count(count), .at_max(strobe));
+counter c0(.clk(clk), 
+                      .nrst(nRst), 
+                      .enable(1'b1), 
+                      .clear(1'b0), 
+                      .wrap(1'b1), 
+                      .max(17'd99999), 
+                      .count(count), 
+                      .at_max(strobe));
 
 // Program Counter
 program_counter PC0 (.next_pc(next_pc), 
-                     .pc(pc), 
+                    .pc(pc), 
                      .clk(clk), 
                      .nRst(nRst)
 );
@@ -117,30 +124,29 @@ end
  
 // Register File
 register_file RF0 (.clk(clk), 
-                   .nRst(nRst), 
-                   .regWrite(register_en), 
-                   .readReg1(instruction[19:15]), 
-                   .readReg2(instruction[24:20]),
-                   .writeReg(instruction[11:7]),
-                   .write_data(WriteData),
-                   .readData1(ReadData1),
-                   .readData2(ReadData2),
-                   .output_reg(output_reg)
+                   .nRST(nRst), 
+                   .RegWrite(register_en), 
+                   .ReadReg1(instruction[19:15]), 
+                   .ReadReg2(instruction[24:20]),
+                   .WriteReg(instruction[11:7]),
+                   .WriteData(WriteData),
+                   .ReadData1(ReadData1),
+                   .ReadData2(ReadData2)
 );
 
 // Immediate Generator
-immediate_generator IG0 (.instr(instruction),
-                         .imm(Immediate)
+immediate_generator IG0 (.Instr(instruction),
+                         .Imm(Immediate)
 );
 
 // ALU
-alu ALU0 (.aluOp(AluOP),
-          .readData1(AUIPC ? pc : ReadData1),
-          .readData2(AluSRC ? Immediate : ReadData2),
-          .zero(Zero),
-          .negative(Negative),
-          .overflow(Overflow),
-          .aluResult(AluResult)
+alu ALU0 (.AluOP(AluOP),
+          .Data1(AUIPC ? pc : ReadData1),
+          .Data2(AluSRC ? Immediate : ReadData2),
+          .Zero(Zero),
+          .Negative(Negative),
+          .Overflow(Overflow),
+          .AluResult(AluResult)
 );
 logic [1:0] dm_state;
 // Data Memory
@@ -159,32 +165,14 @@ data_memory DM0 (.clk(clk),
                  .DataWrite(asm_write_i),
                  .dhit(dhit),
                  .ihit(ihit),
-                 .enable(dm_enable),
-                 .dm_state(dm_state)
+                 .enable(dm_enable)
 );
 
 // Branch Logic 
-branch_logic BL0 (.branch(Branch),
-                  .negative(Negative),
-                  .zero(Zero),
-                  .branch_enable(branch_enable)
-);
-
-// RAM 
-ram R0 (.clk(clk), 
-        .nRST(nRst),
-        .read_i(ru_read_o),
-        .write_i(ru_write_o),
-        .adr_i(ru_adr_o[11:0]),
-        .cpu_dat_i(ru_cpu_data_o),
-        .cpu_dat_o(ru_cpu_data_i),
-        .busy_o(ru_busy_i),
-        .sel_i(ru_sel_o),
-        .edge_det(edge_det),
-        .ramstate(ramstate),
-        .ack(ack),
-        .data_i(demo),
-        .dat_o(demo2)
+branch_logic BL0 (.Branch(Branch),
+                  .Negative(Negative),
+                  .Zero(Zero),
+                  .Enable(branch_enable)
 );
 
 // Request Unit
@@ -207,7 +195,6 @@ request_unit RU0 (.clk(clk),
                   .adr_i(adr_i),
                   .cpu_dat_i(cpu_dat_i),
                   .sel_i(sel_i),
-                  .rustate(rustate)
 );
 
 
@@ -233,7 +220,7 @@ end
 keypad kp(.clk(clk),
              .nRST(nRst),
              .rows(rows),
-             .cols(columns),
+             .cols(cols),
              .code(data_received[7:0]),
              .data(data_received[15:8]),
              .keyvalid(keyvalid),
