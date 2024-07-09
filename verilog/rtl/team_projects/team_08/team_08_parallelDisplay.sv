@@ -1,4 +1,3 @@
-
 // Empty top module
 localparam MAX_IDX = 20;
 typedef enum logic [3:0] { 
@@ -18,7 +17,9 @@ typedef enum logic [3:0] {
     DRAW_DINO = 6,
     DRAW_CACTUS_1 = 7,
     DRAW_CACTUS_2 = 8,
-    DONES = 9
+    DRAW_DINO_FULL = 9,
+    ERASE_BUGS = 10,
+    DONES = 11
 } state_d;
 
 module team_08_parallelDisplay (
@@ -27,7 +28,7 @@ module team_08_parallelDisplay (
     input logic [1:0] move_enable, // Enable signals for movement of each object
     input logic [7:0] dinoY,
     input logic [8:0] cactusX1, x_dist,
-    input logic [8:0] cactusH1, cactusH2,
+    input logic [7:0] cactusH1, cactusH2,
     input logic [7:0] v,
     output logic cs,
     output logic cd,
@@ -114,19 +115,19 @@ always_comb begin
     d_x_end = 9'd300;
     d_y_start = dinoY;
     d_y_end = dinoY + 8'd40;
-    d_color = 16'hF800; // Red block
+    d_color = 16'h0000;
 
     c1_x_start = cactusX1;
     c1_x_end = cactusX1 + 9'd20; 
     c1_y_start = 8'd101; 
-    c1_y_end = 9'd101 + cactusH1; 
-    c1_color= 16'h07E0; // Green block
+    c1_y_end = 8'd101 + cactusH1; 
+    c1_color= 16'h07E0; 
 
     c2_x_start = cactusX2;
     c2_x_end = cactusX2 + 9'd20; 
     c2_y_start = 8'd101; 
-    c2_y_end = 9'd101 + cactusH2; 
-    c2_color= 16'h001F; // Blue block
+    c2_y_end = 8'd101 + cactusH2; 
+    c2_color= 16'h001F; 
 end
 
 always_ff @(posedge clk or negedge rst) begin
@@ -137,6 +138,11 @@ always_ff @(posedge clk or negedge rst) begin
     end else begin
         state <= state;
         received <= 2'b0;
+        x_start <= 1;
+        x_end <= 1;
+        y_start <= 1;
+        y_end <= 1;
+        color <= 16'hEEEE;  
         case (state)
             INITI: begin
                     x_start <= 9'd0;
@@ -151,51 +157,32 @@ always_ff @(posedge clk or negedge rst) begin
             end
 
             DRAW_OBJECTS: begin
-                if (current_object < 3) begin
-                    // Set coordinates and color for the current object
-                    if(current_object == 0 && ~block_done) begin
-                        x_start <= d_x_start;
-                        x_end <= d_x_end;
-                        y_start <= d_y_start;
-                        y_end <= d_y_end;
-                        color <= d_color;
-                    end else if (block_done) begin
-                        current_object <= current_object + 1;
-                    end
+
+                x_start <= d_x_start;
+                x_end <= d_x_end;
+                y_start <= d_y_start;
+                y_end <= d_y_end;
+                color <= d_color;
+
                     
-                    if(current_object == 1 && ~block_done) begin
-                        x_start <= c1_x_start;
-                        x_end <= c1_x_end;
-                        y_start <= c1_y_start;
-                        y_end <= c1_y_end;
-                        color <= c1_color;
-                    end else if (block_done) begin
-                        current_object <= current_object + 1;
-                    end
-                    
-                    if(current_object == 2 && ~block_done) begin
-                        x_start <= c2_x_start;
-                        x_end <= c2_x_end;
-                        y_start <= c2_y_start;
-                        y_end <= c2_y_end;
-                        color <= c2_color;
-                    end else if (block_done) begin
-                        current_object <= current_object + 1;
-                    end
-                    state <= DRAW_OBJECTS;
-                    
-                end else begin
+                if (block_done) begin
                     state <= CHECK_MOVE;
                 end
             end
 
             CHECK_MOVE: begin
+                // x_start <= d_x_start;
+                // x_end <= d_x_end;
+                // y_start <= d_y_end + 1;
+                // y_end <= 239;
+                // color <= 16'hEEEE;  
                 if (move_enable[0] && block_done) begin
                     current_object <= 0;
                     state <= ERASE_DINO;
                 end else if(move_enable[1] && block_done) begin
-                    current_object <= 1;
-                    state <= ERASE_CACTUS_1;
+
+                        state <= ERASE_CACTUS_1;
+                
                 end else begin
                     state <= CHECK_MOVE;
                 end
@@ -235,30 +222,35 @@ always_ff @(posedge clk or negedge rst) begin
 
             ERASE_CACTUS_1: begin
                 // Erase the current object by drawing over it with the background color (assuming background is black)
-                x_start <= c1_x_start - 1;
+                if(c1_x_start - 12 > c1_x_start - 1)
+                    state <= DRAW_CACTUS_1;
+                else begin
+                x_start <= c1_x_start - 12;
                 x_end <= c1_x_start - 1;
                 y_start <= c1_y_start;
-                y_end <= c1_y_end;
+                y_end <= c1_y_start + 40;
                 color <= 16'hEEEE; // white color
-                received <= 2'b10;//detected the move)enable signal
+                end
 
                 if (block_done) begin
-                    state <= ERASE_CACTUS_2;
+                    state <= DRAW_CACTUS_1;
                     current_object <= 1;
                 end
             end
 
             ERASE_CACTUS_2: begin
                 // Erase the current object by drawing over it with the background color (assuming background is black)
-                x_start <= c2_x_start - 1;
+                if(c2_x_start - 12 > c2_x_start - 1)
+                    state <= DRAW_CACTUS_2;
+                else begin
+                x_start <= c2_x_start - 12;
                 x_end <= c2_x_start - 1;
                 y_start <= c2_y_start;
-                y_end <= c2_y_end;
+                y_end <= c2_y_start + 40;
                 color <= 16'hEEEE; // white color
-                received <= 1;//detected the move)enable signal
-
+                end
                 if (block_done) begin
-                    state <= DRAW_CACTUS_1;
+                    state <= DRAW_CACTUS_2;
                     current_object <= 1;
                 end
             end
@@ -287,41 +279,53 @@ always_ff @(posedge clk or negedge rst) begin
                 end
                 
                 if (block_done) begin
-                    state <= DONES;
+                    state <= CHECK_MOVE;
                     current_object <= 0;
                 end        
             end
 
             DRAW_CACTUS_1: begin
-                x_start <= c1_x_end + 1;
-                x_end <= c1_x_end + 1;
-                y_start <= c1_y_start;
-                y_end <= c1_y_end;
-                color <= c1_color; // Black color
-                received <= 1;//detected the move)enable signal
-
+                if(c1_x_end + 4 < c1_x_end - 7)
+                    state <= ERASE_CACTUS_2;
+                else begin
+                    x_start <= c1_x_end - 7;
+                    x_end <= c1_x_end + 4;
+                    y_start <= c1_y_start;
+                    y_end <= c1_y_end;
+                    color <= c1_color; // Black color
+                end
                 if (block_done) begin
-                    state <= DRAW_CACTUS_2;
+                    state <= ERASE_CACTUS_2;
                     current_object <= 1;
                 end     
             end
  
             DRAW_CACTUS_2: begin
-                x_start <= c2_x_end + 1;
-                x_end <= c2_x_end + 1;
+                if(c2_x_end + 4 < c2_x_end - 7)
+                    state <= DRAW_DINO_FULL;
+                else begin
+                x_start <= c2_x_end - 7;
+                x_end <= c2_x_end + 4;
                 y_start <= c2_y_start;
                 y_end <= c2_y_end;
                 color <= 16'h0000; // Black color
-                received <= 1;//detected the move enable signal
-
+                end
                 if (block_done) begin
-                    state <= DONES;
+                    state <= DRAW_DINO_FULL;
                     current_object <= 2;
                 end      
             end
-
-            DONES: begin
-                state <= CHECK_MOVE;
+            DRAW_DINO_FULL: begin
+                    x_start <= d_x_start;
+                    x_end <= d_x_end;
+                    y_start <= d_y_start;
+                    y_end <= d_y_end;
+                    color <= d_color;
+                    received <= 2'b10;//detected the move)enable signal
+                    if (block_done) begin
+                        state <= CHECK_MOVE;
+                        current_object <= 2;
+                    end      
             end
         endcase
     end
@@ -400,8 +404,9 @@ always_ff @(posedge clk, negedge rst) begin
                 idx <= 0;
                 state <= INIT;
             end
-            default: state <= SET;
-        endcase 
+        endcase
+        if (x_start > x_end || y_start > y_end)
+            state <= DONE;
     end 
 end 
 
@@ -615,5 +620,4 @@ module tft_init(
         endcase
     end
 endmodule
-
 

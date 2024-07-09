@@ -144,7 +144,27 @@ always_comb begin
 
 end
 
-assign dinoJumpGood = en && maxdinoDelay;
+logic n_dinoJumpGood;
+always_ff @(posedge clk, negedge nRst) begin
+  if(!nRst) begin
+    dinoJumpGood <= 0;
+  end
+  else begin
+    dinoJumpGood <= n_dinoJumpGood;
+  end
+end
+
+always_comb begin
+  if(en && maxdinoDelay) begin
+    n_dinoJumpGood = 1;
+  end
+  else if (next_v == 0) begin
+    n_dinoJumpGood = 0;
+  end
+  else begin
+    n_dinoJumpGood = dinoJumpGood;
+  end
+end  
 
 always_comb begin   
   next_dinoY = 101;

@@ -8,7 +8,7 @@ logic cs, cd, wr, rd;
 logic tft_sck, tft_sdi, tft_dc, tft_reset, tft_cs;
 logic dac_sdi, dac_cs, dac_sck;
 logic [6:0] ones_score, tens_score;
-logic up, collides, blinkToggle;    
+logic up, collides;    
 logic [7:0] data;
     
     team_08_dinoGame game(.clk(clk), .rst(in[20]), .up(in[21]), .collides(out[33]), 
@@ -21,33 +21,24 @@ logic [7:0] data;
     .tft_sck(tft_sck), .tft_sdi(tft_sdi), .tft_dc(tft_dc), .tft_reset(tft_reset), .tft_cs(tft_cs),
    
    /*set pin values*/
-    .dac_sdi(dac_sdi),
-    .dac_cs(dac_cs),
-    .dac_sck(dac_sck),
-
+    .PWM_o(out[32]),
     .ones_score(ones_score), 
-    .tens_score(tens_score),
-    .blinkToggle(out[32]));
+    .tens_score(tens_score));
 
-assign out[31:20] = 0;
+assign out[31:27] = 0;
 
 
 always_comb begin
-    if(!blinkToggle) begin
         out[11:5] = ones_score;        
-    end
-    else begin
-        out[11:5] = tens_score;
+        out[18:12] = tens_score;
       
-    end
-
     if (in[22] == 1) begin
         out[0] = tft_sck;
         out[1] = tft_sdi;
         out[2] = tft_dc;
         out[3] = tft_reset;
         out[4] = tft_cs;
-        out[19:12] = 0;
+        out[26:19] = 0;
     end
     else begin
         out[0] = cs;
@@ -55,7 +46,7 @@ always_comb begin
         out[2] = wr;
         out[3] = rd;
         out[4] = 0; 
-        out[19:12] = data;
+        out[26:19] = data;
     end
 end
 

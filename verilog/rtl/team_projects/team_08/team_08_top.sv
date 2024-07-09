@@ -27,30 +27,18 @@ module top
  // assign left[7] = pb[1];
   // Instantiate top module
 
-logic [19:0] empty;
-logic blinkToggle;
-logic [6:0] scoreDisplayed;
+logic [13:0] empty;
+logic [33:0] in, out;
 
 team_08_GPIOPins game(
-  .clk(hwclk), .reset(reset), .in({11'd0, pb[17], pb[18], ~pb[19], 20'd0}), 
-  .out({right[5], right[6], empty, scoreDisplayed, right[4:0]})
-);
-
-// assign ss0[6:0] = 7'b1100111;
-// assign ss1[6:0] = blinkToggle;
+  .clk(hwclk), .reset(reset), .in(in), .out(out));
 
 always_comb begin
-if(right[6]) begin
-        ss0[6:0] = scoreDisplayed;
-        ss0[7] = 0;
-        ss1 = 0;
-        
-    end
-    else begin
-        ss1[6:0] = scoreDisplayed;
-        ss1[7] = 0;
-        ss0 = 0;      
-    end
+  
+    in = {11'd0, pb[17], pb[18], ~pb[19], 20'd0};
+    {right[5], right[7], empty[4:0], left[7:0], ss1[6:0], ss0[6:0], right[4:0]} = out;
+  
 end
+
 endmodule
 

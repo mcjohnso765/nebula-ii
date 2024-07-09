@@ -12,20 +12,14 @@ module team_08_dinoGame (input clk, input up, input rst,
     output logic tft_sck, output logic tft_sdi, 
 	output logic tft_dc, output logic tft_reset, output logic tft_cs,
 
-	/*synth*/output dac_sdi, output dac_cs, output dac_sck, 
     
     /*parallel*/output logic cs, cd, rd, wr,
     output logic [7:0] data,
 
-    /*score*/output [6:0] ones_score, tens_score,
-    output logic collides,
-    output logic blinkToggle
+    /*score*/output logic [6:0] ones_score, tens_score,
+    output logic collides, PWM_o
+    //output logic blinkToggle
     );
-
-    assign dac_sdi = 0;
-    assign dac_cs = 0;
-    assign dac_sck = 0;
-
 
     // Required registers and wires
     wire[8:0] x;
@@ -54,6 +48,8 @@ module team_08_dinoGame (input clk, input up, input rst,
     reg drawDoneCactus;
     reg cactusMovement;
     //reg [6:0] ss0, ss1;
+    logic game_over;
+    assign game_over = state == OVER;
     
     always_ff @(posedge clk, negedge rst) begin 
         if (!rst) begin
@@ -110,15 +106,15 @@ module team_08_dinoGame (input clk, input up, input rst,
     team_08_score_counter scoreCounter(/*inputs*/.clk(clk), .reset(rst), .collision_detect(collides), .state(state), 
     /*outputs*/.bcd_ones(bcd_ones), .bcd_tens(bcd_tens), .score(score));
 
-    team_08_score_display flash(/*inputs*/.clk(clk), .reset(rst), .bcd_ones(bcd_ones), .bcd_tens(bcd_tens), 
-    /*outputs*/.displayOut(displayOut), .blinkToggle(blinkToggle));
+    //team_08_score_display flash(/*inputs*/.clk(clk), .reset(rst), .bcd_ones(bcd_ones), .bcd_tens(bcd_tens), 
+    ///*outputs*/.displayOut(displayOut), .blinkToggle(blinkToggle));
 
-    team_08_ssdec ones(.in(displayOut), .enable(~blinkToggle), .out(ones_score));
+    team_08_ssdec ones(.in(bcd_ones), .enable(1'b1), .out(ones_score));
 
-    team_08_ssdec tens(.in(displayOut), .enable(blinkToggle), .out(tens_score));
+    team_08_ssdec tens(.in(bcd_tens), .enable(1'b1), .out(tens_score));
 
     ///add synthesizer module 
-    //.synthesizer sound(.clk(clk), .reset(rst), .trigger(dinoJumpGood));
+    team_08_PWM syn(.clk(clk), .nrst(~rst), .enable(1'b1), .gameover(game_over), .light(), .out(PWM_o), .jump(dinoJumpGood));
 
 
     

@@ -59,7 +59,7 @@ RUN: begin
   n_bcd_tens = bcd_tens;
   deconcatenate = 0;
 if(det) begin
-  n_score = score - 1;    
+  n_score = score - 3;    
 end
 if(slow_clock) begin
   if(score < 99) begin
@@ -166,7 +166,7 @@ always_ff @(posedge clk, negedge nRst_i) begin
       counter <= 0; 
       slow_clk <= 0; 
     end 
-    else if (counter >= 60000000 - 1) begin 
+    else if (counter >= 30000000 - 1) begin 
       counter <= 0; // 12 MHz, 100 cycles = 1 second, 100s = 10000 cycles --> 9999 cycles useless 
                     //12 MHz * 10 seconds = 1,000,000,000 cycles 
       slow_clk <= 1; 

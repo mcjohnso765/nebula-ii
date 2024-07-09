@@ -1,3 +1,4 @@
+
 module team_08_cactusMove(
 input logic clk, nRst, enable, 
 input logic [1:0] rng_input,
@@ -41,8 +42,8 @@ always_ff @(posedge clk, negedge nRst) begin
     end
   end
 
-//assign enable = 1;
-assign max_i = 60000;
+// assign enable = 1;
+assign max_i = 240000;
 
 always_ff @(posedge clk, negedge nRst) begin
   if(!nRst)
@@ -62,15 +63,14 @@ always_comb begin
   end
 
   RUN: begin
-    if (enable) begin
-      n_count = count + 1;
+    n_count = count + 1;
     if (count == max_i)
         n_count = 0;
-    end
     if (count == max_i) begin
       atmax = 1;
-    end else
+    end else begin
       atmax = 0;
+    end
   end
 
   WIN: begin
@@ -89,7 +89,7 @@ end
 // tracking second cactus 
 always_ff @(posedge clk, negedge nRst) begin
   if (!nRst) begin
-    pixel <= -190;
+    pixel <= 328;
 end else begin
     pixel <= n_pixel;
 end
@@ -100,27 +100,21 @@ always_comb begin
 
 case(state) 
   IDLE: begin
-      n_pixel = 328;
+    n_pixel = pixel;
   end
 
 RUN: begin
   if (atmax)
-    if (pixel <= 320 || pixel >= 322) begin
-        n_pixel = pixel + 1;
-    end else begin
-        n_pixel = -189;
-    end
+    n_pixel = pixel + 4;
 end
 
 OVER: begin
- 
 end
 
 WIN: begin
-
 end
-default: begin end
 
+default: begin end
 endcase
   
 end
@@ -140,18 +134,15 @@ always_comb begin
 case(state)
 
 IDLE: begin
-  x_distance = x_dist;
-  n_h1 = height1;
-  n_h2 = height2;
 end
 
 RUN: begin
-  if (pixel == 320) begin
+  if (pixel == 320 && drawDoneCactus) begin
         case (rng_input)
             2'b00: x_distance = 100;  // 10 pixels
             2'b01: x_distance = 130; // 20 pixels
             2'b10: x_distance = 160; // 30 pixels
-            2'b11: x_distance = 189; // 40 pixels
+            2'b11: x_distance = 180; // 40 pixels
             default: x_distance = 100; // Default to 10 pixels 
         endcase
   end
@@ -159,7 +150,7 @@ RUN: begin
     x_distance = x_dist;
   end
 
-  if (pixel == 320) begin
+  if (pixel == 320 && drawDoneCactus) begin
         case (type1)
             2'b00: n_h1 = 15;  // 15 pixels
             2'b01: n_h1 = 20; // 20 pixels
@@ -173,7 +164,7 @@ RUN: begin
     n_h1 = height1;
   end
   
-  if (pixel == 320) begin
+  if (pixel == 320 && drawDoneCactus) begin
         case (type2)
             2'b00: n_h2 = 15;  // 15 pixels
             2'b01: n_h2 = 20; // 20 pixels
@@ -189,23 +180,20 @@ RUN: begin
 end
 
 WIN: begin
- 
+
 end
 
 OVER: begin
- 
 end
 
-default: begin
- 
-end
+default: begin end
 
 endcase
 end
 
 always_ff @(posedge clk, negedge nRst) begin
         if (!nRst) begin
-          x_dist <= 189;
+          x_dist <= 180;
           height1 <= 40;
           height2 <= 40;
         end
