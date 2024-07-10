@@ -151,7 +151,7 @@ void main()
 
     sram_space0 = 0x00500513;
     sram_space1 = 0x00800613;
-    // sram_space2 = 0x00a62023;
+    sram_space2 = 0x00a62023;
     // sram_space3 = 0x00b54863;
     // sram_space4 = 0x00a62023;
     // sram_space5 = 0x00062583;
