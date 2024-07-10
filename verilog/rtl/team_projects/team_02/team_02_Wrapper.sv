@@ -55,9 +55,7 @@ module team_02_Wrapper (
     output wire wbm_stb_o,
     output wire wbm_cyc_o,
     input wire wbm_ack_i,
-    input wire [31:0] wbm_dat_i,
-    input wire [31:0] start_addr,
-    input wire en
+    input wire [31:0] wbm_dat_i
 
 );
     /*
@@ -79,8 +77,9 @@ module team_02_Wrapper (
 
     //Assign to unused outputs
     assign irq = 3'b000;	// Unused
-    assign gpio_oeb[4:1] = 4'b1111;//Set all to inputs
-    assign gpio_out[4:1] = 4'b0;//Doesn't matter since inputs
+    assign {gpio_oeb[37:36], gpio_oeb[4:1]} = '1;//Set all to inputs
+    assign {gpio_out[37:36], gpio_out[4:1]} = '0;//Doesn't matter since inputs
+    // assign gpio
 
     // Instantiate Bus Wrapper module here
     team_02_WB team_02_WB (
@@ -102,9 +101,9 @@ module team_02_Wrapper (
         // .gpio_in({gpio_in[37:5], gpio_in[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         // .gpio_out({gpio_out[37:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         // .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
-        .gpio_in({gpio_in[37:5], gpio_in[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
-        .gpio_out({gpio_out[37:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
-        .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        .gpio_in({gpio_in[35:5], gpio_in[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        .gpio_out({gpio_out[35:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        .gpio_oeb({gpio_oeb[35:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
 
         // Add master ports
         .ADR_O(wbm_adr_o),

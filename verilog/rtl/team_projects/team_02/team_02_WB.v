@@ -58,11 +58,11 @@ module team_02_WB (
 	// Register Definitions
 	reg [0:0]	EN_VAL_REG;
 	assign	en = EN_VAL_REG;
-	`WB_REG(EN_VAL_REG, 'h30020000, 1)
+	`WB_REG(EN_VAL_REG, 0, 1)
 
 	reg [31:0]	START_ADDR_VAL_REG;
 	assign	start_addr = START_ADDR_VAL_REG;
-	`WB_REG(START_ADDR_VAL_REG, 'h30020004, 32)
+	`WB_REG(START_ADDR_VAL_REG, 0, 32)
 
 	team_02 instance_to_wrap (
 		.clk(clk),

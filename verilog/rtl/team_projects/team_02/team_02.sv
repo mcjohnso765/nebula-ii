@@ -42,7 +42,7 @@ module team_02 (
 
     // All outputs must have a value even if not used
     assign la_data_out = 128'b0;
-    assign gpio_out = 34'b0; //Inputs, but set low anyways
+    assign gpio_out = 32'b0; //Inputs, but set low anyways
     assign gpio_oeb = '1;//All 1's inputs
     /*
     * Place code and sub-module instantiations here.
@@ -50,7 +50,7 @@ module team_02 (
     */
     logic [31:0] ramstore, ramaddr, ramload;
     logic Ren, Wen, busy_o;
-    t02_top top (.clk(clk), .nrst(nrst), .ramaddr(ramaddr), .ramstore(ramstore), .Ren(Ren), .Wen(Wen), .ramload(ramload), .busy_o(busy_o), .enable(en), .start_addr(32'h3300_0000));
+    t02_top top (.clk(clk), .nrst(nrst), .ramaddr(ramaddr), .ramstore(ramstore), .Ren(Ren), .Wen(Wen), .ramload(ramload), .busy_o(busy_o), .enable(en), .start_addr(start_addr));
     // add start_addr 
     // make sure all signals are connected
     t02_wishbone_manager wb(.CLK(clk), .nRST(nrst), 

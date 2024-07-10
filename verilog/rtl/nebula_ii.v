@@ -42,7 +42,7 @@ module nebula_ii (
     // Replace sample project with your design for testing
     localparam NUM_TEAMS = 12;
 
-    // All projects singals
+    // All projects (slave) singals
     wire [NUM_TEAMS:0] wbs_cyc_o_proj;
     wire [NUM_TEAMS:0] wbs_stb_o_proj;
     wire [NUM_TEAMS:0] wbs_we_o_proj;
@@ -52,7 +52,15 @@ module nebula_ii (
     wire [NUM_TEAMS:0] [3:0] wbs_sel_o_proj;
     wire [NUM_TEAMS:0] wbs_ack_i_proj;
 
-
+    // All cpu project (master) signlas
+     wire [31:0]  wbm_adr_o_cpu;
+     wire [31:0]  wbm_dat_o_cpu;
+      wire [3:0] wbm_sel_o_cpu;
+     wire   wbm_we_o_cpu;
+      wire  wbm_stb_o_cpu;
+      wire  wbm_cyc_o_cpu;
+     wire   wbm_ack_i_cpu;
+      wire [31:0] wbm_dat_i_cpu;
 
     // Addmore...
 
@@ -113,9 +121,6 @@ module nebula_ii (
         .wbs_ack_o(wbs_ack_i_proj[2]),
         .wbs_dat_o(wbs_dat_i_proj[2]),
 
-        .en(en),
-        .start_addr(start_addr),
-
         // Logic Analyzer
         .la_data_in(la_data_in),
         .la_data_out(designs_la_data_out[2]),
@@ -124,7 +129,18 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[2]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[2]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[2]), // Active Low Output Enable
+
+        // master!!!!!!!!!!!!!!!!!!!
+
+        .wbm_adr_o(wbm_adr_o_cpu),
+        .wbm_dat_o(wbm_dat_o_cpu),
+        .wbm_sel_o(wbm_sel_o_cpu),
+        .wbm_we_o(wbm_we_o_cpu),
+        .wbm_stb_o(wbm_stb_o_cpu),
+        .wbm_cyc_o(wbm_cyc_o_cpu),
+        .wbm_ack_i(wbm_ack_i_cpu),
+        .wbm_dat_i(wbm_dat_i_cpu)
     );
 
     // Flattened GPIO outputs
@@ -206,7 +222,7 @@ module nebula_ii (
     // Wishbone Arbitrator
     // everywhere with squigly brackets is where more manager signals can be concatinated!!!
     wishbone_arbitrator #(
-        .NUM_MANAGERS(1)
+        .NUM_MANAGERS(2)
     ) wb_arbitrator (
         
     `ifdef USE_POWER_PINS
@@ -217,17 +233,29 @@ module nebula_ii (
         .CLK(wb_clk_i),
         .nRST(~wb_rst_i),
 
-        //manager to arbitrator, input
-        .A_ADR_I({wbs_adr_i}),
-        .A_DAT_I({wbs_dat_i}),
-        .A_SEL_I({wbs_sel_i}),
-        .A_WE_I({wbs_we_i}),
-        .A_STB_I({wbs_stb_i}),
-        .A_CYC_I({wbs_cyc_i}),
+        // //manager to arbitrator, input
+        .A_ADR_I({wbm_adr_o_cpu, wbs_adr_i}),
+        .A_DAT_I({wbm_dat_o_cpu, wbs_dat_i}),
+        .A_SEL_I({wbm_sel_o_cpu, wbs_sel_i}),
+        .A_WE_I({wbm_we_o_cpu, wbs_we_i}),
+        .A_STB_I({wbm_stb_o_cpu, wbs_stb_i}),
+        .A_CYC_I({wbm_cyc_o_cpu, wbs_cyc_i}),
 
         //arbitrator to manager, output
-        .A_DAT_O({wbs_dat_o}),
-        .A_ACK_O({wbs_ack_o}),
+        .A_DAT_O({wbm_dat_i_cpu, wbs_dat_o}),
+        .A_ACK_O({wbm_ack_i_cpu, wbs_ack_o}),
+
+        //manager to arbitrator, input
+        // .A_ADR_I({wbm_adr_o_cpu}),
+        // .A_DAT_I({wbm_dat_o_cpu}),
+        // .A_SEL_I({wbm_sel_o_cpu}),
+        // .A_WE_I({wbm_we_o_cpu}),
+        // .A_STB_I({wbm_stb_o_cpu}),
+        // .A_CYC_I({wbm_cyc_o_cpu}),
+
+        // //arbitrator to manager, output
+        // .A_DAT_O({wbm_dat_i_cpu}),
+        // .A_ACK_O({wbm_ack_i_cpu}),
 
         //arbitrator to peripheral, input
         .DAT_I(wbs_dat_o_m),

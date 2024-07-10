@@ -29,29 +29,39 @@ typedef enum logic [5:0] {
 		CU_ERROR
 	} cuOPType;	
 
+            
+
 
             always_ff@(posedge clk, negedge nRST)
-                if (nRST == 0)
+                if (~nRST)
                     PC <= start_addr;
+                // else if (!enable)
+                //     PC <= start_addr;
                 else
                     PC <= next_pc;
 
            always_comb begin
             // inter_next_pc = rs1Read + signExtend;
-            if (iready & enable)
-                case(cuOP)
-                    CU_JALR: next_pc = rs1Read + signExtend;
-                    CU_JAL: next_pc = PC + (signExtend << 1);
-                    CU_BEQ: next_pc = (Zero? PC + (signExtend << 1): PC + 4);
-                    CU_BNE: next_pc = (~Zero? PC + (signExtend << 1) : PC + 4);
-                    CU_BLT: next_pc = (ALUneg? PC + (signExtend << 1): PC + 4);
-                    CU_BGE: next_pc = (~ALUneg | Zero? PC + (signExtend << 1) : PC + 4);
-                    CU_BLTU: next_pc = (ALUneg? PC + (signExtend << 1): PC + 4);
-                    CU_BGEU: next_pc = (~ALUneg | Zero? PC + (signExtend << 1) : PC + 4);
-                    default: next_pc = PC + 4;
-                endcase
-                else
-                next_pc = PC;
+            if (enable) begin
+                
+                if (iready) begin
+                    case(cuOP)
+                        CU_JALR: next_pc = rs1Read + signExtend;
+                        CU_JAL: next_pc = PC + (signExtend << 1);
+                        CU_BEQ: next_pc = (Zero? PC + (signExtend << 1): PC + 4);
+                        CU_BNE: next_pc = (~Zero? PC + (signExtend << 1) : PC + 4);
+                        CU_BLT: next_pc = (ALUneg? PC + (signExtend << 1): PC + 4);
+                        CU_BGE: next_pc = (~ALUneg | Zero? PC + (signExtend << 1) : PC + 4);
+                        CU_BLTU: next_pc = (ALUneg? PC + (signExtend << 1): PC + 4);
+                        CU_BGEU: next_pc = (~ALUneg | Zero? PC + (signExtend << 1) : PC + 4);
+                        default: next_pc = PC + 4;
+                    endcase
+                end else begin
+                    next_pc = PC;
+                end
+            end else begin
+                next_pc = start_addr;
+            end
            end
            
            
