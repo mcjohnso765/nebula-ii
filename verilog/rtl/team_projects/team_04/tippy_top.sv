@@ -150,14 +150,15 @@ module tippy_top (
 
         .data_from_mem(data_from_mem),
         .mem_read(mem_read),
-        // .mem_write(),
-        .mem_write(mem_write),
+        .mem_write(),
+        // .mem_write(mem_write),
         .adr_to_mem(adr_to_mem),
-        .data_to_mem(data_to_mdem),
+        .data_to_mem(),
+        // .data_to_mem(data_to_mem),
         .sel_to_mem(sel_to_mem)
     );
-    // assign mem_write = 1'b0;
-
+    assign mem_write = 1'b0;
+    assign data_to_mem = 32'h0;
     // //create mem
     // reg [31:0] instrMem [99:0];
     // initial begin
@@ -1696,7 +1697,7 @@ module request_handler #(parameter UART_ADDRESS = 500)(
 
 
         //logic for sending data to mem
-        if (mem_busy | next_client == STANDBY) begin
+        if (mem_busy || (next_client == STANDBY)) begin
             mem_read =      1'b0;
             mem_write =     1'b0;
             adr_to_mem =    32'b0;
@@ -1712,6 +1713,8 @@ module request_handler #(parameter UART_ADDRESS = 500)(
                     adr_to_mem =    32'h0;
                 end else begin
                     adr_to_mem =    CPU_data_adr;
+                    data_to_mem =   data_from_CPU;
+                    sel_to_mem =    CPU_sel;
                 end
             end
         end else begin

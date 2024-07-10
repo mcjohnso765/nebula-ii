@@ -378,16 +378,18 @@ void main()
     // reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
 
     // Write instructions in hex to SRAM
-
+	*(&sram_space + 1) = 0x0c502423; 
 	// *(&sram_space + 1) = 0x06300093;
 	// *(&sram_space + 2) = 0x3e700113;
 	// *(&sram_space + 3) = 0x001101b3;
 	// *(&sram_space + 4) = 0x00209213;
-	// *(&sram_space + 5) = 0x0db00293;
+	*(&sram_space + 3) = 0x0db00293;
 	
 	//*(&sram_space + 50) = 0x0000ffff;
-	*(&sram_space + 1) = 0x0c502423; 
-	// *(&sram_space + 6) = 0x0c802303;
+	
+	// *(&sram_space + 3) = 0x0c802303;
+
+	
 	
 	
 	//addi x4, x0, 3
