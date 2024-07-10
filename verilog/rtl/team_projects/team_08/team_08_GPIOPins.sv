@@ -10,7 +10,7 @@ logic [6:0] ones_score, tens_score;
 logic up, collides;    
 logic [7:0] data;
     
-    team_08_dinoGame game(.clk(clk), .rst(in[20]), .up(in[21]), .collides(out[33]), 
+    team_08_dinoGame game(.clk(clk), .rst(in[0]), .up(in[1]), .collides(out[30]), 
     .cs(cs),
     .cd(cd),
     .wr(wr),
@@ -23,28 +23,29 @@ logic [7:0] data;
     .ones_score(ones_score), 
     .tens_score(tens_score));
 
-assign out[32:27] = 0;
+assign out[33:31] = 0;
+assign out[2:0] = 0;
 
 
 always_comb begin
-        out[11:5] = ones_score;        
-        out[18:12] = tens_score;
+        out[22:16] = ones_score;        
+        out[29:23] = tens_score;
       
-    if (in[22] == 1) begin
-        out[0] = tft_sck;
-        out[1] = tft_sdi;
-        out[2] = tft_dc;
-        out[3] = tft_reset;
-        out[4] = tft_cs;
-        out[26:19] = 0;
+    if (in[2] == 1) begin
+        out[3] = tft_sck;
+        out[4] = tft_sdi;
+        out[5] = tft_dc;
+        out[6] = tft_reset;
+        out[7] = tft_cs;
+        out[15:8] = 0;
     end
     else begin
-        out[0] = cs;
-        out[1] = cd;
-        out[2] = wr;
-        out[3] = rd;
-        out[4] = 0; 
-        out[26:19] = data;
+        out[3] = cs;
+        out[4] = cd;
+        out[5] = wr;
+        out[6] = rd;
+        out[7] = 0; 
+        out[15:8] = data;
     end
 end
 

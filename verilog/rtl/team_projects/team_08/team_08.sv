@@ -32,9 +32,9 @@ module team_08 (
     */
     // Only two pins are inputs, the reset and jump button are the inputs 
 
-    assign gpio_oeb[21:19] = {3{1'b1}};
-    assign gpio_oeb[18:0] = 19'b0;
-     assign gpio_oeb[33:22] = 12'b0;
+    assign gpio_oeb[2:0] = '1;
+    assign gpio_oeb[30:3] = '0;
+    assign gpio_oeb[33:31] = '1;
 
     team_08_GPIOPins allocation(.in(gpio_in), .out(gpio_out), .clk(clk), .reset(nrst));
 
