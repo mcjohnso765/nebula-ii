@@ -126,7 +126,7 @@ module tippy_top (
         .nRst(nRst),
 
         .mem_busy(mem_busy),
-        .VGA_state(2'b0),
+        .VGA_state(2'b0), //FIXME later
         //.VGA_state(VGA_state),
         .CPU_enable(CPU_enable),
         .VGA_enable(VGA_enable),
@@ -1065,7 +1065,7 @@ module program_counter (
 
 );
   
-  always_ff @( negedge clk, negedge nRst ) begin
+  always_ff @( posedge clk, negedge nRst ) begin
     if(~nRst) begin
       instructionAddress <= 32'd0;
       linkAddress <= 32'd0;
@@ -1646,49 +1646,50 @@ module request_handler #(parameter UART_ADDRESS = 500)(
 
 );
     // handler_state_t handler_state, next_handler_state;
-    client_t current_client, next_client, current_client_next, next_client_next;
+    client_t current_client, next_client, current_client_next;//, next_client_next;
     logic [31:0] instruction, next_instruction;
     always_ff @( posedge clk, negedge nRst ) begin
         if(~nRst) begin
             // handler_state <= WAITING;
 
             current_client <= STANDBY;
-            next_client <= STANDBY;
+            //next_client <= STANDBY;
 
             instruction <= 32'b0;
         end else begin
             // handler_state <= next_handler_state;
 
             current_client <= current_client_next;
-            next_client <= next_client_next;
+            //next_client <= next_client_next;
 
             instruction <= next_instruction;
         end
     end
 
     always_comb begin
-        current_client_next = next_client;
         if (mem_busy) begin
-            next_client_next = next_client;
+            //next_client_next = next_client;
+            next_client = current_client;
         end else begin
-            if (next_client == STANDBY) begin
-                next_client_next = CPU_INSTR;
-            end else if (next_client == VGA) begin
+            if (current_client == STANDBY) begin
+                next_client = CPU_INSTR;
+            end else if (current_client == VGA) begin
                 if (VGA_state == ACTIVE | VGA_state == READY) begin
-                    next_client_next = VGA;
+                    next_client = VGA;
                 end else begin
-                    next_client_next = CPU_INSTR;
+                    next_client = CPU_INSTR;
                 end
-            end else if (next_client == CPU_INSTR) begin
-                next_client_next = CPU_DATA;
+            end else if (current_client == CPU_INSTR) begin
+                next_client = CPU_DATA;
             end else begin //current_client == CPU_DATA
                 if (VGA_state == INACTIVE) begin
-                    next_client_next = CPU_INSTR;
+                    next_client = CPU_INSTR;
                 end else begin
-                    next_client_next = VGA;
+                    next_client = VGA;
                 end
             end
         end
+        current_client_next = next_client;
 
 
         //logic for sending data to mem

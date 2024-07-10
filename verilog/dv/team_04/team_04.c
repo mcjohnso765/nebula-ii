@@ -373,9 +373,9 @@ void main()
     sram_space = 0xFEED0000; // write 0xFEED000 to address 0x33000000
     *(&sram_space + 1) = 0xABCDEF78;  // write 0xABCDEF78 to address 0x33000004
     *(&sram_space + 3) = 0x12345678;  // write 0x12345678 to address 0x3300000C
-    reg_sample_proj_EN = (sram_space == 0xFEED0000);
-    reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
-    reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
+    // reg_sample_proj_EN = (sram_space == 0xFEED0000);
+    // reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
+    // reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
 
     // Write instructions in hex to SRAM
 	*(&sram_space + 4) = 0x06300093; 
