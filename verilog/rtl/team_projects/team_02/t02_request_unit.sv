@@ -17,9 +17,9 @@ typedef enum logic [5:0] {
 		CU_ERROR
 	} cuOPType;	
 logic nxt_dmmRen, nxt_dmmWen;
-assign imemRen = 1;
+assign imemRen = 1; //THISH LINE
 always_ff@(posedge CLK, negedge nRST) begin
-    if (!nRST) begin
+    if (~nRST) begin
         dmmRen <= 0;
         dmmWen <= 0; 
     end

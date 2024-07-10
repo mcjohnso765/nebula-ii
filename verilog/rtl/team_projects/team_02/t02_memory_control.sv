@@ -1,6 +1,6 @@
 module t02_memory_control
 (
-    input logic CLK, nRST, dmmRen, dmmWen, imemRen, busy_o,
+    input logic CLK, nRST, dmmRen, dmmWen, busy_o,
     input logic [31:0] imemaddr, dmmaddr, dmmstore, ramload,
     output logic i_ready, d_ready, Ren, Wen, 
     output logic [31:0] ramaddr, ramstore, imemload, dmmload
@@ -46,16 +46,16 @@ always_comb begin
         ramstore = prev_dmmstore;
         d_wait = busy_o;
     end
-    else if(imemRen | 0) begin
-             ramaddr = imemaddr;
-             Ren = imemRen; 
-            imemload = ramload;
-            i_wait = 1'b1 | 0;
-     end
     else begin
-        Ren = 1;
-        Wen = 1; 
-    end
+        ramaddr = imemaddr;
+        Ren = 1; 
+        imemload = ramload;
+        i_wait = busy_o;
+     end
+    // else begin
+    //     Ren = 1;
+    //     Wen = 1; 
+    // end
 end
 //     else begin
 //         ramaddr = imemaddr;
@@ -64,7 +64,7 @@ end
 //              i_wait = busy_o  ;
 //     end
 // end
-assign i_ready = imemRen & (~i_wait | 0); //FUCK THIS LINE
+assign i_ready = (~i_wait); //FUCK THIS LINE
 assign d_ready = (dmmRen | dmmWen) & ~d_wait;
 
 endmodule

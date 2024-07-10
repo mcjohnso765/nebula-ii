@@ -40,7 +40,7 @@ t02_request_unit r1 (.CLK(CLK), .nRST(nRST), .dmmstorei(dmmstore), .dmmaddri(dmm
  .imemloado(imemload), .dmmloado(dmmload), .d_ready_o(d_ready));
 
 t02_memory_control m1 (.CLK(CLK), .nRST(nRST),
-                    .dmmRen(dmmRen), .dmmWen(dmmWen), .imemRen(imemRen), .busy_o(busy_o),
+                    .dmmRen(dmmRen), .dmmWen(dmmWen), .busy_o(busy_o),
                     .imemaddr(imemaddr_co), .dmmaddr(dmmaddr_co), .dmmstore(dmmstore_co),
                     .ramload(ramload), .i_ready(i_ready_i), .d_ready(d_ready_i), .Ren(Ren_), .Wen(Wen_),
                     .ramaddr(ramaddr_), .ramstore(ramstore_), .dmmload(dmmload_co), .imemload(imemload_co));
