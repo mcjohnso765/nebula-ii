@@ -20,6 +20,7 @@
 module team_09_tb;
 	localparam CLK_PERIOD = 25;
 	reg clock;
+	wire clock_in;
 	reg RSTB;
 	reg CSB;
 	reg power1, power2;
@@ -29,8 +30,12 @@ module team_09_tb;
 	wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
 
+	reg [37:0] mprj_io_in = mprj_io;
+	reg [7:0] mprj_io_0_in = mprj_io_0;
+
 	assign mprj_io_0 = mprj_io[7:0];
 	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
+	assign clock_in = clock;
 
 	//assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 	// assign mprj_io[3] = 1'b1;
@@ -42,71 +47,71 @@ module team_09_tb;
 	always #12.5 clock <= (clock === 1'b0);
 	task left_button_press;
     begin
+        @(negedge clock_in);
+        mprj_io_in[25] = 1'b1;
         @(negedge clock);
-        mprj_io[25] = 1'b1;
-        @(negedge clock)
-        mprj_io[25] = 1'b0;
-        @(posedge clock);
+        mprj_io_in[25] = 1'b0;
+        @(posedge clock_in);
     end
     endtask
 
     task right_button_press;
     begin
-        @(negedge clock);
-        mprj_io[26] = 1'b1;
-        @(negedge clock)
-        mprj_io[26] = 1'b0;
-        @(posedge clock);
+        @(negedge clock_in);
+        mprj_io_in[26] = 1'b1;
+        @(negedge clock_in);
+        mprj_io_in[26] = 1'b0;
+        @(posedge clock_in);
     end
     endtask
 
     task down_button_press;
     begin
+        @(negedge clock_in);
+        mprj_io_in[27] = 1'b1;
         @(negedge clock);
-        mprj_io[27] = 1'b1;
-        @(negedge clock)
-        mprj_io[27] = 1'b0;
-        @(posedge clock);
+        mprj_io_in[27] = 1'b0;
+        @(posedge clock_in);
     end
     endtask
 
     task up_button_press;
     begin
-        @(negedge clock);
-        mprj_io[28] = 1'b1;
-        @(negedge clock)
-        mprj_io[28] = 1'b0;
+        @(negedge clock_in);
+        mprj_io_in[28] = 1'b1;
+        @(negedge clock_in);
+        mprj_io_in[28] = 1'b0;
         @(posedge clock);
     end
     endtask
 
 	task obstacle_gen_press;
 	begin
-		@(negedge clock);
-		mprj_io[30] = 1'b1;
-		@(negedge clock)
-        mprj_io[30] = 1'b0;
-        @(posedge clock);
+		@(negedge clock_in);
+		mprj_io_in[30] = 1'b1;
+		@(negedge clock_in);
+        mprj_io_in[30] = 1'b0;
+        @(posedge clock_in);
 	end
 	endtask
 	
 	task mode_press;
 	begin
-		@(negedge clock);
-		mprj_io[29] = 1'b1;
-		@(negedge clock)
-        mprj_io[29] = 1'b0;
-        @(posedge clock);
+		@(negedge clock_in);
+		mprj_io_in[29] = 1'b1;
+		@(negedge clock_in);
+        mprj_io_in[29] = 1'b0;
+        @(posedge clock_in);
 	end
 	endtask
 
 	task new_game_press;
 	begin
 		@(negedge clock);
-		mprj_io[31] = 1'b1;
-		@(negedge clock)
-        mprj_io[31] = 1'b0;
-        @(posedge clock);
+		mprj_io_in[31] = 1'b1;
+		@(negedge clock_in);
+        mprj_io_in[31] = 1'b0;
+        @(posedge clock_in);
 	end
 	endtask
 
@@ -211,13 +216,13 @@ module team_09_tb;
 	`endif  */
 
 	initial begin
-		$dumpfile("io_ports.vcd");
+		$dumpfile("team_09.vcd");
 		$dumpvars(0, team_09_tb);
 
-		// Repeat cycles of 1000 clock edges as needed to complete testbench
+		// Repeat cycles of 1000000 clock edges as needed to complete testbench
 		repeat (25) begin
-			repeat (1000) @(posedge clock);
-			// $display("+1000 cycles");
+			repeat (1000000) @(posedge clock);
+			// $display("+1000000 cycles");
 		end
 		$display("%c[1;31m",27);
 		`ifdef GL
@@ -249,11 +254,22 @@ module team_09_tb;
 		`else
 		    $display("Monitor: Test 1 Mega-Project IO (RTL) Passed");
 		`endif */
-		#(CLK_PERIOD * 750000);
-    	left_button_press();
-    	#(CLK_PERIOD * 2500000);
-    	down_button_press();
-    	#(CLK_PERIOD * 2500000);
+
+		// ************************************************************************
+        // Test Case 0: Power-on-Reset of the DUT
+        // ************************************************************************
+		#(CLK_PERIOD * 1000);
+		@(negedge clock);
+		new_game_press();
+		//#(CLK_PERIOD * 50000);
+		// ************************************************************************
+        // Test Case 1: Snake Eats an Apple
+        // ************************************************************************
+		
+    	//right_button_press();
+    	//#(CLK_PERIOD * 5000000);
+    	//down_button_press();
+    	//#(CLK_PERIOD * 2500000);
 	    $finish;
 	end
 
@@ -317,7 +333,7 @@ module team_09_tb;
 		.vccd2	  (VDD1V8),
 		.vssd1	  (VSS),
 		.vssd2	  (VSS),
-		.clock    (clock),
+		.clock    (clock_in),
 		.gpio     (gpio),
 		.mprj_io  (mprj_io),
 		.flash_csb(flash_csb),
@@ -328,7 +344,7 @@ module team_09_tb;
 	);
 
 	spiflash #(
-		.FILENAME("io_ports.hex")
+		.FILENAME("team_09.hex")
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),
