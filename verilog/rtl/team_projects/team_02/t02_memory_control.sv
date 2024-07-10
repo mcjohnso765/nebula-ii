@@ -47,16 +47,23 @@ always_comb begin
         d_wait = busy_o;
     end
     else if(imemRen) begin
-        ramaddr = imemaddr;
-        Ren = imemRen; 
-        imemload = ramload;
-        i_wait = busy_o;
-    end
+             ramaddr = imemaddr;
+             Ren = imemRen; 
+            imemload = ramload;
+            i_wait = busy_o;
+     end
     else begin
         Ren = 1;
         Wen = 1; 
     end
 end
+//     else begin
+//         ramaddr = imemaddr;
+//             Ren = imemRen; 
+//             imemload = ramload;
+//              i_wait = busy_o  ;
+//     end
+// end
 assign i_ready = imemRen & ~i_wait; 
 assign d_ready = (dmmRen | dmmWen) & ~d_wait;
 

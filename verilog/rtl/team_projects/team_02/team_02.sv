@@ -54,7 +54,7 @@ module team_02 (
     // add start_addr 
     // make sure all signals are connected
     t02_wishbone_manager wb(.CLK(clk), .nRST(nrst), 
-    .CPU_DAT_I(ramstore), .ADR_I(ramaddr), .SEL_I(4'b1), .WRITE_I(Wen), .READ_I(Ren),
+    .CPU_DAT_I(ramstore), .ADR_I(ramaddr), .SEL_I(4'hF), .WRITE_I(Wen), .READ_I(Ren),
     .CPU_DAT_O(ramload), .BUSY_O(busy_o), 
     .ADR_O(ADR_O), .DAT_O(DAT_O), .SEL_O(SEL_O), .WE_O(WE_O), .STB_O(STB_O), .CYC_O(CYC_O),
     .DAT_I(DAT_I), .ACK_I(ACK_I));
