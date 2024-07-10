@@ -21,6 +21,10 @@
 
 // List of Wishbone Slave Addresses
 // Sample Project
+#define reg_team_05_EN (*(volatile uint32_t*)0x30020000)
+
+
+
 #define reg_sample_proj_EN (*(volatile uint32_t*)0x30010000)
 #define reg_sample_proj_PRESCALER (*(volatile uint32_t*)0x30010004)
 #define reg_sample_proj_IM (*(volatile uint32_t*)0x3001FF00)
@@ -131,4 +135,16 @@ void main()
     reg_sample_proj_EN = (sram_space == 0xFEED0000);
     reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
     reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
+
+
+    // write sram
+    // write
+    // write
+    // write
+
+    // write your design (enable)
+
+    // your design:
+    // read from sram
+    
 }
