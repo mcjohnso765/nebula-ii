@@ -14,7 +14,7 @@ module shift_register (
     end
 
     always_comb begin
-        internal_shift_register = 9'b0;
+        internal_shift_register = shifted_data;
         if (receive_ready == 1) begin
             data_receive = {shifted_data[8:1]};
         end 

@@ -189,7 +189,6 @@ module FSM(
                             Reg_Start = 1'b0;
                             Count_Start = 1'b0;
                             send = 1'b0;
-                            Success = 1'b0;
                         end
                     end
                 end
