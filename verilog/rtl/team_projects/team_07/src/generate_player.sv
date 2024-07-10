@@ -29,8 +29,8 @@ module generate_player (
 
       playerDetect = playerPixel;
 
-      if ((x > (SCo + 9'(blockSize))) && (x < (SCo + (2 * 9'(blockSize))))
-       && (y > (SPo + 8'(blockSize))) && (y < (SPo + (2 * 8'(blockSize))))) begin 
+      if ((x > (SCo + 9'(blockSize))) && (x < (SCo + (2 * 9'(blockSize)))) 
+      && (y > (SPo + 8'(blockSize))) && (y < (SPo + (2 * 8'(blockSize))))) begin 
         playerDetect = 1;
       end else begin
         playerDetect = 0;
