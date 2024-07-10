@@ -281,24 +281,18 @@ always_ff @(posedge clk, negedge nrst) begin
     error_state <= IDLE_e;
   end else begin
     error_state <= nxt_error_state;
-    count_delay <= nxt_count_delay;
+    // count_delay <= nxt_count_delay;
   end
 end
-logic [24:0] nxt_count_delay,count_delay;
-initial count_delay = '0;
+// logic [24:0] nxt_count_delay,count_delay;
+// initial count_delay = '0;
 always_comb begin
-  nxt_count_delay = count_delay;
     nxt_error_state = error_state;
-  if(count_delay > '0)begin 
-    nxt_count_delay = count_delay - 1;
-  end
-   else if(error)begin
+  if(error)begin
     nxt_error_state = PLAY_e;
   end else if (cnt_e_leng == 100) begin  // How long the error buzz sounds
     nxt_error_state = IDLE_e;
-    nxt_count_delay = '0;
   end else begin
-    nxt_count_delay = '0;
     nxt_error_state = error_state;
   end
 end
@@ -471,7 +465,6 @@ always_ff @(posedge clk, negedge nrst) begin
     pzl_state <= IDLE_pzl;
   end else begin
     pzl_state <= nxt_pzl_state;
-    count_delay <= nxt_count_delay;
   end
 end
 logic [24:0] nxt_count_pzl_delay,count_pzl_delay;

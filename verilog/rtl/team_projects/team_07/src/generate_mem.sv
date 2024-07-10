@@ -61,6 +61,8 @@ module generate_mem(
     logic buttonHighlightDetect;
     logic [1:0]display_num[4:0];
     logic [1:0]label_num[3:0][4:0];
+
+    assign stageDetect = '0;
     // assign display_num = '{2'd0, 2'd1, 2'd2, 2'd3, 2'd1};
     // assign label_num[0] = '{2'd0, 2'd0, 2'd0, 2'd0, 2'd0};
     // assign label_num[1] = '{2'd1, 2'd1, 2'd1, 2'd1, 2'd1};
