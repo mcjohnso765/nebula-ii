@@ -159,7 +159,7 @@ fsm f0(.clk(clk),
        .write_adr(32'h33000200),
        .num_adr(32'h33000300),
        .MemWrite(MemWrite),
-       .pc_enable(assembly_en),
+       .pc_enable(),
        .display(lcd_display_data),
        .fsm_state(fsm_state),
        .lcd_en(shift)
