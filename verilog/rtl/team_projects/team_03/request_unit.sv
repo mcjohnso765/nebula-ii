@@ -1,5 +1,5 @@
 module request_unit(
-    input logic clk, rst, memread, memwrite, 
+    input logic en, clk, rst, memread, memwrite, 
     // CPU side signals
     input logic [31:0] data_to_write, 
     // address of the variable we are trying to write data into (memory wise); computed from the ALU  
@@ -45,7 +45,7 @@ always_ff @(posedge clk, posedge rst) begin
         state <= IDLE; 
         //i_request = 1'b0;
         d_hit <= 1'b0; // DATA HIT
-    end else begin
+    end else if (en) begin
         state <= next_state; 
         //read_i <= next_read;
         //write_i <= next_write;
@@ -72,25 +72,25 @@ always_comb begin
     next_instruction = (memread || memwrite) ? instruction : 32'b0;
     case(state) 
         IDLE: begin
-                if(memwrite && !d_hit) begin
+                if(memwrite && !d_hit && en) begin
                     next_state = MEM_WRITE;
                     read_i = 1'b0;
                     write_i = 1'b1;
-                    next_adr = data_address;
+                    next_adr = data_address + 32'h33000000;
                     next_cpu_dat = data_to_write;
                     next_instruction = instruction;
-                end else if (memread && !d_hit) begin
+                end else if (memread && !d_hit && en) begin
                     next_state = MEM_READ;
                     read_i = 1'b1;
                     write_i = 1'b0;
-                    next_adr = data_address;
+                    next_adr = data_address + 32'h33000000;
                     next_cpu_dat = 32'b0;
                     next_instruction = instruction;
-                end else if (!i_hit) begin
+                end else if (!i_hit && en) begin
                     next_state = INSTRUCTION_READ;
                     read_i = 1'b1;
                     write_i = 1'b0;
-                    next_adr = instruction_address;
+                    next_adr = instruction_address + 32'h33000000;
                     //next_cpu_dat = '0;
            end 
         end

@@ -42,7 +42,17 @@
 #define reg_la_sel (*(volatile uint32_t*)0x31000000)
 
 // SRAM address space
-#define sram_space (*(volatile uint32_t*)0x33000000)
+#define sram_space0 (*(volatile uint32_t*)0x33000000)
+#define sram_space1 (*(volatile uint32_t*)0x33000004)
+#define sram_space2 (*(volatile uint32_t*)0x33000008)
+#define sram_space3 (*(volatile uint32_t*)0x3300000C)
+#define sram_space4 (*(volatile uint32_t*)0x33000010)
+#define sram_space5 (*(volatile uint32_t*)0x33000014)
+#define sram_space6 (*(volatile uint32_t*)0x33000018)
+#define sram_space7 (*(volatile uint32_t*)0x3300001C)
+#define sram_space8 (*(volatile uint32_t*)0x33000020)
+#define sram_space9 (*(volatile uint32_t*)0x33000024)
+
 
 
 /*
@@ -127,14 +137,45 @@ void main()
 	reg_gpio_PIN_24TO31 = 0x11111111;
 	reg_gpio_PIN_32TO37 = 0x111111;
 
+   
+   
+/**
+ * 00500513
+00800613
+00a62023
+ */
+
+    sram_space0 = 0x00500513;
+    sram_space1 = 0x00800613;
+    // sram_space2 = 0x00a62023;
+    // sram_space3 = 0x00b54863;
+    // sram_space4 = 0x00a62023;
+    // sram_space5 = 0x00062583;
+    // sram_space6 = 0x00008067;
+    // sram_space7 = 0x00b62023;
+    // sram_space8 = 0x00062503;
+    // sram_space9 = 0x00008067;
+
+    // (*(volatile uint32_t*)0x33000004) = 0x00800593;
+    // (*(volatile uint32_t*)0x33000008) = 0x00a00613;
+    // (*(volatile uint32_t*)0x3300000C) = 0x00b54863;
+    // (*(volatile uint32_t*)0x33000010) = 0x00a62023;
+    // (*(volatile uint32_t*)0x33000014) = 0x00062583;
+    // (*(volatile uint32_t*)0x33000018) = 0x00008067;
+    // (*(volatile uint32_t*)0x3300001C) = 0x00b62023;
+    // (*(volatile uint32_t*)0x33000020) = 0x00062503;
+    // (*(volatile uint32_t*)0x33000024) = 0x00008067;
     // Do stuff with SRAM
-    sram_space = 0x00500513; // li x10, 5
-    *(&sram_space + 1) = 0x00800613; // li x11, 8
-    *(&sram_space + 2) = 0x00c50663; // beq x10, x11
-    *(&sram_space + 3) = 0x00250593; // li x12, 2
-    *(&sram_space + 4) = 0x00008067; // ret
-    *(&sram_space + 5) = 0x00350593; // li x12, 5
-    *(&sram_space + 6) = 0x00008067; // ret
+    // sram_space = 0x00500513; // li x10, 5
+    // *(&sram_space + 4) = 0x00a5a023; // sw x10, 0(x12)
+    // *(&sram_space + 1) = 0x00800593; // li x11, 8
+    // *(&sram_space + 2) = 0x00b54863; // beq x10, x11
+    // *(&sram_space + 3) = 0x00a62023; // li x12, 2
+    // *(&sram_space + 4) = 0x00062583; // ret
+    // *(&sram_space + 5) = 0x00008067; // li x12, 5
+    // *(&sram_space + 6) = 0x00b62023;
+    // *(&sram_space + 7) = 0x00062503; // ret
+    // *(&sram_space + 8) = 0x00008067;
 
     reg_team_03_proj_EN = 0x1; // enabling the design
  //   reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
