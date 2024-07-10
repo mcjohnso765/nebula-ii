@@ -11,7 +11,7 @@ typedef enum logic [5:0] {
 		CU_LB, CU_LH, CU_LW, CU_LBU, CU_LHU, CU_SB, CU_SH, CU_SW, 
 		CU_ADDI, CU_SLTI, CU_SLTIU, CU_SLIU, CU_XORI, CU_ORI, CU_ANDI, CU_SLLI, CU_SRLI, CU_SRAI, 
 		CU_ADD, CU_SUB, CU_SLL, CU_SLT, CU_SLTU, CU_XOR, CU_SRL, CU_SRA, CU_OR, CU_AND,
-		CU_ERROR
+		CU_ERROR, CU_HALT
 	} cuOPType;	
 logic i_ready_i, d_ready_i, dmmRen, dmmWen, imemRen;
 logic [31:0] imemaddr_co, dmmaddr_co, dmmstore_co, dmmload_co, imemload_co;

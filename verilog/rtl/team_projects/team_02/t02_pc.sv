@@ -26,7 +26,7 @@ typedef enum logic [5:0] {
 		CU_LB, CU_LH, CU_LW, CU_LBU, CU_LHU, CU_SB, CU_SH, CU_SW, 
 		CU_ADDI, CU_SLTI, CU_SLTIU, CU_SLIU, CU_XORI, CU_ORI, CU_ANDI, CU_SLLI, CU_SRLI, CU_SRAI, 
 		CU_ADD, CU_SUB, CU_SLL, CU_SLT, CU_SLTU, CU_XOR, CU_SRL, CU_SRA, CU_OR, CU_AND,
-		CU_ERROR
+		CU_ERROR, CU_HALT
 	} cuOPType;	
 
             
@@ -54,6 +54,7 @@ typedef enum logic [5:0] {
                         CU_BGE: next_pc = (~ALUneg | Zero? PC + (signExtend << 1) : PC + 4);
                         CU_BLTU: next_pc = (ALUneg? PC + (signExtend << 1): PC + 4);
                         CU_BGEU: next_pc = (~ALUneg | Zero? PC + (signExtend << 1) : PC + 4);
+                        CU_HALT: next_pc = start_addr;
                         default: next_pc = PC + 4;
                     endcase
                 end else begin

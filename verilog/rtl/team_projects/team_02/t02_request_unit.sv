@@ -13,10 +13,11 @@ typedef enum logic [5:0] {
 		CU_LB, CU_LH, CU_LW, CU_LBU, CU_LHU, CU_SB, CU_SH, CU_SW, 
 		CU_ADDI, CU_SLTI, CU_SLTIU, CU_SLIU, CU_XORI, CU_ORI, CU_ANDI, CU_SLLI, CU_SRLI, CU_SRAI, 
 		CU_ADD, CU_SUB, CU_SLL, CU_SLT, CU_SLTU, CU_XOR, CU_SRL, CU_SRA, CU_OR, CU_AND,
-		CU_ERROR
+		CU_ERROR, CU_HALT
 	} cuOPType;	
 logic nxt_dmmRen, nxt_dmmWen;
-assign imemRen = 1;
+
+
 always_ff@(posedge CLK, negedge nRST) begin
     if (!nRST) begin
         dmmRen <= 0;
@@ -28,6 +29,11 @@ always_ff@(posedge CLK, negedge nRST) begin
     end
 end
 always_comb begin
+    if (cuOP == CU_HALT) begin
+    imemRen = 0;
+    end else begin
+    imemRen = 1;
+    end
     if (i_ready_i) begin
         if(cuOP == CU_LB| cuOP == CU_LH| cuOP == CU_LW | cuOP == CU_LBU | cuOP == CU_LHU) begin
         nxt_dmmRen = 1; 
