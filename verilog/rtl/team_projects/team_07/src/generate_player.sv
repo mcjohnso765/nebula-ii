@@ -21,7 +21,7 @@ module generate_player (
     logic [8:0] SCo = `CUBE_PLAYER + `JUMP_PLAYER* pos_x; // beginning x
     logic [7:0] SPo = `CUBE_PLAYER + `JUMP_PLAYER* pos_y; // beginning y
     logic playerDetect;                     // 1 bit since boolean 0 or 1
-    logic [3:0] blockSize = `CUBE;
+    logic [3:0] blockSize = `CUBE_PLAYER;
 
     // clk is needed for each of the coordinates to specify the range update is cycling through
 
