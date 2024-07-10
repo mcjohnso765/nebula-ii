@@ -146,9 +146,9 @@ always_comb begin
 	end
 	(ITYPE): begin
 		reg_1 = instruction[19:15];
-		rd = instruction[11:7];
+		rd = instruction[11:7]; //TRACED
 		imm = {8'b0, instruction[31:20]};
-		regWrite = 1;
+		regWrite = 1; //TRACED
 		aluSrc = 1;
 		casez(instruction[14:12])
 		ADDI: begin

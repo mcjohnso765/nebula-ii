@@ -1,4 +1,3 @@
-
 module t02_request_unit
 (
     input logic CLK, nRST, i_ready_i, d_ready, 
@@ -17,9 +16,9 @@ typedef enum logic [5:0] {
 		CU_ERROR
 	} cuOPType;	
 logic nxt_dmmRen, nxt_dmmWen;
-assign imemRen = 1; //THISH LINE
+assign imemRen = 1;
 always_ff@(posedge CLK, negedge nRST) begin
-    if (~nRST) begin
+    if (!nRST) begin
         dmmRen <= 0;
         dmmWen <= 0; 
     end
@@ -50,32 +49,12 @@ always_comb begin
         nxt_dmmWen = 0;
     end
 end
-always_ff@(posedge CLK, negedge nRST) begin
-    if(!nRST) begin
-        imemaddro <= 0;
-        dmmaddro <= 0;
-        dmmstoreo <= 0;
-        imemloado <= 0;
-        dmmloado <= 0;
-        i_ready_o <= 0;
-        d_ready_o <= 0;
-    end
-    else begin 
-        imemaddro <= imemaddri; 
-        dmmaddro <= dmmaddri; 
-        dmmstoreo <= dmmstorei;
-        imemloado <= imemloadi;
-        dmmloado <= dmmloadi;
-        i_ready_o <= i_ready_i;
-        d_ready_o <= d_ready;
-    end
-end
 
-// assign imemaddro = imemaddri; 
-// assign dmmaddro = dmmaddri; 
-// assign dmmstoreo = dmmstorei;
-// assign imemloado = imemloadi;
-// assign dmmloado = dmmloadi;
-// assign i_ready_o = i_ready_i;
-// assign d_ready_o = d_ready;
- endmodule
+assign imemaddro = imemaddri; 
+assign dmmaddro = dmmaddri; 
+assign dmmstoreo = dmmstorei;
+assign imemloado = imemloadi;
+assign dmmloado = dmmloadi;
+assign i_ready_o = i_ready_i;
+assign d_ready_o = d_ready;
+endmodule

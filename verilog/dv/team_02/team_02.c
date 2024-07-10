@@ -155,7 +155,7 @@ void main()
     *(&sram_space + 1) = 0x00100113;
 	*(&sram_space + 2) = 0x002080b3;
 	*(&sram_space + 3) = 0x00110133;
-	*(&sram_space + 4) = 0xff9ff1ef;
+	// *(&sram_space + 4) = 0xff9ff1ef;
 
 	// Set start address
     reg_tem_02_start_address = 0x33000000;

@@ -30,7 +30,7 @@ t02_mux aluMux(.in1(immOut), .in2(regData2), .en(aluSrc), .out(aluIn));
 t02_alu arith(.aluOP(aluOP), .inputA(regData1), .inputB(aluIn), .ALUResult(aluOut), .zero(zero), .negative(negative));
 
 t02_register_file DUT(.clk(clk), .nRST(nrst), .reg_write(regWrite), .read_index1(regsel1), .read_index2(regsel2), 
-.read_data1(regData1), .read_data2(regData2), .write_index(w_reg), .write_data(writeData));
+.read_data1(regData1), .read_data2(regData2), .write_index(w_reg), .write_data(writeData), .en(enable));
 
 t02_control controller (.cuOP(cuOP), .instruction(instruction), 
 .reg_1(regsel1), .reg_2(regsel2), .rd(w_reg),

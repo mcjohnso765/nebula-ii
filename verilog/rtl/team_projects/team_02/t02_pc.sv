@@ -34,7 +34,7 @@ typedef enum logic [5:0] {
 
             always_ff@(posedge clk, negedge nRST)
                 if (~nRST)
-                    PC <= start_addr - 32'd4;
+                    PC <= start_addr;
                 // else if (!enable)
                 //     PC <= start_addr;
                 else
