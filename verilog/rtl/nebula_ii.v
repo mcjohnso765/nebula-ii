@@ -92,7 +92,7 @@ module nebula_ii (
 
     wire        wbs_cyc_o_samp, wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_sram;
     wire        wbs_stb_o_samp, wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_sram;
-    wire        wbs_we_o_samp, wbs_we_o_la, wbs_we_o_sram;
+    wire        wbs_we_o_samp, wbs_we_o_gpio, wbs_we_o_la, wbs_we_o_sram;
     wire [31:0] wbs_adr_o_samp, wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
     wire [31:0] wbs_dat_o_samp, wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
     wire [3:0]  wbs_sel_o_samp, wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
