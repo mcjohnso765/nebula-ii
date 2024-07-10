@@ -247,7 +247,7 @@ module wb_test_tb;
 		button_push_right;
 		#3000050;
 		
-        #1500000;  // wait some time before ending
+        #1300000;  // wait some time before ending
 
 		`ifdef GL
 	    	$display("Monitor: NEBULA II-Sample Project (GL) Passed");
