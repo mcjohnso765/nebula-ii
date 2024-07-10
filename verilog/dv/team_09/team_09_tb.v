@@ -120,7 +120,7 @@ module team_09_tb;
 	end
 
 
-	/* `ifdef ENABLE_SDF
+	 `ifdef ENABLE_SDF
 		initial begin
 			$sdf_annotate("../../../sdf/user_proj_example.sdf", uut.mprj) ;
 			$sdf_annotate("../../../sdf/user_project_wrapper.sdf", uut.mprj.mprj) ;
@@ -213,25 +213,25 @@ module team_09_tb;
 			$sdf_annotate("../../../caravel/sdf/gpio_defaults_block.sdf", uut.gpio_defaults_block_36) ;
 			$sdf_annotate("../../../caravel/sdf/gpio_defaults_block.sdf", uut.gpio_defaults_block_37) ;
 		end
-	`endif  */
+	`endif 
 
 	initial begin
 		$dumpfile("team_09.vcd");
 		$dumpvars(0, team_09_tb);
 
 		// Repeat cycles of 1000000 clock edges as needed to complete testbench
-		repeat (25) begin
-			repeat (1000000) @(posedge clock);
-			// $display("+1000000 cycles");
-		end
-		$display("%c[1;31m",27);
-		`ifdef GL
-			$display ("Monitor: Timeout, Test Mega-Project IO Ports (GL) Failed");
-		`else
-			$display ("Monitor: Timeout, Test Mega-Project IO Ports (RTL) Failed");
-		`endif
-		$display("%c[0m",27);
-		$finish;
+		// repeat (25) begin
+		// 	repeat (1000000) @(posedge clock);
+		// 	// $display("+1000000 cycles");
+		// end
+		// $display("%c[1;31m",27);
+		// `ifdef GL
+		// 	$display ("Monitor: Timeout, Test Mega-Project IO Ports (GL) Failed");
+		// `else
+		// 	$display ("Monitor: Timeout, Test Mega-Project IO Ports (RTL) Failed");
+		// `endif
+		// $display("%c[0m",27);
+		// $finish;
 	end
 
 	initial begin
@@ -258,18 +258,18 @@ module team_09_tb;
 		// ************************************************************************
         // Test Case 0: Power-on-Reset of the DUT
         // ************************************************************************
-		#(CLK_PERIOD * 1000);
+		#(CLK_PERIOD * 1000000);
 		@(negedge clock);
 		new_game_press();
-		//#(CLK_PERIOD * 50000);
+		#(CLK_PERIOD * 2000000);
 		// ************************************************************************
         // Test Case 1: Snake Eats an Apple
         // ************************************************************************
 		
-    	//right_button_press();
-    	//#(CLK_PERIOD * 5000000);
-    	//down_button_press();
-    	//#(CLK_PERIOD * 2500000);
+    	right_button_press();
+    	#(CLK_PERIOD * 1000000);
+    	down_button_press();
+    	#(CLK_PERIOD * 25000000);
 	    $finish;
 	end
 
