@@ -49,7 +49,7 @@ module core(
   .data_to_write(data_to_write), .instruction_address(program_counter), 
   .data_address(result), .busy_o(BUSY_O), .cpu_dat_o(CPU_DAT_O), 
   .read_i(READ_I), .write_i(WRITE_I), .cpu_dat_i(CPU_DAT_I), 
-  .instruction(inst), .adr_i(ADR_I), .data_read(data_read), 
+  .instruction(inst), .adr_i(ADR_I), .data_read(data_to_IO), 
   .sel_i(SEL_I), .i_hit(i_hit), .d_hit(d_hit));
 
     wire cpu_clock;
@@ -77,7 +77,7 @@ module core(
 
     byte_demux byte_demux(.reg_b(regB_data), .store_byte_en(store_byte), .b_out(data_to_write));
 
-    //IO_mod_enable IO_mod(.clk(clock), .rst(reset), .write_mem(write_mem), .read_mem(read_mem), .data_from_mem(data_to_IO), .data_address(result), .data_to_write(data_to_write), .data_read(data_read), .IO_out(gpio_out[31:0]), .IO_enable(gpio_oeb[31:0]), .IO_in(gpio_in[31:0]));
+    IO_mod_enable IO_mod(.clk(clock), .rst(reset), .write_mem(write_mem), .read_mem(read_mem), .data_from_mem(data_to_IO), .data_address(result), .data_to_write(data_to_write), .data_read(data_read), .IO_out(gpio_out[31:0]), .IO_enable(gpio_oeb[31:0]), .IO_in(gpio_in[31:0]));
 
     //byte_imm_gen byte_immediate_generator (.b_out(b_out_connect), .imm_gen_byte(data_to_write));
 

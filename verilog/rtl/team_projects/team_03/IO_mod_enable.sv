@@ -8,18 +8,18 @@ module IO_mod_enable(
     input logic [31:0] IO_in
 );
  logic [31:0] output_reg, input_reg, enable_reg;
- logic [31:0] next_output_reg, next_input_reg, next_enable_reg;
+ logic [31:0] next_output_reg, next_input_reg, next_enable_reg, IO_out1, IO_out_en1, IO_in1;
 
 
 always_ff @(posedge clk, posedge rst) begin
     if (rst) begin
-        IO_out <= '0;
+        IO_out1 <= '0;
         input_reg <= '0;
         enable_reg <= '0;
     end
 
     else begin
-        IO_out <= next_output_reg;
+        IO_out1 <= next_output_reg;
         input_reg <= IO_in;
         enable_reg <= next_enable_reg;
 
@@ -29,15 +29,15 @@ end
 
 always_comb begin
 
-    next_output_reg = IO_out;
-    next_enable_reg = IO_out;
+    next_output_reg = IO_out1;
+    next_enable_reg = IO_out1;
     data_read = data_from_mem;
     case(data_address)
         32'hFFFFFFFF: begin
-           next_output_reg = (write_mem) ? data_to_write : IO_out;
+           next_output_reg = (write_mem) ? data_to_write : IO_out1;
         end
         32'hFFFFFFFD: begin
-           next_enable_reg = (write_mem) ? data_to_write : IO_out;
+           next_enable_reg = (write_mem) ? data_to_write : IO_out1;
         end
         32'hFFFFFFFC: begin
            data_read = (read_mem) ? input_reg : data_from_mem;
@@ -45,5 +45,6 @@ always_comb begin
     endcase
 end
 
+assign IO_out = IO_out1;
 
 endmodule
