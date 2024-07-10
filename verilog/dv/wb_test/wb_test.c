@@ -149,9 +149,16 @@ void main()
 00a62023
  */
 
-    sram_space0 = 0x00500513;
-    sram_space1 = 0x00800613;
-    sram_space2 = 0x00a62023;
+sram_space0 = 0x00500513; // li x10, 5
+sram_space1 = 0x00800593; // li x11, 8
+sram_space2 = 0x00a00613; // li x12, 10
+sram_space3 = 0x00a5d863; // bgt x11, x10, BRANCH
+sram_space4 = 0x00a62023; // sw x10, 0(x12)
+sram_space5 = 0x00062583; // lw x11, 0(x12)
+sram_space6 = 0x00008067; // ret
+sram_space7 = 0x00b62023; // sw x11, 0(x12)
+sram_space8 = 0x00062503; // lw x10, 0(x12)
+//sram_space9 = 0x00008067; // ret
     // sram_space3 = 0x00b54863;
     // sram_space4 = 0x00a62023;
     // sram_space5 = 0x00062583;

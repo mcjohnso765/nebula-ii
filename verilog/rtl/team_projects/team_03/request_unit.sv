@@ -61,6 +61,7 @@ always_ff @(posedge clk, posedge rst) begin
         state <= next_state;
         i_hit <= next_i_hit;
         prev_busy <= busy_o;
+        data_read <= next_data_read;
         //i_request <= next_i_request;
     end
 end
