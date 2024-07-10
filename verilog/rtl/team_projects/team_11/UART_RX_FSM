@@ -1,4 +1,4 @@
-module FSM(
+module RX_FSM(
     input logic clk, nrst, receive_ready, no_count, rx_din, falling_edge, new_clk,
     output logic Success, Reg_Start, Count_Start, send
   );

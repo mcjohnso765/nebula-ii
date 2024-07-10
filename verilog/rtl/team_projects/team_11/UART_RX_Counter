@@ -1,4 +1,4 @@
-module counter(
+module RX_counter(
     input logic clk, nrst, count_start, baud_edge,
     input logic [3:0]max,  
     output logic atmax

@@ -14,25 +14,25 @@ module top_RX (
     logic baud_edge;
     logic [8:0]show_internal;
 
-    idle_counter secondcount(.clk(new_clk), .nrst(nrst), .falling_edge(falling_edge), .max(4'b1001),  .no_count(no_count), .countout());
+    RX_idle_counter secondcount(.clk(new_clk), .nrst(nrst), .falling_edge(falling_edge), .max(4'b1001),  .no_count(no_count), .countout());
 
-    shift_register shifting_in(.clk(clk), .nrst(nrst), .Reg_Start(Reg_Start), .receive_ready(send), .Din(rx_din), .data_receive(data_receive), .show_internal(show_internal), .baud_edge(baud_edge));
+    RX_shift_register shifting_in(.clk(clk), .nrst(nrst), .Reg_Start(Reg_Start), .receive_ready(send), .Din(rx_din), .data_receive(data_receive), .show_internal(show_internal), .baud_edge(baud_edge));
 
-    counter count(.clk(clk), .nrst(nrst), .count_start(Count_Start), .baud_edge(baud_edge), .max(4'b1001), .atmax(receive_ready));
+    RX_counter count(.clk(clk), .nrst(nrst), .count_start(Count_Start), .baud_edge(baud_edge), .max(4'b1001), .atmax(receive_ready));
     
-    FSM test(.clk(clk), .nrst(nrst), .receive_ready(receive_ready), .rx_din(rx_din), .falling_edge(falling_edge), .new_clk(new_clk), .Success(success), .Reg_Start(Reg_Start), .Count_Start(Count_Start), .no_count(no_count), .send(send));
+    RX_FSM test(.clk(clk), .nrst(nrst), .receive_ready(receive_ready), .rx_din(rx_din), .falling_edge(falling_edge), .new_clk(new_clk), .Success(success), .Reg_Start(Reg_Start), .Count_Start(Count_Start), .no_count(no_count), .send(send));
 
-    clock_divider baud(.clk(clk), .nrst(nrst), .new_clk(new_clk));
+    RX_clock_divider baud(.clk(clk), .nrst(nrst), .new_clk(new_clk));
 
-    edge_detect detect(.clk(clk), .nrst(nrst), .signal_in(rx_din), .falling_edge(falling_edge));
+    RX_edge_detect detect(.clk(clk), .nrst(nrst), .signal_in(rx_din), .falling_edge(falling_edge));
 
     sr_rx rx_register(.clk(clk), .nrst(nrst), .receive_ready(send), .data_receive(data_receive), .new_clk(new_clk), .msg(msg));
 
-    baud_edge_detect baud_detect(.clk(clk), .nrst(nrst), .signal_in(new_clk), .baud_edge(baud_edge));
+    RX_baud_edge_detect baud_detect(.clk(clk), .nrst(nrst), .signal_in(new_clk), .baud_edge(baud_edge));
 
 endmodule
 
-module idle_counter(
+module RX_idle_counter(
     input logic clk, nrst, falling_edge,
     input logic [3:0]max,  
     output logic no_count,
@@ -67,7 +67,7 @@ module idle_counter(
     end
 endmodule
 
-module shift_register (
+module RX_shift_register (
     input logic clk, nrst, Reg_Start, Din, receive_ready, baud_edge,
     output logic [7:0]data_receive, 
     output logic [8:0]show_internal
@@ -107,7 +107,7 @@ module shift_register (
     assign show_internal = internal_shift_register;
 endmodule
 
-module counter(
+module RX_counter(
     input logic clk, nrst, count_start, baud_edge,
     input logic [3:0]max,  
     output logic atmax
@@ -149,7 +149,7 @@ module counter(
     end
 endmodule
 
-module FSM(
+module RX_FSM(
     input logic clk, nrst, receive_ready, no_count, rx_din, falling_edge, new_clk,
     output logic Success, Reg_Start, Count_Start, send
   );
@@ -252,7 +252,7 @@ module FSM(
     end
 endmodule
 
-module clock_divider (
+module RX_clock_divider (
   input logic clk, nrst,
   output logic new_clk
   );
@@ -289,7 +289,7 @@ module clock_divider (
   end
 endmodule
 
-module edge_detect (
+module RX_edge_detect (
     input logic clk, nrst, signal_in,
     output logic falling_edge
   );
@@ -344,7 +344,7 @@ module sr_rx(
     end
 endmodule
 
-module baud_edge_detect (
+module RX_baud_edge_detect (
     input logic clk, nrst, signal_in,
     output logic baud_edge
   );

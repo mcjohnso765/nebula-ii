@@ -1,4 +1,4 @@
-module shift_register (
+module RX_shift_register (
     input logic clk, nrst, Reg_Start, Din, receive_ready, baud_edge,
     output logic [7:0]data_receive, 
     output logic [8:0]show_internal

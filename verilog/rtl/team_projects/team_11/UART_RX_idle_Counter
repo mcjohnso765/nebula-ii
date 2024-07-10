@@ -1,4 +1,4 @@
-module idle_counter(
+module RX_idle_counter(
     input logic clk, nrst, falling_edge,
     input logic [3:0]max,  
     output logic no_count,
