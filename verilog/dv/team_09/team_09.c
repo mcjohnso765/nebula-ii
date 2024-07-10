@@ -116,6 +116,6 @@ void main()
 	reg_gpio_PIN_24TO31 = 0x99999999;
 	reg_gpio_PIN_32TO37 = 0x999999;
 
-	reg_sample_proj_EN = 0x1;
+	// reg_sample_proj_EN = 0x1;
 }
 
