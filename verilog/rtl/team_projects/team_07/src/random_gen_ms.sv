@@ -29,9 +29,9 @@ module random_gen_ms
 
     always @(posedge clk) begin
         if(r_LFSR[11:9] > 4) begin
-            rand_num = r_LFSR[11:9] - 4;
+            rand_num <= r_LFSR[11:9] - 4;
         end else begin
-            rand_num = r_LFSR[11:9];
+            rand_num <= r_LFSR[11:9];
         end
     end // Assign a default value to rand_num
 

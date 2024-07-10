@@ -57,14 +57,14 @@ module wire_wire_gen (
         if(!nrst) begin
             wire_num <= 3'd0;
             for (int i = 0; i < 6; i++) begin
-              wire_color[i] =3'd0;
+              wire_color[i] <= 3'd0;
             end
             activate_rand_delay_1 <= 1'b0;
             activate_rand_delay_2 <= 1'b0;
         end else begin
             wire_num <= nxt_wire_num;
             for (int i = 0; i < 6; i++) begin
-              wire_color[i] = nxt_wire_color[i];
+              wire_color[i] <= nxt_wire_color[i];
             end
             activate_rand_delay_1 <= activate_rand;
             activate_rand_delay_2 <= activate_rand_delay_1;

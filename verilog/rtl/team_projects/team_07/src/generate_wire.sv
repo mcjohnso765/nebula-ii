@@ -21,7 +21,7 @@ module generate_wire (
     `define WIRE_LENGTH 10
     `define SCREEN_WIDTH 240
     `define MARGIN 40
-    `define SPACE 20
+    `define SPACE_WIRE 20
     `define BAND_HEIGHT 20
     `define HIHGLIGHT 3
 
@@ -31,8 +31,8 @@ module generate_wire (
     always_comb begin
         for(integer i = 0; i < 6; i++) begin     // set the pixel for wire_num number of wires
             wireDetect[i] = 1'd0;
-            if(x < 9'(`SCREEN_WIDTH - (`MARGIN + i * (`WIRE_LENGTH + `SPACE)))
-            && x > 9'(`SCREEN_WIDTH - (`MARGIN + i * (`WIRE_LENGTH + `SPACE) + `WIRE_LENGTH))
+            if(x < 9'(`SCREEN_WIDTH - (`MARGIN + i * (`WIRE_LENGTH + `SPACE_WIRE)))
+            && x > 9'(`SCREEN_WIDTH - (`MARGIN + i * (`WIRE_LENGTH + `SPACE_WIRE) + `WIRE_LENGTH))
             && y > 8'(`MARGIN + `BAND_HEIGHT)
             && y < 8'(`MARGIN + `BAND_HEIGHT + `WIRE_HEIGHT)) begin
                 wireDetect[i] = 1'd1;
@@ -45,8 +45,8 @@ module generate_wire (
             end
         end
         wireHighlightDetect = 0;
-        if(x < 9'(`SCREEN_WIDTH - (`MARGIN + wire_pos * (`WIRE_LENGTH + `SPACE)) + `HIHGLIGHT)
-        && x > 9'(`SCREEN_WIDTH - (`MARGIN + wire_pos * (`WIRE_LENGTH + `SPACE) + `WIRE_LENGTH) - `HIHGLIGHT)
+        if(x < 9'(`SCREEN_WIDTH - (`MARGIN + wire_pos * (`WIRE_LENGTH + `SPACE_WIRE)) + `HIHGLIGHT)
+        && x > 9'(`SCREEN_WIDTH - (`MARGIN + wire_pos * (`WIRE_LENGTH + `SPACE_WIRE) + `WIRE_LENGTH) - `HIHGLIGHT)
         && y > 8'(`MARGIN + `BAND_HEIGHT)
         && y < 8'(`MARGIN + `BAND_HEIGHT + `WIRE_HEIGHT) 
         && !(|wireDetect)) begin

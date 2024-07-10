@@ -31,20 +31,20 @@ module random_gen_pos
 
     always @(posedge clk) begin
         if(r_LFSR[2:0] > 5 && r_LFSR[11:9] <= 5) begin
-            rand_y = r_LFSR[2:0] - 2;
-            rand_x = r_LFSR[11:9];
+            rand_y <= r_LFSR[2:0] - 2;
+            rand_x <= r_LFSR[11:9];
         end
         else if(r_LFSR[2:0] <= 5 && r_LFSR[11:9] > 5)begin 
-            rand_y = r_LFSR[2:0];
-            rand_x = r_LFSR[11:9] - 2;
+            rand_y <= r_LFSR[2:0];
+            rand_x <= r_LFSR[11:9] - 2;
         end  
         else if(r_LFSR[2:0] > 5 && r_LFSR[11:9] > 5)begin 
-            rand_y = r_LFSR[2:0] - 4;
-            rand_x = r_LFSR[11:9] - 2;
+            rand_y <= r_LFSR[2:0] - 4;
+            rand_x <= r_LFSR[11:9] - 2;
         end 
         else begin
-            rand_y = r_LFSR[2:0];
-            rand_x = r_LFSR[11:9];
+            rand_y <= r_LFSR[2:0];
+            rand_x <= r_LFSR[11:9];
         end
     end // Assign a default value to rand_y
         // Assign a default value to rand_x

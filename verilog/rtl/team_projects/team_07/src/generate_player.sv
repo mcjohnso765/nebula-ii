@@ -15,11 +15,11 @@ module generate_player (
 // endmodule
 
     // must be given randomly by RNG of game logic
-    `define JUMP 36
-    `define CUBE 12
+    `define JUMP_PLAYER 36
+    `define CUBE_PLAYER 12
     
-    logic [8:0] SCo = `CUBE + `JUMP* pos_x; // beginning x
-    logic [7:0] SPo = `CUBE + `JUMP* pos_y; // beginning y
+    logic [8:0] SCo = `CUBE_PLAYER + `JUMP_PLAYER* pos_x; // beginning x
+    logic [7:0] SPo = `CUBE_PLAYER + `JUMP_PLAYER* pos_y; // beginning y
     logic playerDetect;                     // 1 bit since boolean 0 or 1
     logic [3:0] blockSize = `CUBE;
 

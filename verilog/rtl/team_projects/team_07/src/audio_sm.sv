@@ -245,7 +245,7 @@ always_comb begin
 always_ff @ (posedge clk, negedge nrst) begin
    if (!nrst) begin
       audio <= '0;
-      count <= '0;
+      // count <= '0;
       cnt_s_freq <= '0;
       cnt_s_leng <= '0; 
       cnt_e_freq <= '0;

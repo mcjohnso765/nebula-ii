@@ -26,7 +26,7 @@ module random_gen_wire_num
     end
 
     always @(posedge clk) begin
-        wire_num = 3'd3 + r_LFSR[1:0];
+        wire_num <= 3'd3 + r_LFSR[1:0];
     end // Assign a default value to rand_y
         // Assign a default value to rand_x
 endmodule

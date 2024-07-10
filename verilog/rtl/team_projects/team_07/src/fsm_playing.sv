@@ -13,7 +13,7 @@
 `define MOD 3'b000
 `define MAZE 3'b001
 `define WIRE 3'b010
-`define MEM 3'd3
+`define MEM 3'b011
 
 `define SELECT 6'b000001
 `define UP 6'b000010

@@ -63,6 +63,7 @@ module generate_mem(
     logic [1:0]label_num[3:0][4:0];
 
     assign stageDetect = '0;
+
     // assign display_num = '{2'd0, 2'd1, 2'd2, 2'd3, 2'd1};
     // assign label_num[0] = '{2'd0, 2'd0, 2'd0, 2'd0, 2'd0};
     // assign label_num[1] = '{2'd1, 2'd1, 2'd1, 2'd1, 2'd1};
@@ -114,7 +115,7 @@ end
         end
     end
 
-    function screen_ssdec (input logic [8:0] x, input logic [7:0] y, input logic [8:0] btm_lf_x, input logic [7:0] btm_lf_y, input logic [6:0] ssdec);
+    function screen_ssdec (input logic [8:0] x_screen, input logic [7:0] y_screen, input logic [8:0] btm_lf_x, input logic [7:0] btm_lf_y, input logic [6:0] ssdec);
         begin
             logic [8:0] SCo;
             logic [7:0] SPo;
@@ -125,53 +126,53 @@ end
             if (ssdec[6]) begin
                 SCo = btm_lf_x - 10;
                 SPo = btm_lf_y + 45;
-                pixelDetect |= hori_ssdec(x, y, SCo, SPo);
+                pixelDetect |= hori_ssdec(x_screen, y_screen, SCo, SPo);
             end
             if (ssdec[5]) begin
                 SCo = btm_lf_x - 10;
                 SPo = btm_lf_y + 45;
-                pixelDetect |= vert_ssdec(x, y, SCo, SPo);
+                pixelDetect |= vert_ssdec(x_screen, y_screen, SCo, SPo);
             end
             if (ssdec[4]) begin
                 SCo = btm_lf_x - 10;
                 SPo = btm_lf_y + 25;
-                pixelDetect |= vert_ssdec(x, y, SCo, SPo);
+                pixelDetect |= vert_ssdec(x_screen, y_screen, SCo, SPo);
             end
             if (ssdec[3]) begin
                 SCo = btm_lf_x - 10;
                 SPo = btm_lf_y + 25;
-                pixelDetect |= hori_ssdec(x, y, SCo, SPo);
+                pixelDetect |= hori_ssdec(x_screen, y_screen, SCo, SPo);
             end
             if (ssdec[2]) begin
                 SCo = btm_lf_x - 30;
                 SPo = btm_lf_y + 25;
-                pixelDetect |= vert_ssdec(x, y, SCo, SPo);
+                pixelDetect |= vert_ssdec(x_screen, y_screen, SCo, SPo);
             end
             if (ssdec[1]) begin
                 SCo = btm_lf_x - 30;
                 SPo = btm_lf_y + 45;
-                pixelDetect |= vert_ssdec(x, y, SCo, SPo);
+                pixelDetect |= vert_ssdec(x_screen, y_screen, SCo, SPo);
             end
             if (ssdec[0]) begin
                 SCo = btm_lf_x - 10;
                 SPo = btm_lf_y + 65;
-                pixelDetect |= hori_ssdec(x, y, SCo, SPo);
+                pixelDetect |= hori_ssdec(x_screen, y_screen, SCo, SPo);
             end
             screen_ssdec = pixelDetect;
         end
     endfunction
 
-    function vert_ssdec (input logic [8:0] x, input logic [7:0] y, input logic [8:0] SCo, input logic [7:0] SPo);
+    function vert_ssdec (input logic [8:0] x_vert, input logic [7:0] y_vert, input logic [8:0] SCo, input logic [7:0] SPo);
         begin
             if( 
-            (((x == SCo -  0) || (x == SCo -  4))
-            &&((y >= SPo +  2) && (y <= SPo + 17)))
+            (((x_vert == SCo -  0) || (x_vert == SCo -  4))
+            &&((y_vert >= SPo +  2) && (y_vert <= SPo + 17)))
             ||
-            (((x == SCo -  1) || (x == SCo -  3))
-            &&((y >= SPo +  1) && (y <= SPo + 18)))
+            (((x_vert == SCo -  1) || (x_vert == SCo -  3))
+            &&((y_vert >= SPo +  1) && (y_vert <= SPo + 18)))
             ||
-            ((x == SCo -  2)
-            &&((y >= SPo +  0) && (y <= SPo + 19)))) begin
+            ((x_vert == SCo -  2)
+            &&((y_vert >= SPo +  0) && (y_vert <= SPo + 19)))) begin
                 vert_ssdec = 1'd1;
             end else begin
                 vert_ssdec = 1'd0;
@@ -179,17 +180,17 @@ end
         end
     endfunction
 
-    function hori_ssdec (input logic [8:0] x, input logic [7:0] y, input logic [8:0] SCo, input logic [7:0] SPo);
+    function hori_ssdec (input logic [8:0] x_hor, input logic [7:0] y_hor, input logic [8:0] SCo, input logic [7:0] SPo);
         begin
             if( 
-            (((y == SPo +  0) || (y == SPo +  4))
-            &&((x <= SCo -  2) && (x >= SCo - 17)))
+            (((y_hor == SPo +  0) || (y_hor == SPo +  4))
+            &&((x_hor <= SCo -  2) && (x_hor >= SCo - 17)))
             ||
-            (((y == SPo +  1) || (y == SPo +  3))
-            &&((x <= SCo -  1) && (x >= SCo - 18)))
+            (((y_hor == SPo +  1) || (y_hor == SPo +  3))
+            &&((x_hor <= SCo -  1) && (x_hor >= SCo - 18)))
             ||
-            ((y == SPo +  2)
-            &&((x <= SCo -  0) && (x >= SCo - 19)))) begin
+            ((y_hor == SPo +  2)
+            &&((x_hor <= SCo -  0) && (x_hor >= SCo - 19)))) begin
                 hori_ssdec = 1'd1;
             end else begin
                 hori_ssdec = 1'd0;

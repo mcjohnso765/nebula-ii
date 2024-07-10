@@ -42,11 +42,11 @@ module random_gen_wire_color
     always @(posedge clk) begin
         for(integer i = 0; i < 6; i++) begin
             if (i >= wire_num) begin
-                wire_color[i] = 3'd5;
+                wire_color[i] <= 3'd5;
             end else if(r_LFSR[i * 3 +: 3] > 3'd4) begin
-                wire_color[i] = r_LFSR[i * 3 +: 3] - 3;
+                wire_color[i] <= r_LFSR[i * 3 +: 3] - 3;
             end else begin
-                wire_color[i] = r_LFSR[i * 3 +: 3];
+                wire_color[i] <= r_LFSR[i * 3 +: 3];
             end
         end
     end // Assign a default value to rand_y
