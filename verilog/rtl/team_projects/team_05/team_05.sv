@@ -665,7 +665,7 @@ module t05_instruction_memory(
 
     always_comb begin
         next_fetch = 1'b0;
-        if((state == Wait) & instr_fetch) begin //data_good & instr_fetch
+        if((state == Wait)) begin //data_good & instr_fetch
             next_fetch = 1'b0;
             stored_instr_adr = instruction_adr_i;
             stored_instr = '0;
@@ -721,6 +721,7 @@ module t05_memcontrol(
 
     logic [2:0] prev_state;
     logic next_next_fetch;
+    logic next_instr;
 
     always_ff @(posedge clk, posedge rst) begin : startFSM
         if (rst) begin
@@ -728,7 +729,7 @@ module t05_memcontrol(
             next_next_fetch <= 0;
         end else begin
             state <= next_state;
-            next_next_fetch <= instr_en;
+            next_next_fetch <= next_instr;
         end
     end
 
@@ -741,6 +742,7 @@ module t05_memcontrol(
         data_out_INSTR = 32'h0;
         next_state = state;
         prev_state = state;
+        next_instr = next_next_fetch;
         case(state)
             INIT: begin 
                 if (!rst) next_state = IDLE;
@@ -769,6 +771,9 @@ module t05_memcontrol(
                     next_state = Wait;
                     prev_state = Read_Request;
                 end
+                if(instr_en) begin
+                    next_instr = 1'b1;
+                end
             end
             
             Write_Request: begin 
@@ -791,6 +796,7 @@ module t05_memcontrol(
                     data_out_INSTR = data_in_BUS; // going to CU
                 end
                 next_state = IDLE;
+                next_instr = 1'b0;
             end
             
             Write: begin 
@@ -801,7 +807,7 @@ module t05_memcontrol(
                 next_state = IDLE;
             end
 
-            Wait: begin 
+            Wait: begin
                 if (!bus_full) begin
                     if (memRead) begin
                         next_state = Read;
