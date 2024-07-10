@@ -8,7 +8,7 @@ module program_counter (
 
     always_ff @(posedge clk, negedge nRST) begin
         if(~nRST)
-            pc <= 32'b0;
+            pc <= 32'h33000000;
         else begin
             pc <= next_pc;
         end

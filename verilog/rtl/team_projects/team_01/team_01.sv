@@ -84,7 +84,8 @@ module team_01 (
 
     team_01_cpu cpu(
    .clk(clk), 
-   .nRST(nrst), 
+   .nRST(nrst),
+   .en(en), 
    .busy_o(busy_o),
    .cpu_dat_o(cpu_dat_o),
    .cpu_dat_i(cpu_dat_i),

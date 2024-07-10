@@ -4,7 +4,7 @@
 
 module team_01_cpu (
   // input logic[31:0] instruction,
-  input logic clk, nRST,
+  input logic clk, nRST, en,
   // input logic [31:0]store,
     //from wishbone
   input logic         busy_o,                     // Wishbone is busy with a transaction, low = transaction complete
@@ -239,11 +239,11 @@ register_file RF0 (.clk(clk),
 // REQUEST UNIT : DONE
 request_unit RU0 (.clk(clk),
                   .nRST(nRST),
-                  .InstrRead(assembly_en),
+                  .InstrRead(en),
                   .DataRead(DataRead),
                   .DataWrite(DataWrite),
                   .DataAddress(DataAddress),
-                  .InstrAddress(InstrAddress >> 2),
+                  .InstrAddress(InstrAddress),
                   .DataToWrite(DataToWrite),
                   .ihit(ihit),
                   .dhit(dhit),
@@ -276,7 +276,7 @@ shift_reg SR1 (.clk(clk),
 
 // ASSEMBLY OR FSM
 always_comb begin
-    if (assembly_en) begin
+    if (1'b1) begin
         DataRead    = asm_read_i;
         DataWrite   = asm_write_i;
         DataAddress = asm_data_adr;

@@ -27,21 +27,27 @@
 // `include			"wb_wrapper.vh"
 
 module team_01_WB (
+	//see .vh file to find out what this shit is
 	`WB_SLAVE_PORTS,
+	//la
 	input	wire	[128-1:0]	la_data_in,
 	output	wire	[128-1:0]	la_data_out,
 	input	wire	[128-1:0]	la_oenb,
+	
+	//gpio
 	input	wire	[34-1:0]	gpio_in,
 	output	wire	[34-1:0]	gpio_out,
 	output	wire	[34-1:0]	gpio_oeb,
+
+	//manager
 	input	wire	[32-1:0]	DAT_I,
-	input	wire	[1-1:0]	ACK_I,
+	input	wire	[1-1:0]		ACK_I,
 	output	wire	[32-1:0]	ADR_O,
 	output	wire	[32-1:0]	DAT_O,
-	output	wire	[4-1:0]	SEL_O,
-	output	wire	[1-1:0]	WE_O,
-	output	wire	[1-1:0]	STB_O,
-	output	wire	[1-1:0]	CYC_O
+	output	wire	[4-1:0]		SEL_O,
+	output	wire	[1-1:0]		WE_O,
+	output	wire	[1-1:0]		STB_O,
+	output	wire	[1-1:0]		CYC_O
 );
 
 	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30010000;

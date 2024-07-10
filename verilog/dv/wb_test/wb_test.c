@@ -129,13 +129,9 @@ void main()
 	reg_gpio_PIN_32TO37 = 0x111111;
 
     // Do stuff with SRAM
-    // sram_space = 0xFEED0000;
-    // *(&sram_space + 1) = 0xABCDEF78;
-    // *(&sram_space + 3) = 0x12345678;
-    // reg_sample_proj_EN = (sram_space == 0xFEED0000);
-    // reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
-    // reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
-
+    sram_space = 0x3e800093;
+    *(&sram_space + 1) = 0x00106113;
+    *(&sram_space + 2) = 0x0020f1b3;
 
     // write sram
     // write
@@ -143,7 +139,7 @@ void main()
     // write
 
     // write your design (enable)
-
+    reg_sample_proj_EN = 1;
     // your design:
     // read from sram
     

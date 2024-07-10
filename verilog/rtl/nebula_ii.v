@@ -51,6 +51,12 @@ module nebula_ii (
     // wire [2:0] designs_irq [NUM_TEAMS:0];
     assign irq = 3'b0; // Default of 0
 
+    //Project Manager Arbitrator Signals
+    wire [31:0] wbs_dat_i_team_01, wbs_data_o_team_01, wbs_adr_i_team_01;
+    wire [3:0] wbs_sel_i_team_01;
+    wire wbs_ack_o_team_01;
+    wire wbs_we_i_team_01, wbs_stb_i_team_01, wbs_cyc_i_team01;
+
     //to arbitrator
     wire        wbs_ack_o_m;
     wire [31:0] wbs_dat_o_m;
@@ -104,7 +110,19 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[1]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[1]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[1]), // Active Low Output Enable
+
+        // manager ports:
+        // user design -> arbitrator (outputs)
+        .ADR_O(wbs_adr_i_team_01),
+        .DAT_O(wbs_dat_i_team_01),
+        .SEL_O(wbs_sel_i_team_01),
+        .WE_O(wbs_we_i_team_01),
+        .STB_O(wbs_stb_i_team_01),
+        .CYC_O(wbs_cyc_i_team_01),
+        // arbitrator -> user design (inputs)
+        .DAT_I(wbs_dat_o_team_01),
+        .ACK_I(wbs_ack_o_team_01)
     );
 
 
@@ -187,7 +205,7 @@ module nebula_ii (
     // Wishbone Arbitrator
     // everywhere with squigly brackets is where more manager signals can be concatinated!!!
     wishbone_arbitrator #(
-        .NUM_MANAGERS(1)
+        .NUM_MANAGERS(2)
     ) wb_arbitrator (
         
     `ifdef USE_POWER_PINS
@@ -199,16 +217,16 @@ module nebula_ii (
         .nRST(~wb_rst_i),
 
         //manager to arbitrator, input
-        .A_ADR_I({wbs_adr_i}),
-        .A_DAT_I({wbs_dat_i}),
-        .A_SEL_I({wbs_sel_i}),
-        .A_WE_I({wbs_we_i}),
-        .A_STB_I({wbs_stb_i}),
-        .A_CYC_I({wbs_cyc_i}),
+        .A_ADR_I({wbs_adr_i_team_01, wbs_adr_i}),
+        .A_DAT_I({wbs_dat_i_team_01, wbs_dat_i}),
+        .A_SEL_I({wbs_sel_i_team_01, wbs_sel_i}),
+        .A_WE_I({wbs_we_i_team_01, wbs_we_i}),
+        .A_STB_I({wbs_stb_i_team_01, wbs_stb_i}),
+        .A_CYC_I({wbs_cyc_i_team_01, wbs_cyc_i}),
 
         //arbitrator to manager, output
-        .A_DAT_O({wbs_dat_o}),
-        .A_ACK_O({wbs_ack_o}),
+        .A_DAT_O({wbs_dat_o_team_01, wbs_dat_o}),
+        .A_ACK_O({wbs_ack_o_team_01, wbs_ack_o}),
 
         //arbitrator to peripheral, input
         .DAT_I(wbs_dat_o_m),
