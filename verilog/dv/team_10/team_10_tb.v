@@ -28,25 +28,33 @@ module team_10_tb;
 
 	wire gpio;
 	wire [37:0] mprj_io;
-	wire [7:0] mprj_io_0;
+	wire [33:0] checkbits;
 
-	assign mprj_io_0 = mprj_io[7:0];
-	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
+	assign checkbits = {mprj_io[37:5], mprj_io[0]};
 
 	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 	// assign mprj_io[3] = 1'b1;
 
+	// reg tb_mode;
+	// reg [3:0] read_row;
+	// assign mprj_io[37] = tb_mode;
+	// assign mprj_io[28:25] = read_row;
+
 	// External clock is used by default.  Make this artificially fast for the
 	// simulation.  Normally this would be a slow clock and the digital PLL
 	// would be the fast clock.
-
 	assign tb_clk = clock;
 	always #12.5 clock <= (clock === 1'b0);
 
-	initial begin
-		clock = 0;
-	end
+	// initial begin
+	// 	clock = 0;
 
+	// 	tb_mode = 1'b1;
+	// 	@(negedge clock);
+	// 	read_row = 4'b1000;
+	// 	@(negedge clock);
+
+	// end
 
 	`ifdef ENABLE_SDF
 		initial begin
@@ -142,13 +150,13 @@ module team_10_tb;
 			$sdf_annotate("../../../caravel/sdf/gpio_defaults_block.sdf", uut.gpio_defaults_block_37) ;
 		end
 	`endif 
-
+	//logic [3:0]tb_readrow;
 	initial begin
 		$dumpfile("team_10.vcd");
 		$dumpvars(0, team_10_tb);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
-		repeat (25) begin
+		repeat (5000000) begin //from 100
 			repeat (1000) @(posedge clock);
 			// $display("+1000 cycles");
 		end
@@ -162,35 +170,35 @@ module team_10_tb;
 		$finish;
 	end
 
-	initial begin
-	    // Observe Output pins [7:0]
-		wait(mprj_io_0 == 8'h01);
-		wait(mprj_io_0 == 8'h02);
-		wait(mprj_io_0 == 8'h03);
-		wait(mprj_io_0 == 8'h04);
-		wait(mprj_io_0 == 8'h05);
-		wait(mprj_io_0 == 8'h06);
-		wait(mprj_io_0 == 8'h07);
-		wait(mprj_io_0 == 8'h08);
-		wait(mprj_io_0 == 8'h09);
-		wait(mprj_io_0 == 8'h0A);   
-		wait(mprj_io_0 == 8'hFF);
-		wait(mprj_io_0 == 8'h00);
+	// initial begin
+	//     // Observe Output pins [7:0]
+	// 	wait(mprj_io_0 == 8'h01);
+	// 	wait(mprj_io_0 == 8'h02);
+	// 	wait(mprj_io_0 == 8'h03);
+	// 	wait(mprj_io_0 == 8'h04);
+	// 	wait(mprj_io_0 == 8'h05);
+	// 	wait(mprj_io_0 == 8'h06);
+	// 	wait(mprj_io_0 == 8'h07);
+	// 	wait(mprj_io_0 == 8'h08);
+	// 	wait(mprj_io_0 == 8'h09);
+	// 	wait(mprj_io_0 == 8'h0A);   
+	// 	wait(mprj_io_0 == 8'hFF);
+	// 	wait(mprj_io_0 == 8'h00);
 		
-		`ifdef GL
-	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
-		`else
-		    $display("Monitor: Test 1 Mega-Project IO (RTL) Passed");
-		`endif
-	    $finish;
-	end
+	// 	`ifdef GL
+	//     	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
+	// 	`else
+	// 	    $display("Monitor: Test 1 Mega-Project IO (RTL) Passed");
+	// 	`endif
+	//     $finish;
+	// end
 
 	initial begin
 		RSTB <= 1'b0;
 		CSB  <= 1'b1;		// Force CSB high
 		#2000;
 		RSTB <= 1'b1;	    	// Release reset
-		#3_00_000;
+		#2000;
 		CSB = 1'b0;		// CSB can be released
 	end
 
@@ -210,7 +218,7 @@ module team_10_tb;
 	end
 
 	always @(mprj_io) begin
-		#1 $display("MPRJ-IO state = %b ", mprj_io[7:0]);
+		#1 $display("{GPIO[37:5], GPIO[0]} = 34'h%h ", checkbits);
 	end
 
 	wire flash_csb;
@@ -266,16 +274,24 @@ module team_10_tb;
 		.io3()			// not used
 	);
 
-// Testbench ports
-localparam CLK_PERIOD = 100; // 100 Hz clk
-logic tb_nRst, tb_role_switch, tb_red, tb_green, tb_blue, tb_error; // Input
-//logic tb_msg_sent;
-logic [3:0] tb_input_row;
-logic [3:0] tb_scan_col;
-logic [7:0] lcd_data; // Final output
-//logic [127:0] tb_play_row1, tb_play_row2, tb_host_row1, tb_host_row2;
+	// initial begin 
+	// 	mprj_io[37] = 1'b1;
 
-assign RSTB = tb_nRst;
+
+
+	// end
+
+// Testbench ports
+//localparam CLK_PERIOD = 100; // 100 Hz clk
+//logic tb_nRst, 
+reg tb_role_switch, tb_role_switch1, tb_red, tb_green, tb_blue, tb_error; // Input
+reg tb_msg_sent;
+reg [3:0] tb_scan_col;
+reg [7:0] lcd_data; // Final output
+reg [127:0] tb_play_row1, tb_play_row2, tb_host_row1, tb_host_row2;
+reg [3:0] tb_input_row, tb_input_row1;
+
+//assign RSTB = tb_nRst;
 
 assign mprj_io[37] = tb_role_switch;
 assign mprj_io[22] = tb_red;
@@ -287,13 +303,18 @@ assign mprj_io[23] = tb_error;
 
 assign mprj_io[28:25] = tb_input_row;
 
-//assign mprj_io[28:25] = tb_play_row1;
-//assign mprj_io[28:25] = tb_play_row2;
-//assign mprj_io[??] = tb_host_row1;
-//assign mprj_io[??] = tb_host_row2;
+//assign mprj_io[36:33] = tb_scan_col;
+//assign mprj_io[17:10] = lcd_data;
 
-assign mprj_io[36:33] = tb_scan_col;
-assign mprj_io[17:10] = lcd_data;
+assign mprj_io[0] = 1'b0;
+assign mprj_io[9:5] = 5'b0;
+assign mprj_io[19:18] = 2'b0;
+assign mprj_io[24] = mprj_io[29]; //rx to tx
+//assign tb_role_switch = 1'b0;
+//assign tb_input_row = 4'b0;
+//assign tb_input_row = 4'b1000;
+
+//assign tb_input_row1 = tb_input_row;
 
 integer tb_test_num;
 
@@ -301,340 +322,339 @@ integer tb_test_num;
 //main main0 (.clk(tb_clk), .nRst(tb_nRst), .role_switch(tb_role_switch), .red(tb_red), .green(tb_green), .blue(tb_blue), .error(tb_error), .play_row1(tb_play_row1), .play_row2(tb_play_row2), .host_row1(tb_host_row1), .host_row2(tb_host_row2), .input_row_player(tb_input_row), .input_row_host(tb_input_row), .msg_sent(tb_msg_sent));
 
 initial begin 
-//     // Signal dump
-//     $dumpfile("dump.vcd");
-//     $dumpvars;
 
-    tb_input_row = 4'd0;
-    tb_role_switch = 0;
-	tb_test_num = -1;
+	wait(uut.chip_core.mprj.mprj.team_10_Wrapper.team_10_WB.instance_to_wrap.\en == 1);
+	@(negedge clock);
 
-    // Wait some time before starting first test case
-    #(0.1);
+	//tb_input_row1= tb_input_row;
+	//tb_role_switch = tb_role_switch1;
+tb_role_switch = 1'b0;
+// tb_input_row = 4'b0000;
+// 	#(30000000);
+// 	tb_input_row = 4'b1000;
+	
 
-    // ***********************************
-    // Test Case 0: Power-on-Reset 
-    // ***********************************
-    tb_test_num += 1;
-    #(CLK_PERIOD * 20);
-    @(negedge tb_clk);
-    tb_nRst = 1'b0; 
-    @(negedge tb_clk);
-    @(negedge tb_clk);
-    tb_nRst = 1'b1;
-    #(CLK_PERIOD * 300000);
+// 	#(300000);
+	
 				
     // ***********************************
     // Test Case 3: Host Side: Setting the word  MOORE 
     // ***********************************
 
     tb_test_num += 1;
-    // //game end
-    // tb_input_row = 4'b0010;
+    // // //game end
+    // tb_input_row = 4'b0;
 
-    // #(CLK_PERIOD * 100000);
+    //#(100000);
 
     // @(negedge tb_clk);
     // tb_input_row = 4'd0;
-    // #(CLK_PERIOD * 600000);
+    // #(600000);
     // press A
     tb_input_row = 4'b1000; // R0 C1 -> 'A'
 
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
     @(posedge tb_clk);
-    #(CLK_PERIOD * 300000); // R3 C0 (submit_letter_key)
+    #(30000000); // R3 C0 (submit_letter_key)
     tb_input_row = 4'b0001;
 
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
-    #(CLK_PERIOD * 200000);
+    #(20000000);
 
     // START E
 
     tb_input_row = 4'b1000; //for E
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
-    #(CLK_PERIOD * 400000);
+    #(40000000);
     tb_input_row = 4'b1000; // 'E'
-    #(CLK_PERIOD * 100000);
+    #(100000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
     @(posedge tb_clk);
-    #(CLK_PERIOD * 200000); // R3 C0 (submit_letter_key)
+    #(20000000); // R3 C0 (submit_letter_key)
     tb_input_row = 4'b0001;
 
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
-    #(CLK_PERIOD * 500000);
+    #(50000000);
 
     // PRESS A
 
     tb_input_row = 4'b1000; // R0 C1 -> 'A'
 
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
     @(posedge tb_clk);
-    #(CLK_PERIOD * 300000); // R3 C0 (submit_letter_key)
+    #(30000000); // R3 C0 (submit_letter_key)
     tb_input_row = 4'b0001;
 
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
-     #(CLK_PERIOD * 100000);
+     #(10000000);
 
     // PRESS I
-    #(CLK_PERIOD * 300000);
+    #(30000000);
     tb_input_row = 4'b0100; // R1 C1 -> 'I'
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
-    #(CLK_PERIOD * 400000);
+    #(40000000);
     tb_input_row = 4'b0100; // R1 C1 -> 'I'
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
-     #(CLK_PERIOD * 400000);
+     #(40000000);
     tb_input_row = 4'b0100; // R1 C1 -> 'I'
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
      @(posedge tb_clk);
-    #(CLK_PERIOD * 500000); // R3 C0 (clear_letter_key)
+    #(50000000); // R3 C0 (clear_letter_key)
     tb_input_row = 4'b0001;
 
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
-    #(CLK_PERIOD * 300000);
+    #(30000000);
 
     // PRESS R
 
      tb_input_row = 4'b0010; // 'R'
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
-    #(CLK_PERIOD * 400000);
+    #(40000000);
     tb_input_row = 4'b0010; // 'R'
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
-     #(CLK_PERIOD * 400000);
+     #(40000000);
     tb_input_row = 4'b0010; // 'R'
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
      @(posedge tb_clk);
-    #(CLK_PERIOD * 400000); // R3 C0 (submit_letter_key)
+    #(40000000); // R3 C0 (submit_letter_key)
     tb_input_row = 4'b0001;
 
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     // PRESS T
 
     tb_input_row = 4'b0010; // 'T'
-    #(CLK_PERIOD * 100000);
+    #(1000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
      @(posedge tb_clk);
-    #(CLK_PERIOD * 300000); // R3 C0 (submit_letter_key)
+    #(30000000); // R3 C0 (submit_letter_key)
     tb_input_row = 4'b0001;
 
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
-    #(CLK_PERIOD * 400000);
+    #(40000000);
 
     //PRESS H
 
 
     tb_input_row = 4'b0100; //H 
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
-     #(CLK_PERIOD * 400000);
+     #(40000000);
     tb_input_row = 4'b0100; // R1 C1 -> 'H'
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
 
      @(posedge tb_clk);
-    #(CLK_PERIOD * 400000); // R3 C0 (submit_letter_key)
+    #(40000000); // R3 C0 (submit_letter_key)
     tb_input_row = 4'b0001;
 
-    #(CLK_PERIOD * 100000);
+    #(10000000);
 
     @(negedge tb_clk);
     tb_input_row = 4'd0;
-    #(CLK_PERIOD * 600000);
+    #(60000000);
 
     tb_input_row = 4'b0001; // (submit word key)
-    #(CLK_PERIOD * 100000);
+    #(10000000);
     @(negedge tb_clk);
     tb_input_row = 4'd0;
-    #(CLK_PERIOD * 300000);
+    #(30000000);
 
-    //  // ***********************************
-    // // Test Case 4: Player Side: losing ;-;
-    // // ***********************************
 
-    // tb_test_num += 1;
-    // tb_input_row = 4'd0;
-    // tb_input_row = 4'd0;
-    // tb_role_switch = 1;
+	$finish;
 
-    // #(CLK_PERIOD * 10000);
+	end 
 
-    // tb_input_row = 4'b0010; // R2 C0 -> 'P'
 
-    // #(CLK_PERIOD * 100000);
+/*
+//      // ***********************************
+//     // Test Case 4: Player Side: losing ;-;
+//     // ***********************************
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
+//     tb_test_num += 1;
+//     tb_input_row = 4'd0;
+//     tb_input_row = 4'd0;
+//     tb_role_switch = 1;
 
-    // #(CLK_PERIOD * 400000);
+//     #(10000);
 
-    // @(posedge tb_clk);
-    // tb_input_row = 4'b0001;  // R3 C0 (submit_letter_key)
+//     tb_input_row = 4'b0010; // R2 C0 -> 'P'
 
-    // #(CLK_PERIOD * 100000);
+//     #(100000);
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
-    // #(CLK_PERIOD * 200000);
-//initial begin 
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
 
-    //  tb_input_row = 4'b1000; // R2 C0 -> 'D'
+//     #(400000);
 
-    // #(CLK_PERIOD * 100000);
+//     @(posedge tb_clk);
+//     tb_input_row = 4'b0001;  // R3 C0 (submit_letter_key)
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
+//     #(100000);
 
-    // @(posedge tb_clk);
-    // #(CLK_PERIOD * 600000); // R3 C0 (submit_letter_key)
-    // tb_input_row = 4'b0001;
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
+//     #(200000);
+// //initial begin 
 
-    // #(CLK_PERIOD * 100000);
+//      tb_input_row = 4'b1000; // R2 C0 -> 'D'
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
-    // #(CLK_PERIOD * 100000);
+//     #(100000);
 
-    // tb_input_row = 4'b1000; //for B
-    // #(CLK_PERIOD * 100000);
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
+//     @(posedge tb_clk);
+//     #(600000); // R3 C0 (submit_letter_key)
+//     tb_input_row = 4'b0001;
 
-    // #(CLK_PERIOD * 400000);
-    // tb_input_row = 4'b1000; // 'B'
-    // #(CLK_PERIOD * 100000);
+//     #(100000);
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
+//     #(100000);
 
-    // @(posedge tb_clk);
-    // #(CLK_PERIOD * 300000); // R3 C0 (submit_letter_key)
-    // tb_input_row = 4'b0001;
+//     tb_input_row = 4'b1000; //for B
+//     #(100000);
 
-    // #(CLK_PERIOD * 100000);
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
-    // #(CLK_PERIOD * 500000);
+//     #(400000);
+//     tb_input_row = 4'b1000; // 'B'
+//     #(100000);
 
-    // tb_input_row = 4'b0100; // R0 C1 -> 'J'
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
 
-    // #(CLK_PERIOD * 100000);
+//     @(posedge tb_clk);
+//     #(300000); // R3 C0 (submit_letter_key)
+//     tb_input_row = 4'b0001;
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
+//     #(100000);
 
-    // @(posedge tb_clk);
-    // #(CLK_PERIOD * 300000); // R3 C0 (submit_letter_key)
-    // tb_input_row = 4'b0001;
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
+//     #(500000);
 
-    // #(CLK_PERIOD * 100000);
+//     tb_input_row = 4'b0100; // R0 C1 -> 'J'
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
-    //  #(CLK_PERIOD * 200000);
+//     #(100000);
 
-    //  tb_input_row = 4'b0100; // R0 C1 -> 'M'
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
 
-    // #(CLK_PERIOD * 100000);
+//     @(posedge tb_clk);
+//     #(300000); // R3 C0 (submit_letter_key)
+//     tb_input_row = 4'b0001;
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
+//     #(100000);
 
-    // @(posedge tb_clk);
-    // #(CLK_PERIOD * 200000); // R3 C0 (submit_letter_key)
-    // tb_input_row = 4'b0001;
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
+//      #(200000);
 
-    // #(CLK_PERIOD * 100000);
+//      tb_input_row = 4'b0100; // R0 C1 -> 'M'
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
-    //  #(CLK_PERIOD * 200000);
+//     #(100000);
 
-    //  tb_input_row = 4'b0010; // R0 C1 -> 'W'
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
 
-    // #(CLK_PERIOD * 100000);
+//     @(posedge tb_clk);
+//     #(200000); // R3 C0 (submit_letter_key)
+//     tb_input_row = 4'b0001;
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
+//     #(100000);
 
-    // @(posedge tb_clk);
-    // #(CLK_PERIOD * 200000); // R3 C0 (submit_letter_key)
-    // tb_input_row = 4'b0001;
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
+//      #(200000);
 
-    // #(CLK_PERIOD * 100000);
+//      tb_input_row = 4'b0010; // R0 C1 -> 'W'
 
-    // @(negedge tb_clk);
-    // tb_input_row = 4'd0;
-    //  #(CLK_PERIOD * 300000);
+//     #(100000);
+
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
+
+//     @(posedge tb_clk);
+//     #(200000); // R3 C0 (submit_letter_key)
+//     tb_input_row = 4'b0001;
+
+//     #(100000);
+
+//     @(negedge tb_clk);
+//     tb_input_row = 4'd0;
+//      #(300000);
 
     $finish;
-end
+end*/
 
 endmodule
-`default_nettype wire
+//`default_nettype wire

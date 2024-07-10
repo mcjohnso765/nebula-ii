@@ -26,8 +26,8 @@
 */
 
 // List of Wishbone Slave Addresses
-// Sample Project
-#define reg_sample_proj_EN (*(volatile uint32_t*)0x300C0000)
+// Team 10
+#define reg_team_10_en (*(volatile uint32_t*)0x300A0000)
 
 // GPIO Control
 #define reg_gpio_PIN_0TO7 (*(volatile uint32_t*)0x32000000)
@@ -57,7 +57,8 @@ void main()
 	/* Set up the housekeeping SPI to be connected internally so	*/
 	/* that external pin changes don't affect it.			*/
 
-	// reg_spi_enable = 1;
+	reg_spi_enable = 1;
+	reg_wb_enable = 1;
 	// reg_spimaster_cs = 0x10001;
 	// reg_spimaster_control = 0x0801;
 
@@ -126,5 +127,5 @@ void main()
 	reg_gpio_PIN_24TO31 = 0xAAAAAAAA;
 	reg_gpio_PIN_32TO37 = 0xAAAAAA;
 
-	reg_sample_proj_EN = 0x1;
+	reg_team_10_en = 0x1;
 }

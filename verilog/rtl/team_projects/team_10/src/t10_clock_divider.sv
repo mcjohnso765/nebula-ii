@@ -24,4 +24,5 @@ module t10_clock_divider (
     else
       next_count = count + 1;
   end
+
 endmodule
