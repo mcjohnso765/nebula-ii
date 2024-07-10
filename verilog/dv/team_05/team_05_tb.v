@@ -544,8 +544,8 @@ module team_05_tb;
 */
 
 		
-       // #1000000;  // wait some time before ending
-		#963762;
+        #1000000;  // wait some time before ending
+		// #963780;
 		`ifdef GL
 	    	$display("Monitor: NEBULA II-Sample Project (GL) Passed");
 		`else
