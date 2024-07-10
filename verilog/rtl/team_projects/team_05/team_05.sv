@@ -155,7 +155,7 @@ module t05_cpu_core(
             data_out_BUS = data_out_BUS_int;
             address_out = address_out_int;
             data_write = data_write_int;
-            mem_read = mem_read_int;
+            mem_read = (next_state == Read) ? 0 : mem_read_int;
         end
     end
     //Instruction Memory -> Control Unit
@@ -199,7 +199,7 @@ module t05_cpu_core(
     logic data_en, instr_en, memWrite, memRead;
 
     // outputs
-    state_t state; //not currently used, it's just kind of there rn
+    state_t next_state, state; //not currently used, it's just kind of there rn
     logic [31:0] data_out_CPU, data_out_INSTR;
     
     //Program Counter
@@ -254,8 +254,10 @@ module t05_cpu_core(
         .instruction_adr_i(pc_val),
         .instruction_i(data_out_INSTR),
         .clk(clk),
-        .data_good(data_good),
+        .data_good(!bus_full),
         .rst(rst),
+        .next_state(next_state),
+        .state(state),
         .instr_fetch(instr_fetch),
         .instruction_adr_o(instruction_adr_o),
         .instruction_o(instruction),
@@ -319,7 +321,7 @@ module t05_cpu_core(
         .pc_val(pc_val));
 
     always_comb begin
-        data_good = !bus_full & (state == Read | state == Write);
+        data_good = !bus_full & (next_state == Read | next_state == Write);
     end
 
     logic [31:0] val2;
@@ -360,6 +362,7 @@ module t05_cpu_core(
         .rst(rst),
         // outputs
         .state(state),
+        .next_state(next_state),
         .address_out(address_out_int), //to external output
         .data_out_CPU(data_out_CPU), //to data mem
         .data_out_BUS(data_out_BUS_int), //to external output
@@ -651,27 +654,33 @@ endmodule
 module t05_instruction_memory(
     input logic [31:0] instruction_adr_i, instruction_i,
     input logic clk, data_good, rst, instr_wait,
+    input logic [2:0] next_state, state,
     output logic instr_fetch,
     output logic [31:0] instruction_adr_o, instruction_o
 );
 
-    logic next_fetch;
+    logic next_fetch, prev_fetch, prev_d_good;
     logic [31:0] stored_instr, stored_instr_adr;
+
 
     always_comb begin
         next_fetch = 1'b0;
-        if(data_good & instr_fetch) begin //data_good & instr_fetch
+        if((state == Wait) & instr_fetch) begin //data_good & instr_fetch
+            next_fetch = 1'b0;
+            stored_instr_adr = instruction_adr_i;
+            stored_instr = '0;
+        end else if((state == Read)) begin
             next_fetch = 1'b0;
             stored_instr_adr = instruction_adr_i;
             stored_instr = instruction_i;
         end else if(!instr_wait) begin
             next_fetch = 1'b1;
             stored_instr_adr = instruction_adr_i;
-            stored_instr = 32'b0;
+            stored_instr = '0;  ////////////32'b0 <-
         end else begin
             next_fetch = 1'b0;
             stored_instr_adr = instruction_adr_i;
-            stored_instr = instruction_i;
+            stored_instr = instruction_o;
         end
     end
 
@@ -680,14 +689,20 @@ module t05_instruction_memory(
             instruction_adr_o <= 32'b0;
             instruction_o <= 32'b0;
             instr_fetch <= 1'b0;
+            prev_d_good <= 0;
+            prev_fetch <= 0;
         end else if(instr_wait) begin
             instruction_adr_o <= instruction_adr_o;
             instruction_o <= instruction_o;
             instr_fetch <= 1'b0;
+            prev_fetch <= instr_fetch;
+            prev_d_good <= data_good;
         end else begin
             instruction_adr_o <= stored_instr_adr;
             instruction_o <= stored_instr;
             instr_fetch <= next_fetch;
+            prev_fetch <= instr_fetch;
+            prev_d_good <= data_good;
         end
     end
 endmodule
@@ -699,18 +714,21 @@ module t05_memcontrol(
     input logic data_en, instr_en, bus_full, memWrite, memRead,
     input logic clk, rst,
     // outputs
-    output logic [2:0] state,
+    output logic [2:0] next_state, state,
     output logic bus_full_CPU,
     output logic [31:0] address_out, data_out_CPU, data_out_BUS, data_out_INSTR
 );
 
-    logic [2:0] next_state, prev_state;
+    logic [2:0] prev_state;
+    logic next_next_fetch;
 
     always_ff @(posedge clk, posedge rst) begin : startFSM
         if (rst) begin
             state <= INIT;
+            next_next_fetch <= 0;
         end else begin
             state <= next_state;
+            next_next_fetch <= instr_en;
         end
     end
 
@@ -736,9 +754,6 @@ module t05_memcontrol(
                 end else if (memWrite) begin
                     next_state = Write_Request;
                     prev_state = Write_Request;
-                end else if (prev_state == Read | prev_state == Write) begin
-                    address_out = address_in;
-                    prev_state = IDLE;
                 end else begin
                     prev_state = IDLE;
                     next_state = IDLE;
@@ -771,7 +786,7 @@ module t05_memcontrol(
                     data_out_CPU = data_in_BUS;
                     data_out_INSTR = 32'b0; // going to MUX
                 end
-                else if (instr_en) begin
+                else if (next_next_fetch) begin
                     data_out_CPU = 32'b0;
                     data_out_INSTR = data_in_BUS; // going to CU
                 end
@@ -788,18 +803,18 @@ module t05_memcontrol(
 
             Wait: begin 
                 if (!bus_full) begin
-                    if (prev_state == Read_Request) begin
+                    if (memRead) begin
                         next_state = Read;
-                    end else if (prev_state == Write_Request) begin
+                    end else if (memWrite) begin
                         next_state = Write;
                     end else begin
                         next_state = Read;
                     end
                 end else begin
                     next_state = Wait;
-                    if(prev_state == Read_Request) begin
+                    if(memRead) begin
                         prev_state = Read_Request;
-                    end else if(prev_state == Write_Request) begin
+                    end else if(memWrite) begin
                         prev_state = Write_Request;
                     end
                 end

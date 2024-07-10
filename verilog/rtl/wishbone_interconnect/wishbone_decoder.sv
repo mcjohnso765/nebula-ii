@@ -157,6 +157,7 @@ always @(*) begin
                         next_ack_reg        = 1'b1;
                     end
                     default: begin
+                        next_ack_reg        = 1'b1;
 
                     end
                 endcase
