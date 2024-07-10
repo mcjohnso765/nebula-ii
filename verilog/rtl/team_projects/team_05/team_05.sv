@@ -68,8 +68,15 @@ module team_05 (
         .CPU_DAT_I(CPU_DAT_I),
         .ADR_I(ADR_I),
         .SEL_I(SEL_I),
+
+
+        // .WRITE_I(WRITE_I),
+        // .READ_I(READ_I),
+
         .WRITE_I(WRITE_I),
         .READ_I(READ_I),
+
+
         .ADR_O(ADR_O),
         .DAT_O(DAT_O),
         .SEL_O(SEL_O),
@@ -116,6 +123,8 @@ endmodule
 typedef enum logic [2:0] {
     INIT = 0,
     IDLE = 1,
+    Read_Request = 2,
+    Write_Request = 3,
     Read = 4,
     Write = 5,
     Wait = 6
@@ -310,10 +319,11 @@ module t05_cpu_core(
         .pc_val(pc_val));
 
     always_comb begin
-        data_good = !bus_full_CPU & (state == Read | state == Write);
+        data_good = !bus_full & (state == Read | state == Write);
     end
 
     logic [31:0] val2;
+
     always_comb begin
         // if (ALU_source) val2 = imm_32;
         // else val2 = reg2;
@@ -650,7 +660,7 @@ module t05_instruction_memory(
 
     always_comb begin
         next_fetch = 1'b0;
-        if(data_good & instr_fetch) begin
+        if(data_good & instr_fetch) begin //data_good & instr_fetch
             next_fetch = 1'b0;
             stored_instr_adr = instruction_adr_i;
             stored_instr = instruction_i;
@@ -721,11 +731,11 @@ module t05_memcontrol(
             
             IDLE: begin
                 if (memRead) begin
-                    next_state = Read;
-                    prev_state = Read;
+                    next_state = Read_Request;
+                    prev_state = Read_Request;
                 end else if (memWrite) begin
-                    next_state = Write;
-                    prev_state = Write;
+                    next_state = Write_Request;
+                    prev_state = Write_Request;
                 end else if (prev_state == Read | prev_state == Write) begin
                     address_out = address_in;
                     prev_state = IDLE;
@@ -736,9 +746,27 @@ module t05_memcontrol(
                 end
             end
             
+            Read_Request: begin 
+                if (bus_full) begin
+                    next_state = Wait;
+                    prev_state = Read_Request;
+                end else begin
+                    next_state = Wait;
+                    prev_state = Read_Request;
+                end
+            end
+            
+            Write_Request: begin 
+                if (bus_full) begin
+                    next_state = Write;
+                end else begin
+                    next_state = Write;
+                end
+            end
+
             Read: begin 
                 address_out = address_in;
-                data_out_BUS = 32'b0; 
+                data_out_BUS = 32'b0;
                 if (data_en) begin
                     data_out_CPU = data_in_BUS;
                     data_out_INSTR = 32'b0; // going to MUX
@@ -755,20 +783,25 @@ module t05_memcontrol(
                 data_out_BUS = data_in_CPU;
                 data_out_INSTR = 32'b0;
                 data_out_CPU = 32'b0;
-                next_state = IDLE; 
+                next_state = IDLE;
             end
 
             Wait: begin 
                 if (!bus_full) begin
-                    if (prev_state == Read) begin
+                    if (prev_state == Read_Request) begin
                         next_state = Read;
-                    end else if (prev_state == Write) begin
+                    end else if (prev_state == Write_Request) begin
                         next_state = Write;
                     end else begin
-                        next_state = IDLE;
+                        next_state = Read;
                     end
                 end else begin
                     next_state = Wait;
+                    if(prev_state == Read_Request) begin
+                        prev_state = Read_Request;
+                    end else if(prev_state == Write_Request) begin
+                        prev_state = Write_Request;
+                    end
                 end
             end
 
