@@ -173,22 +173,17 @@ module FSM(
                         next_state = current_state;
                         Reg_Start = 1'b0;
                         Count_Start = 1'b0;
-                        send = 1'b0;
-                        Success = 1'b0;
                     end
                     else begin
                         if(new_clk == 1'b1) begin
                             Reg_Start = 1'b1;
                             Count_Start = 1'b1;
                             next_state = RECEIVING;
-                            send = 1'b0;
-                            Success = 1'b0;
                         end
                         else begin
                             next_state = current_state;
                             Reg_Start = 1'b0;
                             Count_Start = 1'b0;
-                            send = 1'b0;
                         end
                     end
                 end
@@ -196,16 +191,11 @@ module FSM(
                     next_state = current_state;
                     Reg_Start = 1'b0;
                     Count_Start = 1'b0;
-                    send = 1'b0;
-                    Success = 1'b0;
                 end
             end
 		    RECEIVING: begin
-                next_state = current_state;
                 Count_Start = 1'b1;
                 Reg_Start = 1'b1;
-                send = 1'b0;
-                Success = 1'b0;
                 if(no_count == 1'b1)begin
                     next_state = IDLE;
                     Reg_Start = 1'b0;
@@ -249,10 +239,6 @@ module FSM(
 		        end
                 else begin
                     next_state = current_state;
-                    send = 1'b0;
-                    Count_Start = 1'b0;
-                    Reg_Start = 1'b0;
-                    Success = 1'b0;
                 end
             end
             default: begin
