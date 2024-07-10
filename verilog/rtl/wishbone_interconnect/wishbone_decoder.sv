@@ -92,7 +92,19 @@ always @(*) begin
 
     for(state_idx = 0; state_idx <= (NUM_TEAMS + 3); state_idx++) begin
 
-        if(curr_state[state_idx]) begin
+        if(curr_state == '1) begin //SRAM special state
+            next_state = 1 << 1;
+
+            wbs_cyc_o_periph[0] = wbs_cyc_i_m;
+            wbs_stb_o_periph[0] = wbs_stb_i_m;
+            wbs_we_o_periph[0]  = wbs_we_i_m;
+            wbs_adr_o_periph[0] = wbs_adr_i_m;
+            wbs_dat_o_periph[0] = wbs_dat_i_m;
+            wbs_sel_o_periph[0] = wbs_sel_i_m;
+            next_dat_reg        = wbs_dat_i_periph[0]; 
+            next_ack_reg        = 1'b1;           
+        end
+        else if(curr_state[state_idx]) begin
             if((state_idx == 0) && wbs_cyc_i_m && wbs_stb_i_m) begin
                 //this means we're in IDLE so we look at the adress to decode
                 casez(wbs_adr_i_m) 
@@ -121,7 +133,7 @@ always @(*) begin
                         next_ack_reg        = 1'b1;
                     end
                     32'h3300????: begin //SRAM address space
-                        next_state = 1 << 1;
+                        next_state = '1;
                         
                         wbs_cyc_o_periph[0] = wbs_cyc_i_m;
                         wbs_stb_o_periph[0] = wbs_stb_i_m;
@@ -130,7 +142,7 @@ always @(*) begin
                         wbs_dat_o_periph[0] = wbs_dat_i_m;
                         wbs_sel_o_periph[0] = wbs_sel_i_m;
                         next_dat_reg        = wbs_dat_i_periph[0];
-                        next_ack_reg        = 1'b1;
+                        //next_ack_reg        = 1'b1;
                     end
                     32'h30??????: begin //user project address space
                         next_state = 1 << (3 + wbs_adr_i_m[19:16]);
