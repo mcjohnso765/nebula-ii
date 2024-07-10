@@ -22,7 +22,7 @@ module team_09 (
 	assign la_data_out = 128'b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
 	assign gpio_out[33:25] = 9'b000000000;
 	assign gpio_oeb = 34'b0011111110000000000000000000000000;
-	localparam MAX_LENGTH = 140;
+	localparam MAX_LENGTH = 78;
 	wire snakeBody;
 	wire snakeHead;
 	wire apple;
@@ -61,7 +61,7 @@ module team_09 (
 		.KeyEnc(gpio_in[31]),
 		.GameOver(isGameComplete),
 		.clk(clk),
-		.nrst(nrst || en),
+		.nrst(nrst && en),
 		.sync(sync),
 		.wr(gpio_out[9]),
 		.dcx(gpio_out[8]),
@@ -80,7 +80,7 @@ module team_09 (
 		.y(y),
 		.clk(clk),
 		.pb_mode(gpio_in[29]),
-		.nrst(nrst || en),
+		.nrst(nrst && en),
 		.sync(sync),
 		.curr_length(curr_length),
 		.body(body),
@@ -96,7 +96,7 @@ module team_09 (
 	);
 	obstacle_random obsrand1(
 		.clk(clk),
-		.nRst(nrst || en),
+		.nRst(nrst && en),
 		.randX(randX),
 		.randY(randY),
 		.randX2(randX2),
@@ -110,7 +110,7 @@ module team_09 (
 		.randY(randY),
 		.goodColl(goodColl),
 		.clk(clk),
-		.reset(nrst || en),
+		.reset(nrst && en),
 		.s_reset(sync),
 		.body(body),
 		.apple(apple)
@@ -132,7 +132,7 @@ module team_09 (
 	);
 	collision coll(
 		.clk(clk),
-		.nRst(nrst || en),
+		.nRst(nrst && en),
 		.snakeHead(snakeHead),
 		.snakeBody(snakeBody),
 		.border(border || obstacle),
@@ -142,7 +142,7 @@ module team_09 (
 	);
 	score_posedge_detector score_detect(
 		.clk(clk),
-		.nRst(nrst || en),
+		.nRst(nrst && en),
 		.goodColl_i(goodColl),
 		.badColl_i(badColl),
 		.goodColl(good_coll),
@@ -150,7 +150,7 @@ module team_09 (
 	);
 	score_tracker3 track(
 		.clk(clk),
-		.nRst(nrst || en),
+		.nRst(nrst && en),
 		.goodColl(good_coll),
 		.current_score(curr_length),
 		.badColl(bad_coll),
@@ -164,7 +164,7 @@ module team_09 (
 		.displayOut(displayOut),
 		.blinkToggle(blinkToggle),
 		.clk(clk),
-		.rst(nrst),
+		.rst(nrst && en),
 		.bcd_ones(bcd_ones),
 		.bcd_tens(bcd_tens),
 		.bcd_hundreds(bcd_hundreds)
@@ -177,7 +177,7 @@ module team_09 (
 	assign gpio_out[24:23] = blinkToggle;
 	sound_generator sound_gen(
 		.clk(clk),
-		.rst(~nrst || ~en),
+		.rst(~nrst && ~en),
 		.goodColl_i(goodColl),
 		.badColl_i(badColl),
 		.button_i(1'b0),
