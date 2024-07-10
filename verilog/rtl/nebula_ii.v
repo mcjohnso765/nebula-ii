@@ -37,7 +37,7 @@ module nebula_ii (
     
     // Number of teams (only sample project for now)
     // Replace sample project with your design for testing
-    localparam NUM_TEAMS = 2;
+    localparam NUM_TEAMS = 6;
 
     // LA outputs from all designs
     wire [127:0] designs_la_data_out [NUM_TEAMS:0];
@@ -79,7 +79,7 @@ module nebula_ii (
 
     // Sample Project Instance
     // (replace this with your team design instance when testing)
-    sample_team_proj_Wrapper sample_team_proj_Wrapper (
+    team_06_Wrapper sample_team_proj_Wrapper (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground

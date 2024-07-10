@@ -27,6 +27,7 @@ module wb_test_tb;
 
 	wire gpio;
 	wire [37:0] mprj_io;
+	reg [37:0] mprj_io_in = mprj_io;
 	reg [33:0] expected_io;
 	wire [33:0] checkbits;
 
@@ -138,6 +139,54 @@ module wb_test_tb;
 		end
 	`endif 
 
+	task button_push_reset;
+		@(negedge clock);
+		mprj_io_in[0] <= 1'b1;
+		@(negedge clock);
+		mprj_io_in[0] <= 1'b0;
+		@(posedge clock);
+	endtask
+
+	task button_push_right;
+		@(negedge clock);
+		mprj_io_in[5] <= 1'b1;
+		@(negedge clock);
+		mprj_io_in[5] <= 1'b0;
+		@(posedge clock);
+	endtask
+
+	task button_push_left;
+		@(negedge clock);
+		mprj_io_in[6] <= 1'b1;
+		@(negedge clock);
+		mprj_io_in[6] <= 1'b0;
+		@(posedge clock);
+	endtask
+
+	task button_push_up;
+		@(negedge clock);
+		mprj_io_in[7] <= 1'b1;
+		@(negedge clock);
+		mprj_io_in[7] <= 1'b0;
+		@(posedge clock);
+	endtask
+
+	task button_push_down;
+		@(negedge clock);
+		mprj_io_in[8] <= 1'b1;
+		@(negedge clock);
+		mprj_io_in[8] <= 1'b0;
+		@(posedge clock);
+	endtask
+
+	task button_push_start_pause;
+		@(negedge clock);
+		mprj_io_in[9] <= 1'b1;
+		@(negedge clock);
+		mprj_io_in[9] <= 1'b0;
+		@(posedge clock);
+	endtask
+
 	// Signal dump and timeout check
 	initial begin
 		$dumpfile("wb_test.vcd");
@@ -192,7 +241,11 @@ module wb_test_tb;
 
 		#300;  // wait some time before ending
 */
-
+		// Go right until Dead Test
+		button_push_start_pause;
+		#3000050;
+		button_push_right;
+		#3000050;
 		
         #1500000;  // wait some time before ending
 

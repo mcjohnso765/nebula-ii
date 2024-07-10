@@ -20,7 +20,7 @@ module team_06 (
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
     output wire [33:0] gpio_out, // Breakout Board Pins
-    output wire [33:0] gpio_oeb, // Active Low Output Enable
+    output wire [33:0] gpio_oeb // Active Low Output Enable
     
     /*
     * Add other I/O ports that you wish to interface with the
@@ -35,10 +35,8 @@ module team_06 (
 
     //o is output 
     //1 is input
-    always @(*) begin
-        gpio_oeb = (en) ? 34'b11_1111_0000_0000_0000_0000_0000_0011_1111 : '1;
-        {gpio_out[33:29], gpio_out[5:0]} = '0;
-    end
+    assign gpio_oeb = (en) ? 34'b11_1111_0000_0000_0000_0000_0000_0011_1111 : 34'b11_1111_1111_1111_1111_1111_1111_1111_1111;
+        //{gpio_out[33:29], gpio_out[5:0]} = '0;
     /*
     * Place code and sub-module instantiations here.
     */
