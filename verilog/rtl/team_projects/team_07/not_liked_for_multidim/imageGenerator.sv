@@ -49,13 +49,7 @@ module imageGenerator (
     input logic stagePixel,
     input logic buttonHighlightPixel,
 
-
-    input logic [2:0]wire_color_0,
-    input logic [2:0]wire_color_1,
-    input logic [2:0]wire_color_2,
-    input logic [2:0]wire_color_3,
-    input logic [2:0]wire_color_4,
-    input logic [2:0]wire_color_5,
+    input logic [2:0] wire_color[5:0],
     output wire [8:0] x,                     // current x coordinate
     output wire [7:0] y,                     // current y coordinate
 
@@ -70,14 +64,7 @@ module imageGenerator (
     logic [15:0] currentPixel;
     logic tft_clk;
 	assign tft_clk = clk; // system clock
-        logic [2:0]wire_color[5:0];
 
-    assign    wire_color[0]= wire_color_0;
-    assign    wire_color[1] = wire_color_1;
-    assign    wire_color[2] = wire_color_2;
-    assign    wire_color[3] = wire_color_3;
-    assign    wire_color[4] = wire_color_4;
-    assign    wire_color[5] = wire_color_5;
 	// Use PLL to create a fast clock (~50 MHz):
     // wire clk_10khz;
     // pll pll_inst(clk, tft_clk, clk_10khz);  // 4x faster clock

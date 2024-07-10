@@ -9,23 +9,8 @@ module wire_wire_gen (
     input logic clk,
     input logic activate_rand,
     output logic [2:0] wire_num,
-    output logic [2:0] wire_color_0,
-    output logic [2:0] wire_color_1,
-    output logic [2:0] wire_color_2,
-    output logic [2:0] wire_color_3,
-    output logic [2:0] wire_color_4,
-    output logic [2:0] wire_color_5
+    output logic [2:0] wire_color[5:0]
 );
-    logic [2:0]wire_color[5:0];
-    
-    assign    wire_color_0= wire_color[0];
-    assign    wire_color_1 = wire_color[1];
-    assign    wire_color_2 = wire_color[2];
-    assign    wire_color_3 = wire_color[3];
-    assign    wire_color_4 = wire_color[4];
-    assign    wire_color_5 = wire_color[5];
-    
-    //initilize wire_color
     logic [2:0] rand_wire_num;
     logic [2:0] rand_wire_color[5:0];
     logic activate_rand_delay_1;
@@ -42,12 +27,7 @@ module wire_wire_gen (
         .clk(clk), 
         .random_seed(18'd5869),
         .wire_num(wire_num),
-        .wire_color_0(rand_wire_color[0]),
-        .wire_color_1(rand_wire_color[1]),
-        .wire_color_2(rand_wire_color[2]),
-        .wire_color_3(rand_wire_color[3]),
-        .wire_color_4(rand_wire_color[4]),
-        .wire_color_5(rand_wire_color[5])
+        .wire_color(rand_wire_color)
     );
 
     logic [2:0] nxt_wire_num;
@@ -56,9 +36,7 @@ module wire_wire_gen (
     always_ff @(posedge clk, negedge nrst) begin 
         if(!nrst) begin
             wire_num <= 3'd0;
-            for (int i = 0; i < 6; i++) begin
-              wire_color[i] =3'd0;
-            end
+            wire_color[5:0] <='{default: 3'b000};
             activate_rand_delay_1 <= 1'b0;
             activate_rand_delay_2 <= 1'b0;
         end else begin

@@ -32,77 +32,13 @@ module mem_select_detector(
     input logic activate_rand,
     input logic strobe,
     input logic [5:0] button,
-    input logic [1:0] display_num_0,
-    input logic [1:0] display_num_1,
-    input logic [1:0] display_num_2,
-    input logic [1:0] display_num_3,
-    input logic [1:0] display_num_4,
-    input logic [1:0] label_num_0_0,
-    input logic [1:0] label_num_0_1,
-    input logic [1:0] label_num_0_2,
-    input logic [1:0] label_num_0_3,
-    input logic [1:0] label_num_0_4,
-    input logic [1:0] label_num_1_0,
-    input logic [1:0] label_num_1_1,
-    input logic [1:0] label_num_1_2,
-    input logic [1:0] label_num_1_3,
-    input logic [1:0] label_num_1_4,
-    input logic [1:0] label_num_2_0,
-    input logic [1:0] label_num_2_1,
-    input logic [1:0] label_num_2_2,
-    input logic [1:0] label_num_2_3,
-    input logic [1:0] label_num_2_4,
-    input logic [1:0] label_num_3_0,
-    input logic [1:0] label_num_3_1,
-    input logic [1:0] label_num_3_2,
-    input logic [1:0] label_num_3_3,
-    input logic [1:0] label_num_3_4,
-  // display number for position 1-4, stage 1-5, vary from 1-4
+    input logic [1:0] display_num[4:0],     // display number for stage 1-5, each vary from 1-4
+    input logic [1:0] label_num[3:0][4:0],  // display number for position 1-4, stage 1-5, vary from 1-4
     input logic [1:0] mem_pos,  // current selected position
     output logic mem_error,     // memory game error strobe signal
     output logic mem_clear,     // memory game clear strobe signal
     output logic [2:0] stage
-);  
-
-    logic [1:0]display_num[4:0];
-    logic [1:0]label_num[3:0][4:0];
-    // assign display_num = '{2'd0, 2'd1, 2'd2, 2'd3, 2'd1};
-    // assign label_num[0] = '{2'd0, 2'd0, 2'd0, 2'd0, 2'd0};
-    // assign label_num[1] = '{2'd1, 2'd1, 2'd1, 2'd1, 2'd1};
-    // assign label_num[2] = '{2'd2, 2'd2, 2'd2, 2'd2, 2'd2};
-    // assign label_num[3] = '{2'd3, 2'd3, 2'd3, 2'd3, 2'd3}; 
-    // assign display_num[4:0] = '{display_num_0, display_num_1, display_num_2, display_num_3, display_num_4};
-    // assign label_num[0] = '{label_num_0_0, label_num_0_1, label_num_0_2, label_num_0_3, label_num_0_4};
-    // assign label_num[1] = '{label_num_1_0, label_num_1_1, label_num_1_2, label_num_1_3, label_num_1_4};
-    // assign label_num[2] = '{label_num_2_0, label_num_2_1, label_num_2_2, label_num_2_3, label_num_2_4};
-    // assign label_num[3] = '{label_num_3_0, label_num_3_1, label_num_3_2, label_num_3_3, label_num_3_4};
-
-    assign    display_num[0] = display_num_4;
-    assign    display_num[1] = display_num_3;
-    assign    display_num[2] = display_num_2;
-    assign    display_num[3] = display_num_1;
-    assign    display_num[4] = display_num_0;
-    assign    label_num[0][0] = label_num_0_4;
-    assign    label_num[0][1] = label_num_0_3;
-    assign    label_num[0][2] = label_num_0_2;
-    assign    label_num[0][3] = label_num_0_1;
-    assign    label_num[0][4] = label_num_0_0;
-    assign    label_num[1][0] = label_num_1_4;
-    assign    label_num[1][1] = label_num_1_3;
-    assign    label_num[1][2] = label_num_1_2;
-    assign    label_num[1][3] = label_num_1_1;
-    assign    label_num[1][4] = label_num_1_0;
-    assign    label_num[2][0] = label_num_2_4;
-    assign    label_num[2][1] = label_num_2_3;
-    assign    label_num[2][2] = label_num_2_2;
-    assign    label_num[2][3] = label_num_2_1;
-    assign    label_num[2][4] = label_num_2_0;
-        
-    assign   label_num[3][0] = label_num_3_4;
-    assign   label_num[3][1] = label_num_3_3;
-    assign   label_num[3][2] = label_num_3_2;
-    assign   label_num[3][3] = label_num_3_1;
-   assign     label_num[3][4] = label_num_3_0;
+);
     logic [2:0] nxt_stage;      // logic to update the stage
     logic [1:0] right_pos[4:0]; // correct position for stage 1-5, position vary from 1-4
 
@@ -115,10 +51,7 @@ module mem_select_detector(
     end
 
     always_comb begin
-        for(integer i = 0; i < 4; i++) begin
-        
-                right_pos[i] = 2'b0; 
-        end 
+        right_pos ='{default: 2'b00};
         mem_clear = 1'b0;
         mem_error = 1'b0;
         nxt_stage = stage;
@@ -180,8 +113,7 @@ module mem_select_detector(
         endcase
     
         case (display_num[4])
-            0: begin                    
-                right_pos[4] = 2'd0;                // if display 1:
+            0: begin                                    // if display 1:
                 for(integer i = 0; i < 4; i++) begin
                     if (label_num[i][4] == label_num[right_pos[0]][0]) begin
                         right_pos[4] = 2'(i);           // press the button with the same label you pressed in stage 1
@@ -190,7 +122,6 @@ module mem_select_detector(
             end
             1: begin                                    // if display 2:
                 for(integer i = 0; i < 4; i++) begin
-                    right_pos[4] = 2'd0;  
                     if (label_num[i][4] == label_num[right_pos[1]][1]) begin
                         right_pos[4] = 2'(i);           // press the button with the same label you pressed in stage 2
                     end
@@ -198,7 +129,6 @@ module mem_select_detector(
             end
             2: begin                                    // if display 3:
                 for(integer i = 0; i < 4; i++) begin
-                    right_pos[4] = 2'd0;  
                     if (label_num[i][4] == label_num[right_pos[3]][3]) begin
                         right_pos[4] = 2'(i);           // press the button with the same label you pressed in stage 4
                     end
@@ -206,14 +136,11 @@ module mem_select_detector(
             end
             3: begin                                    // if display 4:
                 for(integer i = 0; i < 4; i++) begin
-                    right_pos[4] = 2'd0;  
                     if (label_num[i][4] == label_num[right_pos[2]][2]) begin
                         right_pos[4] = 2'(i);           // press the button with the same label you pressed in stage 3
                     end
                 end
             end
-            default:
-            right_pos[4] = 2'd0; 
         endcase
 
         if (activate_rand) begin

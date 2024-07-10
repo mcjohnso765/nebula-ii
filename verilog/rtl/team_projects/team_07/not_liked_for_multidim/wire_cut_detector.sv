@@ -23,36 +23,21 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module wire_cut_detector (
+module wire_cut_detector(
     input logic nrst,
     input logic clk,
-    input logic activate_rand,
-    input logic [2:0] playing_state_in,
+    input logic activate_rand,          // signal when move from MENU to PLAY
+    input logic [2:0] playing_state_in, // playing_state input
     input logic strobe,
-    input logic [5:0]button,
-    input logic [2:0] wire_num,
-    input logic [2:0] wire_color_0,
-    input logic [2:0] wire_color_1,
-    input logic [2:0] wire_color_2,
-    input logic [2:0] wire_color_3,
-    input logic [2:0] wire_color_4,
-    input logic [2:0] wire_color_5,
-    input logic [2:0] wire_pos,
-    output logic [5:0] wire_status,
-    output logic wire_clear,
-    output logic wire_error
-);
-    logic [2:0]wire_color[5:0];
-
-    
-    assign    wire_color[0] = wire_color_0;
-    assign    wire_color[1] = wire_color_1;
-    assign    wire_color[2] = wire_color_2;
-    assign    wire_color[3] = wire_color_3;
-    assign    wire_color[4] = wire_color_4;
-    assign    wire_color[5] = wire_color_5;
-    
-    logic [2:0] color_num[4:0];  // number of wire of each color: 0:red, 1:white, 2:yellow, 3:blue, 4:grey
+    input logic [5:0] button,
+    input logic [2:0] wire_num,         // number of wires: from 3 to 6
+    input logic [2:0] wire_color[5:0],  // 6 colors: red, white, yellow, blue, grey, no_wire; 6 wires
+    input logic [2:0] wire_pos,         // wire position
+    output logic [5:0] wire_status,     // wire status, 0 - uncut, 1 - cut
+    output logic wire_clear,            // wire game clear strobe signal
+    output logic wire_error             // wire game error strobe signal
+);  
+    logic [4:0][2:0] color_num;  // number of wire of each color: 0:red, 1:white, 2:yellow, 3:blue, 4:grey
     logic [2:0] right_wire;      // position of the right wire to cut
     logic [5:0] nxt_wire_status; // wire status for six wires
 

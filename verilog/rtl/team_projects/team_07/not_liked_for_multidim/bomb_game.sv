@@ -211,79 +211,50 @@ module bomb_game(
     );
 
     logic [2:0] wire_num;
-logic [5:0] wire_status;
-logic [2:0] wire_pos;
-logic [2:0] wire_color[5:0];
-logic [5:0] wirePixel;
-logic wireHighlightPixel;
-logic wire_error;
-logic wire_clear;
+    logic [5:0] wire_status;
+    logic [2:0] wire_pos;
+    logic [2:0] wire_color[5:0];
+    logic [5:0] wirePixel;
+    logic wireHighlightPixel;
+    logic wire_error;
+    logic wire_clear;
+    wire_game wire_game_0 (
+        .nrst(nrst),
+        .clk(clk),
+        .button(sync_button),
+        .strobe(strobe),
+        .game_state_in(game_state),
+        .playing_state_in(playing_state),
+        .activate_rand(activate_rand),
+        .wire_error(wire_error),
+        .wire_clear(wire_clear),
+        .wire_num(wire_num),
+        .wire_color(wire_color[5:0]),
+        .wire_status(wire_status),
+        .wire_pos(wire_pos)
+    );
 
-wire_game wire_game_0 (
-    .nrst(nrst),
-    .clk(clk),
-    .button(sync_button),
-    .strobe(strobe),
-    .game_state_in(game_state),
-    .playing_state_in(playing_state),
-    .activate_rand(activate_rand),
-    .wire_error(wire_error),
-    .wire_clear(wire_clear),
-    .wire_num(wire_num),
-    .wire_color_0(wire_color[0]),
-    .wire_color_1(wire_color[1]),
-    .wire_color_2(wire_color[2]),
-    .wire_color_3(wire_color[3]),
-    .wire_color_4(wire_color[4]),
-    .wire_color_5(wire_color[5]),
-    .wire_status(wire_status),
-    .wire_pos(wire_pos)
-);
     logic mem_error;
     logic mem_clear;
     logic [1:0] mem_pos;
     logic [1:0] display_num[4:0];
     logic [1:0] label_num[3:0][4:0];
     logic [2:0] stage;
-
-mem_game mem_game_0 (
-    .nrst(nrst),
-    .clk(clk),
-    .button(sync_button),
-    .strobe(strobe),
-    .game_state_in(game_state),
-    .playing_state_in(playing_state),
-    .activate_rand(activate_rand),
-    .mem_error(mem_error),
-    .mem_clear(mem_clear),
-    .mem_pos(mem_pos),
-    .display_num_0(display_num[0]),
-    .display_num_1(display_num[1]),
-    .display_num_2(display_num[2]),
-    .display_num_3(display_num[3]),
-    .display_num_4(display_num[4]),
-    .label_num_0_0(label_num[0][0]),
-    .label_num_0_1(label_num[0][1]),
-    .label_num_0_2(label_num[0][2]),
-    .label_num_0_3(label_num[0][3]),
-    .label_num_0_4(label_num[0][4]),
-    .label_num_1_0(label_num[1][0]),
-    .label_num_1_1(label_num[1][1]),
-    .label_num_1_2(label_num[1][2]),
-    .label_num_1_3(label_num[1][3]),
-    .label_num_1_4(label_num[1][4]),
-    .label_num_2_0(label_num[2][0]),
-    .label_num_2_1(label_num[2][1]),
-    .label_num_2_2(label_num[2][2]),
-    .label_num_2_3(label_num[2][3]),
-    .label_num_2_4(label_num[2][4]),
-    .label_num_3_0(label_num[3][0]),
-    .label_num_3_1(label_num[3][1]),
-    .label_num_3_2(label_num[3][2]),
-    .label_num_3_3(label_num[3][3]),
-    .label_num_3_4(label_num[3][4]),
-    .stage(stage)
-);
+    mem_game mem_game_0 (
+        .nrst(nrst),
+        .clk(clk),
+        .button(sync_button),
+        .strobe(strobe),
+        .game_state_in(game_state),
+        .playing_state_in(playing_state),
+        .activate_rand(activate_rand),
+        .mem_error(mem_error),
+        .mem_clear(mem_clear),
+        .mem_pos(mem_pos),
+        .display_num(display_num),
+        .label_num(label_num),
+        .stage(stage)
+    );
 
     logic [8:0] x;
     logic [7:0] y;
@@ -302,33 +273,8 @@ mem_game mem_game_0 (
     generate_boom boomGen(.clk(clk), .nrst(nrst), .x(x), .y(y), .boomPixel(boomPixel));
     generate_wire wireGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .wire_num(wire_num), .wire_status(wire_status), .wire_pos(wire_pos),
        .wirePixel(wirePixel), .wireHighlightPixel(wireHighlightPixel));
-    generate_mem memGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .stage(stage), .mem_pos(mem_pos), .displayPixel(displayPixel),
-     .buttonPixel(buttonPixel), .labelPixel(labelPixel), .stagePixel(stagePixel), .buttonHighlightPixel(buttonHighlightPixel),
-        .display_num_0(display_num[0]),
-    .display_num_1(display_num[1]),
-    .display_num_2(display_num[2]),
-    .display_num_3(display_num[3]),
-    .display_num_4(display_num[4]),
-    .label_num_0_0(label_num[0][0]),
-    .label_num_0_1(label_num[0][1]),
-    .label_num_0_2(label_num[0][2]),
-    .label_num_0_3(label_num[0][3]),
-    .label_num_0_4(label_num[0][4]),
-    .label_num_1_0(label_num[1][0]),
-    .label_num_1_1(label_num[1][1]),
-    .label_num_1_2(label_num[1][2]),
-    .label_num_1_3(label_num[1][3]),
-    .label_num_1_4(label_num[1][4]),
-    .label_num_2_0(label_num[2][0]),
-    .label_num_2_1(label_num[2][1]),
-    .label_num_2_2(label_num[2][2]),
-    .label_num_2_3(label_num[2][3]),
-    .label_num_2_4(label_num[2][4]),
-    .label_num_3_0(label_num[3][0]),
-    .label_num_3_1(label_num[3][1]),
-    .label_num_3_2(label_num[3][2]),
-    .label_num_3_3(label_num[3][3]),
-    .label_num_3_4(label_num[3][4]));
+    generate_mem memGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .display_num(display_num), .label_num(label_num), .stage(stage), .mem_pos(mem_pos),
+        .displayPixel(displayPixel), .buttonPixel(buttonPixel), .labelPixel(labelPixel), .stagePixel(stagePixel), .buttonHighlightPixel(buttonHighlightPixel));
 
     logic tft_sdo;
     logic tftstate;
@@ -349,12 +295,7 @@ mem_game mem_game_0 (
         .boomPixel(boomPixel),
         .wirePixel(wirePixel),
         .wireHighlightPixel(wireHighlightPixel),
-        .wire_color_0(wire_color[0]),
-        .wire_color_1(wire_color[1]),
-        .wire_color_2(wire_color[2]),
-        .wire_color_3(wire_color[3]),
-        .wire_color_4(wire_color[4]),
-        .wire_color_5(wire_color[5]),
+        .wire_color(wire_color[5:0]),
         .displayPixel(displayPixel), 
         .buttonPixel(buttonPixel), 
         .labelPixel(labelPixel), 
