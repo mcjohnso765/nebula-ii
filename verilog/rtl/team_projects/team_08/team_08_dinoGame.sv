@@ -17,7 +17,7 @@ module team_08_dinoGame (input clk, input up, input rst,
     output logic [7:0] data,
 
     /*score*/output logic [6:0] ones_score, tens_score,
-    output logic collides, PWM_o
+    output logic collides
     //output logic blinkToggle
     );
 
@@ -114,7 +114,7 @@ module team_08_dinoGame (input clk, input up, input rst,
     team_08_ssdec tens(.in(bcd_tens), .enable(1'b1), .out(tens_score));
 
     ///add synthesizer module 
-    team_08_PWM syn(.clk(clk), .nrst(~rst), .enable(1'b1), .gameover(game_over), .light(), .out(PWM_o), .jump(dinoJumpGood));
+    //team_08_PWM syn(.clk(clk), .nrst(~rst), .enable(1'b1), .gameover(game_over), .light(), .out(PWM_o), .jump(dinoJumpGood));
 
 
     

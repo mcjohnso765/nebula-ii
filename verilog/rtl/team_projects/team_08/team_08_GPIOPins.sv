@@ -6,7 +6,6 @@ module team_08_GPIOPins(
 
 logic cs, cd, wr, rd;
 logic tft_sck, tft_sdi, tft_dc, tft_reset, tft_cs;
-logic dac_sdi, dac_cs, dac_sck;
 logic [6:0] ones_score, tens_score;
 logic up, collides;    
 logic [7:0] data;
@@ -21,11 +20,10 @@ logic [7:0] data;
     .tft_sck(tft_sck), .tft_sdi(tft_sdi), .tft_dc(tft_dc), .tft_reset(tft_reset), .tft_cs(tft_cs),
    
    /*set pin values*/
-    .PWM_o(out[32]),
     .ones_score(ones_score), 
     .tens_score(tens_score));
 
-assign out[31:27] = 0;
+assign out[32:27] = 0;
 
 
 always_comb begin

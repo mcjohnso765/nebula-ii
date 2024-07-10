@@ -27,7 +27,7 @@ module top
  // assign left[7] = pb[1];
   // Instantiate top module
 
-logic [13:0] empty;
+logic [14:0] empty;
 logic [33:0] in, out;
 
 team_08_GPIOPins game(
@@ -36,7 +36,7 @@ team_08_GPIOPins game(
 always_comb begin
   
     in = {11'd0, pb[17], pb[18], ~pb[19], 20'd0};
-    {right[5], right[7], empty[4:0], left[7:0], ss1[6:0], ss0[6:0], right[4:0]} = out;
+    {right[5], empty[5:0], left[7:0], ss1[6:0], ss0[6:0], right[4:0]} = out;
   
 end
 

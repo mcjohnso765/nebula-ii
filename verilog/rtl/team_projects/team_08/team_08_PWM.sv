@@ -15,13 +15,12 @@ output logic light
 logic [8:0] state;
 logic [8:0] state_n;
 logic [18:0] max_in, ratio_in;
-logic [99:0] ratio_lookup [18:0];
+logic [18:0] ratio_lookup [99:0];
 logic [18:0] count;
 logic [6:0] note;
 logic innerlight;
 
 fsm f1 (.clk(clk), .enable(enable), .over(gameover), .nrst(nrst), .state(note), .jump(jump));
-sound notes (.note(note), .max_in(max_in), .ratio_lookup(ratio_lookup));
 counter counter1 (.clk(clk), .enable(enable), .nrst(nrst), .max(max_in), .ratio(ratio_in), .count(count), .out(out));
 
 always_comb begin
@@ -50,6 +49,707 @@ always_ff @(posedge clk, negedge nrst) begin
        light <= innerlight;
 end
 end
+
+logic [18:0] MAX_IN_VALUES [26:0];
+ /*= {
+   BNOTE, ENOTEL, GNOTE, ENOTEL, BNOTE, ENOTEL, GNOTE, ENOTEL,
+   ANOTE, DNOTEL, FNOTEL, DNOTEL, ANOTE, DNOTEL, FNOTEL, DNOTEL, 
+   BNOTE, DNOTEL, FNOTEL, DNOTEL, BNOTE, DNOTEL, DNOTE, CNOTE, BNOTE, ANOTE, BNOTE
+};*/
+
+logic [18:0] ZERO_LOOKUP [99:0];
+initial begin
+   for (int i = 0; i < 27; i++) begin
+      MAX_IN_VALUES[i] = 19'b0;
+
+   end
+end
+initial begin
+   for (int i = 0; i < 100; i++) begin
+      ZERO_LOOKUP[i] = 19'b0;
+
+   end
+end
+
+logic [18:0] LS_LOOKUP [99:0];
+assign LS_LOOKUP = {
+   19'd181818, 19'd193234, 19'd204606, 19'd215887, 19'd227034, 19'd238003, 19'd248750, 19'd259232, 19'd269409, 19'd279241,
+   19'd288688, 19'd297713, 19'd306281, 19'd314358, 19'd321911, 19'd328912, 19'd335332, 19'd341146, 19'd346332, 19'd350868,
+   19'd354737, 19'd357924, 19'd360416, 19'd362202, 19'd363277, 19'd363636, 19'd363277, 19'd362202, 19'd360416, 19'd357924,
+   19'd354737, 19'd350868, 19'd346332, 19'd341146, 19'd335332, 19'd328912, 19'd321911, 19'd314358, 19'd306281, 19'd297713,
+   19'd288688, 19'd279241, 19'd269409, 19'd259232, 19'd248750, 19'd238003, 19'd227034, 19'd215887, 19'd204606, 19'd193234,
+   19'd181818, 19'd170402, 19'd159030, 19'd147749, 19'd136602, 19'd125633, 19'd114886, 19'd104404, 19'd94227, 19'd84395,
+   19'd74948, 19'd65923, 19'd57355, 19'd49278, 19'd41725, 19'd34724, 19'd28304, 19'd22490, 19'd17304, 19'd12768,
+   19'd8899, 19'd5712, 19'd3220, 19'd1434, 19'd359, 19'd0, 19'd359, 19'd1434, 19'd3220, 19'd5712,
+   19'd8899, 19'd12768, 19'd17304, 19'd22490, 19'd28304, 19'd34724, 19'd41725, 19'd49278, 19'd57355, 19'd65923,
+   19'd74948, 19'd84395, 19'd94227, 19'd104404, 19'd114886, 19'd125633, 19'd136602, 19'd147749, 19'd159030, 19'd170402};
+
+note_t max_inOFF = OFF;
+
+always_comb begin
+   case(note) 
+        0: begin
+         max_in = MAX_IN_VALUES[0];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        2: begin
+         max_in = MAX_IN_VALUES[1];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        4: begin
+         max_in = MAX_IN_VALUES[2];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        6: begin
+         max_in = MAX_IN_VALUES[3];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        8: begin
+         max_in = MAX_IN_VALUES[4];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        10: begin
+         max_in = MAX_IN_VALUES[5];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        12: begin
+         max_in = MAX_IN_VALUES[6];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        14: begin
+         max_in = MAX_IN_VALUES[7];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        16: begin
+         max_in = MAX_IN_VALUES[8];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        18: begin
+         max_in = MAX_IN_VALUES[9];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        20: begin
+         max_in = MAX_IN_VALUES[10];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        22: begin
+         max_in = MAX_IN_VALUES[11];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        24: begin
+         max_in = MAX_IN_VALUES[12];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        26: begin
+         max_in = MAX_IN_VALUES[13];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        28: begin
+         max_in = MAX_IN_VALUES[14];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        30: begin
+         max_in = MAX_IN_VALUES[15];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        32: begin
+         max_in = MAX_IN_VALUES[16];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        34: begin
+         max_in = MAX_IN_VALUES[17];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        36: begin
+         max_in = MAX_IN_VALUES[18];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        38: begin
+         max_in = MAX_IN_VALUES[19];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        40: begin
+         max_in = MAX_IN_VALUES[20];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        42: begin
+         max_in = MAX_IN_VALUES[21];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        44: begin
+         max_in = MAX_IN_VALUES[22];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        46: begin
+         max_in = MAX_IN_VALUES[23];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        48: begin
+         max_in = MAX_IN_VALUES[24];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        50: begin
+         max_in = MAX_IN_VALUES[25];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+        52: begin
+         max_in = MAX_IN_VALUES[26];
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+      53: begin
+         max_in = BFLAT;
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+      54: begin
+         max_in = LOW;
+         ratio_lookup[0] = LS_LOOKUP[0];
+         ratio_lookup[1] = LS_LOOKUP[1];
+         ratio_lookup[2] = LS_LOOKUP[2];
+         ratio_lookup[3] = LS_LOOKUP[3];
+         ratio_lookup[4] = LS_LOOKUP[4];
+         ratio_lookup[5] = LS_LOOKUP[5];
+         ratio_lookup[6] = LS_LOOKUP[6];
+         ratio_lookup[7] = LS_LOOKUP[7];
+         ratio_lookup[8] = LS_LOOKUP[8];
+         ratio_lookup[9] = LS_LOOKUP[9];
+         ratio_lookup[10] = LS_LOOKUP[10];
+         ratio_lookup[11] = LS_LOOKUP[11];
+         ratio_lookup[12] = LS_LOOKUP[12];
+         ratio_lookup[13] = LS_LOOKUP[13];
+         ratio_lookup[14] = LS_LOOKUP[14];
+         ratio_lookup[15] = LS_LOOKUP[15];
+         ratio_lookup[16] = LS_LOOKUP[16];
+         ratio_lookup[17] = LS_LOOKUP[17];
+         ratio_lookup[18] = LS_LOOKUP[18];
+      end
+      default:begin
+         max_in = OFF;
+         ratio_lookup[0] = ZERO_LOOKUP[0];
+         ratio_lookup[1] = ZERO_LOOKUP[1];
+         ratio_lookup[2] = ZERO_LOOKUP[2];
+         ratio_lookup[3] = ZERO_LOOKUP[3];
+         ratio_lookup[4] = ZERO_LOOKUP[4];
+         ratio_lookup[5] = ZERO_LOOKUP[5];
+         ratio_lookup[6] = ZERO_LOOKUP[6];
+         ratio_lookup[7] = ZERO_LOOKUP[7];
+         ratio_lookup[8] = ZERO_LOOKUP[8];
+         ratio_lookup[9] = ZERO_LOOKUP[9];
+         ratio_lookup[10] = ZERO_LOOKUP[10];
+         ratio_lookup[11] = ZERO_LOOKUP[11];
+         ratio_lookup[12] = ZERO_LOOKUP[12];
+         ratio_lookup[13] = ZERO_LOOKUP[13];
+         ratio_lookup[14] = ZERO_LOOKUP[14];
+         ratio_lookup[15] = ZERO_LOOKUP[15];
+         ratio_lookup[16] = ZERO_LOOKUP[16];
+         ratio_lookup[17] = ZERO_LOOKUP[17];
+         ratio_lookup[18] = ZERO_LOOKUP[18];
+      end
+   endcase
+end 
 endmodule
 
 module counter (
@@ -111,159 +811,7 @@ end
 
 endmodule
 
-module sound (
-   input logic [6:0] note,
-   output logic [18:0] max_in,
-   output logic [99:0] ratio_lookup [18:0] 
-);
 
-logic [26:0] MAX_IN_VALUES [18:0] = {
-   BNOTE, ENOTEL, GNOTE, ENOTEL, BNOTE, ENOTEL, GNOTE, ENOTEL,
-   ANOTE, DNOTEL, FNOTEL, DNOTEL, ANOTE, DNOTEL, FNOTEL, DNOTEL, 
-   BNOTE, DNOTEL, FNOTEL, DNOTEL, BNOTE, DNOTEL, DNOTE, CNOTE, BNOTE, ANOTE, BNOTE
-};
-
-logic [99:0] ZERO_LOOKUP [18:0] = 1900'b0;
-
-logic [99:0] LS_LOOKUP [18:0] = {
-   19'd181818, 19'd193234, 19'd204606, 19'd215887, 19'd227034, 19'd238003, 19'd248750, 19'd259232, 19'd269409, 19'd279241,
-   19'd288688, 19'd297713, 19'd306281, 19'd314358, 19'd321911, 19'd328912, 19'd335332, 19'd341146, 19'd346332, 19'd350868,
-   19'd354737, 19'd357924, 19'd360416, 19'd362202, 19'd363277, 19'd363636, 19'd363277, 19'd362202, 19'd360416, 19'd357924,
-   19'd354737, 19'd350868, 19'd346332, 19'd341146, 19'd335332, 19'd328912, 19'd321911, 19'd314358, 19'd306281, 19'd297713,
-   19'd288688, 19'd279241, 19'd269409, 19'd259232, 19'd248750, 19'd238003, 19'd227034, 19'd215887, 19'd204606, 19'd193234,
-   19'd181818, 19'd170402, 19'd159030, 19'd147749, 19'd136602, 19'd125633, 19'd114886, 19'd104404, 19'd94227, 19'd84395,
-   19'd74948, 19'd65923, 19'd57355, 19'd49278, 19'd41725, 19'd34724, 19'd28304, 19'd22490, 19'd17304, 19'd12768,
-   19'd8899, 19'd5712, 19'd3220, 19'd1434, 19'd359, 19'd0, 19'd359, 19'd1434, 19'd3220, 19'd5712,
-   19'd8899, 19'd12768, 19'd17304, 19'd22490, 19'd28304, 19'd34724, 19'd41725, 19'd49278, 19'd57355, 19'd65923,
-   19'd74948, 19'd84395, 19'd94227, 19'd104404, 19'd114886, 19'd125633, 19'd136602, 19'd147749, 19'd159030, 19'd170402};
-
-note_t max_inOFF = OFF;
-
-always_comb begin
-   case(note) 
-        0: begin
-         max_in = MAX_IN_VALUES[0];
-         ratio_lookup = LS_LOOKUP;
-      end
-        2: begin
-         max_in = MAX_IN_VALUES[1];
-         ratio_lookup = LS_LOOKUP;
-      end
-        4: begin
-         max_in = MAX_IN_VALUES[2];
-         ratio_lookup = LS_LOOKUP;
-      end
-        6: begin
-         max_in = MAX_IN_VALUES[3];
-         ratio_lookup = LS_LOOKUP;
-      end
-        8: begin
-         max_in = MAX_IN_VALUES[4];
-         ratio_lookup = LS_LOOKUP;
-      end
-        10: begin
-         max_in = MAX_IN_VALUES[5];
-         ratio_lookup = LS_LOOKUP;
-      end
-        12: begin
-         max_in = MAX_IN_VALUES[6];
-         ratio_lookup = LS_LOOKUP;
-      end
-        14: begin
-         max_in = MAX_IN_VALUES[7];
-         ratio_lookup = LS_LOOKUP;
-      end
-        16: begin
-         max_in = MAX_IN_VALUES[8];
-         ratio_lookup = LS_LOOKUP;
-      end
-        18: begin
-         max_in = MAX_IN_VALUES[9];
-         ratio_lookup = LS_LOOKUP;
-      end
-        20: begin
-         max_in = MAX_IN_VALUES[10];
-         ratio_lookup = LS_LOOKUP;
-      end
-        22: begin
-         max_in = MAX_IN_VALUES[11];
-         ratio_lookup = LS_LOOKUP;
-      end
-        24: begin
-         max_in = MAX_IN_VALUES[12];
-         ratio_lookup = LS_LOOKUP;
-      end
-        26: begin
-         max_in = MAX_IN_VALUES[13];
-         ratio_lookup = LS_LOOKUP;
-      end
-        28: begin
-         max_in = MAX_IN_VALUES[14];
-         ratio_lookup = LS_LOOKUP;
-      end
-        30: begin
-         max_in = MAX_IN_VALUES[15];
-         ratio_lookup = LS_LOOKUP;
-      end
-        32: begin
-         max_in = MAX_IN_VALUES[16];
-         ratio_lookup = LS_LOOKUP;
-      end
-        34: begin
-         max_in = MAX_IN_VALUES[17];
-         ratio_lookup = LS_LOOKUP;
-      end
-        36: begin
-         max_in = MAX_IN_VALUES[18];
-         ratio_lookup = LS_LOOKUP;
-      end
-        38: begin
-         max_in = MAX_IN_VALUES[19];
-         ratio_lookup = LS_LOOKUP;
-      end
-        40: begin
-         max_in = MAX_IN_VALUES[20];
-         ratio_lookup = LS_LOOKUP;
-      end
-        42: begin
-         max_in = MAX_IN_VALUES[21];
-         ratio_lookup = LS_LOOKUP;
-      end
-        44: begin
-         max_in = MAX_IN_VALUES[22];
-         ratio_lookup = LS_LOOKUP;
-      end
-        46: begin
-         max_in = MAX_IN_VALUES[23];
-         ratio_lookup = LS_LOOKUP;
-      end
-        48: begin
-         max_in = MAX_IN_VALUES[24];
-         ratio_lookup = LS_LOOKUP;
-      end
-        50: begin
-         max_in = MAX_IN_VALUES[25];
-         ratio_lookup = LS_LOOKUP;
-      end
-        52: begin
-         max_in = MAX_IN_VALUES[26];
-         ratio_lookup = LS_LOOKUP;
-      end
-      53: begin
-         max_in = BFLAT;
-         ratio_lookup = LS_LOOKUP;
-      end
-      54: begin
-         max_in = LOW;
-         ratio_lookup = LS_LOOKUP;
-      end
-      default:begin
-         max_in = OFF;
-         ratio_lookup = ZERO_LOOKUP;
-      end
-   endcase
-end 
-endmodule
 
 module fsm (
  input logic clk, nrst,
