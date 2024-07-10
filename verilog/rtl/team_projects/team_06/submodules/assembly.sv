@@ -299,7 +299,7 @@ always_comb begin
                 color = 16'h0000;
             end
             else begin
-                color = 16'he581;
+                color = 16'he580;
             end
         end
         else begin
@@ -377,7 +377,7 @@ always_comb begin
             3'b010  : color = 16'hf800;   //body
             3'b011  : color = 16'h00f8;   //apple
             3'b100  : color = 16'h0000;   //border
-            default : color = 16'he581;
+            default : color = 16'he580;
         endcase
 
         cmd_finished = 1'b0;

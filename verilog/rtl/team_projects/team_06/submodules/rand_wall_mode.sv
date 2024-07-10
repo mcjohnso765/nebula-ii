@@ -420,7 +420,7 @@ if (~nreset) begin //reset condition
     inputa <= 0;
     count1 <= 0;
 end
-else if (good_collision & (counter <= 5'd24)) begin // or 23? //if a new wall can spawn
+else if (good_collision & (apple_locations[24] == 8'd0)) begin // or 23? //if a new wall can spawn
     if (count1) begin  //only makes a new wall every other good_collision
         inputa <= 1;
         count1 <= 0;

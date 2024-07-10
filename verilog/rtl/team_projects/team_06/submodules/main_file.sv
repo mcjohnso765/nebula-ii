@@ -89,7 +89,7 @@ wall_wrapper walls(.system_clk(main_clk), .score(score), .nrst(reset_button), .x
 , .apple_luck(apple_luck), .snake_head_x(snake_head_x), .snake_head_y(snake_head_y), .snakeArrayX(snakeArrayX), .snakeArrayY(snakeArrayY), .wall(wall_a), 
 .xmax(xmax), .xmin(xmin), .ymax(ymax), .ymin(ymin), .wall_locations(wall_locations));
 
-apple_wrapper applesa (.system_clk(main_clk), .nreset(reset_button), .good_collision(good_collision), .apple_luck(apple_luck), .snake_head_x(snake_head_x),
+apple_wrapper applesa (.system_clk(main_clk), .clk_body(clk_body), .nreset(reset_button), .good_collision(good_collision), .apple_luck(apple_luck), .snake_head_x(snake_head_x),
 .snake_head_y(snake_head_y), .xmax(xmax), .xmin(xmin), .ymin(ymin), .ymax(ymax), .snakeArrayX(snakeArrayX), .snakeArrayY(snakeArrayY), 
 .enable_in(game_mode == TWO_APPLE), .x(x), .y(y), .wall_locations(wall_locations), .apple(apple_a), .apple_location1(apple_location), 
 .apple_location2(apple_location2), .good_collision2(good_collision2));

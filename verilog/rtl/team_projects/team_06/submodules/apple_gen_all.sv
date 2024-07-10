@@ -12,7 +12,7 @@ module apple_gen_all(
 );
     parameter MAX_LENGTH = 30;
     logic [3:0] x_next, y_next, x_final, y_final, x_difference, y_difference, x_last, y_last;
-logic enable_next , good_spot, good_spot_next, logic_enable, lucky_spot, unlucky_spot;
+logic enable_next ,  logic_enable, lucky_spot, unlucky_spot, good_spot, good_spot_next; 
     logic [3:0] count;
 logic [7:0] count_luck, count_luck_next, total_difference;
 
