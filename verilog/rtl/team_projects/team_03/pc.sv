@@ -1,5 +1,5 @@
 module pc(
-    input logic en, 
+    input logic en, i_request, 
     output logic [31:0] pc_out,
     output logic [31:0] pc_add_out,
     input logic [31:0] generated_immediate,
@@ -27,7 +27,7 @@ assign pc_add_out = auipc_in ? pc_add_immediate : pc_add_4; //AUIPC decision
 
 always_comb begin
     next_pc = current_pc;
-    if(in_en) begin //if PC is enabled
+    if(in_en && i_request) begin //if PC is enabled
         next_pc = branch_decision ? pc_add_immediate : pc_add_4; //if branch or jump, then branch, else next instruction
     end
 end

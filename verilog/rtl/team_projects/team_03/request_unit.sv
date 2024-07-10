@@ -6,7 +6,7 @@ module request_unit(
     input logic [31:0] instruction_address, data_address, 
     // instruction address should just be the program counter and the 
     // alu result is just the result from the alu we are trying to 
-    input logic busy_o, 
+    input logic busy_o, i_request,
     // wish bone
     input logic [31:0] cpu_dat_o, 
     // wishbone side signals as inputs
@@ -45,7 +45,6 @@ always_ff @(posedge clk, posedge rst) begin
         instruction <= 32'b0; // instruction to CPU
         data_read <= 32'b0;
         i_hit <= 1'b0; // Instruction hit
-        state <= IDLE; 
         //i_request = 1'b0;
         d_hit <= 1'b0; // DATA HIT
         prev_busy <= 1'b0;
@@ -92,7 +91,7 @@ always_comb begin
                     next_adr = data_address + 32'h33000000;
                     next_cpu_dat = 32'b0;
                     next_instruction = instruction;
-                end else if (!i_hit && en) begin
+                end else if (!i_hit && en && i_request) begin
                     next_state = WAIT_INSTRUCTION;
                     next_read_i = 1'b1;
                     next_write_i = 1'b0;

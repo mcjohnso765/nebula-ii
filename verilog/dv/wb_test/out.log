@@ -1,21 +1,21 @@
 Compiling VVP ...
  ... VVP file version 11.0 (stable)
 Compile cleanup...
- ...    88865 functors (net_fun pool=4718592 bytes)
+ ...    88868 functors (net_fun pool=4718592 bytes)
               43245 logic
                 354 bufif
                  53 resolv
-               3801 signals
- ...    79375 filters (net_fil pool=9699328 bytes)
- ...   108009 opcodes (2605056 bytes)
- ...    30595 nets
- ...    88865 vvp_nets (5242720 bytes)
+               3802 signals
+ ...    79376 filters (net_fil pool=9699328 bytes)
+ ...   108024 opcodes (2605056 bytes)
+ ...    30600 nets
+ ...    88868 vvp_nets (5242720 bytes)
  ...        3 arrays (9 words)
  ...       13 memories
                  13 logic (16778881 words)
                   0 real (0 words)
- ...     3169 scopes
- ... 0.858506 seconds, 342068.0/333380.0/5420.0 KBytes size/rss/shared
+ ...     3170 scopes
+ ... 0.738627 seconds, 342064.0/333404.0/5440.0 KBytes size/rss/shared
 Running ...
  ...execute EndOfCompile callbacks
  ...propagate initialization events
@@ -32,14 +32,14 @@ FST info: dumpfile wb_test.vcd opened for output.
 {GPIO[37:5], GPIO[0]} = 34'hzzzzzzzzz 
 Monitor: NEBULA II-Sample Project (RTL) Passed
  ...execute Postsim callbacks
- ... 22.0769 seconds, 735288.0/727312.0/5752.0 KBytes size/rss/shared
+ ... 20.8755 seconds, 735284.0/727228.0/5760.0 KBytes size/rss/shared
 Event counts:
-     1148272 time steps (pool=113)
-     4066458 thread schedule events
-    33541434 assign events
+     1148309 time steps (pool=113)
+     3871903 thread schedule events
+    33511319 assign events
              ...assign(vec4) pool=149792
              ...assign(vec8) pool=2448
              ...assign(real) pool=256
              ...assign(word) pool=128
              ...assign(word/r) pool=204
-     4574188 other events (pool=16384)
+     4498990 other events (pool=16384)
