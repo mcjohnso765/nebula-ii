@@ -3,7 +3,7 @@ module idle_counter(
     input logic [3:0]max,  
     output logic no_count,
     output logic [3:0] countout
-);
+  );
     logic [3:0]nextcount;
 
     always_ff @(posedge clk, negedge nrst)begin
@@ -16,6 +16,7 @@ module idle_counter(
     end
 
     always_comb begin
+        no_count = 1'b0;
         if (falling_edge == 1'b1)begin
             nextcount = 4'b0;
         end

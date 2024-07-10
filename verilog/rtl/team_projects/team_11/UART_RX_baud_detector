@@ -1,7 +1,7 @@
 module baud_edge_detect (
     input logic clk, nrst, signal_in,
     output logic baud_edge
-);
+  );
 
     logic prev_sig;
 

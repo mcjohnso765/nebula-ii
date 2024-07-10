@@ -8,7 +8,7 @@ module tb_top;
     logic [127:0] msg;
 
     // Instantiate the top module
-    top uut_top (
+    top_RX uut_top (
         .clk(clk),
         .nrst(nrst),
         .rx_din(rx_din),

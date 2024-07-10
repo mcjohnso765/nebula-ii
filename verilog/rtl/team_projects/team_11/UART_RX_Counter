@@ -2,7 +2,7 @@ module counter(
     input logic clk, nrst, count_start, baud_edge,
     input logic [3:0]max,  
     output logic atmax
-);
+  );
     logic [3:0]nextcount, countout;
 
     always_ff @(posedge clk, negedge nrst)
@@ -31,7 +31,7 @@ module counter(
                 end
             end
             else begin
-                nextcount = nextcount;
+                nextcount = countout;
             end
         end
         else begin

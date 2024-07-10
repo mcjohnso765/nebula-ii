@@ -5,7 +5,7 @@ module sr_rx(
     input logic receive_ready,
     input logic [7:0] data_receive,
     output logic [127:0] msg
-);
+  );
 
     logic [127:0] shift_register;
     logic [127:0] shift_register_buffer;
@@ -16,7 +16,10 @@ module sr_rx(
             shift_register_buffer <= 128'd0;
         end else begin
             if(receive_ready && new_clk) begin
-                shift_register <= (shift_register << 8) | data_receive;
+                shift_register <= (shift_register << 8) | {120'b0,data_receive};
+            end
+            else begin 
+                shift_register <= shift_register;
             end
             shift_register_buffer <= shift_register;
         end
