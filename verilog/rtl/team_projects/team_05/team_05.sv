@@ -328,7 +328,7 @@ module t05_cpu_core(
     logic [31:0] register_out;
     
     t05_register_file regFile(
-        .reg_write(reg_write | reg_write_flipflop), 
+        .reg_write(reg_write),
         .clk(clk), 
         .rst(rst), 
         .write(reg_write_en), 
