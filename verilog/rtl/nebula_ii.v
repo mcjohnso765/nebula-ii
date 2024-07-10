@@ -62,15 +62,15 @@ module nebula_ii (
     wire [31:0] wbs_dat_i_m;
     wire [3:0]  wbs_sel_i_m;
 
-    wire        wbs_ack_i_01, wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
-    wire [31:0] wbs_dat_i_01, wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
+    wire        wbs_ack_i_samp, wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
+    wire [31:0] wbs_dat_i_samp, wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
 
-    wire        wbs_cyc_o_01, wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_sram;
-    wire        wbs_stb_o_01, wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_sram;
-    wire        wbs_we_o_01, wbs_we_o_la, wbs_we_o_sram;
-    wire [31:0] wbs_adr_o_01, wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
-    wire [31:0] wbs_dat_o_01, wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
-    wire [3:0]  wbs_sel_o_01, wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
+    wire        wbs_cyc_o_samp, wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_sram;
+    wire        wbs_stb_o_samp, wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_sram;
+    wire        wbs_we_o_samp, wbs_we_o_gpio, wbs_we_o_la, wbs_we_o_sram;
+    wire [31:0] wbs_adr_o_samp, wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
+    wire [31:0] wbs_dat_o_samp, wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
+    wire [3:0]  wbs_sel_o_samp, wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
     
     // Assign default values to index 0 of output arrays
     assign designs_la_data_out[0] = 'b0;

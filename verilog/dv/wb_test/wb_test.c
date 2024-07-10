@@ -21,6 +21,10 @@
 
 // List of Wishbone Slave Addresses
 // Sample Project
+#define reg_team_05_EN (*(volatile uint32_t*)0x30020000)
+
+
+
 #define reg_sample_proj_EN (*(volatile uint32_t*)0x30010000)
 #define reg_sample_proj_PRESCALER (*(volatile uint32_t*)0x30010004)
 #define reg_sample_proj_IM (*(volatile uint32_t*)0x3001FF00)
