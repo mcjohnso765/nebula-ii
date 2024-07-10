@@ -41,9 +41,36 @@
 -v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
 
 # Sample Team project
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_WB.v
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_WB.v
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
+
+# Team_01 project
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_alu.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_branch_logic.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_cpu.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_control_unit.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_counter.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_data_memory.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_fsm.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_immediate_generator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_instruction_memory.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_keypad.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_lcd1602.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_mux.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_program_counter.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_register_file.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_request_unit.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_shift_reg.sv
+
+-v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
+
+
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
 

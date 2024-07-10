@@ -79,7 +79,7 @@ module nebula_ii (
 
     // Sample Project Instance
     // (replace this with your team design instance when testing)
-    sample_team_proj_Wrapper sample_team_proj_Wrapper (
+    team_01_Wrapper wrapper(
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
@@ -87,14 +87,14 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_o_samp),
-        .wbs_cyc_i(wbs_cyc_o_samp),
-        .wbs_we_i(wbs_we_o_samp),
-        .wbs_sel_i(wbs_sel_o_samp),
-        .wbs_dat_i(wbs_dat_o_samp),
-        .wbs_adr_i(wbs_adr_o_samp),
-        .wbs_ack_o(wbs_ack_i_samp),
-        .wbs_dat_o(wbs_dat_i_samp),
+        .wbs_stb_i(wbs_stb_o_01),
+        .wbs_cyc_i(wbs_cyc_o_01),
+        .wbs_we_i(wbs_we_o_01),
+        .wbs_sel_i(wbs_sel_o_01),
+        .wbs_dat_i(wbs_dat_o_01),
+        .wbs_adr_i(wbs_adr_o_01),
+        .wbs_ack_o(wbs_ack_i_01),
+        .wbs_dat_o(wbs_dat_i_01),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -106,6 +106,7 @@ module nebula_ii (
         .gpio_out(designs_gpio_out[1]), // Breakout Board Pins
         .gpio_oeb(designs_gpio_oeb[1]) // Active Low Output Enable
     );
+
 
     // Flattened GPIO outputs
     reg [38*(NUM_TEAMS+1)-1:0] designs_gpio_out_flat;
@@ -235,8 +236,8 @@ module nebula_ii (
         .nRST(~wb_rst_i),
 
         //muxxing signals that go to manager
-        .wbs_ack_i_periph({wbs_ack_i_samp, wbs_ack_i_la, wbs_ack_i_gpio, wbs_ack_i_sram}),
-        .wbs_dat_i_periph({wbs_dat_i_samp, wbs_dat_i_la, wbs_dat_i_gpio, wbs_dat_i_sram}),
+        .wbs_ack_i_periph({wbs_ack_i_01, wbs_ack_i_la, wbs_ack_i_gpio, wbs_ack_i_sram}),
+        .wbs_dat_i_periph({wbs_dat_i_01, wbs_dat_i_la, wbs_dat_i_gpio, wbs_dat_i_sram}),
 
         .wbs_ack_o_m(wbs_ack_o_m),
         .wbs_dat_o_m(wbs_dat_o_m),
@@ -249,12 +250,12 @@ module nebula_ii (
         .wbs_dat_i_m(wbs_dat_i_m),
         .wbs_sel_i_m(wbs_sel_i_m),
 
-        .wbs_cyc_o_periph({wbs_cyc_o_samp, wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_sram}),
-        .wbs_stb_o_periph({wbs_stb_o_samp, wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_sram}),
-        .wbs_we_o_periph({wbs_we_o_samp, wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_sram}),
-        .wbs_adr_o_periph({wbs_adr_o_samp, wbs_adr_o_la, wbs_adr_o_gpio, wbs_adr_o_sram}),
-        .wbs_dat_o_periph({wbs_dat_o_samp, wbs_dat_o_la, wbs_dat_o_gpio, wbs_dat_o_sram}),
-        .wbs_sel_o_periph({wbs_sel_o_samp, wbs_sel_o_la, wbs_sel_o_gpio, wbs_sel_o_sram})
+        .wbs_cyc_o_periph({wbs_cyc_o_01, wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_sram}),
+        .wbs_stb_o_periph({wbs_stb_o_01, wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_sram}),
+        .wbs_we_o_periph({wbs_we_o_01, wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_sram}),
+        .wbs_adr_o_periph({wbs_adr_o_01, wbs_adr_o_la, wbs_adr_o_gpio, wbs_adr_o_sram}),
+        .wbs_dat_o_periph({wbs_dat_o_01, wbs_dat_o_la, wbs_dat_o_gpio, wbs_dat_o_sram}),
+        .wbs_sel_o_periph({wbs_sel_o_01, wbs_sel_o_la, wbs_sel_o_gpio, wbs_sel_o_sram})
     );
 
     // SRAM
