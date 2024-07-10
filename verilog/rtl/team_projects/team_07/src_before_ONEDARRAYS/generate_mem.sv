@@ -13,28 +13,31 @@ module generate_mem(
     input logic clk,
     input logic [8:0] x,
     input logic [7:0] y, 
-    input logic [9:0] OneD_display_num,
-    input logic [39:0] OneD_label_num,
-    // input logic [1:0] label_num_0_0,
-    // input logic [1:0] label_num_0_1,
-    // input logic [1:0] label_num_0_2,
-    // input logic [1:0] label_num_0_3,
-    // input logic [1:0] label_num_0_4,
-    // input logic [1:0] label_num_1_0,
-    // input logic [1:0] label_num_1_1,
-    // input logic [1:0] label_num_1_2,
-    // input logic [1:0] label_num_1_3,
-    // input logic [1:0] label_num_1_4,
-    // input logic [1:0] label_num_2_0,
-    // input logic [1:0] label_num_2_1,
-    // input logic [1:0] label_num_2_2,
-    // input logic [1:0] label_num_2_3,
-    // input logic [1:0] label_num_2_4,
-    // input logic [1:0] label_num_3_0,
-    // input logic [1:0] label_num_3_1,
-    // input logic [1:0] label_num_3_2,
-    // input logic [1:0] label_num_3_3,
-    // input logic [1:0] label_num_3_4,
+    input logic [1:0] display_num_0,
+    input logic [1:0] display_num_1,
+    input logic [1:0] display_num_2,
+    input logic [1:0] display_num_3,
+    input logic [1:0] display_num_4,
+    input logic [1:0] label_num_0_0,
+    input logic [1:0] label_num_0_1,
+    input logic [1:0] label_num_0_2,
+    input logic [1:0] label_num_0_3,
+    input logic [1:0] label_num_0_4,
+    input logic [1:0] label_num_1_0,
+    input logic [1:0] label_num_1_1,
+    input logic [1:0] label_num_1_2,
+    input logic [1:0] label_num_1_3,
+    input logic [1:0] label_num_1_4,
+    input logic [1:0] label_num_2_0,
+    input logic [1:0] label_num_2_1,
+    input logic [1:0] label_num_2_2,
+    input logic [1:0] label_num_2_3,
+    input logic [1:0] label_num_2_4,
+    input logic [1:0] label_num_3_0,
+    input logic [1:0] label_num_3_1,
+    input logic [1:0] label_num_3_2,
+    input logic [1:0] label_num_3_3,
+    input logic [1:0] label_num_3_4,
     input logic [2:0] stage,
     input logic [1:0] mem_pos,
     output logic displayPixel,
@@ -67,46 +70,35 @@ module generate_mem(
     // assign label_num[2] = '{2'd2, 2'd2, 2'd2, 2'd2, 2'd2};
     // assign label_num[3] = '{2'd3, 2'd3, 2'd3, 2'd3, 2'd3}; 
 initial begin
-        // display_num[0] = display_num_4;
-        // display_num[1] = display_num_3;
-        // display_num[2] = display_num_2;
-        // display_num[3] = display_num_1;
-        // display_num[4] = display_num_0;
-        // label_num[0][0] = label_num_0_4;
-        // label_num[0][1] = label_num_0_3;
-        // label_num[0][2] = label_num_0_2;
-        // label_num[0][3] = label_num_0_1;
-        // label_num[0][4] = label_num_0_0;
-        // label_num[1][0] = label_num_1_4;
-        // label_num[1][1] = label_num_1_3;
-        // label_num[1][2] = label_num_1_2;
-        // label_num[1][3] = label_num_1_1;
-        // label_num[1][4] = label_num_1_0;
-        // label_num[2][0] = label_num_2_4;
-        // label_num[2][1] = label_num_2_3;
-        // label_num[2][2] = label_num_2_2;
-        // label_num[2][3] = label_num_2_1;
-        // label_num[2][4] = label_num_2_0;
+        display_num[0] = display_num_4;
+        display_num[1] = display_num_3;
+        display_num[2] = display_num_2;
+        display_num[3] = display_num_1;
+        display_num[4] = display_num_0;
+        label_num[0][0] = label_num_0_4;
+        label_num[0][1] = label_num_0_3;
+        label_num[0][2] = label_num_0_2;
+        label_num[0][3] = label_num_0_1;
+        label_num[0][4] = label_num_0_0;
+        label_num[1][0] = label_num_1_4;
+        label_num[1][1] = label_num_1_3;
+        label_num[1][2] = label_num_1_2;
+        label_num[1][3] = label_num_1_1;
+        label_num[1][4] = label_num_1_0;
+        label_num[2][0] = label_num_2_4;
+        label_num[2][1] = label_num_2_3;
+        label_num[2][2] = label_num_2_2;
+        label_num[2][3] = label_num_2_1;
+        label_num[2][4] = label_num_2_0;
         
-        // label_num[3][0] = label_num_3_4;
-        // label_num[3][1] = label_num_3_3;
-        // label_num[3][2] = label_num_3_2;
-        // label_num[3][3] = label_num_3_1;
-        // label_num[3][4] = label_num_3_0;
+        label_num[3][0] = label_num_3_4;
+        label_num[3][1] = label_num_3_3;
+        label_num[3][2] = label_num_3_2;
+        label_num[3][3] = label_num_3_1;
+        label_num[3][4] = label_num_3_0;
 end
 
-    always_comb begin
-        for(integer l = 0; l< 5; l++ )begin 
-            display_num[l] = OneD_display_num[(l*2) +: 2];
-        end
-    end
-    always_comb begin
-        for(integer m = 0; m<4; m++)begin
-            for(integer s = 0; s< 5; s++ )begin 
-                label_num[m][s] = OneD_label_num[(m * 10) + (s * 2) +: 2];
-            end
-        end
-    end
+
     always_ff @(negedge nrst, posedge clk) begin
         if(!nrst) begin
             displayPixel <= 1'd0;

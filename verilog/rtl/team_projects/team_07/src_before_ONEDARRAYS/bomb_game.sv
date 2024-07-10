@@ -245,15 +245,16 @@ wire_game wire_game_0 (
     logic [1:0] display_num[4:0];
     logic [1:0] label_num[3:0][4:0];
     logic [2:0] stage;
-    logic [9:0]OneD_display_num ;
-    logic [39:0]OneD_label_num ;
+    logic OneD_display_num [9:0];
+// always_comb begin 
+//     for(integer l = 0; l < 5; l++)begin 
+//         OneD_display_num[(l+1):l] =  display_num[l];
+//     end
 
-
-    // always_comb begin
-    // for(integer l = 0; l< 5; l++)begin 
-    //      display_num[l] = OneD_display_num[(l+1):l];
-    // end
-    // end
+//     for(integer l = 0; l< 5: l++)begin 
+//          display_num[l] = OneD_display_num[(l+1):l];
+//     end
+// end
 mem_game mem_game_0 (
     .nrst(nrst),
     .clk(clk),
@@ -265,29 +266,31 @@ mem_game mem_game_0 (
     .mem_error(mem_error),
     .mem_clear(mem_clear),
     .mem_pos(mem_pos),
- 
-    .OneD_display_num(OneD_display_num),
-    .OneD_label_num(OneD_label_num),
-    // .label_num_0_0(label_num[0][0]),
-    // .label_num_0_1(label_num[0][1]),
-    // .label_num_0_2(label_num[0][2]),
-    // .label_num_0_3(label_num[0][3]),
-    // .label_num_0_4(label_num[0][4]),
-    // .label_num_1_0(label_num[1][0]),
-    // .label_num_1_1(label_num[1][1]),
-    // .label_num_1_2(label_num[1][2]),
-    // .label_num_1_3(label_num[1][3]),
-    // .label_num_1_4(label_num[1][4]),
-    // .label_num_2_0(label_num[2][0]),
-    // .label_num_2_1(label_num[2][1]),
-    // .label_num_2_2(label_num[2][2]),
-    // .label_num_2_3(label_num[2][3]),
-    // .label_num_2_4(label_num[2][4]),
-    // .label_num_3_0(label_num[3][0]),
-    // .label_num_3_1(label_num[3][1]),
-    // .label_num_3_2(label_num[3][2]),
-    // .label_num_3_3(label_num[3][3]),
-    // .label_num_3_4(label_num[3][4]),
+    .display_num_0(display_num[0]),
+    .display_num_1(display_num[1]),
+    .display_num_2(display_num[2]),
+    .display_num_3(display_num[3]),
+    .display_num_4(display_num[4]),
+    .label_num_0_0(label_num[0][0]),
+    .label_num_0_1(label_num[0][1]),
+    .label_num_0_2(label_num[0][2]),
+    .label_num_0_3(label_num[0][3]),
+    .label_num_0_4(label_num[0][4]),
+    .label_num_1_0(label_num[1][0]),
+    .label_num_1_1(label_num[1][1]),
+    .label_num_1_2(label_num[1][2]),
+    .label_num_1_3(label_num[1][3]),
+    .label_num_1_4(label_num[1][4]),
+    .label_num_2_0(label_num[2][0]),
+    .label_num_2_1(label_num[2][1]),
+    .label_num_2_2(label_num[2][2]),
+    .label_num_2_3(label_num[2][3]),
+    .label_num_2_4(label_num[2][4]),
+    .label_num_3_0(label_num[3][0]),
+    .label_num_3_1(label_num[3][1]),
+    .label_num_3_2(label_num[3][2]),
+    .label_num_3_3(label_num[3][3]),
+    .label_num_3_4(label_num[3][4]),
     .stage(stage)
 );
 
@@ -310,29 +313,31 @@ mem_game mem_game_0 (
        .wirePixel(wirePixel), .wireHighlightPixel(wireHighlightPixel));
     generate_mem memGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .stage(stage), .mem_pos(mem_pos), .displayPixel(displayPixel),
      .buttonPixel(buttonPixel), .labelPixel(labelPixel), .stagePixel(stagePixel), .buttonHighlightPixel(buttonHighlightPixel),
-     .OneD_display_num(OneD_display_num),
-    .OneD_label_num(OneD_label_num)
-    // .label_num_0_0(label_num[0][0]),
-    // .label_num_0_1(label_num[0][1]),
-    // .label_num_0_2(label_num[0][2]),
-    // .label_num_0_3(label_num[0][3]),
-    // .label_num_0_4(label_num[0][4]),
-    // .label_num_1_0(label_num[1][0]),
-    // .label_num_1_1(label_num[1][1]),
-    // .label_num_1_2(label_num[1][2]),
-    // .label_num_1_3(label_num[1][3]),
-    // .label_num_1_4(label_num[1][4]),
-    // .label_num_2_0(label_num[2][0]),
-    // .label_num_2_1(label_num[2][1]),
-    // .label_num_2_2(label_num[2][2]),
-    // .label_num_2_3(label_num[2][3]),
-    // .label_num_2_4(label_num[2][4]),
-    // .label_num_3_0(label_num[3][0]),
-    // .label_num_3_1(label_num[3][1]),
-    // .label_num_3_2(label_num[3][2]),
-    // .label_num_3_3(label_num[3][3]),
-    // .label_num_3_4(label_num[3][4])
-    );
+        .display_num_0(display_num[0]),
+    .display_num_1(display_num[1]),
+    .display_num_2(display_num[2]),
+    .display_num_3(display_num[3]),
+    .display_num_4(display_num[4]),
+    .label_num_0_0(label_num[0][0]),
+    .label_num_0_1(label_num[0][1]),
+    .label_num_0_2(label_num[0][2]),
+    .label_num_0_3(label_num[0][3]),
+    .label_num_0_4(label_num[0][4]),
+    .label_num_1_0(label_num[1][0]),
+    .label_num_1_1(label_num[1][1]),
+    .label_num_1_2(label_num[1][2]),
+    .label_num_1_3(label_num[1][3]),
+    .label_num_1_4(label_num[1][4]),
+    .label_num_2_0(label_num[2][0]),
+    .label_num_2_1(label_num[2][1]),
+    .label_num_2_2(label_num[2][2]),
+    .label_num_2_3(label_num[2][3]),
+    .label_num_2_4(label_num[2][4]),
+    .label_num_3_0(label_num[3][0]),
+    .label_num_3_1(label_num[3][1]),
+    .label_num_3_2(label_num[3][2]),
+    .label_num_3_3(label_num[3][3]),
+    .label_num_3_4(label_num[3][4]));
 
     logic tft_sdo;
     logic tftstate;

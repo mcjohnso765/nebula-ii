@@ -32,28 +32,31 @@ module mem_select_detector(
     input logic activate_rand,
     input logic strobe,
     input logic [5:0] button,
-    input logic [9:0] OneD_display_num,
-    input logic [39:0] OneD_label_num,
-    // input logic [1:0] label_num_0_0,
-    // input logic [1:0] label_num_0_1,
-    // input logic [1:0] label_num_0_2,
-    // input logic [1:0] label_num_0_3,
-    // input logic [1:0] label_num_0_4,
-    // input logic [1:0] label_num_1_0,
-    // input logic [1:0] label_num_1_1,
-    // input logic [1:0] label_num_1_2,
-    // input logic [1:0] label_num_1_3,
-    // input logic [1:0] label_num_1_4,
-    // input logic [1:0] label_num_2_0,
-    // input logic [1:0] label_num_2_1,
-    // input logic [1:0] label_num_2_2,
-    // input logic [1:0] label_num_2_3,
-    // input logic [1:0] label_num_2_4,
-    // input logic [1:0] label_num_3_0,
-    // input logic [1:0] label_num_3_1,
-    // input logic [1:0] label_num_3_2,
-    // input logic [1:0] label_num_3_3,
-    // input logic [1:0] label_num_3_4,
+    input logic [1:0] display_num_0,
+    input logic [1:0] display_num_1,
+    input logic [1:0] display_num_2,
+    input logic [1:0] display_num_3,
+    input logic [1:0] display_num_4,
+    input logic [1:0] label_num_0_0,
+    input logic [1:0] label_num_0_1,
+    input logic [1:0] label_num_0_2,
+    input logic [1:0] label_num_0_3,
+    input logic [1:0] label_num_0_4,
+    input logic [1:0] label_num_1_0,
+    input logic [1:0] label_num_1_1,
+    input logic [1:0] label_num_1_2,
+    input logic [1:0] label_num_1_3,
+    input logic [1:0] label_num_1_4,
+    input logic [1:0] label_num_2_0,
+    input logic [1:0] label_num_2_1,
+    input logic [1:0] label_num_2_2,
+    input logic [1:0] label_num_2_3,
+    input logic [1:0] label_num_2_4,
+    input logic [1:0] label_num_3_0,
+    input logic [1:0] label_num_3_1,
+    input logic [1:0] label_num_3_2,
+    input logic [1:0] label_num_3_3,
+    input logic [1:0] label_num_3_4,
   // display number for position 1-4, stage 1-5, vary from 1-4
     input logic [1:0] mem_pos,  // current selected position
     output logic mem_error,     // memory game error strobe signal
@@ -74,48 +77,34 @@ module mem_select_detector(
     // assign label_num[2] = '{label_num_2_0, label_num_2_1, label_num_2_2, label_num_2_3, label_num_2_4};
     // assign label_num[3] = '{label_num_3_0, label_num_3_1, label_num_3_2, label_num_3_3, label_num_3_4};
 
-    // assign    display_num[0] = display_num_4;
-    // assign    display_num[1] = display_num_3;
-    // assign    display_num[2] = display_num_2;
-    // assign    display_num[3] = display_num_1;
-    // assign    display_num[4] = display_num_0;
-    // assign    label_num[0][0] = label_num_0_4;
-    // assign    label_num[0][1] = label_num_0_3;
-    // assign    label_num[0][2] = label_num_0_2;
-    // assign    label_num[0][3] = label_num_0_1;
-    // assign    label_num[0][4] = label_num_0_0;
-    // assign    label_num[1][0] = label_num_1_4;
-    // assign    label_num[1][1] = label_num_1_3;
-    // assign    label_num[1][2] = label_num_1_2;
-    // assign    label_num[1][3] = label_num_1_1;
-    // assign    label_num[1][4] = label_num_1_0;
-    // assign    label_num[2][0] = label_num_2_4;
-    // assign    label_num[2][1] = label_num_2_3;
-    // assign    label_num[2][2] = label_num_2_2;
-    // assign    label_num[2][3] = label_num_2_1;
-    // assign    label_num[2][4] = label_num_2_0;
+    assign    display_num[0] = display_num_4;
+    assign    display_num[1] = display_num_3;
+    assign    display_num[2] = display_num_2;
+    assign    display_num[3] = display_num_1;
+    assign    display_num[4] = display_num_0;
+    assign    label_num[0][0] = label_num_0_4;
+    assign    label_num[0][1] = label_num_0_3;
+    assign    label_num[0][2] = label_num_0_2;
+    assign    label_num[0][3] = label_num_0_1;
+    assign    label_num[0][4] = label_num_0_0;
+    assign    label_num[1][0] = label_num_1_4;
+    assign    label_num[1][1] = label_num_1_3;
+    assign    label_num[1][2] = label_num_1_2;
+    assign    label_num[1][3] = label_num_1_1;
+    assign    label_num[1][4] = label_num_1_0;
+    assign    label_num[2][0] = label_num_2_4;
+    assign    label_num[2][1] = label_num_2_3;
+    assign    label_num[2][2] = label_num_2_2;
+    assign    label_num[2][3] = label_num_2_1;
+    assign    label_num[2][4] = label_num_2_0;
         
-    // assign   label_num[3][0] = label_num_3_4;
-    // assign   label_num[3][1] = label_num_3_3;
-    // assign   label_num[3][2] = label_num_3_2;
-    // assign   label_num[3][3] = label_num_3_1;
-    // assign   label_num[3][4] = label_num_3_0;
+    assign   label_num[3][0] = label_num_3_4;
+    assign   label_num[3][1] = label_num_3_3;
+    assign   label_num[3][2] = label_num_3_2;
+    assign   label_num[3][3] = label_num_3_1;
+   assign     label_num[3][4] = label_num_3_0;
     logic [2:0] nxt_stage;      // logic to update the stage
     logic [1:0] right_pos[4:0]; // correct position for stage 1-5, position vary from 1-4
-
-
-    always_comb begin
-        for(integer l = 0; l< 5; l++ )begin 
-            display_num[l] = OneD_display_num[(l*2) +: 2];
-        end
-    end
-    always_comb begin
-        for(integer m = 0; m<4; m++)begin
-            for(integer s = 0; s< 5; s++ )begin 
-                label_num[m][s] = OneD_label_num[(m * 10) + (s * 2) +: 2];
-            end
-        end
-    end
 
     always_ff @ (negedge nrst, posedge clk) begin
         if(!nrst) begin
@@ -199,26 +188,25 @@ module mem_select_detector(
                     end
                 end
             end
-            1: begin
-                right_pos[4] = 2'd0;                                     // if display 2:
+            1: begin                                    // if display 2:
                 for(integer i = 0; i < 4; i++) begin
-                     
+                    right_pos[4] = 2'd0;  
                     if (label_num[i][4] == label_num[right_pos[1]][1]) begin
                         right_pos[4] = 2'(i);           // press the button with the same label you pressed in stage 2
                     end
                 end
             end
             2: begin                                    // if display 3:
-                right_pos[4] = 2'd0;
-                for(integer i = 0; i < 4; i++) begin  
+                for(integer i = 0; i < 4; i++) begin
+                    right_pos[4] = 2'd0;  
                     if (label_num[i][4] == label_num[right_pos[3]][3]) begin
                         right_pos[4] = 2'(i);           // press the button with the same label you pressed in stage 4
                     end
                 end
             end
             3: begin                                    // if display 4:
-                right_pos[4] = 2'd0;  
                 for(integer i = 0; i < 4; i++) begin
+                    right_pos[4] = 2'd0;  
                     if (label_num[i][4] == label_num[right_pos[2]][2]) begin
                         right_pos[4] = 2'(i);           // press the button with the same label you pressed in stage 3
                     end
