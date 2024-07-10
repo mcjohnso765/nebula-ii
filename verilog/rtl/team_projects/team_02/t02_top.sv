@@ -3,18 +3,6 @@
 `default_nettype none
 
 module t02_top (
-  // I/O ports
-  // input  logic hz100, reset,
-  // input  logic [20:0] pb,
-  // output logic [7:0] left, right,
-  //        ss7, ss6, ss5, ss4, ss3, ss2, ss1, ss0,
-  // output logic red, green, blue,
-
-  // // UART ports
-  // output logic [7:0] txdata,
-  // input  logic [7:0] rxdata,
-  // output logic txclk, rxclk,
-  // input  logic txready, rxready
 	input logic clk, nrst, enable,
   output logic [31:0] ramaddr, ramstore, 
   output logic Ren, Wen, 
@@ -60,7 +48,6 @@ t02_request ru(.CLK(clk), .nRST(nrst), .imemload(instruction), .imemaddr(pc), .d
 // t02_edgeDetector edg2(.clk(clk), .nRst_i(nrst), .button_i(~keyStrobe), .button_p(enData));
 // t02_keypad pad (.clk(clk), .rst(nrst), .receive_ready(keyStrobe), .data_received(halfData), .read_row(read_row), .scan_col(scan_col));
 // t02_lcd1602 lcd (.clk(clk), .rst(nrst), .row_1(row1), .row_2(row2), .lcd_en(lcd_en), .lcd_rw(lcd_rw), .lcd_rs(lcd_rs), .lcd_data(lcd_data));
- 
 
 //ru_ram rram (.clk(clk), .nRst(nrst), .write_enable(write_enable), .addr(addr), .data_in(datain), .data_out(dataout), .busy(busy_o));
 //ram ra(.clk(clk), .nRst(nrst), .write_enable(memWrite), .read_enable(1), .address_DM(aluOut[5:0]), .address_IM(pc[5:0]), .data_in(regData2), .data_out(memload), .instr_out(instruction), .pc_enable(i_ready), .CUOp(cuOP));
