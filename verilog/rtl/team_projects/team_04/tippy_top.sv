@@ -141,8 +141,8 @@ module tippy_top (
 
         .CPU_instr_adr(CPU_instr_adr),
         .CPU_data_adr(CPU_adr_to_mem),
-        .CPU_read(CPU_read),
-        .CPU_write(CPU_write),
+        .CPU_read(CPU_read + 1'b0),
+        .CPU_write(CPU_write + 1'b0),
         .data_from_CPU(CPU_data_to_mem),
         .CPU_sel(CPU_sel),
         .instr_data_to_CPU(CPU_instructions),
@@ -150,6 +150,7 @@ module tippy_top (
 
         .data_from_mem(data_from_mem),
         .mem_read(mem_read),
+        // .mem_write(),
         .mem_write(mem_write),
         .adr_to_mem(adr_to_mem),
         .data_to_mem(data_to_mem),
@@ -1662,7 +1663,8 @@ module request_handler #(parameter UART_ADDRESS = 500)(
             current_client <= current_client_next;
             //next_client <= next_client_next;
 
-            instruction <= next_instruction;
+            instruction <= next_instruction;  
+            
         end
     end
 
@@ -1699,6 +1701,18 @@ module request_handler #(parameter UART_ADDRESS = 500)(
             adr_to_mem =    32'b0;
             data_to_mem =   32'b0;
             sel_to_mem =    4'b0;
+
+            if(current_client == VGA) begin
+                adr_to_mem =    VGA_adr;
+            end else if (current_client == CPU_INSTR) begin
+                adr_to_mem =    CPU_instr_adr;
+            end else begin
+                if(CPU_data_adr == UART_ADDRESS) begin
+                    adr_to_mem =    32'h0;
+                end else begin
+                    adr_to_mem =    CPU_data_adr;
+                end
+            end
         end else begin
             if (next_client == VGA) begin
                 mem_read =      VGA_read;
@@ -1709,7 +1723,11 @@ module request_handler #(parameter UART_ADDRESS = 500)(
             end else if (next_client == CPU_INSTR) begin
                 mem_read =      1'b1;
                 mem_write =     1'b0;
-                adr_to_mem =    CPU_instr_adr;
+                if(current_client == CPU_DATA) begin
+                    adr_to_mem =    CPU_instr_adr + 32'd4;
+                end else begin
+                    adr_to_mem =    CPU_instr_adr;
+                end
                 data_to_mem =   32'b0;
                 sel_to_mem =    4'b1111;
             end else begin // next_client == CPU_DATA
@@ -1732,7 +1750,13 @@ module request_handler #(parameter UART_ADDRESS = 500)(
         
 
         //logic for sending data to other parts (VGA,CPU)
-        instr_data_to_CPU = instruction;
+        if(~mem_busy && next_client == CPU_DATA) begin
+            instr_data_to_CPU = data_from_mem;
+        end else begin
+            instr_data_to_CPU = instruction;    
+        end
+
+        
         if (mem_busy | current_client == STANDBY) begin
             data_to_VGA =       32'b0;
             next_instruction =  instruction;

@@ -371,17 +371,25 @@ void main()
 
     // // Do stuff with SRAM
     sram_space = 0xFEED0000; // write 0xFEED000 to address 0x33000000
-    *(&sram_space + 1) = 0xABCDEF78;  // write 0xABCDEF78 to address 0x33000004
-    *(&sram_space + 3) = 0x12345678;  // write 0x12345678 to address 0x3300000C
+    // *(&sram_space + 1) = 0xABCDEF78;  // write 0xABCDEF78 to address 0x33000004
+    // *(&sram_space + 3) = 0x12345678;  // write 0x12345678 to address 0x3300000C
     // reg_sample_proj_EN = (sram_space == 0xFEED0000);
     // reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
     // reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
 
     // Write instructions in hex to SRAM
-	*(&sram_space + 4) = 0x06300093; 
-	*(&sram_space + 5) = 0x3e700113;
-	*(&sram_space + 6) = 0x001101b3; 
-	*(&sram_space + 7) = 0x00209213; 
+
+	*(&sram_space + 1) = 0x06300093;
+	*(&sram_space + 2) = 0x3e700113;
+	*(&sram_space + 3) = 0x001101b3;
+	*(&sram_space + 4) = 0x00209213;
+	*(&sram_space + 5) = 0x0db00293;
+	
+	//*(&sram_space + 50) = 0x0000ffff;
+	*(&sram_space + 6) = 0x0c502423; 
+	*(&sram_space + 7) = 0x0c802303;
+	
+	
 	//addi x4, x0, 3
 	//addi x3, x0, 0
 	// *(&sram_space + 8) = 0x00118193; //addi x3, x3, 1
