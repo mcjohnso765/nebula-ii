@@ -219,10 +219,10 @@ module team_09_tb;
 		$dumpfile("team_09.vcd");
 		$dumpvars(0, team_09_tb);
 
-		// Repeat cycles of 1000 clock edges as needed to complete testbench
+		// Repeat cycles of 1000000 clock edges as needed to complete testbench
 		repeat (25) begin
-			repeat (1000) @(posedge clock);
-			// $display("+1000 cycles");
+			repeat (1000000) @(posedge clock);
+			// $display("+1000000 cycles");
 		end
 		$display("%c[1;31m",27);
 		`ifdef GL
@@ -258,17 +258,18 @@ module team_09_tb;
 		// ************************************************************************
         // Test Case 0: Power-on-Reset of the DUT
         // ************************************************************************
+		#(CLK_PERIOD * 1000);
 		@(negedge clock);
 		new_game_press();
-
+		//#(CLK_PERIOD * 50000);
 		// ************************************************************************
         // Test Case 1: Snake Eats an Apple
         // ************************************************************************
-		#(CLK_PERIOD * 100);
-    	right_button_press();
-    	#(CLK_PERIOD * 50000000);
-    	down_button_press();
-    	#(CLK_PERIOD * 25000000);
+		
+    	//right_button_press();
+    	//#(CLK_PERIOD * 5000000);
+    	//down_button_press();
+    	//#(CLK_PERIOD * 2500000);
 	    $finish;
 	end
 
