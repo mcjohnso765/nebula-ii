@@ -199,7 +199,7 @@ module t05_cpu_core(
     logic data_en, instr_en, memWrite, memRead;
 
     // outputs
-    state_t next_state, state; //not currently used, it's just kind of there rn
+    state_t next_state, state, prev_state; //not currently used, it's just kind of there rn
     logic [31:0] data_out_CPU, data_out_INSTR;
     
     //Program Counter
@@ -228,7 +228,7 @@ module t05_cpu_core(
    // logic mem_read;
 
     logic branch_ff;
-    logic instr_wait;
+    logic instr_wait, next_instr_wait;
     logic memToReg_flipflop;
 
     logic [31:0] data_out_BUS_int, address_out_int;
@@ -238,26 +238,53 @@ module t05_cpu_core(
         mem_adr_i = (data_adr_o | instruction_adr_o);
         data_en = data_read | data_write_int;
         mem_read_int = data_read | instr_fetch;
-        instr_wait = ((~(read_address == 32'b0) | ~(write_address == 32'b0)) & ~data_good);
+        next_instr_wait = ((~(read_address == 32'b0) | ~(write_address == 32'b0)) & ~data_good);
     end
 
-    logic [31:0] load_data_flipflop, reg_write_flipflop;
+    logic [31:0] load_data_flipflop, reg_write_flipflop, instruction_adr_i;
 
-    always_ff @(posedge clk) begin
-        memToReg_flipflop <= memToReg;
-        reg_write_flipflop <= reg_write;
-        load_data_flipflop <= data_cpu_o;
+    always_ff @(posedge clk, posedge rst) begin
+        if(rst) begin
+            memToReg_flipflop <= 1'b0;
+            reg_write_flipflop <= '0;
+            load_data_flipflop <= '0;
+            instr_wait <= 1'b0;
+        end else begin
+            memToReg_flipflop <= memToReg;
+            reg_write_flipflop <= reg_write;
+            load_data_flipflop <= data_cpu_o;
+            instr_wait <= next_instr_wait;
+            instruction_adr_i <= pc_val;
+            instruction_i <= data_out_INSTR;
+            prev_state <= state;
+        end
     end
 
+    // input logic [31:0] instruction_adr_i, instruction_i,
+    // input logic clk, data_good, rst, instr_wait,
+    // input logic [2:0] state,
+
+    logic [31:0] ALU_val2;
+
+    // always_comb begin
+    //     if (ALU_source) begin
+    //         ALU_val2 = imm_32;
+    //     end else begin
+    //         ALU_val2 = reg2;
+    //     end 
+    // end
+
+    assign ALU_val2 = (ALU_source) ? imm_32 : reg2;
+
+    // assign ALU_val2 = 32'b0;
 
     t05_instruction_memory instr_mem(
-        .instruction_adr_i(pc_val),
-        .instruction_i(data_out_INSTR),
+        .instruction_adr_i(instruction_adr_i),
+        .instruction_i(instruction_i),
         .clk(clk),
         .data_good(!bus_full),
         .rst(rst),
-        .next_state(next_state),
-        .state(state),
+        .state(prev_state),
         .instr_fetch(instr_fetch),
         .instruction_adr_o(instruction_adr_o),
         .instruction_o(instruction),
@@ -265,30 +292,38 @@ module t05_cpu_core(
     
     t05_control_unit ctrl(
         .instruction(instruction), 
-        .opcode(opcode), 
-        .funct7(funct7), 
-        .funct3(funct3), 
+        // .instruction(32'h3e800093), //addi instr
+        // .instruction(32'h00309133), //sll instr
+        // .instruction('1),
+        .opcode(opcode),
+        .funct7(funct7),
+        .funct3(funct3),
         .rs1(rs1), 
         .rs2(rs2), 
-        .rd(rd), 
+        .rd(rd),
         .imm_32(imm_32), 
         .ALU_source(ALU_source), 
         .memToReg(memToReg),
-        .load(load_pc));
+        .load(load_pc)
+        );
 
         // assign result = imm_32;
 
-    //multiplexer for register input
-    always_comb begin
-        if((opcode != 7'b0100011) && (opcode != 7'b1100011)) begin
-            if(memToReg_flipflop == 1'b1) reg_write = (load_data_flipflop | data_cpu_o);
-            else reg_write = result;
-            reg_write_en = (!instr_fetch) ? 1'b1 : 1'b0;
-        end else begin
-            reg_write = 32'b0;
-            reg_write_en = 1'b0;
-        end
-    end
+    // multiplexer for register input
+    
+    // always_comb begin
+    //     if((opcode != 7'b0100011) && (opcode != 7'b1100011)) begin
+    //         if(memToReg_flipflop == 1'b1) reg_write = (load_data_flipflop | data_cpu_o);
+    //         else reg_write = result;
+    //         reg_write_en = (!instr_fetch) ? 1'b1 : 1'b0;
+    //     end else begin
+    //         reg_write = 32'b0;
+    //         reg_write_en = 1'b0;
+    //     end
+    // end
+
+    assign reg_write = (memToReg) ? data_cpu_o : result;
+    assign reg_write_en = (!instr_fetch) ? 1'b1 : 1'b0; //these need to be updated to accommodate load and store word
 
     logic [31:0] register_out;
     
@@ -302,36 +337,39 @@ module t05_cpu_core(
         .rs2(rs2),
         .reg1(reg1),
         .reg2(reg2),
-        .register_out(register_out));
+        .register_out(register_out)
+        );
  
     logic branch_temp;
     t05_ALU math(
         .ALU_source(ALU_source), 
         .opcode(opcode), 
         .funct3(funct3), 
-        .funct7(funct7), 
+        .funct7(funct7),
         .reg1(reg1), 
-        .reg2(reg2), 
-        .immediate(imm_32), 
+        .val2(ALU_val2),
         .read_address(read_address), 
         .write_address(write_address), 
         .result(result), 
         .branch(branch),
         .pc_data(pc_jump),
-        .pc_val(pc_val));
+        .pc_val(pc_val)
+        );
 
     always_comb begin
-        data_good = !bus_full & (next_state == Read | next_state == Write);
+        data_good = !bus_full && (state == Wait);
     end
 
     logic [31:0] val2;
 
-    always_comb begin
-        // if (ALU_source) val2 = imm_32;
-        // else val2 = reg2;
-        val2 = reg2;
-        branch_ff = ((opcode == 7'b1100011) && ((funct3 == 3'b000 && (reg1 == val2)) | (funct3 == 3'b100 && (reg1 < val2)) | (funct3 == 3'b001 && (reg1 != val2)) | (funct3 == 3'b101 && (reg1 >= val2)))) | (opcode == 7'b1101111) | (opcode == 7'b1100111);
-    end
+    // always_comb begin
+    //     // if (ALU_source) val2 = imm_32;
+    //     // else val2 = reg2;
+    //     val2 = reg2;
+    //     branch_ff = ((opcode == 7'b1100011) && ((funct3 == 3'b000 && (reg1 == val2)) | (funct3 == 3'b100 && (reg1 < val2)) | (funct3 == 3'b001 && (reg1 != val2)) | (funct3 == 3'b101 && (reg1 >= val2)))) | (opcode == 7'b1101111) | (opcode == 7'b1100111);
+    // end
+
+    assign branch_ff = 1'b0;
 
     //sort through mem management inputs/outputs
     t05_data_memory data_mem(
@@ -342,6 +380,15 @@ module t05_cpu_core(
         .clk(clk),
         .rst(rst),
         .data_good(data_good),
+
+        // .data_read_adr_i('0),
+        // .data_write_adr_i('0),
+        // .data_cpu_i('0),
+        // .data_bus_i('0),
+        // .clk(clk),
+        // .rst(rst),
+        // .data_good('0),
+
         .data_read(data_read),
         .data_write(data_write_int),
         .data_adr_o(data_adr_o),
@@ -377,34 +424,25 @@ module t05_cpu_core(
         .clr(rst),
         .load(load_pc),
         .inc(data_good & en),
-        .ALU_out(branch_ff),
+        .ALU_out(branch),
         .Disable(instr_wait),
         .data(pc_jump),
-        .imm_val(imm_32),
+        .imm_val(32'b0),   //should be imm_32
         .pc_val(pc_val));
 
 endmodule
+
+
 
 module t05_ALU(
     input logic ALU_source,
     input logic [6:0] opcode,
     input logic [2:0] funct3,
     input logic [6:0] funct7,
-    input logic [31:0] reg1, reg2, immediate, pc_val,
+    input logic [31:0] reg1, val2, pc_val,
     output logic [31:0] read_address, write_address, result, pc_data,
     output logic branch
-);
-
-    logic [31:0] val2;
-
-
-    always_comb begin
-        if (ALU_source) begin
-            val2 = immediate;
-        end else begin
-            val2 = reg2;
-        end end
-        
+);        
 
     always_comb begin
         pc_data = 32'b0;
@@ -420,10 +458,46 @@ module t05_ALU(
                 begin
                     write_address = reg1 + val2;
                 end
-            7'b0110011, 7'b0010011:
+            7'b0110011:
                 begin
                     case(funct3)
-                        3'b000, 3'b010: begin
+                        3'b000: begin
+                            if (funct7==7'b0100000) begin //subtract based on f7
+                                result = reg1-val2;
+                            end else begin
+                                result = reg1+val2;
+                            end
+                        end 
+                        3'b010: begin
+                            if (funct7==7'b0100000) begin //subtract based on f7
+                                result = reg1-val2;
+                            end else begin
+                                result = reg1+val2;
+                            end
+                        end
+                        3'b100: result = reg1^val2;
+                        3'b110: result = reg1|val2;
+                        3'b111: result = reg1&val2;
+                        3'b001: result = reg1 << val2[4:0];
+                        3'b101: result = reg1 >> val2[4:0];
+                        default: begin
+                            result=32'b0;
+                            read_address=32'b0;
+                            write_address=32'b0;
+                        end
+                    endcase 
+                end
+            7'b0010011:
+                begin
+                    case(funct3)
+                        3'b000: begin
+                            if (funct7==7'b0100000) begin //subtract based on f7
+                                result = reg1-val2;
+                            end else begin
+                                result = reg1+val2;
+                            end
+                        end 
+                        3'b010: begin
                             if (funct7==7'b0100000) begin //subtract based on f7
                                 result = reg1-val2;
                             end else begin
@@ -510,7 +584,7 @@ module t05_control_unit(
         ALU_source = 1'b0;
         memToReg = 1'b0;
         load = 1'b0;
-        case(opcode)
+        case(instruction[6:0])
             7'b0110011: //only r type instruction
                 begin
                     funct3 = instruction[14:12];
@@ -523,8 +597,30 @@ module t05_control_unit(
                     memToReg = 1'b0;
                     load = 1'b0;
                 end
-            7'b0010011, //i type instructions
-            7'b0000011,
+            7'b0010011: //i type instructions
+                begin
+                    funct3 = instruction[14:12];
+                    rd = instruction[11:7];
+                    rs1 = instruction[19:15];
+                    imm_32 = {20'(instruction[31]), instruction[31:20]};
+                    funct7 = 7'b0;
+                    rs2 = 5'b0;
+                    ALU_source = 1'b1;
+                    memToReg = (opcode == 7'b0000011) ? 1'b1 : 1'b0;
+                    load = (opcode == 7'b1100111) ? 1'b1 : 1'b0;
+                end
+            7'b0000011:
+                begin
+                    funct3 = instruction[14:12];
+                    rd = instruction[11:7];
+                    rs1 = instruction[19:15];
+                    imm_32 = {20'b0, instruction[31:20]};
+                    funct7 = 7'b0;
+                    rs2 = 5'b0;
+                    ALU_source = 1'b1;
+                    memToReg = (opcode == 7'b0000011) ? 1'b1 : 1'b0;
+                    load = (opcode == 7'b1100111) ? 1'b1 : 1'b0;
+                end
             7'b1100111:
                 begin
                     funct3 = instruction[14:12];
@@ -654,7 +750,7 @@ endmodule
 module t05_instruction_memory(
     input logic [31:0] instruction_adr_i, instruction_i,
     input logic clk, data_good, rst, instr_wait,
-    input logic [2:0] next_state, state,
+    input logic [2:0] state,
     output logic instr_fetch,
     output logic [31:0] instruction_adr_o, instruction_o
 );
@@ -665,6 +761,9 @@ module t05_instruction_memory(
 
     always_comb begin
         next_fetch = 1'b0;
+        stored_instr_adr = '0;
+        stored_instr = '0;
+
         if((state == Wait)) begin //data_good & instr_fetch
             next_fetch = 1'b0;
             stored_instr_adr = instruction_adr_i;
@@ -673,14 +772,15 @@ module t05_instruction_memory(
             next_fetch = 1'b0;
             stored_instr_adr = instruction_adr_i;
             stored_instr = instruction_i;
+            // stored_instr = 32'h3E800093;
         end else if(!instr_wait) begin
             next_fetch = 1'b1;
             stored_instr_adr = instruction_adr_i;
             stored_instr = '0;  ////////////32'b0 <-
         end else begin
-            next_fetch = 1'b0;
-            stored_instr_adr = instruction_adr_i;
-            stored_instr = instruction_o;
+            // next_fetch = 1'b0;
+            // stored_instr_adr = instruction_adr_i;
+            // stored_instr = instruction_o;
         end
     end
 
@@ -858,8 +958,8 @@ module t05_pc(
    always_comb begin
        next_pc = pc_val;
        next_line_ad = pc_val + 32'd4;	// Calculate next line address  
-       jump_ad = pc_val + imm_val;    // Calculate jump address (jump and link)
-
+    //    jump_ad = pc_val + imm_val;    // Calculate jump address (jump and link)
+        jump_ad = pc_val;
 	
         // Mux choice between next line address and jump address
         if (Disable) begin 
@@ -872,7 +972,7 @@ module t05_pc(
             
         else if (ALU_out) begin
 		      next_pc = jump_ad ;
-	      end
+	    end
 	
         else if (inc) begin
           next_pc= next_line_ad;
