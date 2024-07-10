@@ -1,50 +1,28 @@
 `default_nettype none
-module top (
-	hwclk,
-	reset,
-	pb,
-	left,
-	right,
-	ss7,
-	ss6,
-	ss5,
-	ss4,
-	ss3,
-	ss2,
-	ss1,
-	ss0,
-	red,
-	green,
-	blue,
-	txdata,
-	rxdata,
-	txclk,
-	rxclk,
-	txready,
-	rxready
+module team_09 (
+	clk,
+	nrst,
+	en,
+	la_data_in,
+	la_data_out,
+	la_oenb,
+	gpio_in,
+	gpio_out,
+	gpio_oeb
 );
-	input wire hwclk;
-	input wire reset;
-	input wire [20:0] pb;
-	output wire [7:0] left;
-	output wire [7:0] right;
-	output wire [7:0] ss7;
-	output wire [7:0] ss6;
-	output wire [7:0] ss5;
-	output wire [7:0] ss4;
-	output wire [7:0] ss3;
-	output wire [7:0] ss2;
-	output wire [7:0] ss1;
-	output wire [7:0] ss0;
-	output wire red;
-	output wire green;
-	output wire blue;
-	output wire [7:0] txdata;
-	input wire [7:0] rxdata;
-	output wire txclk;
-	output wire rxclk;
-	input wire txready;
-	input wire rxready;
+	input wire clk;
+	input wire nrst;
+	input wire en;
+	input wire [127:0] la_data_in;
+	output wire [127:0] la_data_out;
+	input wire [127:0] la_oenb;
+	input wire [33:0] gpio_in;
+	output wire [33:0] gpio_out;
+	output wire [33:0] gpio_oeb;
+	assign la_data_out = 128'b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
+	assign gpio_out[33:25] = 9'b000000000;
+	assign gpio_oeb = 34'b0011111110000000000000000000000000;
+	localparam MAX_LENGTH = 78;
 	wire snakeBody;
 	wire snakeHead;
 	wire apple;
@@ -72,7 +50,6 @@ module top (
 	wire [3:0] displayOut;
 	wire [3:0] dispObs;
 	wire isGameComplete;
-	localparam MAX_LENGTH = 78;
 	wire [623:0] body;
 	wire [1:0] blinkToggle;
 	wire [1:0] junk;
@@ -81,14 +58,14 @@ module top (
 		.snakeHead(snakeHead),
 		.apple(apple),
 		.border(border || obstacle),
-		.KeyEnc(pb[0]),
+		.KeyEnc(gpio_in[31]),
 		.GameOver(isGameComplete),
-		.clk(hwclk),
-		.nrst(~reset),
+		.clk(clk),
+		.nrst(nrst || en),
 		.sync(sync),
-		.wr(left[0]),
-		.dcx(left[1]),
-		.D(right[7:0]),
+		.wr(gpio_out[9]),
+		.dcx(gpio_out[8]),
+		.D(gpio_out[7:0]),
 		.x(x),
 		.y(y)
 	);
@@ -98,12 +75,12 @@ module top (
 		.isBorder(border)
 	);
 	snake_body_controller #(.MAX_LENGTH(MAX_LENGTH)) control(
-		.direction_pb({pb[10], pb[6], pb[5], pb[7]}),
+		.direction_pb(gpio_in[28:25]),
 		.x(x),
 		.y(y),
-		.clk(hwclk),
-		.pb_mode(pb[9]),
-		.nrst(~reset),
+		.clk(clk),
+		.pb_mode(gpio_in[29]),
+		.nrst(nrst || en),
 		.sync(sync),
 		.curr_length(curr_length),
 		.body(body),
@@ -112,14 +89,14 @@ module top (
 	);
 	obstacleMode obsmode(
 		.sync_reset(sync),
-		.obstacle_pb(pb[8]),
-		.clk(hwclk),
-		.nrst(~reset),
+		.obstacle_pb(gpio_in[30]),
+		.clk(clk),
+		.nrst(nrst || en),
 		.obstacleFlag(obstacleFlag)
 	);
 	obstacle_random obsrand1(
-		.clk(hwclk),
-		.nRst(~reset),
+		.clk(clk),
+		.nRst(nrst || en),
 		.randX(randX),
 		.randY(randY),
 		.randX2(randX2),
@@ -132,8 +109,8 @@ module top (
 		.randX(randX),
 		.randY(randY),
 		.goodColl(goodColl),
-		.clk(hwclk),
-		.reset(~reset),
+		.clk(clk),
+		.reset(nrst || en),
 		.s_reset(sync),
 		.body(body),
 		.apple(apple)
@@ -141,8 +118,8 @@ module top (
 	obstaclegen2 #(.MAX_LENGTH(MAX_LENGTH)) obsg2(
 		.curr_length(curr_length),
 		.obstacleCount(dispObs),
-		.clk(hwclk),
-		.nRst(~reset),
+		.clk(clk),
+		.nRst(nrst || en),
 		.s_reset(sync),
 		.body(body),
 		.x(x),
@@ -154,8 +131,8 @@ module top (
 		.obstacleFlag(obstacleFlag)
 	);
 	collision coll(
-		.clk(hwclk),
-		.nRst(~reset),
+		.clk(clk),
+		.nRst(nrst || en),
 		.snakeHead(snakeHead),
 		.snakeBody(snakeBody),
 		.border(border || obstacle),
@@ -164,16 +141,16 @@ module top (
 		.badColl(badColl)
 	);
 	score_posedge_detector score_detect(
-		.clk(hwclk),
-		.nRst(~reset),
+		.clk(clk),
+		.nRst(nrst || en),
 		.goodColl_i(goodColl),
 		.badColl_i(badColl),
 		.goodColl(good_coll),
 		.badColl(bad_coll)
 	);
 	score_tracker3 track(
-		.clk(hwclk),
-		.nRst(~reset),
+		.clk(clk),
+		.nRst(nrst || en),
 		.goodColl(good_coll),
 		.current_score(curr_length),
 		.badColl(bad_coll),
@@ -186,33 +163,24 @@ module top (
 	toggle_screen toggle1(
 		.displayOut(displayOut),
 		.blinkToggle(blinkToggle),
-		.clk(hwclk),
-		.rst(~reset),
+		.clk(clk),
+		.rst(nrst),
 		.bcd_ones(bcd_ones),
 		.bcd_tens(bcd_tens),
 		.bcd_hundreds(bcd_hundreds)
 	);
 	ssdec ssdec1(
 		.in(displayOut),
-		.enable(blinkToggle == 1),
-		.out(ss0[6:0])
+		.enable(1),
+		.out(gpio_out[22:16])
 	);
-	ssdec ssdec2(
-		.in(displayOut),
-		.enable(blinkToggle == 2),
-		.out(ss1[6:0])
-	);
-	ssdec ssdec3(
-		.in(displayOut),
-		.enable(blinkToggle == 0),
-		.out(ss2[6:0])
-	);
+	assign gpio_out[24:23] = blinkToggle;
 	sound_generator sound_gen(
-		.clk(hwclk),
-		.rst(reset),
+		.clk(clk),
+		.rst(~nrst || ~en),
 		.goodColl_i(goodColl),
 		.badColl_i(badColl),
 		.button_i(1'b0),
-		.soundOut({left[7:2], junk})
+		.soundOut({gpio_out[15:10], junk})
 	);
 endmodule
