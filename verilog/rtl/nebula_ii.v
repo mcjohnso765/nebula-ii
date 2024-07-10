@@ -32,17 +32,8 @@ module nebula_ii (
     output [37:0] io_oeb,
 
     // IRQ
-    output [2:0] irq,
+    output [2:0] irq
 
-    // Wishbone Master Signals
-    output [31:0] ADR_O,
-    output [31:0] DAT_O,
-    output [3:0]  SEL_O,
-    output        WE_O,
-    output        STB_O,
-    output        CYC_O,
-    input [31:0] DAT_I,
-    input         ACK_I
 );
     
     // Number of teams (only sample project for now)
@@ -60,6 +51,19 @@ module nebula_ii (
     // (not used unless a team wants to)
     // wire [2:0] designs_irq [NUM_TEAMS:0];
     assign irq = 3'b0; // Default of 0
+
+    // Wishbone Master Signals
+    //team specific Master -> arbitrator signals
+    //team specific Arbitrator -> master signals
+    wire [31:0] ADR_O;
+    wire [31:0] DAT_O;
+    wire [3:0]  SEL_O;
+    wire        WE_O;
+    wire        STB_O;
+    wire        CYC_O;
+
+    wire [31:0] DAT_I;
+    wire        ACK_I;
 
     //to arbitrator
     wire        wbs_ack_o_m;
@@ -123,6 +127,7 @@ module nebula_ii (
 		.WE_O(WE_O),
 		.STB_O(STB_O),
 		.CYC_O(CYC_O),
+
         .DAT_I(DAT_I),
         .ACK_I(ACK_I)
     );
@@ -206,7 +211,7 @@ module nebula_ii (
     // Wishbone Arbitrator
     // everywhere with squigly brackets is where more manager signals can be concatinated!!!
     wishbone_arbitrator #(
-        .NUM_MANAGERS(1)
+        .NUM_MANAGERS(2)
     ) wb_arbitrator (
         
     `ifdef USE_POWER_PINS
@@ -218,16 +223,16 @@ module nebula_ii (
         .nRST(~wb_rst_i),
 
         //manager to arbitrator, input
-        .A_ADR_I({wbs_adr_i}),
-        .A_DAT_I({wbs_dat_i}),
-        .A_SEL_I({wbs_sel_i}),
-        .A_WE_I({wbs_we_i}),
-        .A_STB_I({wbs_stb_i}),
-        .A_CYC_I({wbs_cyc_i}),
+        .A_ADR_I({ADR_O, wbs_adr_i}),
+        .A_DAT_I({DAT_O, wbs_dat_i}),
+        .A_SEL_I({SEL_O, wbs_sel_i}),
+        .A_WE_I({WE_O, wbs_we_i}),
+        .A_STB_I({STB_O, wbs_stb_i}),
+        .A_CYC_I({CYC_O, wbs_cyc_i}),
 
         //arbitrator to manager, output
-        .A_DAT_O({wbs_dat_o}),
-        .A_ACK_O({wbs_ack_o}),
+        .A_DAT_O({DAT_I, wbs_dat_o}),
+        .A_ACK_O({ACK_I, wbs_ack_o}),
 
         //arbitrator to peripheral, input
         .DAT_I(wbs_dat_o_m),

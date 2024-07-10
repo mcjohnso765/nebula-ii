@@ -128,16 +128,16 @@ void main()
 	reg_gpio_PIN_24TO31 = 0x11111111;
 	reg_gpio_PIN_32TO37 = 0x111111;
 
-    // Do stuff with SRAM
-    sram_space = 0xFEED0000; // write 0xFEED000 to address 0x33000000
-    *(&sram_space + 1) = 0xABCDEF78;  // write 0xABCDEF78 to address 0x33000004
-    *(&sram_space + 3) = 0x12345678;  // write 0x12345678 to address 0x3300000C
-    reg_sample_proj_EN = (sram_space == 0xFEED0000);
-    reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
-    reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
+    // // Do stuff with SRAM
+    // sram_space = 0xFEED0000; // write 0xFEED000 to address 0x33000000
+    // *(&sram_space + 1) = 0xABCDEF78;  // write 0xABCDEF78 to address 0x33000004
+    // *(&sram_space + 3) = 0x12345678;  // write 0x12345678 to address 0x3300000C
+    // reg_sample_proj_EN = (sram_space == 0xFEED0000);
+    // reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
+    // reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
 
-    // Write instructions in hex to SRAM
+    // // Write instructions in hex to SRAM
 
-    // Enable CPU
-    reg_team_04_EN = 1;
+    // // Enable CPU
+    // reg_team_04_EN = 1;
 }

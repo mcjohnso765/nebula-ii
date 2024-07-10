@@ -14,8 +14,6 @@ module tippy_top (
     input logic Rx,
 
     output logic h_out, v_out, pixel_data
-
-    //output logic 
 );
 
     logic [31:0] CPU_instructions;
@@ -27,6 +25,19 @@ module tippy_top (
     logic CPU_write;
     logic [3:0] CPU_sel;
     logic CPU_enable;
+    
+    logic [31:0] VGA_request_address;
+    logic [31:0] mem_data_to_VGA;
+    logic [9:0] h_count;
+    logic [1:0] VGA_state;
+    logic data_en;
+    logic VGA_read;
+    logic [31:0] data_to_VGA;
+    logic [31:0] VGA_adr;
+
+    logic VGA_enable;
+    
+
     CPU cpu(
         .instruction(CPU_instructions),
 
@@ -36,7 +47,7 @@ module tippy_top (
         .data_from_mem(mem_data_to_CPU),
 
         .alu_result(), //ignore
-        //.reg_window(), //ignore
+        .reg_window(), //ignore
         .err_flag(), //ignore
         
         .addr_to_mem(CPU_adr_to_mem),
@@ -50,14 +61,7 @@ module tippy_top (
         .enable(CPU_enable)
     );
 
-    logic [31:0] VGA_request_address;
-    logic [31:0] mem_data_to_VGA;
-    logic [9:0] h_count;
-    logic [1:0] VGA_state;
-    logic data_en;
-    logic VGA_read;
-    logic [31:0] data_to_VGA;
-    logic [31:0] VGA_adr;
+    
     VGA_data_controller VGA_data_control(
         .clk(clk),
         .nrst(nRst),
@@ -65,8 +69,6 @@ module tippy_top (
         .data_from_SRAM(mem_data_to_VGA),
         .h_count(h_count),
         .VGA_state(VGA_state),
-        .data_en(data_en),
-        .byte_select_in({4{data_en}}),
         .byte_select_out(), //ignore
         .read(VGA_read),
         .data_to_VGA(data_to_VGA),
@@ -74,10 +76,12 @@ module tippy_top (
     );
 
 
-    logic VGA_enable;
+    
     VGA_out vga(
         .SRAM_data_in(data_to_VGA),
-        .SRAM_busy(),
+        //.SRAM_data_in({4{uart_out}}), 
+        //.SRAM_data_in({32{1'b1}}), 
+        .SRAM_busy(1'b0),
         
         .clk(clk),
         .nrst(nRst),
@@ -96,14 +100,6 @@ module tippy_top (
         .v_state() //ignore
     );
 
-    // ram ranch(
-    //     .din(),
-    //     .addr_r(), 
-    //     .addr_w(), 
-    //     .write_en(), 
-    //     .clk(clk), 
-    //     .dout()
-    // );
 
     logic [7:0] uart_out;
     logic uart_data_ready; // flags that the UART data is ready to be received
@@ -124,29 +120,23 @@ module tippy_top (
         .parity_error() // ignore
     );
 
-    // logic [31:0] UART_flag;
-    // UARTMem UARTMem(
-    //     .clk(clk),
-    //     .nRst(nRst),
-
-    //     .button(button),
-    //     .flag(UART_flag)
-    // );
-
-    request_handler #(.UART_ADDRESS(999)) reqhand
+    request_handler #(.UART_ADDRESS(1000)) reqhand
     (
         .clk(clk),
         .nRst(nRst),
 
         .mem_busy(mem_busy),
-        .VGA_state(VGA_state),
+        .VGA_state(2'b0),
+        //.VGA_state(VGA_state),
         .CPU_enable(CPU_enable),
         .VGA_enable(VGA_enable),
 
         .VGA_read(VGA_read),
-        .VGA_adr(VGA_adr),
+        // .VGA_adr(VGA_adr),
+        .VGA_adr(VGA_adr*4+32'd2000),
+        // .data_to_VGA(VGA_adr),
         .data_to_VGA(mem_data_to_VGA),
-
+        
         .data_from_UART({24'b0, uart_out}),
 
         .CPU_instr_adr(CPU_instr_adr),
@@ -189,7 +179,7 @@ module CPU (
     input logic clk, nrst, //timing & reset signals
     input logic [31:0] data_from_mem,
     output logic [31:0] alu_result,  //numerical/logical output of ALU
-    //output reg [31:0] [31:0] reg_window,
+    output reg [31:0] [31:0] reg_window,
     // output logic ctrl_err, //error flag indicating invalid instruction (not w/in RISC-V 32I), from alu control
     output logic err_flag, //ALU flag invalid operation, from ALU
     output logic [31:0] addr_to_mem, data_to_mem,//signals from memory handler to mem
@@ -228,7 +218,6 @@ module CPU (
 
     //from Regs
     logic [31:0] regA, regB;
-    //logic [31:0] reg_file [31:0] ;
 
     //from Mem Handler
     logic [31:0] MemData;
@@ -315,7 +304,7 @@ module CPU (
         .write_data(DataWrite), //value tobe written
         .clk(clk), 
         .nrst(nrst), 
-        //.reg_file(), //testbenching array
+        .reg_file(reg_window), //testbenching array
         .enable(enable)
         );
 
@@ -966,11 +955,10 @@ module register_file(
     input logic clk, nrst, reg_enable_write,
     input logic [31:0] write_data,
     output logic [31:0]  read_data_1, read_data_2,
-    //output reg [31:0]   reg_file [31:0],
+    output reg [31:0]  [31:0] reg_file,
     input enable
 );
     // logic [4:0] i;
-    logic [31:0] reg_file [31:0];
 
     //assign reg_file[0] = 0;
 
@@ -1077,7 +1065,7 @@ module program_counter (
 
 );
   
-  always_ff @( posedge clk, negedge nRst ) begin
+  always_ff @( negedge clk, negedge nRst ) begin
     if(~nRst) begin
       instructionAddress <= 32'd0;
       linkAddress <= 32'd0;
@@ -1136,15 +1124,15 @@ module VGA_out(
     logic [9:0] h_next_count; // 0 to 640 // FOR TESTBENCHING ONLY /////////////////////////////////////////////
     logic [8:0] v_next_count; // 0 to 480 // FOR TESTBENCHING ONLY /////////////////////////////////////////////
    
-    //    logic [9:0] h_count, h_next_count; // 0 to 640 // FOR ACTUAL USE /////////////////////////////////////////
-    //    logic [8:0] v_count, v_next_count; // 0 to 480 // FOR ACTUAL USE /////////////////////////////////////////
+//    logic [9:0] h_count, h_next_count; // 0 to 640 // FOR ACTUAL USE /////////////////////////////////////////
+//    logic [8:0] v_count, v_next_count; // 0 to 480 // FOR ACTUAL USE /////////////////////////////////////////
     logic [8:0] h_offset; // h count math for appropriate word address offset
     logic [8:0] v_offset; // v count math for appropriate word address offset
     logic [4:0] x_coord; // address for the 32 bit of information received from SRAM
     logic [31:0] current_word, next_word; // used for calling the next line of info from SRAM and having it on standby
     
     //assign word_address_base = 32'h3E80; // Word address base for the actual SRAM
-    assign word_address_base = 32'd1000; // Word address base for test benching purposes
+    assign word_address_base = 32'h0; // Word address base for test benching purposes
 
     // Enum for H_STATES
     typedef enum logic [1:0] {
@@ -1193,7 +1181,7 @@ module VGA_out(
     always_comb begin
         if ((v_current_state == v_active) & (v_count < 384)) begin
             VGA_state = 2'b10;
-        end else if ((v_current_state == v_backporch) & (v_count == 9'd32)) begin
+        end else if ((v_current_state == v_backporch) & (v_count > 9'd31)) begin
             VGA_state = 2'b01;
         end else begin
             VGA_state = 2'b00;
@@ -1208,7 +1196,7 @@ module VGA_out(
             h_sync: begin
                 h_state = 2'b00; // can be eliminated after tesbenching
                 v_count_toggle = 0;
-                if (h_count < 45) begin //OG 95
+                if (h_count < 37) begin //10 MHz // 12 MHz = 45
                     h_next_count = h_next_count + 1'b1;
                     h_out = 0;
                     h_next_state = h_sync;
@@ -1224,7 +1212,7 @@ module VGA_out(
                 h_state = 2'b01; // can be eliminated after tesbenching
                 h_out = 1;
                 v_count_toggle = 0;
-                if (h_count < 22) begin // OG 47
+                if (h_count < 18) begin //10 MHz // 12 MHz = 22
                     h_next_count = h_next_count + 1'b1;
                     h_next_state = h_backporch;
                 end else begin
@@ -1237,7 +1225,7 @@ module VGA_out(
                 h_state = 2'b10; // can be eliminated after tesbenching
                 h_out = 1;
                 v_count_toggle = 0;
-                if (h_count < 304) begin // OG 639
+                if (h_count < 256) begin //10 MHz // 12 MHz = 304
                     h_next_count = h_next_count + 1'b1;
                     h_next_state = h_active;
                 end else begin
@@ -1250,7 +1238,7 @@ module VGA_out(
             h_frontporch: begin
                 h_state = 2'b11; // can be eliminated after tesbenching
                 h_out = 1;
-                if (h_count < 7) begin // OG 15
+                if (h_count < 5) begin //10 MHz // 12 MHz = 6
                     h_next_count = h_next_count + 1'b1;
                     h_next_state = h_frontporch;
                     v_count_toggle = 0;
@@ -1274,7 +1262,7 @@ module VGA_out(
         case (v_current_state) 
             v_sync: begin
                 v_state = 2'b00; // can be eliminated after tesbenching
-                if (v_count < 2) begin
+                if (v_count < 2) begin 
                     v_out = 0;
                     v_next_state = v_sync;
                 end else begin
@@ -1336,8 +1324,8 @@ module VGA_out(
     end
 
     // IF BOTH STATES ARE ACTIVE AND THE COUNT IS WITHIN OUR DISPLAY DIMENSIONS, DATA TRANSACTION IS ENABLED
-    always_comb begin                                                       // 256 for 2 pixels ber pit, 384 for 4 lines before new data
-        if ((h_current_state == h_active) & (v_current_state == v_active) & (h_count < 256) & (v_count < 384)) begin
+    always_comb begin                                                       // 256 for 2 pixels ber pit, 384 for 5 lines before new data
+        if ((h_current_state == h_active) & (v_current_state == v_active) & (h_count < 256) & (v_count < 480)) begin
             data_en = 1;
         end else begin
             data_en = 0;
@@ -1352,7 +1340,7 @@ module VGA_out(
     always_comb begin
     ////////////////////////////////////POTENTIAL FOR ADDING AN ENABLE HERE TO OPTIMIZE/////////////////////////////////////////
         h_offset = {7'b0, h_count[7:6]};  // sets h offset to hcount up until 32
-        v_offset = 7'd4 * v_count[8:2];            // sets v offset to vcount * 4 // [8:2] accounts for after 4 lines we get a new offset of info
+        v_offset = 7'd4 * (v_count / 9'd5);            // sets v offset to vcount * 4 // [8:2] accounts for after 4 lines we get a new offset of info
         word_address_offset = h_offset + v_offset; // sets word offset to the total of h and v offsets
     end
 
@@ -1371,19 +1359,22 @@ module VGA_data_controller (
     input logic [31:0] VGA_request_address, data_from_SRAM,
     input logic [9:0] h_count,
     input logic [1:0] VGA_state,
-    input logic data_en, // Can be used for the read 
-    input logic [3:0] byte_select_in, // directly tied to the data_en output
-    output logic [3:0] byte_select_out, // directly tied to the data_en output
+    output logic [3:0] byte_select_out,
     output logic read,
     output logic [31:0] data_to_VGA, SRAM_address
 );
-    // logic [31:0] data_hold;
-    // logic data_send_enable;
 
-    // assign data_send_enable = &h_count[5:0];
+    logic [31:0] next_data, next_address;
 
-    assign byte_select_out = byte_select_in;
-    assign read = data_en;
+    always_comb begin
+        if (VGA_state > 0) begin
+            read = 1'b1;
+            byte_select_out = 4'b1111;
+        end else begin
+            read = 1'b0;
+            byte_select_out = 4'b0000;
+        end
+    end
 
     typedef enum logic [1:0] {
         IDLE,
@@ -1391,71 +1382,63 @@ module VGA_data_controller (
         LOAD_NEW_REGISTER
     } state_type;
 
-    state_type state;
+    state_type state, next_state;
 
     always_ff @(posedge clk, negedge nrst) begin
-        if (~nrst) begin
+        if(~nrst) begin
             state <= IDLE;
-            data_to_VGA <= data_from_SRAM;
+            data_to_VGA <= 32'b0;
+            SRAM_address <= 32'b0;
         end else begin
+            state <= next_state;
+            data_to_VGA <= next_data;
+            SRAM_address <= next_address;
+        end
+    end
+
+    always_comb begin
+        next_data = data_to_VGA;
+        next_address = SRAM_address;
             case (state)
                 IDLE: begin
-                    data_to_VGA <= data_from_SRAM;
-                    state <= LOAD_NEW_REGISTER;
+                    next_data = data_from_SRAM;
+                    next_state = LOAD_NEW_REGISTER;
+                    next_address = SRAM_address;
                 end
 
                 LOAD_NEW_REGISTER: begin
-                    data_to_VGA <= data_from_SRAM;
-                    SRAM_address <= SRAM_address;
-                    state <= PREPARE_DATA;
+                    next_data = data_from_SRAM;
+                    next_address = SRAM_address;
+                    next_state = PREPARE_DATA;
                 end
 
                 PREPARE_DATA: begin
                     if (VGA_state == 1) begin // preparing first word 
                       //SRAM_address <= 32'h3E80; // base of SRAM storage
-                        SRAM_address <= 32'h0; // TESTBENCH CASE
-                        data_to_VGA <= data_from_SRAM;
-                        state <= LOAD_NEW_REGISTER;
+                        next_address = 32'h0; // TESTBENCH CASE
+                        next_data = data_from_SRAM;
+                        next_state = LOAD_NEW_REGISTER;
                     end
                     
-                    else if (h_count[5:0] == 63) begin
-                        state <= LOAD_NEW_REGISTER;
+                    else if (h_count[5:0] == 62) begin
+                        next_state = LOAD_NEW_REGISTER;
+                    end else if (h_count[7:6] == 3)begin
+                        next_address = VGA_request_address - 3; // preparing next word 
+                        next_data = next_data;
+                        next_state = PREPARE_DATA;
                     end else begin
-                        SRAM_address <= VGA_request_address + 1; // preparing next word 
-                        data_to_VGA <= data_to_VGA;
-                        state <= PREPARE_DATA;
+                        next_address = VGA_request_address + 1; // preparing next word 
+                        next_data = next_data;
+                        next_state = PREPARE_DATA;
                     end
 
                 end
 
-                default: state <= IDLE;
+                default: next_state = IDLE;
             endcase
         end
-    end
-
-
-
-
-
 
 endmodule
-
-// module UARTMem (
-//     input logic  clk, nRst, 
-//     input logic button, //uart input signal
-//     output logic [31:0] flag //uart output signal
-// );
-
-//     always_ff @( posedge clk, negedge nRst) begin
-//         if(~nRst) begin
-//             flag <= 0;
-//         end else if (button) begin
-//             flag <= 32'hffffffff;
-//         end else begin
-//             flag <= 0;
-//         end
-//     end
-// endmodule
 
 
 
@@ -1468,7 +1451,7 @@ typedef enum logic {
 
 module UART_Receiver #(
   parameter BAUD_RATE = 9600,
-  parameter CLOCK_FREQ = 50000000,
+  parameter CLOCK_FREQ = 10000000,
   parameter CYCLES_PER_BIT = CLOCK_FREQ / BAUD_RATE //number of clock cycles per UART bit
 ) (
   input logic nRst, clk, enable, Rx,
@@ -1514,7 +1497,7 @@ module UART_Receiver #(
     end
   end
 
-  assign parity_error = ((^working_data[7:0]) != working_data[8]); // May not work idk, we will see when we try and run it. However, this is the accurate logic info for parity error
+  assign parity_error = 0; // May not work idk, we will see when we try and run it. However, this is the accurate logic info for parity error
 
   always_ff @( posedge clk, negedge nRst ) begin //data loader
     if (~nRst) begin //reset
@@ -1534,10 +1517,10 @@ module UART_Receiver #(
           
           if(BAUD_counter == CYCLES_PER_BIT) begin //wait till clock cycle sync up with BAUD rate 
 
-            if (bits_received == 4'd10) begin //last bit received, send data out
+            if (bits_received == 4'd9) begin //last bit received, send data out
               
               if (~parity_error) begin
-                data_out <= working_data[7:0]; // CHANGED TO THIS IN ORDER TO SEND OUT OUR 8 BITS OF USABLE DATA
+                data_out <= working_data[8:1]; // CHANGED TO THIS IN ORDER TO SEND OUT OUR 8 BITS OF USABLE DATA
                 working_data <= working_data;  // I HAVE MY CONCERNS ON WHETHER OR NOT THIS IS PLAUSIBLE, CONSIDERING DATA_OUT IS ALSO BEING SET TO WORKING_DATA
                                        // I suggest leaving it as is and letting the reset state have its way with the working data
                 receiving <= 1'b0;
@@ -1619,12 +1602,13 @@ typedef enum logic [1:0] {
 } VGA_state_t;
 
 typedef enum logic [1:0] {
-    VGA = 2'd0,
+    STANDBY = 2'd0,
+    VGA = 2'd1,
     CPU_INSTR = 2'd2,
     CPU_DATA = 2'd3
 } client_t;
 
-module request_handler #(parameter UART_ADDRESS = 999)(
+module request_handler #(parameter UART_ADDRESS = 500)(
     input logic clk,
     input logic nRst,
 
@@ -1668,11 +1652,10 @@ module request_handler #(parameter UART_ADDRESS = 999)(
         if(~nRst) begin
             // handler_state <= WAITING;
 
-            current_client <= VGA;
-            next_client <= VGA;
+            current_client <= STANDBY;
+            next_client <= STANDBY;
 
             instruction <= 32'b0;
-
         end else begin
             // handler_state <= next_handler_state;
 
@@ -1688,7 +1671,9 @@ module request_handler #(parameter UART_ADDRESS = 999)(
         if (mem_busy) begin
             next_client_next = next_client;
         end else begin
-            if (next_client == VGA) begin
+            if (next_client == STANDBY) begin
+                next_client_next = CPU_INSTR;
+            end else if (next_client == VGA) begin
                 if (VGA_state == ACTIVE | VGA_state == READY) begin
                     next_client_next = VGA;
                 end else begin
@@ -1707,7 +1692,7 @@ module request_handler #(parameter UART_ADDRESS = 999)(
 
 
         //logic for sending data to mem
-        if (mem_busy) begin
+        if (mem_busy | next_client == STANDBY) begin
             mem_read =      1'b0;
             mem_write =     1'b0;
             adr_to_mem =    32'b0;
@@ -1746,45 +1731,29 @@ module request_handler #(parameter UART_ADDRESS = 999)(
         
 
         //logic for sending data to other parts (VGA,CPU)
-        if (mem_busy) begin
+        instr_data_to_CPU = instruction;
+        if (mem_busy | current_client == STANDBY) begin
             data_to_VGA =       32'b0;
-            data_to_CPU =       32'b0;
             next_instruction =  instruction;
-            instr_data_to_CPU = instruction;
+            data_to_CPU =       32'b0;
         end else begin
             if (current_client == VGA) begin
                 data_to_VGA =       data_from_mem;
-                data_to_CPU =       32'b0;
                 next_instruction =  32'b0;
-                instr_data_to_CPU = instruction;
+                data_to_CPU =       32'b0;
             end else if (current_client == CPU_INSTR) begin
                 data_to_VGA =       32'b0;
-                data_to_CPU =       32'b0;
                 next_instruction =  data_from_mem;
-                instr_data_to_CPU = data_from_mem;
+                data_to_CPU =       32'b0;
             end else begin // current_client == CPU_DATA
                 data_to_VGA =       32'b0;
+                next_instruction =  instruction;
                 if (CPU_data_adr == UART_ADDRESS) begin
                     data_to_CPU = data_from_UART;
                 end else begin
                     data_to_CPU = data_from_mem;
                 end
-                next_instruction =  instruction;
-                instr_data_to_CPU = instruction;
             end    
-        end
-
-        //logic for instructions to CPU
-        if(mem_busy) begin
-            
-        end else begin
-            if(current_client == VGA) begin
-                
-            end else if (current_client == CPU_INSTR) begin
-                
-            end else begin // current_client == CPU_DATA
-                
-            end
         end
 
 
@@ -1806,47 +1775,50 @@ module request_handler #(parameter UART_ADDRESS = 999)(
 
 endmodule
 
-// module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
-//     parameter addr_width = 32;
-//     parameter data_width = 32;
-//     input [addr_width-1:0] addr_r, addr_w;
-//     input [data_width-1:0] din;
-//     input write_en, clk;
-//     output [data_width-1:0] dout;
 
-//     reg [data_width-1:0] dout; // Register for output.
-//     reg [data_width-1:0] mem [2000-1:0];
-    
-//     // initial begin
-//     //     $readmemh("instrList.txt", mem);
-//     // end
 
-//     always @(posedge clk)
-//     begin
-//         // mem[1000] <= 32'h1;
+// module ram (
+//     input logic clk, rst,
+//     input logic [31:0] data_address, // alu result to be read or written
+//     input logic [31:0] instruction_address, // no brainer, it is the insturction address
+//     input logic dm_read_en, dm_write_en, // enable ports for the read and enable
+//     input logic [31:0] data_to_write, // data to be written into memory
+//     output logic [31:0] instruction_read, data_read // things we got from memory dude
+// );
 
-//         mem[00] <= 32'h00000000;
-//         mem[01] <= 32'h03c00093;
-//         mem[02] <= 32'h02400113;
-//         mem[03] <= 32'h01800193;
-//         mem[04] <= 32'h0ff00213;
-//         mem[05] <= 32'h3e102423;
-//         mem[06] <= 32'h3e202623;
-//         mem[07] <= 32'h3e102823;
-//         mem[08] <= 32'h3e302a23;
-//         mem[09] <= 32'h3e402c23;
-//         mem[10] <= 32'h3e302e23;
-//         mem[11] <= 32'h40302023;
-//         mem[12] <= 32'h40202223;
-//         mem[13] <= 32'h40202423;
-//         mem[14] <= 32'h40202623;
-        
-//         if (write_en) begin
-//             mem[(addr_w)] <= din;
-//         end
-//         dout <= mem[addr_r]; // Output register controlled by clock.
+// logic [31:0] mem [4095:0];
+// initial $readmemh("instrList.txt", mem, 0, 4095);
+
+// always_ff @(posedge clk) begin
+//     if (dm_write_en) begin
+//         mem[data_address] <= data_to_write;
 //     end
 
+// end
+
+// always_ff @(posedge clk, negedge rst) begin
+//     if (!rst) begin
+//         data_read <= '0;
+//         instruction_read <= mem[32'b0];
+//     end
+
+//     else if (dm_read_en) begin
+//         data_read <= mem[data_address];
+
+//     end
     
+//     else if (!dm_read_en) begin
+//         instruction_read <= mem[instruction_address];
+
+//     end
+
+//     else begin
+//         instruction_read <= 32'b00000000000000000000000000010011;
+//         data_read <= '0;
+
+//     end
+// end
+
+
 
 // endmodule

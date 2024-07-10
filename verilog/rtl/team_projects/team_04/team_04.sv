@@ -13,13 +13,13 @@ module team_04 (
 
     // Logic Analyzer - Grant access to all 128 LA
     input wire [127:0] la_data_in,
-    output wire [127:0] la_data_out,
+    output reg [127:0] la_data_out,
     input wire [127:0] la_oenb,
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
-    output wire [33:0] gpio_out, // Breakout Board Pins
-    output wire [33:0] gpio_oeb, // Active Low Output Enable
+    output reg [33:0] gpio_out, // Breakout Board Pins
+    output reg [33:0] gpio_oeb, // Active Low Output Enable
     
     /*
     * Add other I/O ports that you wish to interface with the
@@ -39,11 +39,7 @@ module team_04 (
 
 );
 
-    // All outputs must have a value even if not used
-    assign la_data_out = 128'b0;
-    assign gpio_out = 34'b0; //Inputs, but set low anyways
-    assign gpio_oeb = '1;//All 1's inputs
-
+   
     /*
     * Place code and sub-module instantiations here.
     */
@@ -70,6 +66,10 @@ module team_04 (
     logic [31:0] CPU_DAT_O;
     logic        BUSY_O;
 
+    logic [31:0] middle_mem_adr;
+    assign ADR_I = middle_mem_adr + 32'h33000000;
+
+
     tippy_top final_design (
         .clk(clk),
         .nRst(nrst),
@@ -80,10 +80,10 @@ module team_04 (
         .pixel_data(pixel_data),
         //.opcode_error(opcode_error),
         //.alu_error(alu_error),
-        .mem_busy(BUSY_O),
+        .mem_busy(BUSY_O | !en),
         .mem_read(READ_I),
         .mem_write(WRITE_I),
-        .adr_to_mem(ADR_I),
+        .adr_to_mem(middle_mem_adr),
         .data_to_mem(CPU_DAT_I),
         .sel_to_mem(SEL_I),
         .data_from_mem(CPU_DAT_O)
@@ -112,6 +112,11 @@ module team_04 (
     
     //enable handler
     always_comb begin 
+         // All outputs must have a value even if not used
+    la_data_out = 128'b0;
+    gpio_out = 34'b0; //Inputs, but set low anyways
+    gpio_oeb = '1;//All 1's inputs
+
         if(~en) begin
             gpio_out[2:0] = 0;
         end else begin
