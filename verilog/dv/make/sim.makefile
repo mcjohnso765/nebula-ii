@@ -110,7 +110,7 @@ endif
 
 ifeq ($(SIM),RTL)
 	vvp $<
-	mv $@ RTL-$@
+	 mv $@ RTL-$@
 endif
 ifeq ($(SIM),GL)
 	vvp  $<
