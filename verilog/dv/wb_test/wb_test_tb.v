@@ -142,6 +142,9 @@ module wb_test_tb;
 	initial begin
 		$dumpfile("wb_test.vcd");
 		$dumpvars(0, wb_test_tb);
+	end
+
+	initial begin
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (1000) begin

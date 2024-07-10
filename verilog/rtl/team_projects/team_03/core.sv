@@ -40,12 +40,12 @@ module core(
     logic [31:0] data_to_write, data_read, data_to_IO;
     logic pc_en;
     logic slt;
-    logic u, d_hit;;
+    logic u, d_hit;
     //this is a test
 
      
     logic i_hit;
-  request_unit ru(.clk(clock), .rst(reset), .memread(read_mem), .memwrite(write_mem), 
+  request_unit ru(.en(en), .clk(clock), .rst(reset), .memread(read_mem), .memwrite(write_mem), 
   .data_to_write(data_to_write), .instruction_address(program_counter), 
   .data_address(result), .busy_o(BUSY_O), .cpu_dat_o(CPU_DAT_O), 
   .read_i(READ_I), .write_i(WRITE_I), .cpu_dat_i(CPU_DAT_I), 

@@ -1,0 +1,45 @@
+Compiling VVP ...
+ ... VVP file version 11.0 (stable)
+Compile cleanup...
+ ...    88862 functors (net_fun pool=4718592 bytes)
+              43245 logic
+                354 bufif
+                 53 resolv
+               3798 signals
+ ...    79372 filters (net_fil pool=9699328 bytes)
+ ...   107913 opcodes (2605056 bytes)
+ ...    30592 nets
+ ...    88862 vvp_nets (5242720 bytes)
+ ...        3 arrays (9 words)
+ ...       13 memories
+                 13 logic (16778881 words)
+                  0 real (0 words)
+ ...     3169 scopes
+ ... 0.901924 seconds, 341980.0/333384.0/5432.0 KBytes size/rss/shared
+Running ...
+ ...execute EndOfCompile callbacks
+ ...propagate initialization events
+ ...execute StartOfSim callbacks
+ ...run scheduler
+Reading wb_test.hex
+wb_test.hex loaded into memory
+Memory 5 bytes = 0x6f 0x00 0x00 0x0b 0x13
+FST info: dumpfile wb_test.vcd opened for output.
+===NOTE=== (efsram) : Undefined state in EF_SRAM_00128x032_008_18: vpwra= 1 vpwrp=1 TM=0 SM=0 WLOFF=0 in instance wb_test_tb.uut.chip_core.mprj.mprj.sram.SRAM_0.EF_SRAM_1024x32_inst at time=                1000
+===INFO=== (efsram) : Writing X to whole memory:pwroff_mode=0 mem_x=1 undefined_mode=1 in instance wb_test_tb.uut.chip_core.mprj.mprj.sram.SRAM_0.EF_SRAM_1024x32_inst at                 2000
+{GPIO[37:5], GPIO[0]} = 34'hzzzzzzzzz 
+{GPIO[37:5], GPIO[0]} = 34'hzzzzzzzzZ 
+{GPIO[37:5], GPIO[0]} = 34'hzzzzzzzzz 
+Monitor: NEBULA II-Sample Project (RTL) Passed
+ ...execute Postsim callbacks
+ ... 26.1336 seconds, 735200.0/727392.0/5832.0 KBytes size/rss/shared
+Event counts:
+     1147858 time steps (pool=113)
+     4745767 thread schedule events
+    33571145 assign events
+             ...assign(vec4) pool=149792
+             ...assign(vec8) pool=2448
+             ...assign(real) pool=256
+             ...assign(word) pool=128
+             ...assign(word/r) pool=204
+     5632647 other events (pool=16384)
