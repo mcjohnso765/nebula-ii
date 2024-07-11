@@ -31,10 +31,10 @@ module team_10 (
 
     // All outputs must have a value even if not used
     assign la_data_out = 128'b0;
-    // assign gpio_out[33] = 1'b0;
-    // assign gpio_out[24:20] = 5'd0; //Inputs, but set low anyways
-    // assign gpio_out[15:14] = 2'd0;
-    // assign gpio_out[5:0] = 6'd0;
+    assign gpio_out[33] = 1'b0;
+    assign gpio_out[24:20] = 5'd0; //Inputs, but set low anyways
+    assign gpio_out[15:14] = 2'd0;
+    assign gpio_out[5:0] = 6'd0;
 
     assign gpio_oeb = (en) ? (34'b1000000001111100001100000000111111) : (34'b1111111111111111111111111111111111); //All 1's inputs
     
