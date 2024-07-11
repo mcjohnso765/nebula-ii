@@ -175,7 +175,7 @@ module team_04_tb;
 		// wait(mprj_io_0 == 8'hFF);
 		// wait(mprj_io_0 == 8'h00);
 		
-		#3000000;
+		#1100000;
 
 		`ifdef GL
 	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");

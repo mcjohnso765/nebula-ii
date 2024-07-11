@@ -150,20 +150,28 @@ module tippy_top (
 
         .data_from_mem(data_from_mem),
         .mem_read(mem_read),
-        .mem_write(),
-        // .mem_write(mem_write),
+        // .mem_write(),
+        .mem_write(mem_write),
         .adr_to_mem(adr_to_mem),
-        .data_to_mem(),
-        // .data_to_mem(data_to_mem),
+        // .data_to_mem(),
+        .data_to_mem(data_to_mem),
         .sel_to_mem(sel_to_mem)
     );
-    assign mem_write = 1'b0;
-    assign data_to_mem = 32'h0;
+    // assign mem_write = 1'b0;
+    // assign data_to_mem = 32'h0;
     // //create mem
     // reg [31:0] instrMem [99:0];
     // initial begin
     //     $readmemh("instrList.txt", instrMem);
     // end
+
+    always @(posedge mem_write) begin
+        #(10) $display("@ %t: Writing %h %h", $time, adr_to_mem, data_to_mem);
+    end
+
+    always @(posedge mem_read) begin
+        #(10) $display("@ %t: Reading %h %h", $time, adr_to_mem, data_to_mem);
+    end
 
 endmodule
 
