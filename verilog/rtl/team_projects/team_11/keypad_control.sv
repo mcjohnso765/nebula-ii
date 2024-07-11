@@ -1,10 +1,10 @@
 `default_nettype none
 
-`include "source/debouncer.sv"
-`include "source/decoder.sv"
-`include "source/keypad.sv"
-`include "source/controls.sv"
-`include "source/buffer.sv"
+`include "src/debouncer.sv"
+`include "src/decoder.sv"
+`include "src/keypad.sv"
+`include "src/controls.sv"
+`include "src/buffer.sv"
 
 module keypad_control (
 input logic [3:0]readrow,

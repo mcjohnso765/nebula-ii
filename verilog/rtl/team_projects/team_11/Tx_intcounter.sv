@@ -13,23 +13,30 @@ logic [N - 1:0] next_count;
 
 always_comb begin
   next_count = count; 
-  ready_signal = 1; 
+  ready_signal = 0; 
   
   if(enable_t) begin
     ready_signal = 0; 
-    next_count = count + 1; 
     if(count == max) begin
         next_count = 0; 
         ready_signal = 1; 
     end 
+    else begin
+      next_count = count + 1;
+      ready_signal = 0;
+    end
+  end
+  else begin
+    next_count = count;
+    ready_signal = 0;
   end
 end
 
 always_ff @(posedge clk, negedge nrst) begin
     if(!nrst)
-     count = 0;
+     count <= 0;
      else
-        count = next_count; 
+        count <= next_count; 
 
 end
 endmodule

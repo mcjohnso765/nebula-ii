@@ -23,7 +23,6 @@ module Tx_ext_fsm(
     end
 
     always_comb begin
-
         next_state = current_state;
 
         case(current_state) 

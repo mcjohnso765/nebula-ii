@@ -12,14 +12,14 @@ module tb_Tx_top;
    logic clk;
    logic nrst;
    logic msg_tx_ctrl;
-   logic [127:0] msg_1;
-   logic transmit_ready;
-
+   logic[127:0] msg_1;
+   logic tx_dout;
+   logic success;
    //output
    logic [7:0] data_send;
    logic tx_ctrl;
    
-   Tx_top DUT(.clk(clk), .nrst(nrst),.msg_1(msg_1), .transmit_ready(transmit_ready),.msg_tx_ctrl(msg_tx_ctrl), .data_send(data_send), .tx_ctrl(tx_ctrl)); 
+   Tx_top DUT(.clk(clk), .nrst(nrst), .msg_tx_ctrl(msg_tx_ctrl), .msg_1(msg_1), .tx_dout(tx_dout), .success(success));
 
    task reset_dut;
    begin
@@ -83,9 +83,8 @@ module tb_Tx_top;
       #(CLK_PERIOD);
 
       nrst = RESET_INACTIVE;
-      msg_1 = 128'd0; 
+      msg_1 = "                "; 
       msg_tx_ctrl = '0;
-      transmit_ready = 1;
       #(CLK_PERIOD);
 
     //   dout_exp = 0;
@@ -99,31 +98,15 @@ module tb_Tx_top;
       test_name = "Test 1";
       reset_dut();
 
-      msg_1 = 128'd479762576; 
-      msg_tx_ctrl = 1'b1;
-      transmit_ready = 0;
-      #(CLK_PERIOD);
-
+      msg_1 = "HEY TEST 1     ";
       msg_tx_ctrl = 1'b0;
-      transmit_ready = 1;
-      #(CLK_PERIOD);
+      #(CLK_PERIOD * 1);
+      msg_tx_ctrl = 1'b1;
+      #(CLK_PERIOD * 1);
+      msg_tx_ctrl = 1'b0;
+      #(CLK_PERIOD * 1250 * 16 * 11);
 
-      transmit_ready = 0;
-      #(CLK_PERIOD * 10);
-      
-      //2
-      transmit_ready = 1;
-      #(CLK_PERIOD);
-      
-      transmit_ready = 0;
-      #(CLK_PERIOD * 10);
-
-    //   dout_exp = 1; 
-    //   success_exp = 1;
-    //   #(CLK_PERIOD);
-
-    //   check_output(dout_exp, success_exp);
-
+     
 
       $finish;
    end

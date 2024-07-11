@@ -1,5 +1,5 @@
 
-module Tx_extcounter #( parameter N = 5) // MAX = 5'd16
+module Tx_extcounter #( parameter N = 5)
 (
 input logic clk,nrst, count_enable,
 input logic [N - 1:0] max,

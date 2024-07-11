@@ -21,13 +21,13 @@ end
 
 always_comb begin
     if(tx_ctrl) begin
-        shifted_data = {1'b1, 1'b0, data_send, 1'b0};
+        shifted_data = {1'b1,1'b0, data_send, 1'b0};
     end
     else if(enable_s) begin
         shifted_data = {next_out[9:0], 1'b1};
     end
     else begin
-        shifted_data = '1;
+        shifted_data = next_out;
         //shifted_data = 8'b1;
     end
 end

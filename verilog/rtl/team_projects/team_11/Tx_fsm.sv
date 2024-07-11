@@ -3,12 +3,11 @@ module Tx_fsm(
 
   input logic clk,nrst,tx_ctrl, ready_signal,
   input logic bit_out,
-
+    input logic msg_tx_ctrl,
   output logic tx_dout,
   output logic success,
   output logic enable_t, enable_s,
   output logic transmit_ready
-
 );
 
     typedef enum logic [1:0] {IDLE= 0, TRANSFER = 1, STOP= 2} State_t;
@@ -37,7 +36,7 @@ module Tx_fsm(
         nxt_enable_s = enable_s;
 
         next_state = current_state;
-        tx_dout = 0;
+        tx_dout = 1;
         transmit_ready = 1;
 
         case(current_state) 
@@ -49,6 +48,7 @@ module Tx_fsm(
                     next_state = TRANSFER;
                     nxt_enable_t = 1; 
                     nxt_enable_s = 1;
+                    transmit_ready = 0;
                 end
             end
 
