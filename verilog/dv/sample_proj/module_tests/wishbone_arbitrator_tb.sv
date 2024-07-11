@@ -33,6 +33,9 @@ module wishbone_arbitrator_tb();
     logic        tb_BUSY_O_1,    tb_BUSY_O_2;
 
     //peripheral ports
+
+    //CPU ports
+    logic en;
     
 
 //clock gen
@@ -48,6 +51,26 @@ initial begin
     $dumpfile ("wishbone_arbitrator.vcd");
     $dumpvars;
 end
+
+team_04 final_design (
+        .clk(clk),
+        .nRst(nrst),
+        .button(),
+        .Rx(),
+        .h_out(),
+        .v_out(),
+        .pixel_data(),
+        //.opcode_error(opcode_error),
+        //.alu_error(alu_error),
+        .mem_busy(BUSY_O | !en),
+        .mem_read(tb_READ_I_2),
+        .mem_write(tb_WRITE_I_2),
+        .adr_to_mem(tb_ADR_I_2),
+        .data_to_mem(tb_CPU_DAT_I_2),
+        .sel_to_mem(tb_SEL_I_2),
+        .data_from_mem(tb_CPU_DAT_O_2)
+
+    );
 
 wishbone_manager manager_1(
     .CLK(tb_CLK),
@@ -130,6 +153,63 @@ wishbone_arbitrator #(
     .STB_O(tb_STB_O_P),
     .CYC_O(tb_CYC_O_P)
 );
+
+wishbone_decoder #(
+        .NUM_TEAMS(NUM_TEAMS)
+    ) wb_decoder (
+
+    `ifdef USE_POWER_PINS
+        .vccd1(vccd1),	// User area 1 1.8V power
+        .vssd1(vssd1),	// User area 1 digital ground
+    `endif
+
+        .CLK(tb_CLK),
+        .nRST(tb_nRST),
+
+        //muxxing signals that go to manager
+        .wbs_ack_i_periph({wbs_ack_i_samp, wbs_ack_i_la, wbs_ack_i_gpio, wbs_ack_i_sram}),
+        .wbs_dat_i_periph({wbs_dat_i_samp, wbs_dat_i_la, wbs_dat_i_gpio, wbs_dat_i_sram}),
+
+        .wbs_ack_o_m(wbs_ack_o_m),
+        .wbs_dat_o_m(wbs_dat_o_m),
+
+        //muxxing signals that come from manager
+        .wbs_cyc_i_m(wbs_cyc_i_m),
+        .wbs_stb_i_m(wbs_stb_i_m),
+        .wbs_we_i_m(wbs_we_i_m),
+        .wbs_adr_i_m(wbs_adr_i_m),
+        .wbs_dat_i_m(wbs_dat_i_m),
+        .wbs_sel_i_m(wbs_sel_i_m),
+
+        .wbs_cyc_o_periph({wbs_cyc_o_samp, wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_sram}),
+        .wbs_stb_o_periph({wbs_stb_o_samp, wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_sram}),
+        .wbs_we_o_periph({wbs_we_o_samp, wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_sram}),
+        .wbs_adr_o_periph({wbs_adr_o_samp, wbs_adr_o_la, wbs_adr_o_gpio, wbs_adr_o_sram}),
+        .wbs_dat_o_periph({wbs_dat_o_samp, wbs_dat_o_la, wbs_dat_o_gpio, wbs_dat_o_sram}),
+        .wbs_sel_o_periph({wbs_sel_o_samp, wbs_sel_o_la, wbs_sel_o_gpio, wbs_sel_o_sram})
+    );
+
+    // SRAM
+    SRAM_1024x32 sram (
+    `ifdef USE_POWER_PINS
+        .VPWR(vccd1),	// User area 1 1.8V power
+        .VGND(vssd1),	// User area 1 digital ground
+    `endif
+
+        .wb_clk_i(wb_clk_i),
+        .wb_rst_i(wb_rst_i),
+
+        // MGMT SoC Wishbone Slave
+
+        .wbs_stb_i(wbs_stb_o_sram),
+        .wbs_cyc_i(wbs_cyc_o_sram),
+        .wbs_we_i(wbs_we_o_sram),
+        .wbs_sel_i(wbs_sel_o_sram),
+        .wbs_dat_i(wbs_dat_o_sram),
+        .wbs_adr_i(wbs_adr_o_sram),
+        .wbs_ack_o(wbs_ack_i_sram),
+        .wbs_dat_o(wbs_dat_i_sram)
+    );
 
 logic [37:0] tb_designs_gpio_out [12:0];
 logic [37:0] tb_designs_gpio_oeb [12:0];

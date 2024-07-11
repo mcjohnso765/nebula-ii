@@ -90,6 +90,8 @@ module team_04 (
 
     );
 
+    //assign CPU_DAT_I = 32'h32;
+
     wishbone_manager wb_manage (
         .nRST(nrst),
         .CLK(clk),

@@ -20,6 +20,9 @@ PRECHECK_ROOT?=${HOME}/mpw_precheck
 export MCW_ROOT?=$(PWD)/mgmt_core_wrapper
 SIM?=RTL
 
+SRC		:= verilog/rtl/team_projects/team_04/team_04_vConvert
+VSRC		:= verilog/rtl/team_projects/team_04/source_v
+
 # Install lite version of caravel, (1): caravel-lite, (0): caravel
 CARAVEL_LITE?=1
 
@@ -511,3 +514,9 @@ tbsim-source-%:
 	make sim-source-$(lastword $(subst -, ,$*))
 
 # FYI: Run 'make clean' to clean all temporary files produced by testbenches
+
+sv2v:
+	@echo "Making VSRC Directory"
+	@mkdir -p $(VSRC)
+	@sv2v --write=$(VSRC) $(SRC)/*
+	@echo "Done Conversion"
