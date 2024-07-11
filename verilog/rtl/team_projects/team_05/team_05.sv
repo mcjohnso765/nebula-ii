@@ -91,20 +91,171 @@ module team_05 (
         $monitor("[Manager Monitor] WRITE_I=%h, READ_I=%h, ADR_I=%h, CPU_DAT_I=%h, SEL_I=%h, CPU_DAT_O=%h, BUSY_O=%h", WRITE_I, READ_I, ADR_I, CPU_DAT_I, SEL_I, CPU_DAT_O, BUSY_O);
     end
 
-
-    t05_cpu_core core(
+    t05_complete_design final(
         .data_in_BUS(CPU_DAT_O),
         .bus_full(BUSY_O),
         .en(en),
         .clk(clk),
         .rst(~nrst),
+        .keypad_in(gpio_in[33:30]),
         .data_out_BUS(CPU_DAT_I),
         .address_out(ADR_I),
         .data_write(WRITE_I), 
-        .mem_read(READ_I)
+        .mem_read(READ_I),
+        .keypad_out(gpio_out[14:11]),
+        .lcd_data(gpio_out[10:3]),
+        .lcd_en(gpio_out[2]),
+        .lcd_rs(gpio_out[1]),
+        .lcd_rw(gpio_out[0])
     );
+    
 
     
+endmodule
+
+//////////////////////////////////////
+// Top-Level instantiation
+//////////////////////////////////////
+
+module t05_complete_design(
+    input logic [31:0] data_in_BUS,
+    input logic bus_full, en, //input from memory bus
+    input logic clk, rst, //external clock, reset
+    input logic [3:0] keypad_in, //I/O
+    output logic [31:0] data_out_BUS, address_out,
+    output logic data_write, mem_read,
+    output logic [3:0] keypad_out, //I/O
+    output logic [7:0] lcd_data, //I/O
+    output logic lcd_en, lcd_rw, lcd_rs //I/O
+);
+
+    logic [31:0] data_to_CPU, data_from_CPU, CPU_address;
+
+    logic mem_access, CPU_data_write, CPU_mem_read;
+
+    logic data_ready, key_confirm, key_data;
+
+    assign data_ready = (key_data) ? key_confirm : bus_full;
+
+    t05_cpu_core core(
+        .data_in_BUS(data_to_CPU),
+        .bus_full(data_ready),
+        .en(en),
+        .clk(clk),
+        .rst(rst),
+        .data_out_BUS(data_from_CPU),
+        .address_out(CPU_address),
+        .data_write(CPU_data_write),  //need to double check that it goes to right spot
+        .mem_read(CPU_mem_read) //same as before
+    );
+
+    always_comb begin
+        if(mem_access) begin
+            data_write = CPU_data_write;
+            mem_read = CPU_mem_read;
+        end else begin
+            data_write = '0;
+            mem_read = '0;
+        end
+    end
+
+    keypad_interface keypad0(
+        .clk(clk),
+        .rst(rst),
+        .columns(keypad_in), //input
+        .rows(keypad_out), //output
+        .key_out_bin(data_from_keypad),
+        .key_confirm(key_confirm)
+    );
+
+    bin_to_LCD bin2lcd(
+        .binary_in(data_to_LCD),
+        .LCD_out(LCD_out)
+    );
+
+    lcd_controller lcd_display(
+        .clk(clk),
+        .rst(rst),
+        .row_1(lcd_storage[255:128]),
+        .row_2(lcd_storage[127:0]),
+        .lcd_en(lcd_en),
+        .lcd_rw(lcd_rw),
+        .lcd_rs(lcd_rs),
+        .lcd_data(lcd_data)
+    );
+
+    memory_mapping map(
+        .mem_address(CPU_address),
+        .data_from_CPU(data_from_CPU),
+        .data_from_keypad(data_from_keypad),
+        .data_from_memory(data_in_BUS),
+        .output_address(address_out),
+        .data_to_CPU(data_to_CPU),
+        .data_to_LCD(data_to_LCD),
+        .data_to_memory(data_out_BUS),
+        .lcd_word(lcd_word),
+        .mem_access(mem_access),
+        .key_data(key_data)
+    );
+
+    logic [255:0] lcd_storage;
+    logic [31:0] lcd_interim [7:0];
+
+    assign lcd_storage = {lcd_interim[7], lcd_interim[6], lcd_interim[5], lcd_interim[4], lcd_interim[3], lcd_interim[2], lcd_interim[1], lcd_interim[0]};
+
+    always_ff @(posedge clk, posedge rst) begin
+        if(rst) begin
+            lcd_interim <= '0;
+        end else if(LCD_out != 32'hFFFFFFFF) begin
+            //write to only a specific word of storage
+            lcd_interim[lcd_word] <= LCD_out;
+        end else begin
+            lcd_interim <= lcd_interim;
+        end
+    end
+
+
+endmodule
+
+////////////////////////////////////
+// Memory-mapped I/O
+////////////////////////////////////
+
+module memory_mapping(
+    input logic [31:0] mem_address, data_from_CPU, data_from_keypad, data_from_memory,
+    output logic [31:0] output_address, data_to_CPU, data_to_LCD, data_to_memory,
+    output logic [2:0] lcd_word,
+    output logic mem_access, key_data
+);
+
+    always_comb begin
+        if(mem_address == 32'h33000FFC) begin
+            data_to_CPU = data_from_keypad;
+            data_to_LCD = '1;
+            data_to_memory = '0;
+            output_address = '0;
+            lcd_word = '0;
+            mem_access = '0;
+            key_data = '1;
+        end else if(mem_address < 32'h33000FFC & mem_address > 32'h33000FD8) begin
+            data_to_LCD = data_from_CPU;
+            data_to_CPU = '0;
+            data_to_memory = '0;
+            output_address = '0;
+            lcd_word = (mem_address - 32'h33000FDC) >> 2'd2; 
+            mem_access = '0;
+            key_data = '0;
+        end else begin
+            data_to_CPU = data_from_memory;
+            data_to_memory = data_from_CPU;
+            data_to_LCD = '1;
+            output_address = mem_address;
+            lcd_word = '0;
+            mem_access = '1;
+            key_data = '0;
+        end
+    end
+
 endmodule
 
 
@@ -112,14 +263,9 @@ endmodule
 
 
 
-
-
-
-
-
-
-
-
+////////////////////////////////////
+// CPU Instantiation
+////////////////////////////////////
 
 
 
@@ -453,6 +599,10 @@ module t05_cpu_core(
         .pc_val(pc_val));
 
 endmodule
+
+/////////////////////////////////
+// CPU Modules
+/////////////////////////////////
 
 
 
@@ -1183,39 +1333,9 @@ endmodule
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+///////////////////////////////
+// Wishbone Manager
+///////////////////////////////
 
 
 
@@ -1401,3 +1521,594 @@ endmodule
 
 
 
+
+
+/////////////////////////////////////////////
+// I/O Stuff
+/////////////////////////////////////////////
+
+typedef enum {KEY_IDLE, SCAN} key_state;
+
+module keypad_interface(
+    input logic clk, rst,
+    input logic [3:0] columns,
+    output logic [3:0] rows,
+    output logic [31:0] key_out_bin,
+    output logic key_confirm
+);
+    logic [3:0] out;
+    logic [15:0] key_out;
+    logic [15:0] next_out;
+    logic next_confirm, key_confirm_hold, debounce;
+    logic [7:0] code;
+    key_state state, next_state;
+    logic [3:0] next_rows;
+    // logic [15:0] next_out;
+    logic [18:0] counter;
+    logic key_clk;
+    logic [3:0] key_counter, next_key_counter;
+
+    always_comb begin
+        code = {columns, rows};
+        next_rows = rows;
+        next_out = key_out;
+        next_confirm = 1'b0;
+        next_key_counter = key_counter;
+        /**if(state == KEY_IDLE) begin
+            if(columns != 4'b0000) begin
+                next_state = SCAN;
+                next_rows = 4'b1110;
+            end
+            else next_state = KEY_IDLE;
+        end else begin**/
+            case(rows)
+                4'b1110:
+                    begin
+                        case(columns)
+                            4'b0001: begin
+                              next_confirm = 1'b0;
+                              if(key_out[3:0] != 4'b0001 | (key_out[3:0] == 4'b0001 & key_counter == 15)) begin
+                                next_out = {key_out[11:0], 4'b0001};
+                                next_key_counter = 0;
+                              end else begin
+                                next_out = key_out;
+                                next_key_counter = key_counter + 1;
+                              end
+                            end
+                            4'b0010: begin
+                              next_out = {key_out[11:0], 4'b0010};
+                              next_confirm = 1'b0;
+                            end
+                            4'b0100: begin
+                              next_out = {key_out[11:0], 4'b0011};
+                              next_confirm = 1'b0;
+                            end
+                            4'b1000: begin
+                              next_out = {key_out[11:0], 4'b1010};
+                              next_confirm = 1'b0;
+                            end
+                            default: begin
+                              next_out = key_out;
+                              next_confirm = 1'b0;
+                            end
+                        endcase
+                        next_rows = 4'b1101;
+                        next_state = SCAN;
+                    end
+                4'b1101:
+                    begin
+                        case(columns)
+                            4'b0001: begin
+                              next_out = {key_out[11:0], 4'b0100};
+                              next_confirm = 1'b0;
+                            end
+                            4'b0010: begin
+                              next_out = {key_out[11:0], 4'b0101};
+                              next_confirm = 1'b0;
+                            end
+                            4'b0100: begin
+                              next_out = {key_out[11:0], 4'b0110};
+                              next_confirm = 1'b0;
+                            end
+                            4'b1000: begin
+                              next_out = {key_out[11:0], 4'b1011};
+                              next_confirm = 1'b0;
+                            end
+                            default: begin 
+                              next_out = key_out;
+                              next_confirm = 1'b0;
+                            end
+                        endcase
+                        next_rows = 4'b1011;
+                        next_state = SCAN;
+                    end
+                4'b1011:
+                    begin
+                        case(columns)
+                            4'b0001: begin
+                              next_out = {key_out[11:0], 4'b0111};
+                              next_confirm = 1'b0;
+                            end
+                            4'b0010: begin
+                              next_out = {key_out[11:0], 4'b1000};
+                              next_confirm = 1'b0;
+                            end
+                            4'b0100: begin
+                              next_out = {key_out[11:0], 4'b1001};
+                              next_confirm = 1'b0;
+                            end
+                            4'b1000: begin
+                              next_out = {key_out[11:0], 4'b1100};
+                              next_confirm = 1'b0;
+                            end
+                            default: begin
+                              next_out = key_out;
+                              next_confirm = 1'b0;
+                            end
+                        endcase
+                        next_rows = 4'b0111;
+                        next_state = SCAN;
+                    end
+                4'b0111:
+                    begin
+                        case(columns)
+                            4'b0001: 
+                              begin
+                                //if(key_confirm == 1'b0 | (key_confirm == 1'b1 & key_counter == 4'd15)) begin
+                                  next_out = {key_out}; //would be E, is instead confirm button
+                                  next_confirm = 1'b1;
+                                  next_key_counter = 0;
+                                /**end else begin
+                                  next_out = key_out;
+                                  next_confirm = 1'b0;
+                                  next_key_counter = key_counter + 1;
+                                end*/
+                              end
+                            4'b0010: begin
+                              next_out = {key_out[11:0], 4'b0000};
+                              next_confirm = 1'b0;
+                            end
+                            4'b0100: begin
+                              next_out = 16'h0000;
+                              next_confirm = 1'b0;
+                            end
+                            4'b1000: begin
+                              next_out = {key_out[11:0], 4'b1101};
+                              next_confirm = 1'b0;
+                            end
+                            default: begin
+                              next_out = key_out;
+                              next_confirm = 1'b0;
+                            end
+                        endcase
+                        next_rows = 4'b1110;
+                        next_state = SCAN;
+                    end
+                default:
+                  begin
+                    next_state = SCAN;
+                    next_rows = 4'b1110;
+                  end
+            endcase
+        //end
+    end
+
+    always_ff @(posedge key_clk, posedge rst) begin
+        if(rst) begin
+            rows <= 4'b1110;
+            state <= KEY_IDLE;
+            // out <= 4'b0000;
+            key_out <= 16'b0;
+        end else begin
+            rows <= next_rows;
+            state <= next_state;
+            key_out <= next_out;
+        end
+    end
+
+    always_ff @ (posedge clk, posedge rst) begin
+        if (rst) begin
+            counter = 0;
+            key_confirm <= 1'b0;
+            key_counter <= 4'b0;
+        end
+        else begin
+            counter = counter + 1;
+            key_clk = 0;
+            if (counter == 150000) begin
+                counter = 0;
+                key_clk = 1;
+            end
+            if(key_confirm) begin
+              key_confirm <= 1'b0;
+            end else if(counter < 2) begin
+              key_confirm <= next_confirm;
+            end else begin
+              key_confirm <= 1'b0;
+            end
+            key_counter <= next_key_counter;
+        end
+    end
+    
+    bcd2bin partyyyyy(
+                    // .bcd7(key_out[31:28]),
+                    // .bcd6(key_out[27:24]),
+                    // .bcd5(key_out[23:20]),
+                    // .bcd4(key_out[19:16]),
+                    .bcd3(key_out[15:12]),
+                    .bcd2(key_out[11:8]),
+                    .bcd1(key_out[7:4]),
+                    .bcd0(key_out[3:0]),
+                    .bin(key_out_bin));
+
+    // logic [31:0] key_out_bin;
+    // logic [15:0] key_out_bin;
+endmodule
+
+module lcd_controller #(parameter clk_div = 24_000)(
+    input clk,
+    input rst,
+    // Data to be displayed
+    input [127:0] row_1,
+    input [127:0] row_2,
+   
+    // LCD control signal
+    output lcd_en,
+    output lcd_rw,
+    output reg lcd_rs,
+    output reg [7:0] lcd_data
+    );
+
+    logic lcd_ctrl; // added declaration
+
+    reg [7:0] currentState; // updated bits from 6 to 8
+    reg [7:0] nextState; // updated bits from 6 to 8
+    reg [17:0] cnt_20ms;
+    reg [14:0] cnt_500hz;
+    wire delay_done;
+ 
+    localparam TIME_500HZ = clk_div;
+    // Wait for 20 ms before intializing.
+    localparam TIME_20MS = TIME_500HZ * 10;
+   
+    // Set lcd_data accroding to datasheet
+    localparam LCD_IDLE = 8'h00,                
+               SET_FUNCTION = 8'h38,
+               DISP_OFF = 8'h03,
+               DISP_CLEAR = 8'h01,
+               ENTRY_MODE = 8'h06,
+               DISP_ON = 8'h07,
+               ROW1_ADDR = 8'h05,      
+               ROW1_0 = 8'h04,
+               ROW1_1 = 8'h0C,
+               ROW1_2 = 8'h0D,
+               ROW1_3 = 8'h0F,
+               ROW1_4 = 8'h0E,
+               ROW1_5 = 8'h0A,
+               ROW1_6 = 8'h0B,
+               ROW1_7 = 8'h09,
+               ROW1_8 = 8'h08,
+               ROW1_9 = 8'h18,
+               ROW1_A = 8'h19,
+               ROW1_B = 8'h1B,
+               ROW1_C = 8'h1A,
+               ROW1_D = 8'h1E,
+               ROW1_E = 8'h1F,
+               ROW1_F = 8'h1D,
+               ROW2_ADDR = 8'h1C,
+               ROW2_0 = 8'h14,
+               ROW2_1 = 8'h15,
+               ROW2_2 = 8'h17,
+               ROW2_3 = 8'h16,
+               ROW2_4 = 8'h12,
+               ROW2_5 = 8'h13,
+               ROW2_6 = 8'h11,
+               ROW2_7 = 8'h10,
+               ROW2_8 = 8'h30,
+               ROW2_9 = 8'h31,
+               ROW2_A = 8'h33,
+               ROW2_B = 8'h32,
+               ROW2_C = 8'h36,
+               ROW2_D = 8'h37,
+               ROW2_E = 8'h35,
+               ROW2_F = 8'h34;
+
+    assign delay_done = (cnt_20ms==TIME_20MS-1) ? 1'b1 : 1'b0;
+    always_ff @(posedge clk, posedge rst) begin
+        if (rst) begin
+            cnt_20ms <= 0;
+        end
+        else if (cnt_20ms == TIME_20MS-1) begin
+            cnt_20ms <= cnt_20ms;
+        end
+        else
+            cnt_20ms <= cnt_20ms + 1;
+    end
+
+    //500HZ for lcd
+    always_ff  @(posedge clk, posedge rst) begin
+        if(rst)begin
+            cnt_500hz <= 0;
+        end
+        else if(delay_done)begin
+            if(cnt_500hz == TIME_500HZ - 1)
+                cnt_500hz <= 0;
+            else
+                cnt_500hz<=cnt_500hz + 1 ;
+        end
+        else
+            cnt_500hz <= 0;
+    end
+
+    assign lcd_en = (cnt_500hz > (TIME_500HZ-1)/2)? 1'b0 : 1'b1;
+    assign lcd_ctrl = (cnt_500hz == TIME_500HZ - 1) ? 1'b1 : 1'b0;
+
+    always_ff  @(posedge clk, posedge rst) begin
+        if(rst)
+            currentState <= LCD_IDLE;
+        else if (lcd_ctrl)
+            currentState <= nextState;
+        else
+            currentState <= currentState;
+    end
+
+    always_comb begin
+        case (currentState)
+            LCD_IDLE: nextState = SET_FUNCTION;
+            SET_FUNCTION: nextState = DISP_OFF;
+            DISP_OFF: nextState = DISP_CLEAR;
+            DISP_CLEAR: nextState = ENTRY_MODE;
+            ENTRY_MODE: nextState = DISP_ON;
+            DISP_ON: nextState = ROW1_ADDR;
+            ROW1_ADDR: nextState = ROW1_0;
+            ROW1_0: nextState = ROW1_1;
+            ROW1_1: nextState = ROW1_2;
+            ROW1_2: nextState = ROW1_3;
+            ROW1_3: nextState = ROW1_4;
+            ROW1_4: nextState = ROW1_5;
+            ROW1_5: nextState = ROW1_6;
+            ROW1_6: nextState = ROW1_7;
+            ROW1_7: nextState = ROW1_8;
+            ROW1_8: nextState = ROW1_9;
+            ROW1_9: nextState = ROW1_A;
+            ROW1_A: nextState = ROW1_B;
+            ROW1_B: nextState = ROW1_C;
+            ROW1_C: nextState = ROW1_D;
+            ROW1_D: nextState = ROW1_E;
+            ROW1_E: nextState = ROW1_F;
+            ROW1_F: nextState = ROW2_ADDR;
+            ROW2_ADDR: nextState = ROW2_0;
+            ROW2_0: nextState = ROW2_1;
+            ROW2_1: nextState = ROW2_2;
+            ROW2_2: nextState = ROW2_3;
+            ROW2_3: nextState = ROW2_4;
+            ROW2_4: nextState = ROW2_5;
+            ROW2_5: nextState = ROW2_6;
+            ROW2_6: nextState = ROW2_7;
+            ROW2_7: nextState = ROW2_8;
+            ROW2_8: nextState = ROW2_9;
+            ROW2_9: nextState = ROW2_A;
+            ROW2_A: nextState = ROW2_B;
+            ROW2_B: nextState = ROW2_C;
+            ROW2_C: nextState = ROW2_D;
+            ROW2_D: nextState = ROW2_E;
+            ROW2_E: nextState = ROW2_F;
+            ROW2_F: nextState = ROW1_ADDR;
+            default: nextState = LCD_IDLE;
+        endcase
+    end  
+
+    // LCD control sigal
+    assign lcd_rw = 1'b0;
+    always_ff  @(posedge clk, posedge rst) begin
+        if(rst) begin
+            lcd_rs <= 1'b0;   //order or data  0: order 1:data
+        end
+        else if (lcd_ctrl) begin
+            if((nextState==SET_FUNCTION) || (nextState==DISP_OFF) || (nextState==DISP_CLEAR) || (nextState==ENTRY_MODE)||
+                (nextState==DISP_ON ) || (nextState==ROW1_ADDR)|| (nextState==ROW2_ADDR))
+                lcd_rs <= 1'b0;
+            else
+                lcd_rs <= 1'b1;
+        end
+        else begin
+            lcd_rs <= lcd_rs;
+        end    
+    end                  
+
+    always_ff @(posedge clk, posedge rst) begin
+        if (rst) begin
+            lcd_data <= 8'h00;
+        end
+        else if(lcd_ctrl) begin
+            case(nextState)
+                LCD_IDLE: lcd_data <= 8'hxx;
+                SET_FUNCTION: lcd_data <= 8'h38; //2 lines and 5×7 matrix
+                DISP_OFF: lcd_data <= 8'h08;
+                DISP_CLEAR: lcd_data <= 8'h01;
+                ENTRY_MODE: lcd_data <= 8'h06;
+                DISP_ON: lcd_data <= 8'h0F;  //Display ON, cursor OFF
+                ROW1_ADDR: lcd_data <= 8'h80; //Force cursor to beginning of first line
+                ROW1_0: lcd_data <= row_1 [127:120];
+                ROW1_1: lcd_data <= row_1 [119:112];
+                ROW1_2: lcd_data <= row_1 [111:104];
+                ROW1_3: lcd_data <= row_1 [103: 96];
+                ROW1_4: lcd_data <= row_1 [ 95: 88];
+                ROW1_5: lcd_data <= row_1 [ 87: 80];
+                ROW1_6: lcd_data <= row_1 [ 79: 72];
+                ROW1_7: lcd_data <= row_1 [ 71: 64];
+                ROW1_8: lcd_data <= row_1 [ 63: 56];
+                ROW1_9: lcd_data <= row_1 [ 55: 48];
+                ROW1_A: lcd_data <= row_1 [ 47: 40];
+                ROW1_B: lcd_data <= row_1 [ 39: 32];
+                ROW1_C: lcd_data <= row_1 [ 31: 24];
+                ROW1_D: lcd_data <= row_1 [ 23: 16];
+                ROW1_E: lcd_data <= row_1 [ 15:  8];
+                ROW1_F: lcd_data <= row_1 [  7:  0];
+
+                ROW2_ADDR: lcd_data <= 8'hC0;      //Force cursor to beginning of second line
+                ROW2_0: lcd_data <= row_2 [127:120];
+                ROW2_1: lcd_data <= row_2 [119:112];
+                ROW2_2: lcd_data <= row_2 [111:104];
+                ROW2_3: lcd_data <= row_2 [103: 96];
+                ROW2_4: lcd_data <= row_2 [ 95: 88];
+                ROW2_5: lcd_data <= row_2 [ 87: 80];
+                ROW2_6: lcd_data <= row_2 [ 79: 72];
+                ROW2_7: lcd_data <= row_2 [ 71: 64];
+                ROW2_8: lcd_data <= row_2 [ 63: 56];
+                ROW2_9: lcd_data <= row_2 [ 55: 48];
+                ROW2_A: lcd_data <= row_2 [ 47: 40];
+                ROW2_B: lcd_data <= row_2 [ 39: 32];
+                ROW2_C: lcd_data <= row_2 [ 31: 24];
+                ROW2_D: lcd_data <= row_2 [ 23: 16];
+                ROW2_E: lcd_data <= row_2 [ 15:  8];
+                ROW2_F: lcd_data <= row_2 [  7:  0];
+                default: lcd_data <= 8'hxx;
+            endcase                    
+        end
+        else
+            lcd_data <= lcd_data;
+    end
+
+endmodule
+
+module bcd2bin
+   (
+    // input logic [3:0] bcd7, // 10,000,000
+    // input logic [3:0] bcd6, // 1,000,000
+    // input logic [3:0] bcd5, // 100,000
+    // input logic [3:0] bcd4, // 10,000
+    input logic [3:0] bcd3, // 1000
+    input logic [3:0] bcd2, // 100
+    input logic [3:0] bcd1, // 10
+    input logic [3:0] bcd0, // 1
+    // output logic [31:0] bin
+    output logic [31:0] bin
+   );
+
+//    assign bin = (bcd7 * 24'd10000000) + (bcd6 * 20'd1000000) + (bcd5 * 17'd100000) + (bcd4 * 14'd10000) + (bcd3 * 10'd1000) + (bcd2*7'd100) + (bcd1*4'd10) + (bcd0 * 1'd1);
+
+    always_comb begin
+      if(bcd3 < 4'b1010 & bcd2 < 4'b1010 & bcd1 < 4'b1010 & bcd0 < 4'b1010) begin
+        bin = {16'h0000, (bcd3 * 16'd1000) + (bcd2*7'd100) + (bcd1*4'd10) + (bcd0 * 1'd1)};
+      end else begin
+        bin = {28'h000000f, bcd0};
+      end
+    end
+
+endmodule
+
+module bin_to_LCD(
+    input logic [31:0] binary_in,
+    output logic [31:0] LCD_out
+);
+
+    logic [15:0] BCD_interim;
+    // integer i;
+
+    always_comb begin
+        BCD_interim = 16'b0;
+        if(binary_in[31:4] == 28'h000000f) begin
+          BCD_interim = {12'b0,binary_in[3:0]};
+        end else if(binary_in[31:16] == 16'h0000) begin
+            for(integer i = 0; i < 14; i = i + 1) begin
+                if(BCD_interim[3:0] >= 5) BCD_interim[3:0] = BCD_interim[3:0] + 3;
+                if(BCD_interim[7:4] >= 5) BCD_interim[7:4] = BCD_interim[7:4] + 3;
+                if(BCD_interim[11:8] >= 5) BCD_interim[11:8] = BCD_interim[11:8] + 3;
+                if(BCD_interim[15:12] >= 5) BCD_interim[15:12] = BCD_interim[15:12] + 3;
+                BCD_interim = {BCD_interim[14:0], binary_in[13-i]}; 
+            end
+        end
+        if((binary_in[31:16] == 16'h0000))  begin
+            case(BCD_interim[15:12]) 
+                4'b0000: begin
+                  if(BCD_interim[11:0] == 12'h000) begin
+                    LCD_out[31:24] = 8'b00110000;
+                  end else begin
+                    LCD_out[31:24] = 8'h5f;
+                  end
+                end
+                4'b0001: LCD_out[31:24] = 8'b00110001;
+                4'b0010: LCD_out[31:24] = 8'b00110010;
+                4'b0011: LCD_out[31:24] = 8'b00110011;
+                4'b0100: LCD_out[31:24] = 8'b00110100;
+                4'b0101: LCD_out[31:24] = 8'b00110101;
+                4'b0110: LCD_out[31:24] = 8'b00110110;
+                4'b0111: LCD_out[31:24] = 8'b00110111;
+                4'b1000: LCD_out[31:24] = 8'b00111000;
+                4'b1001: LCD_out[31:24] = 8'b00111001;
+                4'b1010: LCD_out[31:24] = 8'b00101011;
+                4'b1011: LCD_out[31:24] = 8'b00101101;
+                4'b1100: LCD_out[31:24] = 8'b00101010;
+                4'b1101: LCD_out[31:24] = 8'b00101111;
+                default: LCD_out[31:24] = 8'b01011111; //underscore - default/blank value
+            endcase
+            case(BCD_interim[11:8])
+                4'b0000: begin
+                  if(BCD_interim[7:0] == 8'h00 | BCD_interim[15:12] != 4'h00) begin
+                    LCD_out[23:16] = 8'b00110000;
+                  end else begin
+                    LCD_out[23:16] = 8'h5f;
+                  end
+                end
+                4'b0001: LCD_out[23:16] = 8'b00110001;
+                4'b0010: LCD_out[23:16] = 8'b00110010;
+                4'b0011: LCD_out[23:16] = 8'b00110011;
+                4'b0100: LCD_out[23:16] = 8'b00110100;
+                4'b0101: LCD_out[23:16] = 8'b00110101;
+                4'b0110: LCD_out[23:16] = 8'b00110110;
+                4'b0111: LCD_out[23:16] = 8'b00110111;
+                4'b1000: LCD_out[23:16] = 8'b00111000;
+                4'b1001: LCD_out[23:16] = 8'b00111001;
+                4'b1010: LCD_out[23:16] = 8'b00101011;
+                4'b1011: LCD_out[23:16] = 8'b00101101;
+                4'b1100: LCD_out[23:16] = 8'b00101010;
+                4'b1101: LCD_out[23:16] = 8'b00101111;
+                default: LCD_out[23:16] = 8'b01011111; //underscore - default/blank value
+            endcase
+            case(BCD_interim[7:4])
+                4'b0000: begin
+                  if(BCD_interim[3:0] == 4'h0 | BCD_interim[15:8] != 8'h00) begin
+                    LCD_out[15:8] = 8'b00110000;
+                  end else begin
+                    LCD_out[15:8] = 8'h5f;
+                  end
+                end
+                4'b0001: LCD_out[15:8] = 8'b00110001;
+                4'b0010: LCD_out[15:8] = 8'b00110010;
+                4'b0011: LCD_out[15:8] = 8'b00110011;
+                4'b0100: LCD_out[15:8] = 8'b00110100;
+                4'b0101: LCD_out[15:8] = 8'b00110101;
+                4'b0110: LCD_out[15:8] = 8'b00110110;
+                4'b0111: LCD_out[15:8] = 8'b00110111;
+                4'b1000: LCD_out[15:8] = 8'b00111000;
+                4'b1001: LCD_out[15:8] = 8'b00111001;
+                4'b1010: LCD_out[15:8] = 8'b00101011;
+                4'b1011: LCD_out[15:8] = 8'b00101101;
+                4'b1100: LCD_out[15:8] = 8'b00101010;
+                4'b1101: LCD_out[15:8] = 8'b00101111;
+                default: LCD_out[15:8] = 8'b01011111; //underscore - default/blank value
+            endcase
+            case(BCD_interim[3:0])
+                4'b0000: LCD_out[7:0] = 8'b00110000;
+                4'b0001: LCD_out[7:0] = 8'b00110001;
+                4'b0010: LCD_out[7:0] = 8'b00110010;
+                4'b0011: LCD_out[7:0] = 8'b00110011;
+                4'b0100: LCD_out[7:0] = 8'b00110100;
+                4'b0101: LCD_out[7:0] = 8'b00110101;
+                4'b0110: LCD_out[7:0] = 8'b00110110;
+                4'b0111: LCD_out[7:0] = 8'b00110111;
+                4'b1000: LCD_out[7:0] = 8'b00111000;
+                4'b1001: LCD_out[7:0] = 8'b00111001;
+                4'b1010: LCD_out[7:0] = 8'b00101011;
+                4'b1011: LCD_out[7:0] = 8'b00101101;
+                4'b1100: LCD_out[7:0] = 8'b00101010;
+                4'b1101: LCD_out[7:0] = 8'b00101111;
+                default: LCD_out[7:0] = 8'b01011111; //underscore - default/blank value
+            endcase
+        end else begin
+            LCD_out = binary_in;
+        end
+    end
+
+endmodule
