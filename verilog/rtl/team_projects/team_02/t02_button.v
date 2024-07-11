@@ -1,10 +1,10 @@
 // Module for button debouncing
-module button(
+module t02_button(
 	input         clk,     // clock input from FPGA (12MHz)
 	input         noisy,   // noisy button input
 	output        btn_ctrl // debounced button output one cycle 
   );     
-  parameter LIMIT = 120000; // set the bouncing threshold to 10ms, 10ms / (1/12MHz) = 120000 clock cycles
+  parameter LIMIT = 100000; // set the bouncing threshold to 10ms, 10ms / (1/12MHz) = 120000 clock cycles
   
   reg    [16:0] r_counter;  // size need to be larger or equal to LIMIT
   reg           r_debounce;

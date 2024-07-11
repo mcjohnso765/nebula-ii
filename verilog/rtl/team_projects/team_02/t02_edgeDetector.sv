@@ -1,4 +1,4 @@
-module edgeDetector (
+module t02_edgeDetector (
     input logic clk, nRst_i,
     input logic button_i,
     output logic button_p

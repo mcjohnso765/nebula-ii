@@ -60,6 +60,8 @@ module team_02_WB (
 	assign	en = EN_VAL_REG;
 	`WB_REG(EN_VAL_REG, 0, 1)
 
+	assign IRQ = 0;
+
 	reg [31:0]	START_ADDR_VAL_REG;
 	assign	start_addr = START_ADDR_VAL_REG;
 	`WB_REG(START_ADDR_VAL_REG, 0, 32)

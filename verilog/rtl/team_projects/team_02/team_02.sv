@@ -42,15 +42,18 @@ module team_02 (
 
     // All outputs must have a value even if not used
     assign la_data_out = 128'b0;
-    assign gpio_out = 32'b0; //Inputs, but set low anyways
-    assign gpio_oeb = '1;//All 1's inputs
+    //assign gpio_out = 32'b0; //Inputs, but set low anyways
+    //assign gpio_oeb = '1;//All 1's inputs
     /*
     * Place code and sub-module instantiations here.
     cpu and wish bone manager
     */
     logic [31:0] ramstore, ramaddr, ramload;
     logic Ren, Wen, busy_o;
-    t02_top top (.clk(clk), .nrst(nrst), .ramaddr(ramaddr), .ramstore(ramstore), .Ren(Ren), .Wen(Wen), .ramload(ramload), .busy_o(busy_o), .enable(en), .start_addr(start_addr));
+    t02_top top (.clk(clk), .nrst(nrst), .ramaddr(ramaddr), .ramstore(ramstore), 
+    .Ren(Ren), .Wen(Wen), .ramload(ramload), .busy_o(busy_o), .enable(en), 
+    .lcd_rs(gpio_out[0]), .lcd_rw(gpio_out[5]), .lcd_en(gpio_out[6]), 
+    .lcd_data(gpio_out[14:7]), .read_row(gpio_in[18:15]), .scan_col(gpio_out[22:19]));
     // add start_addr 
     // make sure all signals are connected
     t02_wishbone_manager wb(.CLK(clk), .nRST(nrst), 
@@ -58,4 +61,17 @@ module team_02 (
     .CPU_DAT_O(ramload), .BUSY_O(busy_o), 
     .ADR_O(ADR_O), .DAT_O(DAT_O), .SEL_O(SEL_O), .WE_O(WE_O), .STB_O(STB_O), .CYC_O(CYC_O),
     .DAT_I(DAT_I), .ACK_I(ACK_I));
+
+    assign gpio_oeb[0] = '0;
+    assign gpio_oeb[4:1] = '1;
+    assign gpio_oeb[5] = '0;
+    assign gpio_oeb[6] = '0;
+    assign gpio_oeb[14:7] = '0;
+    assign gpio_oeb[18:15] = 4'b1111;
+    assign gpio_oeb[22:19] = '0;
+
+    assign gpio_oeb[31:23] = '1;
+    assign gpio_out[31:23] = '0;
+    assign gpio_out[18:15] = '0;
+    assign gpio_out[4:1] = '0;
 endmodule
