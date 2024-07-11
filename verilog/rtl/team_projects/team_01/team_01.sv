@@ -112,7 +112,6 @@ module team_01 (
     assign gpio_oeb [33:20] = '1;
     assign gpio_out [33:20] = '0;
     assign gpio_out [15:12] = '0;
-    assign gpio_out [19:16] = '0;
     assign gpio_oeb[0] = 0;
     assign gpio_out[0] = 0;
 

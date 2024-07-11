@@ -19,6 +19,26 @@
 #include <defs.h>
 #include <stub.c>
 
+#define reg_team_01_EN (*(volatile uint32_t*)0x30010000)
+#define reg_team_01_PRESCALER (*(volatile uint32_t*)0x30010004)
+#define reg_team_01_IM (*(volatile uint32_t*)0x3001FF00)
+#define reg_team_01_MIS (*(volatile uint32_t*)0x3001FF04)
+#define reg_team_01_RIS (*(volatile uint32_t*)0x3001FF08)
+#define reg_team_01_IC (*(volatile uint32_t*)0x3001FF0C)
+
+// GPIO Control
+#define reg_gpio_PIN_0TO7 (*(volatile uint32_t*)0x32000000)
+#define reg_gpio_PIN_8TO15 (*(volatile uint32_t*)0x32000004)
+#define reg_gpio_PIN_16TO23 (*(volatile uint32_t*)0x32000008)
+#define reg_gpio_PIN_24TO31 (*(volatile uint32_t*)0x3200000C)
+#define reg_gpio_PIN_32TO37 (*(volatile uint32_t*)0x32000010)
+
+// LA Control
+#define reg_la_sel (*(volatile uint32_t*)0x31000000)
+
+// SRAM address space
+#define sram_space (*(volatile uint32_t*)0x33000000)
+
 /*
 	IO Test:
 		- Configures MPRJ lower 8-IO pins as outputs
@@ -46,7 +66,8 @@ void main()
 	/* Set up the housekeeping SPI to be connected internally so	*/
 	/* that external pin changes don't affect it.			*/
 
-	// reg_spi_enable = 1;
+	reg_spi_enable = 1;
+    reg_wb_enable = 1;
 	// reg_spimaster_cs = 0x10001;
 	// reg_spimaster_control = 0x0801;
 
@@ -59,17 +80,59 @@ void main()
 
 	// Configure lower 8-IOs as user output
 	// Observe counter value in the testbench
-	reg_mprj_io_0 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_1 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_2 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_3 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_4 =  GPIO_MODE_USER_STD_OUTPUT;
 	reg_mprj_io_5 =  GPIO_MODE_USER_STD_OUTPUT;
 	reg_mprj_io_6 =  GPIO_MODE_USER_STD_OUTPUT;
 	reg_mprj_io_7 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_8 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_9 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_10 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_11 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_12 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_13 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_14 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_15 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_16 =  GPIO_MODE_USER_STD_INPUT;
+	reg_mprj_io_17 =  GPIO_MODE_USER_STD_INPUT;
+	reg_mprj_io_18 =  GPIO_MODE_USER_STD_INPUT;
+	reg_mprj_io_19 =  GPIO_MODE_USER_STD_INPUT;
+	reg_mprj_io_20 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_21 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_22 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_23 =  GPIO_MODE_USER_STD_OUTPUT;
 
 	/* Apply configuration */
 	reg_mprj_xfer = 1;
 	while (reg_mprj_xfer == 1);
+
+	// Configure All LA probes as inputs to the cpu 
+	reg_la0_oenb = reg_la0_iena = 0x00000000;    // [31:0]
+	reg_la1_oenb = reg_la1_iena = 0x00000000;    // [63:32]
+	reg_la2_oenb = reg_la2_iena = 0x00000000;    // [95:64]
+	reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
+
+	// Configure GPIOs outputs to be selected by sample project
+	reg_gpio_PIN_0TO7 = 0x11111111;
+	reg_gpio_PIN_8TO15 = 0x11111111;
+	reg_gpio_PIN_16TO23 = 0x11111111;
+	reg_gpio_PIN_24TO31 = 0x11111111;
+	reg_gpio_PIN_32TO37 = 0x111111;
+
+    // Do stuff with SRAM
+    sram_space = 0x3e800093;
+    *(&sram_space + 1) = 0x00106113;
+    *(&sram_space + 2) = 0x0020f1b3;
+    *(&sram_space + 3) = 0x330001b7;
+    *(&sram_space + 4) = 0x4031a023;
+    *(&sram_space + 5) = 0x4001a203;
+    
+    // write sram
+    // write
+    // write
+    // write
+
+    // write your design (enable)
+    reg_team_01_EN = 1;
+    // your design:
+    // read from sram
 }
 

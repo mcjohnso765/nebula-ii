@@ -132,7 +132,10 @@ void main()
     sram_space = 0x3e800093;
     *(&sram_space + 1) = 0x00106113;
     *(&sram_space + 2) = 0x0020f1b3;
-
+    *(&sram_space + 3) = 0x330001b7;
+    *(&sram_space + 4) = 0x4031a023;
+    *(&sram_space + 5) = 0x4001a203;
+    
     // write sram
     // write
     // write
