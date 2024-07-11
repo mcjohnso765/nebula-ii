@@ -1,5 +1,5 @@
 module fsm (
-    input logic         clk, nRST,
+    input logic         clk, nRST, en,
     // From Keypad
     input logic [7:0]   data,
     input logic         keyvalid,
@@ -18,10 +18,10 @@ module fsm (
     output logic        pc_enable,
     // (For LCD)
     output logic [7:0]  display,
-    output logic [2:0]  fsm_state,
+    output logic [3:0]  fsm_state,
     output logic        lcd_en     
 );
-    typedef enum logic [2:0] {INIT, WRITE, NUM, ASM, DISPLAY, FETCH, FLASH, FINISH} StateType;
+    typedef enum logic [3:0] {INIT, IDLE, WRITE, NUM, ASM, DISPLAY, FETCH, FLASH, FINISH} StateType;
     StateType state, next_state;
     assign fsm_state = state;
 
@@ -69,6 +69,11 @@ module fsm (
         next_lcd_en     = 1'b0;
         case (state)
             INIT: begin
+                if (en) begin
+                    next_state = IDLE;
+                end
+            end
+            IDLE: begin
                 if (data == "*" && keyvalid) begin
                     next_write_i    = 1'b1;
                     next_data_adr   = write_adr + (i << 2);
@@ -86,7 +91,7 @@ module fsm (
             end 
             WRITE: begin
                 if (done) begin
-                    next_state      = INIT;
+                    next_state      = IDLE;
                     next_i          = i + 1;
                     next_display    = 8'b0;
                 end

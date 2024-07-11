@@ -91,10 +91,10 @@ void main()
 	reg_mprj_io_13 =  GPIO_MODE_USER_STD_OUTPUT;
 	reg_mprj_io_14 =  GPIO_MODE_USER_STD_OUTPUT;
 	reg_mprj_io_15 =  GPIO_MODE_USER_STD_OUTPUT;
-	reg_mprj_io_16 =  GPIO_MODE_USER_STD_INPUT;
-	reg_mprj_io_17 =  GPIO_MODE_USER_STD_INPUT;
-	reg_mprj_io_18 =  GPIO_MODE_USER_STD_INPUT;
-	reg_mprj_io_19 =  GPIO_MODE_USER_STD_INPUT;
+	reg_mprj_io_16 =  GPIO_MODE_USER_STD_INPUT_NOPULL;
+	reg_mprj_io_17 =  GPIO_MODE_USER_STD_INPUT_NOPULL;
+	reg_mprj_io_18 =  GPIO_MODE_USER_STD_INPUT_NOPULL;
+	reg_mprj_io_19 =  GPIO_MODE_USER_STD_INPUT_NOPULL;
 	reg_mprj_io_20 =  GPIO_MODE_USER_STD_OUTPUT;
 	reg_mprj_io_21 =  GPIO_MODE_USER_STD_OUTPUT;
 	reg_mprj_io_22 =  GPIO_MODE_USER_STD_OUTPUT;
@@ -118,13 +118,19 @@ void main()
 	reg_gpio_PIN_32TO37 = 0x111111;
 
     // Do stuff with SRAM
-    sram_space = 0x3e800093;
-    *(&sram_space + 1) = 0x00106113;
-    *(&sram_space + 2) = 0x0020f1b3;
-    *(&sram_space + 3) = 0x330001b7;
-    *(&sram_space + 4) = 0x4031a023;
-    *(&sram_space + 5) = 0x4001a203;
+    sram_space = 0x330001b7;
+    *(&sram_space + 1) = 0x03900213;
+    *(&sram_space + 2) = 0x4041a023;
     
+
+	//mem map register wrapper file
+	//managment core check if 0x30010008
+	// = 1
+
+
+	//wire enable to zero
+
+
     // write sram
     // write
     // write

@@ -65,7 +65,7 @@ logic [31:0] asm_write_data, asm_data_adr;
 //FSM Signals
 logic fsm_read_i, fsm_write_i;
 logic [31:0] fsm_write_data, fsm_data_adr;
-logic [2:0] fsm_state;
+logic [3:0] fsm_state;
 
 logic register_en;
 logic dm_enable;
@@ -146,6 +146,7 @@ data_memory DM0 (.clk(clk),
 // FSM : DONE 
 fsm f0(.clk(clk),
        .nRST(nRST),
+       .en(en),
        .data(data_received),
        .keyvalid(keyvalid),
        .done(dhit),
@@ -159,7 +160,7 @@ fsm f0(.clk(clk),
        .write_adr(32'h33000200),
        .num_adr(32'h33000300),
        .MemWrite(MemWrite),
-       .pc_enable(),
+       .pc_enable(assembly_en),
        .display(lcd_display_data),
        .fsm_state(fsm_state),
        .lcd_en(shift)
@@ -239,7 +240,7 @@ register_file RF0 (.clk(clk),
 // REQUEST UNIT : DONE
 request_unit RU0 (.clk(clk),
                   .nRST(nRST),
-                  .InstrRead(en),
+                  .InstrRead(assembly_en),
                   .DataRead(DataRead),
                   .DataWrite(DataWrite),
                   .DataAddress(DataAddress),
@@ -263,7 +264,7 @@ shift_reg SR0 (.clk(clk),
                .nRST(nRST), 
                .char_in(DataToWrite[7:0]), 
                .shift_register(unsorted), 
-               .enable(dhit && fsm_state == 3'b001)
+               .enable(dhit && fsm_state == 4'b010)
 );
 
 // SHIFT REGISTER 2 (for LCD row 2) : DONE
@@ -276,7 +277,7 @@ shift_reg SR1 (.clk(clk),
 
 // ASSEMBLY OR FSM
 always_comb begin
-    if (1'b1) begin
+    if (assembly_en) begin
         DataRead    = asm_read_i;
         DataWrite   = asm_write_i;
         DataAddress = asm_data_adr;
