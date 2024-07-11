@@ -91,7 +91,7 @@ module team_05 (
         $monitor("[Manager Monitor] WRITE_I=%h, READ_I=%h, ADR_I=%h, CPU_DAT_I=%h, SEL_I=%h, CPU_DAT_O=%h, BUSY_O=%h", WRITE_I, READ_I, ADR_I, CPU_DAT_I, SEL_I, CPU_DAT_O, BUSY_O);
     end
 
-    t05_complete_design final(
+    t05_complete_design total_design(
         .data_in_BUS(CPU_DAT_O),
         .bus_full(BUSY_O),
         .en(en),
@@ -130,6 +130,9 @@ module t05_complete_design(
 );
 
     logic [31:0] data_to_CPU, data_from_CPU, CPU_address;
+    logic [31:0] data_from_keypad, LCD_out, data_to_LCD;
+
+    logic [2:0] lcd_word;
 
     logic mem_access, CPU_data_write, CPU_mem_read;
 
@@ -205,7 +208,14 @@ module t05_complete_design(
 
     always_ff @(posedge clk, posedge rst) begin
         if(rst) begin
-            lcd_interim <= '0;
+            lcd_interim[7] <= '0;
+            lcd_interim[6] <= '0;
+            lcd_interim[5] <= '0;
+            lcd_interim[4] <= '0;
+            lcd_interim[3] <= '0;
+            lcd_interim[2] <= '0;
+            lcd_interim[1] <= '0;
+            lcd_interim[0] <= '0;
         end else if(LCD_out != 32'hFFFFFFFF) begin
             //write to only a specific word of storage
             lcd_interim[lcd_word] <= LCD_out;
@@ -228,6 +238,8 @@ module memory_mapping(
     output logic mem_access, key_data
 );
 
+
+
     always_comb begin
         if(mem_address == 32'h33000FFC) begin
             data_to_CPU = data_from_keypad;
@@ -242,7 +254,17 @@ module memory_mapping(
             data_to_CPU = '0;
             data_to_memory = '0;
             output_address = '0;
-            lcd_word = (mem_address - 32'h33000FDC) >> 2'd2; 
+            case(mem_address)
+                (32'h33000FDC): lcd_word = 3'b000;
+                (32'h33000FE0): lcd_word = 3'b001;
+                (32'h33000FE4): lcd_word = 3'b010;
+                (32'h33000FE8): lcd_word = 3'b011;
+                (32'h33000FEC): lcd_word = 3'b100;
+                (32'h33000FF0): lcd_word = 3'b101;
+                (32'h33000FF4): lcd_word = 3'b110;
+                (32'h33000FF8): lcd_word = 3'b111;
+                default: lcd_word = 3'b000;
+            endcase
             mem_access = '0;
             key_data = '0;
         end else begin
@@ -881,9 +903,9 @@ module t05_data_memory(
     output logic [31:0] data_adr_o, data_bus_o, data_cpu_o
 );
 
-    logic next_read, next_write;
+    logic next_read, next_write, last_read;
     logic [31:0] stored_read_data, stored_write_data, stored_data_adr;
-    logic [31:0] data_read_adr_reg, data_write_adr_reg;
+    logic [31:0] data_read_adr_reg, data_write_adr_reg, data_read_adr_reg2;
     logic [31:0] data_bus_i_reg, data_cpu_i_reg;
 
     always_comb begin
@@ -926,6 +948,10 @@ module t05_data_memory(
             stored_write_data = data_cpu_i_reg;
             stored_read_data = '0;
         end
+        if(last_read == 1'b0 & data_read == 1'b1) begin
+            next_read = '1;
+            stored_data_adr = data_read_adr_reg2;
+        end
 
         // if((~(data_read_adr_i == 32'b0))) begin
         //     if(data_good & data_read) begin
@@ -953,6 +979,8 @@ module t05_data_memory(
             data_write_adr_reg <= '0;
             data_bus_i_reg <= '0;
             data_cpu_i_reg <= '0;
+            last_read <= 1'b0;
+            data_read_adr_reg2 <= '0;
         end else begin
             data_read <= next_read;
             data_write <= next_write;
@@ -963,7 +991,8 @@ module t05_data_memory(
             data_bus_o <= stored_write_data;
             data_bus_i_reg <= data_bus_i;
             data_cpu_i_reg <= data_cpu_i;
-
+            last_read <= data_read;
+            data_read_adr_reg2 <= data_read_adr_reg;
             // data_adr_o <= 32'b0;
             // data_bus_o <= 32'b0;
             // data_cpu_o <= 32'b0;
@@ -2045,7 +2074,7 @@ module bin_to_LCD(
             endcase
             case(BCD_interim[11:8])
                 4'b0000: begin
-                  if(BCD_interim[7:0] == 8'h00 | BCD_interim[15:12] != 4'h00) begin
+                  if(BCD_interim[7:0] == 8'h00 | BCD_interim[15:12] != 4'h0) begin
                     LCD_out[23:16] = 8'b00110000;
                   end else begin
                     LCD_out[23:16] = 8'h5f;
