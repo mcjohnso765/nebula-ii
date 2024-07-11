@@ -27,7 +27,7 @@
 
 // List of Wishbone Slave Addresses
 // Sample Project
-#define reg_sample_proj_EN (*(volatile uint32_t*)0x300C0000)
+#define reg_team_09_EN (*(volatile uint32_t*)0x30090000)
 
 // GPIO Control
 #define reg_gpio_PIN_0TO7 (*(volatile uint32_t*)0x32000000)
@@ -110,12 +110,20 @@ void main()
 	reg_mprj_xfer = 1;
 	while (reg_mprj_xfer == 1);
 
+	// Configure All LA probes as inputs to the cpu
+	// LAs basically don't do anything
+	reg_la0_oenb = reg_la0_iena = 0x00000000;    // [31:0]
+	reg_la1_oenb = reg_la1_iena = 0x00000000;    // [63:32]
+	reg_la2_oenb = reg_la2_iena = 0x00000000;    // [95:64]
+	reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
+
 	reg_gpio_PIN_0TO7 = 0x99999999;
 	reg_gpio_PIN_8TO15 = 0x99999999;
 	reg_gpio_PIN_16TO23 = 0x99999999;
 	reg_gpio_PIN_24TO31 = 0x99999999;
 	reg_gpio_PIN_32TO37 = 0x999999;
 
-	// reg_sample_proj_EN = 0x1;
+	// Enable Team 9 Design
+	reg_team_09_EN = 1;
 }
 
