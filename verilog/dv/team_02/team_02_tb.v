@@ -188,11 +188,10 @@ module team_02_tb;
 		// wait(checkbits == 'b0);
 		// $display("Correct GPIO output:");
 
-		//#1099;  // wait some time before ending
-		 #1099362.4;
-		 //#2500000;
-		//  #1900000;
-		// #3000000;
+		// #1126637;
+		// #1126187;
+		  // #3000000;
+		   #1126887.45;
 		`ifdef GL
 	    	$display("Monitor: NEBULA II-Sample Project (GL) Passed");
 		`else

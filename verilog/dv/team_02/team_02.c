@@ -151,12 +151,34 @@ void main()
     // reg_team_02_operand_1 = 8;
     // reg_team_02_operator_0 = 11;
     
-    *(&sram_space ) = 0x00000093;
-    *(&sram_space + 1) = 0x00100113;
-	*(&sram_space + 2) = 0x002080b3;
-	*(&sram_space + 3) = 0x00110133;
-    *(&sram_space + 4) = 0xffffffff;
+    //here
+    // *(&sram_space ) = 0x3e800093;
+    // *(&sram_space + 1) = 0x7d008113;
+	// *(&sram_space + 2) = 0x0080006f;
+    // *(&sram_space + 3) = 0x00800393;
+    // *(&sram_space + 4) = 0x00a00413;
+    //  *(&sram_space + 5) = 0xffffffff;
+
+    *(&sram_space ) = 0x3e800093;
+    *(&sram_space + 1) = 0x7d008113;
+    *(&sram_space + 2) = 0x3e800093;
+	*(&sram_space + 3) = 0x0080006f; //j
+    *(&sram_space + 4) = 0x00800393;
+    *(&sram_space + 5) = 0x00a00413;
+     *(&sram_space + 6) = 0xffffffff;
+
+
+
 	// *(&sram_space + 4) = 0xff9ff1ef;
+
+
+    // *(&sram_space ) = 0x3e800093;
+    // *(&sram_space + 1) = 0x7d008113;
+    // *(&sram_space + 2) = 0x0080006f;
+    // *(&sram_space + 3) = 0x0080006f;
+    // *(&sram_space + 4) = 0x00800393;
+    // *(&sram_space + 5) = 0x00a00413;
+    //  *(&sram_space + 6) = 0xffffffff;
 
 	// Set start address
     reg_tem_02_start_address = 0x33000000;

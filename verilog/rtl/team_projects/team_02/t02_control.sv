@@ -72,10 +72,10 @@ always_comb begin
 	memRead=0; 
 	aluSrc=0;
 	aluOP = '0; //
-	// if (instruction == 32'hffffffff) begin
-	// 	cuOP = CU_HALT;
-	// end
-	// else begin
+	if (instruction == 32'hffffffff) begin
+		cuOP = CU_HALT;
+	end
+	else begin
 
 
 	casez (instruction[6:0])
@@ -251,5 +251,5 @@ always_comb begin
 	default: cuOP = CU_ERROR;
 	endcase
 	end
-// end
+end
 endmodule
