@@ -7,7 +7,8 @@ module Tx_fsm(
   output logic tx_dout,
   output logic success,
   output logic enable_t, enable_s,
-  output logic transmit_ready
+  output logic transmit_ready,
+  output logic [1:0] current_state
 );
 
     typedef enum logic [1:0] {IDLE= 0, TRANSFER = 1, STOP= 2} State_t;
@@ -15,7 +16,7 @@ module Tx_fsm(
     logic nxt_enable_t;
     logic nxt_enable_s;
 
-    State_t current_state, next_state;
+    State_t next_state;
 
     always_ff @(posedge clk, negedge nrst) begin 
         if(!nrst) begin
@@ -43,12 +44,17 @@ module Tx_fsm(
             IDLE: begin
                 if(tx_ctrl == 0) begin
                     next_state = IDLE;
+                    transmit_ready = 1;
+                    nxt_enable_t = 0; 
+                    nxt_enable_s = 0;
+                    success = 1;
                 end
                 else begin
                     next_state = TRANSFER;
                     nxt_enable_t = 1; 
                     nxt_enable_s = 1;
                     transmit_ready = 0;
+                    success = 0;
                 end
             end
 
@@ -60,21 +66,32 @@ module Tx_fsm(
                 transmit_ready = 0; 
 
                 if(ready_signal == 1) begin
+                    transmit_ready = 0;
                    next_state = STOP;
                 end
                 else begin
                     // success = 0;
                     // transmit_ready = 0; 
+                    transmit_ready = 0;
                     next_state = TRANSFER;
                 end
             end
 
             STOP: begin 
-               success = 1;
                transmit_ready = 1; 
                nxt_enable_t = 0; 
                nxt_enable_s = 0;
                next_state = IDLE;
+                success = 1;
+            end
+            default: begin
+                success = 1;
+                nxt_enable_t = enable_t;
+                nxt_enable_s = enable_s;
+
+                next_state = current_state;
+                tx_dout = 1;
+                transmit_ready = 1;
             end
         endcase
     end

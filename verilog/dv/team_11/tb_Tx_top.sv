@@ -18,16 +18,17 @@ module tb_Tx_top;
    //output
    logic [7:0] data_send;
    logic tx_ctrl;
+   logic [1:0] state;
    
-   Tx_top DUT(.clk(clk), .nrst(nrst), .msg_tx_ctrl(msg_tx_ctrl), .msg_1(msg_1), .tx_dout(tx_dout), .success(success));
+   Tx_top DUT(.clk(clk), .nrst(nrst), .msg_tx_ctrl(msg_tx_ctrl), .msg_1(msg_1), .tx_dout(tx_dout), .transmit_ready(success), .state(state));
 
    task reset_dut;
    begin
-      @(posedge clk);
       nrst = RESET_ACTIVE;
 
-      @(posedge clk);
+      #(CLK_PERIOD * 1);
       nrst = RESET_INACTIVE;
+      #(CLK_PERIOD * 1);
    end
    endtask
 
@@ -49,9 +50,9 @@ module tb_Tx_top;
 //    endtask
  
    always begin
-      clk =0;
+      clk =1;
       #(CLK_PERIOD / 2);
-      clk = 1;
+      clk = 0;
       #(CLK_PERIOD / 2);
    end
                 
@@ -63,29 +64,6 @@ module tb_Tx_top;
       $dumpvars(0, tb_Tx_top);
 
       // initialization
-      msg_1 = 128'd0; 
-      msg_tx_ctrl = '0;
-      nrst = 1'b1;
-      test_num = -1; 
-      test_name = "Test Bench starting"; 
-      #(CLK_PERIOD);
-
-    //   dout_exp = 0;
-    //   success_exp = 0;
-    //   #(CLK_PERIOD);
-
-    //   check_output(dout_exp, success_exp);
-
-      //Test # 0 
-      test_num +=1;
-      test_name = "Resetting everything manually";
-      nrst = RESET_ACTIVE;
-      #(CLK_PERIOD);
-
-      nrst = RESET_INACTIVE;
-      msg_1 = "                "; 
-      msg_tx_ctrl = '0;
-      #(CLK_PERIOD);
 
     //   dout_exp = 0;
     //   success_exp = 0;
@@ -94,17 +72,26 @@ module tb_Tx_top;
     //   check_output(dout_exp, success_exp);
 
       //Test # 1
+      reset_dut();
       test_num += 1;
+      msg_1 = "               ";
+      msg_tx_ctrl = 1'b0;
       test_name = "Test 1";
+      #(CLK_PERIOD);
+      msg_tx_ctrl =  1;
+      #(CLK_PERIOD * 100);
+      msg_tx_ctrl = 0;
+      #(CLK_PERIOD * 100);
+
       reset_dut();
 
-      msg_1 = "HEY TEST 1     ";
-      msg_tx_ctrl = 1'b0;
-      #(CLK_PERIOD * 1);
+      msg_1 = "1234567890123456";
       msg_tx_ctrl = 1'b1;
-      #(CLK_PERIOD * 1);
-      msg_tx_ctrl = 1'b0;
-      #(CLK_PERIOD * 1250 * 16 * 11);
+      #(CLK_PERIOD* 1250);
+      msg_tx_ctrl = 1'b1;
+      #(CLK_PERIOD);
+      msg_tx_ctrl = 0;
+      #(CLK_PERIOD * 1250 * 16 * 12);
 
      
 

@@ -18,9 +18,10 @@ module tb_UART_Tx;
    logic success;
    logic tx_dout;
    logic transmit_ready;
+   logic [1:0] state;
    
 
-   UART_Tx DUT(.clk(clk), .nrst(nrst),.tx_ctrl(tx_ctrl), .data_send(data_send), .transmit_ready(transmit_ready), .success(success), .tx_dout(tx_dout));
+   UART_Tx DUT(.clk(clk), .nrst(nrst),.tx_ctrl(tx_ctrl), .data_send(data_send), .transmit_ready(transmit_ready), .success(success), .tx_dout(tx_dout), .state(state));
 
    task reset_dut;
    begin
@@ -93,47 +94,42 @@ module tb_UART_Tx;
       nrst = RESET_INACTIVE;
       tx_ctrl = 0; 
       data_send = 8'd0;
-      #(CLK_PERIOD);
-
+      #(CLK_PERIOD  * 1250);
       dout_exp = 0;
       success_exp = 0;
       ready_exp = 0; 
-      #(CLK_PERIOD);
+      #(CLK_PERIOD  * 1250);
 
       check_output(dout_exp, success_exp, ready_exp);
 
       //Test # 1
-      test_num += 1;
-      test_name = "Test 1";
-      reset_dut();
-
       tx_ctrl = 1;
-      data_send = 8'b11010011; 
-      #(CLK_PERIOD);
+      data_send = 8'b11010100; 
+      #(CLK_PERIOD * 1250);
 
       tx_ctrl = 0; 
-      #(CLK_PERIOD * 12);
-
-      dout_exp = 1; 
-      success_exp = 1;
-      ready_exp = 1; 
-      #(CLK_PERIOD);
-
-      check_output(dout_exp, success_exp, ready_exp);
-
-
-      //Test # 2
-      tx_ctrl = 1;
-      data_send = 8'b01011010; 
-      #(CLK_PERIOD);
-
-      tx_ctrl = 0; 
-      #(CLK_PERIOD * 12);
+      #(CLK_PERIOD * 8 * 1250);
+      
 
       dout_exp = 0; 
       success_exp = 1;
       ready_exp = 1; 
-      #(CLK_PERIOD);
+
+      //Test # 2
+
+      #(CLK_PERIOD *2* 1250);
+      tx_ctrl = 1;
+      data_send = 8'b01011010; 
+      #(CLK_PERIOD *2* 1250);
+
+      tx_ctrl = 0; 
+      #(CLK_PERIOD * 8 * 1250);
+      
+
+      dout_exp = 0; 
+      success_exp = 1;
+      ready_exp = 1; 
+      #(CLK_PERIOD * 5* 1250);
 
       check_output(dout_exp, success_exp, ready_exp);
 

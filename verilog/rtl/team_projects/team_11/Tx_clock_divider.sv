@@ -9,7 +9,7 @@ output logic new_clk
 
 parameter OG_CLK = 240000; /// 2.4 GHz signal ie 2400000000
 parameter BAUD_RATE = 9600; // a higher baud rate means a higher rate of transmission, it's essentially a unit of measurement that represents the number of signal changes
-parameter DIV_FACTOR = 100; // so input signal divided by the rate of transmission 
+parameter DIV_FACTOR = 1250; // so input signal divided by the rate of transmission 
 
 parameter N = 32;
 

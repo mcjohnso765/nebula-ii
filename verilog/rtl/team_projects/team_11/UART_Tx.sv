@@ -11,7 +11,8 @@ module UART_Tx(
     output logic transmit_ready, 
 
     output logic success,
-    output logic tx_dout
+    output logic tx_dout,
+    output logic[1:0] state
 
 );
     logic bit_out; 
@@ -25,7 +26,7 @@ module UART_Tx(
 
     Tx_shift_register shifts(.clk(clk), .nrst(nrst), .tx_ctrl(tx_ctrl),.enable_s(enable_s & new_clk), .data_send(data_send), .bit_out(bit_out), .count(count));
      
-    Tx_fsm states(.clk(clk), .nrst(nrst), .tx_ctrl(tx_ctrl), .bit_out(bit_out), .tx_dout(tx_dout), .enable_t(enable_t), .enable_s(enable_s), .success(success), .ready_signal(ready_signal), .transmit_ready(transmit_ready));
+    Tx_fsm states(.clk(clk), .nrst(nrst), .tx_ctrl(tx_ctrl), .bit_out(bit_out), .tx_dout(tx_dout), .enable_t(enable_t), .enable_s(enable_s), .success(success), .ready_signal(ready_signal), .transmit_ready(transmit_ready), .current_state(state));
 
     Tx_intcounter #(.N(4))  counts(.clk(clk), .nrst(nrst), .enable_t(enable_t & new_clk), .max(4'd11), .ready_signal(ready_signal), .count(count)); // where's wrap coming from? where's max coming from?  
 
