@@ -22,7 +22,7 @@ module team_09 (
 	assign la_data_out = 128'b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
 	assign gpio_out[33:25] = 9'b000000000;
 	assign gpio_oeb = 34'b0011111110000000000000000000000000;
-	localparam MAX_LENGTH = 78;
+	localparam MAX_LENGTH = 140;
 	wire snakeBody;
 	wire snakeHead;
 	wire apple;
@@ -91,7 +91,7 @@ module team_09 (
 		.sync_reset(sync),
 		.obstacle_pb(gpio_in[30]),
 		.clk(clk),
-		.nrst(nrst || en),
+		.nrst(nrst&&  en),
 		.obstacleFlag(obstacleFlag)
 	);
 	obstacle_random obsrand1(
@@ -119,7 +119,7 @@ module team_09 (
 		.curr_length(curr_length),
 		.obstacleCount(dispObs),
 		.clk(clk),
-		.nRst(nrst || en),
+		.nRst(nrst && en),
 		.s_reset(sync),
 		.body(body),
 		.x(x),
