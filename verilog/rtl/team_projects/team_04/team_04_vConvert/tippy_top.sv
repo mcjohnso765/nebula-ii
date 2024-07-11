@@ -33,6 +33,7 @@ module tippy_top (
     logic [31:0] VGA_request_address;
     logic [31:0] mem_data_to_VGA;
     logic [9:0] h_count;
+    logic [8:0] v_count;
     logic [1:0] VGA_state;
     logic data_en;
     logic VGA_read;
@@ -72,6 +73,7 @@ module tippy_top (
         .VGA_request_address(VGA_request_address),
         .data_from_SRAM(mem_data_to_VGA),
         .h_count(h_count),
+        .v_count(v_count),
         .VGA_state(VGA_state),
         .byte_select_out(), //ignore
         .read(VGA_read),
@@ -99,7 +101,7 @@ module tippy_top (
         .VGA_state(VGA_state),
 
         .h_count(h_count),
-        .v_count(), //ignore
+        .v_count(v_count), //ignore
         .h_state(), //ignore
         .v_state() //ignore
     );
@@ -1375,6 +1377,7 @@ module VGA_data_controller (
     input logic clk, nrst,
     input logic [31:0] VGA_request_address, data_from_SRAM,
     input logic [9:0] h_count,
+    input logic [8:0] v_count,
     input logic [1:0] VGA_state,
     output logic [3:0] byte_select_out,
     output logic read,
@@ -1439,7 +1442,7 @@ module VGA_data_controller (
                     
                     else if (h_count[5:0] == 62) begin
                         next_state = LOAD_NEW_REGISTER;
-                    end else if (h_count[7:6] == 3)begin
+                    end else if ((h_count[7:6] == 3) & ((v_count % 5) != 4))begin
                         next_address = VGA_request_address - 3; // preparing next word 
                         next_data = next_data;
                         next_state = PREPARE_DATA;

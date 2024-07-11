@@ -42,6 +42,7 @@ module tippy_top (
 	wire [31:0] VGA_request_address;
 	wire [31:0] mem_data_to_VGA;
 	wire [9:0] h_count;
+	wire [8:0] v_count;
 	wire [1:0] VGA_state;
 	wire data_en;
 	wire VGA_read;
@@ -70,6 +71,7 @@ module tippy_top (
 		.VGA_request_address(VGA_request_address),
 		.data_from_SRAM(mem_data_to_VGA),
 		.h_count(h_count),
+		.v_count(v_count),
 		.VGA_state(VGA_state),
 		.byte_select_out(),
 		.read(VGA_read),
@@ -89,7 +91,7 @@ module tippy_top (
 		.byte_select(),
 		.VGA_state(VGA_state),
 		.h_count(h_count),
-		.v_count(),
+		.v_count(v_count),
 		.h_state(),
 		.v_state()
 	);

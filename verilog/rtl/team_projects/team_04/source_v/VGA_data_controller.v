@@ -5,6 +5,7 @@ module VGA_data_controller (
 	VGA_request_address,
 	data_from_SRAM,
 	h_count,
+	v_count,
 	VGA_state,
 	byte_select_out,
 	read,
@@ -17,6 +18,7 @@ module VGA_data_controller (
 	input wire [31:0] VGA_request_address;
 	input wire [31:0] data_from_SRAM;
 	input wire [9:0] h_count;
+	input wire [8:0] v_count;
 	input wire [1:0] VGA_state;
 	output reg [3:0] byte_select_out;
 	output reg read;
@@ -73,7 +75,7 @@ module VGA_data_controller (
 				end
 				else if (h_count[5:0] == 62)
 					next_state = 2'd2;
-				else if (h_count[7:6] == 3) begin
+				else if ((h_count[7:6] == 3) & ((v_count % 5) != 4)) begin
 					next_address = VGA_request_address - 3;
 					next_data = next_data;
 					next_state = 2'd1;
