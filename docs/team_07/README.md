@@ -1,67 +1,52 @@
 # STARS 2024 Design Final Project
 
 ## TEAM NAME
-* Team Member 1 Name
-* Team Member 2 Name
-* Team Member 3 Name
-* Team Member 4 Name
-* Peer Mentor Name
+* Puthimet Kitjaruwankul
+* Luke Scheuffele
+* Nathan Chamlongsulak
+* Leo Janert
+* Abdulloh Rakhmatillokhon
 
 ## Project Type
-Short (2-3 sentences) project description
+    Game Team 2, our bomb defusal game is a multiplayer collaborative game. One player works as the defusal squad team while the other is the bomb expert relaying info about how to defuse the bomb to the defusal team. The design of the game has four puzzles, menu states, a simple synthesizer, and four optimized seven segment displays. We got to learn key concepts making this design and hope you can enjoy playing it when you flash our game!
 
 ## Pin Layout
 Note that on the final chip, there are 38 gpio of which you have access to 4.
 The first number represents the GPIO on the physical board. The second number
 in brackets represents the number in your verilog code
 
-00[00] Input/Output: Pin_Function
-01[--] Input/Output: Pin_Function
-02[--] Input/Output: Pin_Function
-03[--] Input/Output: Pin_Function
-04[--] Input/Output: Pin_Function
-05[01] Input/Output: Pin_Function
-06[02] Input/Output: Pin_Function 
-07[03] Input/Output: Pin_Function 
-08[04] Input/Output: Pin_Function 
-09[05] Input/Output: Pin_Function 
-10[06] Input/Output: Pin_Function
-11[07] Input/Output: Pin_Function
-12[08] Input/Output: Pin_Function
-13[09] Input/Output: Pin_Function 
-14[10] Input/Output: Pin_Function 
-15[11] Input/Output: Pin_Function 
-16[12] Input/Output: Pin_Function 
-17[13] Input/Output: Pin_Function 
-18[14] Input/Output: Pin_Function 
-19[15] Input/Output: Pin_Function 
-20[16] Input/Output: Pin_Function 
-21[17] Input/Output: Pin_Function 
-22[18] Input/Output: Pin_Function 
-23[19] Input/Output: Pin_Function 
-24[20] Input/Output: Pin_Function 
-25[21] Input/Output: Pin_Function 
-26[22] Input/Output: Pin_Function 
-27[23] Input/Output: Pin_Function 
-28[24] Input/Output: Pin_Function 
-29[25] Input/Output: Pin_Function
-30[26] Input/Output: Pin_Function
-31[27] Input/Output: Pin_Function
-32[28] Input/Output: Pin_Function
-33[29] Input/Output: Pin_Function
-34[30] Input/Output: Pin_Function
-35[31] Input/Output: Pin_Function
-36[32] Input/Output: Pin_Function
-37[33] Input/Output: Pin_Function
-38[34] Input/Output: Pin_Function
+
+Pin 10[06] Output: ssdec_sdi  
+Pin 11[07] Output: ssdec_ss  
+Pin 12[08] Output: ssdec_sck  
+Pin 13[09] Output: tft_sck  
+Pin 14[10] Output: tft_sdi  
+Pin 15[11] Output: tft_dc  
+Pin 16[12] Output: tft_rst  
+Pin 17[13] Output: tft_cs  
+Pin 18[14] Output: tft_state[0]  
+Pin 19[15] Output: tft_state[1]  
+Pin 20[16] Output: tft_state[2]  
+Pin 21[17] Output: audio  
+Pin 22[18] Input: button [0]  
+Pin 23[19] Input: button [1]  
+Pin 24[20] Input: button [2]  
+Pin 25[21] Input: button [3]  
+Pin 26[22] Input: button [4]  
+Pin 27[23] Input: button [5]  
+
 
 ## Supporting Equipment
-List all the required equipment and upload a breadboard with the equipment set up (recommend using tinkercad circuits if possible)
+SPI Display : QVGA 2.2 TFT SPI 240x320
+SPI Seven Segment : SparkFun PID 11442 7-Segment Serial Display - Blue
+Speaker : Any speaker
+7 buttons : Any buttons
+
+The final breadboard displays our wiring in the jpg file. 
 
 ## RTL Diagrams
-All the stuff from the proposal goes here, obviously updated from the time you did the proposal to the final layout
-Include more than just block diagrams, including sub-block diagrams, state-transition diagrams, flowcharts, and timing diagrams.  If you include an image, a short (0.5-1 sentence description) is required.
-You may also place other files within this folder.
+
+The attached pdf file displays all of our rtl block diagrams from design reviews and the final product. A png of the final top RTL is also attached.
 
 ## Statement from Purdue
 Pending
