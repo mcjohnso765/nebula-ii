@@ -19,7 +19,7 @@ module team_03 (
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
-    output wire[33:0] gpio_out, // Breakout Board Pins
+    output wire [33:0] gpio_out, // Breakout Board Pins
     output wire [33:0] gpio_oeb, // Active Low Output Enable
 
     output  logic [31:0] ADR_O,
@@ -41,8 +41,8 @@ module team_03 (
 
     // All outputs must have a value even if not used
     assign la_data_out = 128'b0;
-    assign gpio_out = 34'b0; //Inputs, but set low anyways
-    assign gpio_oeb = '1;//All 1's inputs
+    // assign gpio_out[33:32] = '0; //Inputs, but set low anyways
+    // assign gpio_oeb[33:32] = '1;//All 1's inputs
 
     logic WRITE_I, READ_I, BUSY_O;
     

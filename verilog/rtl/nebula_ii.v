@@ -132,8 +132,12 @@ module nebula_ii (
 
         // GPIO's
         .gpio_in(io_in),
-        .gpio_out(designs_gpio_out[3]),
-        .gpio_oeb(designs_gpio_oeb[3]),
+        .gpio_out(designs_gpio_out[2]),
+        .gpio_oeb(designs_gpio_oeb[2]),
+
+        // .gpio_in(),
+        // .gpio_out(),
+        // .gpio_oeb(),
 
         .irq(irq),
         // master side signals 

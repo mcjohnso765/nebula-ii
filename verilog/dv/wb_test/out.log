@@ -1,21 +1,21 @@
 Compiling VVP ...
  ... VVP file version 11.0 (stable)
 Compile cleanup...
- ...    88868 functors (net_fun pool=4718592 bytes)
-              43245 logic
+ ...    88872 functors (net_fun pool=4718592 bytes)
+              43240 logic
                 354 bufif
-                 53 resolv
-               3802 signals
- ...    79376 filters (net_fil pool=9699328 bytes)
- ...   108024 opcodes (2605056 bytes)
- ...    30600 nets
- ...    88868 vvp_nets (5242720 bytes)
+                 51 resolv
+               3806 signals
+ ...    79378 filters (net_fil pool=9699328 bytes)
+ ...   108111 opcodes (2605056 bytes)
+ ...    30615 nets
+ ...    88872 vvp_nets (5242720 bytes)
  ...        3 arrays (9 words)
  ...       13 memories
                  13 logic (16778881 words)
                   0 real (0 words)
- ...     3170 scopes
- ... 0.738627 seconds, 342064.0/333404.0/5440.0 KBytes size/rss/shared
+ ...     3171 scopes
+ ... 0.727125 seconds, 342088.0/333540.0/5580.0 KBytes size/rss/shared
 Running ...
  ...execute EndOfCompile callbacks
  ...propagate initialization events
@@ -28,18 +28,17 @@ FST info: dumpfile wb_test.vcd opened for output.
 ===NOTE=== (efsram) : Undefined state in EF_SRAM_00128x032_008_18: vpwra= 1 vpwrp=1 TM=0 SM=0 WLOFF=0 in instance wb_test_tb.uut.chip_core.mprj.mprj.sram.SRAM_0.EF_SRAM_1024x32_inst at time=                1000
 ===INFO=== (efsram) : Writing X to whole memory:pwroff_mode=0 mem_x=1 undefined_mode=1 in instance wb_test_tb.uut.chip_core.mprj.mprj.sram.SRAM_0.EF_SRAM_1024x32_inst at                 2000
 {GPIO[37:5], GPIO[0]} = 34'hzzzzzzzzz 
-{GPIO[37:5], GPIO[0]} = 34'hzzzzzzzzZ 
 {GPIO[37:5], GPIO[0]} = 34'hzzzzzzzzz 
 Monitor: NEBULA II-Sample Project (RTL) Passed
  ...execute Postsim callbacks
- ... 20.8755 seconds, 735284.0/727228.0/5760.0 KBytes size/rss/shared
+ ... 21.0271 seconds, 735308.0/727440.0/5848.0 KBytes size/rss/shared
 Event counts:
      1148309 time steps (pool=113)
-     3871903 thread schedule events
-    33511319 assign events
+     3872769 thread schedule events
+    33667227 assign events
              ...assign(vec4) pool=149792
              ...assign(vec8) pool=2448
              ...assign(real) pool=256
              ...assign(word) pool=128
              ...assign(word/r) pool=204
-     4498990 other events (pool=16384)
+     4496010 other events (pool=16384)
