@@ -135,7 +135,11 @@ module generate_play_button (
     end
   end
 
-  always_ff @(posedge clk) begin
-    playButtonPixel <= playButtonDetect;
+  always_ff @(negedge nrst, posedge clk) begin
+    if(!nrst) begin
+      playButtonPixel <= 1'd0;
+    end else begin
+      playButtonPixel <= playButtonDetect;
+    end
   end
 endmodule

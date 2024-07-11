@@ -13,8 +13,6 @@
 `define NO_PRESS 6'b000000
 
 module maze_clear_detector(
-    input logic nrst,
-    input logic clk,
     input logic [2:0] pos_x,
     input logic [2:0] pos_y,
     input logic [2:0] dest_x,

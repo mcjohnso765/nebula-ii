@@ -76,9 +76,14 @@ module generate_mod_square
         end
     end
 
-    always_ff @( posedge clk ) begin
-        modSquaresPixel <= modSquaresDetect;
-        modHighlightPixel <= modHighlightDetect;
+    always_ff @(negedge nrst, posedge clk) begin
+        if(!nrst) begin
+            modSquaresPixel <= 1'd0;
+            modHighlightPixel <= 1'd0;
+        end else begin
+            modSquaresPixel <= modSquaresDetect;
+            modHighlightPixel <= modHighlightDetect;
+        end
     end
 
 endmodule

@@ -8,7 +8,6 @@ module wire_game (
     input logic clk,
     input logic strobe,
     input logic [5:0] button,
-    input logic [2:0] game_state_in,
     input logic [2:0] playing_state_in,
     input logic activate_rand,
     input logic wire_cleared,

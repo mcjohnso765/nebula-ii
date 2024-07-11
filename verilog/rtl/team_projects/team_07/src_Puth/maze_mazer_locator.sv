@@ -25,7 +25,6 @@ module maze_mazer_locator(
     input logic clk,
     input logic [5:0] button,
     input logic [2:0] playing_state_in,
-    input logic strobe,
     input logic enable_move,
     input logic activate_rand,
     input logic [2:0] start_pos_x,

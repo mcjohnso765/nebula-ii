@@ -224,7 +224,11 @@ boomDetect = 1;
 end
 end
 
-always_ff @(posedge clk) begin
-boomPixel <= boomDetect;
+always_ff @(negedge nrst, posedge clk) begin
+  if(!nrst) begin
+    boomPixel <= 1'd0;
+  end else begin
+    boomPixel <= boomDetect;
+  end
 end
 endmodule

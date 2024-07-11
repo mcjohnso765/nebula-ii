@@ -38,8 +38,12 @@ module generate_player (
     end
 
   // assign output
-  always_ff @(posedge clk) begin
-    playerPixel <= playerDetect;
+  always_ff @(negedge nrst, posedge clk) begin
+    if(!nrst) begin
+      playerPixel <= 1'd0;
+    end else begin
+      playerPixel <= playerDetect;
+    end
   end
 
 endmodule

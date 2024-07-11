@@ -17,12 +17,8 @@ module bomb_game(
     output logic tft_rst,
     output logic tft_cs,
     output logic [2:0] tft_state,
-    output logic audio,
-
-    // testing output
-    output logic [3:0] simon_light_up_top
+    output logic audio
 ); 
-    assign simon_light_up_top = simon_light_up_state;
 
     logic submodule_clear_edge;
     logic error;
@@ -53,8 +49,7 @@ module bomb_game(
         .clear(timer_clear),
         .s_strobe(s_strobe),
         .s_strobe_fast(s_strobe_fast),
-        .s_strobe_faster(s_strobe_faster),
-        .cnt(cnt)
+        .s_strobe_faster(s_strobe_faster)
     );
 
     logic [2:0] cnt_min;
@@ -231,7 +226,6 @@ module bomb_game(
         .clk(clk),
         .button(sync_button),
         .strobe(strobe),
-        .game_state_in(game_state),
         .playing_state_in(playing_state),
         .activate_rand(activate_rand),
         .wire_cleared(submodule_cleared[1]),
@@ -283,8 +277,7 @@ module bomb_game(
         .simon_error(simon_error),
         .simon_clear(simon_clear),
         .simon_light_up_state(simon_light_up_state),
-        .simon_light_up_manual(simon_light_up_manual),
-        .simon_state_out()
+        .simon_light_up_manual(simon_light_up_manual)
     );
 
     logic [8:0] x;

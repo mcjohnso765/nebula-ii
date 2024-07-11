@@ -16,35 +16,41 @@ module random_gen_maze_pos
     input logic [11:0] random_seed,
     output logic [2:0] rand_y,
     output logic [2:0] rand_x
-
 );
+
     localparam NUM_BITS = 12;
     logic [NUM_BITS-1:0] r_LFSR;
+    logic [2:0] nxt_rand_y;
+    logic [2:0] nxt_rand_x;
 
     always_ff @(posedge clk, negedge nrst) begin
         if (~nrst) begin
             r_LFSR <= random_seed;
+            rand_x <= 3'd0;
+            rand_y <= 3'd0;
         end else begin
             r_LFSR <= {r_LFSR[NUM_BITS-2:0], r_LFSR[NUM_BITS-1] ^~ r_LFSR[6] ^~ r_LFSR[4] ^~ r_LFSR[1]};
+            rand_x <= nxt_rand_x;
+            rand_y <= nxt_rand_y;
         end
     end
 
-    always @(posedge clk) begin
+    always_comb begin
         if(r_LFSR[2:0] > 5 && r_LFSR[11:9] <= 5) begin
-            rand_y = r_LFSR[2:0] - 2;
-            rand_x = r_LFSR[11:9];
+            nxt_rand_y = r_LFSR[2:0] - 2;
+            nxt_rand_x = r_LFSR[11:9];
         end
         else if(r_LFSR[2:0] <= 5 && r_LFSR[11:9] > 5)begin 
-            rand_y = r_LFSR[2:0];
-            rand_x = r_LFSR[11:9] - 2;
+            nxt_rand_y = r_LFSR[2:0];
+            nxt_rand_x = r_LFSR[11:9] - 2;
         end  
         else if(r_LFSR[2:0] > 5 && r_LFSR[11:9] > 5)begin 
-            rand_y = r_LFSR[2:0] - 4;
-            rand_x = r_LFSR[11:9] - 2;
+            nxt_rand_y = r_LFSR[2:0] - 4;
+            nxt_rand_x = r_LFSR[11:9] - 2;
         end 
         else begin
-            rand_y = r_LFSR[2:0];
-            rand_x = r_LFSR[11:9];
+            nxt_rand_y = r_LFSR[2:0];
+            nxt_rand_x = r_LFSR[11:9];
         end
     end // Assign a default value to rand_y
         // Assign a default value to rand_x

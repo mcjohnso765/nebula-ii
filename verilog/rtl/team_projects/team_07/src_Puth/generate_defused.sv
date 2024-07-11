@@ -240,7 +240,11 @@ defusedDetect = 1;
 end
 end
 
-always_ff @(posedge clk) begin
-defusedPixel <= defusedDetect;
+always_ff @(negedge nrst, posedge clk) begin
+  if(!nrst) begin
+    defusedPixel <= 1'd0;
+  end else begin
+    defusedPixel <= defusedDetect;
+  end
 end
 endmodule

@@ -16,17 +16,20 @@ module random_gen_wire_num
 );
     localparam NUM_BITS = 12;
     logic [NUM_BITS-1:0] r_LFSR;
+    logic [2:0] nxt_wire_num;
 
     always_ff @(posedge clk, negedge nrst) begin
         if (~nrst) begin
             r_LFSR <= random_seed;
+            wire_num <= 3'd0;
         end else begin
             r_LFSR <= {r_LFSR[NUM_BITS-2:0], r_LFSR[NUM_BITS-1] ^~ r_LFSR[6] ^~ r_LFSR[4] ^~ r_LFSR[1]};
+            wire_num <= nxt_wire_num;
         end
     end
 
-    always @(posedge clk) begin
-        wire_num = 3'd3 + r_LFSR[1:0];
+    always_comb begin
+        nxt_wire_num = 3'd3 + r_LFSR[1:0];
     end // Assign a default value to rand_y
         // Assign a default value to rand_x
 endmodule

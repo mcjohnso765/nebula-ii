@@ -77,8 +77,12 @@ always_comb begin
 end
                     
 
-always_ff @( posedge clk ) begin
-    borderPixel <= synchronized_rectangle_pixel;
+always_ff @(negedge nrst, posedge clk) begin
+    if(!nrst) begin
+        borderPixel <= 1'd0;
+    end else begin
+        borderPixel <= synchronized_rectangle_pixel;
+    end
 end
 
 endmodule

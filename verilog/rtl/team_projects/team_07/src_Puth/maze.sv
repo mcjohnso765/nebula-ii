@@ -50,7 +50,6 @@ module maze (
         .nrst(nrst),
         .clk(clk),
         .button(button),
-        .strobe(strobe),
         .playing_state_in(playing_state_in),
         .enable_move(enable_move),
         .activate_rand(activate_rand),
@@ -60,8 +59,6 @@ module maze (
         .pos_y(pos_y)
     );
     maze_clear_detector maze_clear_detector0 (
-        .nrst(nrst),
-        .clk(clk),
         .pos_x(pos_x),
         .pos_y(pos_y),
         .dest_x(dest_x),

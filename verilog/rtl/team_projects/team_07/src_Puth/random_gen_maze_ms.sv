@@ -18,20 +18,23 @@ module random_gen_maze_ms
 );
     localparam NUM_BITS = 12;
     logic [NUM_BITS-1:0] r_LFSR;
+    logic [2:0] nxt_rand_num;
 
     always_ff @(posedge clk, negedge nrst) begin
         if (~nrst) begin
             r_LFSR <= random_seed;
+            rand_num <= 3'd0;
         end else begin
             r_LFSR <= {r_LFSR[NUM_BITS-2:0], r_LFSR[NUM_BITS-1] ^~ r_LFSR[6] ^~ r_LFSR[4] ^~ r_LFSR[1]};
+            rand_num <= nxt_rand_num;
         end
     end
 
-    always @(posedge clk) begin
+    always_comb begin
         if(r_LFSR[11:9] > 4) begin
-            rand_num = r_LFSR[11:9] - 4;
+            nxt_rand_num = r_LFSR[11:9] - 4;
         end else begin
-            rand_num = r_LFSR[11:9];
+            nxt_rand_num = r_LFSR[11:9];
         end
     end // Assign a default value to rand_num
 

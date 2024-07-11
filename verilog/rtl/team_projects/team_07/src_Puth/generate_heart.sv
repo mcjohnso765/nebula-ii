@@ -177,7 +177,11 @@ module generate_heart (
  end
 
 
- always_ff @(posedge clk) begin
-   heartPixel <= heartDetect;
+ always_ff @(negedge nrst, posedge clk) begin
+   if(!nrst) begin
+      heartPixel <= 1'd0;
+   end else begin
+      heartPixel <= heartDetect;
+   end
  end
 endmodule

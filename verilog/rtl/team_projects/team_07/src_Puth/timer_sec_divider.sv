@@ -4,11 +4,11 @@ input logic nrst,
 input logic clear, 
 output logic s_strobe,
 output logic s_strobe_fast, // half time
-output logic s_strobe_faster, // fourth time
-output logic [23:0] cnt // used to be a initialized variable but an output for Luke's Random # generator
+output logic s_strobe_faster // fourth time
 );
 
 // initialize Variables
+logic [23:0] cnt;
 logic [23:0] nxt_cnt;  //
 logic [23:0] clk_div;  // count up to 12 million 
 logic [23:0] clk_div_fast;  // count up to 6 million 

@@ -25,7 +25,7 @@ module random_gen_simon
         end
     end
 
-    always @(posedge clk) begin
+    always_comb begin
         nxt_simon_sequence_bus = r_LFSR[9:0];
         for(integer i = 1; i < 5; i++) begin
             if (nxt_simon_sequence_bus[i * 2 +: 2] == nxt_simon_sequence_bus[(i - 1) * 2 +: 2]) begin

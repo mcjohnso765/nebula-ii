@@ -36,7 +36,7 @@ module random_gen_mem_num
         end
     end
 
-    always @(posedge clk) begin
+    always_comb begin
         nxt_display_num_bus = r_LFSR[9:0];
         for(integer i = 0; i < 5; i++) begin
             case (i)

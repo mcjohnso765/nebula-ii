@@ -111,8 +111,12 @@ module generate_circle (
   end
   // assign output
 
-  always_ff @(posedge clk) begin
-    circlePixel <= circleDetect;
+  always_ff @(negedge nrst, posedge clk) begin
+    if(!nrst) begin
+      circlePixel <= 1'd0;
+    end else begin
+      circlePixel <= circleDetect;
+    end
   end
 
 endmodule

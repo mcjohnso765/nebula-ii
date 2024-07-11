@@ -44,7 +44,6 @@ module fsm_game_control(
     
     game_state_t next_game_state, game_state;
     logic [1:0] next_lives;
-    logic [2:0] num_clear;
     
     assign game_state_out = game_state;
     assign mod_num = 3'd4;

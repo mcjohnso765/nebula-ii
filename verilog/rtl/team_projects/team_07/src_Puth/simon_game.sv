@@ -17,10 +17,10 @@ module simon_game(
     output logic simon_error,
     output logic simon_clear,
     output logic [3:0] simon_light_up_state,
-    output logic [3:0] simon_light_up_manual,
-    output logic [3:0] simon_state_out
+    output logic [3:0] simon_light_up_manual
 );
     logic [9:0] simon_sequence_bus;    // 5 stages, 2-bit value vary from 1-4
+    logic [3:0] simon_state;
 
     simon_sequence_gen simon_sequence_gen_0(
         .nrst(nrst),
@@ -34,7 +34,7 @@ module simon_game(
         .clk(clk),
         .s_strobe(s_strobe),
         .unsync_button(unsync_button),
-        .simon_state(simon_state_out),
+        .simon_state(simon_state),
         .simon_sequence_bus(simon_sequence_bus),
         .simon_cleared(simon_cleared),
         .simon_light_up_state(simon_light_up_state),
@@ -52,6 +52,6 @@ module simon_game(
         .simon_cleared(simon_cleared),
         .simon_error(simon_error),
         .simon_clear(simon_clear),
-        .simon_state_out(simon_state_out)
+        .simon_state_out(simon_state)
     );
 endmodule
