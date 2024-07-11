@@ -35,7 +35,11 @@ module team_04 (
     output wire        STB_O,
     output wire        CYC_O,
     input  wire [31:0] DAT_I,
-    input  wire        ACK_I
+    input  wire        ACK_I,
+
+
+    //memory location signals
+    input logic [31:0] mem_adr_start, memory_size
 
 );
 
@@ -67,7 +71,7 @@ module team_04 (
     logic        BUSY_O;
 
     logic [31:0] middle_mem_adr;
-    assign ADR_I = middle_mem_adr + 32'h33000000;
+    assign ADR_I = middle_mem_adr + mem_adr_start;
 
 
     tippy_top final_design (
@@ -86,7 +90,9 @@ module team_04 (
         .adr_to_mem(middle_mem_adr),
         .data_to_mem(CPU_DAT_I),
         .sel_to_mem(SEL_I),
-        .data_from_mem(CPU_DAT_O)
+        .data_from_mem(CPU_DAT_O),
+
+        .memory_size(memory_size)
 
     );
 

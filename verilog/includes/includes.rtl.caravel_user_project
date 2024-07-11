@@ -34,7 +34,7 @@
 -v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_WB.sv
 -v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control_Wrapper.v
 -v $(USER_PROJECT_VERILOG)/rtl/gpio_control/gpio_control.sv
- 
+
 # LA Control
 -v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_WB.v
 -v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control_Wrapper.v
@@ -55,7 +55,8 @@
 #-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper_LVS.v
 
 # Team 04
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/tippy_top.sv
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/tippy_top.sv
+
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04_Wrapper.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04_WB.v
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04.sv

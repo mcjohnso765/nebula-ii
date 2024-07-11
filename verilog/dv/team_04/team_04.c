@@ -394,7 +394,7 @@ void main()
 	*(&sram_space + 5) = 0x0db00293; //addi x5, x0, 219
 	*(&sram_space + 6) = 0x00500a13; //addi x20, x0, 5
 
-	*(&sram_space + 7) = 0x03402f83; //lw x31, 52(x0)
+	*(&sram_space + 7) = 0x02002f83; //lw x31, 32(x0)
 	// *(&sram_space + 4) = 0x06300093; //addi x1, x0, 99
 	// *(&sram_space + 5) = 0x00508133; //add x2, x1, x5
 	// *(&sram_space + 6) = 0x0640a113; //slti x2, x1, 100
@@ -421,7 +421,12 @@ void main()
 	// *(&sram_space + 28) = 0x0f405903; //lhu x18, 244(x0)
 	*(&sram_space + 22) = 0x0000006f; //jal x0, 0
 	
+	for (int i = 0; i < 384; i++) {
+		*(&sram_space + 500 + i) = 0xffffffff; //jal x0, 0
+	}
 
+
+	
 	// lw
 	// *(&sram_space + 1) = 0x06300093;
 	// *(&sram_space + 2) = 0x3e700113;
