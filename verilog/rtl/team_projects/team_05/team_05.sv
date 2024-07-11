@@ -234,8 +234,10 @@ module t05_cpu_core(
     logic [31:0] data_out_BUS_int, address_out_int;
     logic data_write_int, mem_read_int;
     
+    assign mem_adr_i = (data_read | data_write_int) ? data_adr_o : instruction_adr_o;
+
     always_comb begin
-        mem_adr_i = (data_adr_o | instruction_adr_o);
+        // mem_adr_i = (data_read | data_write_int) ? data_adr_o : instruction_adr_o;
         data_en = data_read | data_write_int;
         mem_read_int = data_read | instr_fetch;
         next_instr_wait = ((~(read_address == 32'b0) | ~(write_address == 32'b0)) & ~data_good);
@@ -373,21 +375,23 @@ module t05_cpu_core(
 
     //sort through mem management inputs/outputs
     t05_data_memory data_mem(
-        .data_read_adr_i(read_address),
-        .data_write_adr_i(write_address),
-        .data_cpu_i(reg2),
-        .data_bus_i(data_out_CPU),
+        // .data_read_adr_i(read_address),
+        // .data_write_adr_i(write_address),
+        // .data_cpu_i(reg2),
+        // .data_bus_i(data_out_CPU),
         .clk(clk),
         .rst(rst),
-        .data_good(data_good),
+        // .data_good(!bus_full),
+        // .state(prev_state),
 
-        // .data_read_adr_i('0),
-        // .data_write_adr_i('0),
-        // .data_cpu_i('0),
-        // .data_bus_i('0),
+        .data_read_adr_i('0),
+        .data_write_adr_i('0),
+        .data_cpu_i('0),
+        .data_bus_i('0),
         // .clk(clk),
         // .rst(rst),
-        // .data_good('0),
+        .data_good('0),
+        .state('0),
 
         .data_read(data_read),
         .data_write(data_write_int),
@@ -454,7 +458,9 @@ module t05_ALU(
         //len = val2-1;
         case(opcode)
             7'b0000011:
-                read_address = reg1 + val2;
+                begin
+                    read_address = reg1 + val2;
+                end
             7'b0100011:
                 begin
                     write_address = reg1 + val2;
@@ -607,8 +613,8 @@ module t05_control_unit(
                     funct7 = 7'b0;
                     rs2 = 5'b0;
                     ALU_source = 1'b1;
-                    memToReg = (opcode == 7'b0000011) ? 1'b1 : 1'b0;
-                    load = (opcode == 7'b1100111) ? 1'b1 : 1'b0;
+                    memToReg = 1'b0;
+                    load = 1'b0;
                 end
             7'b0000011:
                 begin
@@ -619,8 +625,8 @@ module t05_control_unit(
                     funct7 = 7'b0;
                     rs2 = 5'b0;
                     ALU_source = 1'b1;
-                    memToReg = (opcode == 7'b0000011) ? 1'b1 : 1'b0;
-                    load = (opcode == 7'b1100111) ? 1'b1 : 1'b0;
+                    memToReg = 1'b1;
+                    load = 1'b0;
                 end
             7'b1100111:
                 begin
@@ -631,8 +637,8 @@ module t05_control_unit(
                     funct7 = 7'b0;
                     rs2 = 5'b0;
                     ALU_source = 1'b1;
-                    memToReg = (opcode == 7'b0000011) ? 1'b1 : 1'b0;
-                    load = (opcode == 7'b1100111) ? 1'b1 : 1'b0;
+                    memToReg = 1'b0;
+                    load = 1'b1;
                 end
             7'b0100011: //s type instructions
                 begin
@@ -702,49 +708,93 @@ endmodule
 module t05_data_memory(
     input logic [31:0] data_read_adr_i, data_write_adr_i, data_bus_i, data_cpu_i,
     input logic clk, data_good, rst,
+    input logic [2:0] state,
     output logic data_read, data_write,
     output logic [31:0] data_adr_o, data_bus_o, data_cpu_o
 );
 
     logic next_read, next_write;
     logic [31:0] stored_read_data, stored_write_data, stored_data_adr;
+    logic [31:0] data_read_adr_reg, data_write_adr_reg;
+    logic [31:0] data_bus_i_reg, data_cpu_i_reg;
 
     always_comb begin
         next_read = 1'b0;
         next_write = 1'b0;
         stored_read_data = 32'b0;
         stored_write_data = 32'b0;
-        stored_data_adr = data_read_adr_i | data_write_adr_i;
-        data_cpu_o = data_bus_i;
-        data_bus_o = data_cpu_i;
-        if(~(data_read_adr_i == 32'b0)) begin
-            if(data_good & data_read) begin
-                next_read = 1'b0;
-            end else begin
-                next_read = 1'b1;
-            end
-        end else if(~(data_write_adr_i == 32'b0)) begin
-            if(data_good & data_write) begin
-                next_write = 1'b0;
-            end else begin
-                next_write = 1'b1;
-            end
+        stored_data_adr = '0;
+        // data_cpu_o = data_bus_i;
+        // data_bus_o = data_cpu_i;
+
+        if(state == Wait) begin
+            next_read = '0;
+            next_write = '0;
+            stored_data_adr = '0;
+            stored_read_data = '0;
+            stored_write_data = '0;
+        end else if (data_read_adr_reg != 32'b0 & state == IDLE) begin
+            next_read = '1;
+            next_write = '0;
+            stored_data_adr = data_read_adr_reg;
+            stored_read_data = '0;
+            stored_write_data = '0;
+        end else if(data_write_adr_reg != 32'b0 & state == IDLE) begin
+            next_read = '0;
+            next_write = '1;
+            stored_data_adr = data_write_adr_reg;
+            stored_read_data = '0;
+            stored_write_data = '0;
+        end else if(data_read_adr_reg != 32'b0 & state == Read) begin
+            next_read = '0;
+            next_write = '0;
+            stored_data_adr = '0;
+            stored_read_data = data_bus_i_reg;
+            stored_write_data = '0;
+        end else if(data_write_adr_reg != 32'b0 & state == Write) begin
+            next_read = '0;
+            next_write = '0;
+            stored_data_adr = '0;
+            stored_write_data = data_cpu_i_reg;
+            stored_read_data = '0;
         end
+
+        // if((~(data_read_adr_i == 32'b0))) begin
+        //     if(data_good & data_read) begin
+        //         next_read = 1'b0;
+        //     end else begin
+        //         next_read = 1'b1;
+        //     end
+        // end else if(~(data_write_adr_i == 32'b0)) begin
+        //     if(data_good & data_write) begin
+        //         next_write = 1'b0;
+        //     end else begin
+        //         next_write = 1'b1;
+        //     end
+        // end
     end
 
     always_ff @(posedge clk, posedge rst) begin
         if(rst) begin
             data_adr_o <= 32'b0;
-            //data_bus_o <= 32'b0;
-            //data_cpu_o <= 32'b0;
+            data_bus_o <= 32'b0;
+            data_cpu_o <= 32'b0;
             data_read <= 1'b0;
             data_write <= 1'b0;
+            data_read_adr_reg <= '0;
+            data_write_adr_reg <= '0;
+            data_bus_i_reg <= '0;
+            data_cpu_i_reg <= '0;
         end else begin
             data_read <= next_read;
             data_write <= next_write;
             data_adr_o <= stored_data_adr;
-            //data_cpu_o <= stored_read_data;
-            //data_bus_o <= stored_write_data;
+            data_read_adr_reg <= data_read_adr_i;
+            data_write_adr_reg <= data_write_adr_i;
+            data_cpu_o <= stored_read_data;
+            data_bus_o <= stored_write_data;
+            data_bus_i_reg <= data_bus_i;
+            data_cpu_i_reg <= data_cpu_i;
         end
     end
 endmodule

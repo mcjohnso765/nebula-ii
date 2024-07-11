@@ -171,16 +171,19 @@ void main()
 	reg_gpio_PIN_32TO37 = 0x555555;
 
 	// Enable the design
-	sram_space = 0x3e800313;
-    *(&sram_space + 1) = 0x7d030113;
-    *(&sram_space + 2) = 0x3e810193;
-	*(&sram_space + 3) = 0x7d018213;
-	*(&sram_space + 4) = 0x3e820293;
-	*(&sram_space + 5) = 0x000013b7;
+	sram_space = 0x3e800093;
+    *(&sram_space + 1) = 0x7d000113;
+    *(&sram_space + 2) = 0x002081b3;
+	*(&sram_space + 3) = 0x33000237;
+	*(&sram_space + 4) = 0x00420213;
+	*(&sram_space + 5) = 0x00022283;
+
+	/**
 	*(&sram_space + 6) = 0xfe0302e3;
 	*(&sram_space + 7) = 0x00230633;
 	*(&sram_space + 8) = 0xfddff06f;
 	*(&sram_space + 9) = 0x3e828513;
+	*/
 
 
 	reg_team_05_EN = 1;
