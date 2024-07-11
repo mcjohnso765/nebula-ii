@@ -56,7 +56,7 @@ module team_01_WB (
 
 
 	`WB_CTRL_SIGNALS
-
+	assign IRQ = 0;
 	wire [1-1:0]	en;
 
 	// Register Definitions
