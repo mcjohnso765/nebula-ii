@@ -56,7 +56,7 @@ in brackets represents the number in your verilog code
 38[34] Input/Output: Pin_Function
 
 ## Supporting Equipment
-List all the required equipment and upload a breadboard with the equipment set up (recommend using tinkercad circuits if possible)
+1 16x2 LCD, 1 320x240 RGB LCD (with 8 bit parallel input), 6 push buttons, 1 potentiometer, 1 8 ohm speaker, 1 LM 386 amplifier, debouncing capacitors, and various resistors (as shown in included image).
 
 ## RTL Diagrams
 All the stuff from the proposal goes here, obviously updated from the time you did the proposal to the final layout
