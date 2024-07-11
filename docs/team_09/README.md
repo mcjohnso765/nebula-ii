@@ -1,40 +1,40 @@
 # STARS 2024 Design Final Project
 
 ## TEAM NAME
-* Team Member 1 Name
-* Team Member 2 Name
-* Team Member 3 Name
-* Team Member 4 Name
-* Peer Mentor Name
+* Caroline Chang
+* Bryan Chiang
+* Sam Gutterman
+* Jash Pola
+* Adrian Buczkowski
 
 ## Project Type
-Short (2-3 sentences) project description
+Chip that play Snake. Snake increases in length when apple in consumed and dies when it hits a border or itself. Inputs are buttons, outputs are LCD and DAC
 
 ## Pin Layout
-Note that on the final chip, there are 38 gpio of which you have access to 4.
+Note that on the final chip, there are 38 gpio of which you have access to 34.
 The first number represents the GPIO on the physical board. The second number
 in brackets represents the number in your verilog code
 
-00[00] Input/Output: Pin_Function
+00[00] Output: D0 Pin on LCD Display
 01[--] Input/Output: Pin_Function
 02[--] Input/Output: Pin_Function
 03[--] Input/Output: Pin_Function
 04[--] Input/Output: Pin_Function
-05[01] Input/Output: Pin_Function
-06[02] Input/Output: Pin_Function 
-07[03] Input/Output: Pin_Function 
-08[04] Input/Output: Pin_Function 
-09[05] Input/Output: Pin_Function 
-10[06] Input/Output: Pin_Function
-11[07] Input/Output: Pin_Function
-12[08] Input/Output: Pin_Function
-13[09] Input/Output: Pin_Function 
-14[10] Input/Output: Pin_Function 
-15[11] Input/Output: Pin_Function 
-16[12] Input/Output: Pin_Function 
-17[13] Input/Output: Pin_Function 
-18[14] Input/Output: Pin_Function 
-19[15] Input/Output: Pin_Function 
+05[01] Output: D1 Pin on LCD Display
+06[02] Output: D2 Pin on LCD Display 
+07[03] Output: D3 Pin on LCD Display
+08[04] Output: D4 Pin on LCD Display 
+09[05] Output: D5 Pin on LCD Display 
+10[06] Output: D6 Pin on LCD Display
+11[07] Output: D7 Pin on LCD Display
+12[08] Output: D/CX Pin on LCD Display
+13[09] Output: WR Pin on LCD Display
+14[10] Output: VA (LSB) for DAC 
+15[11] Output: VB for DAC 
+16[12] Output: VC for DAC 
+17[13] Output: VD for DAC 
+18[14] Output: VE for DAC 
+19[15] Output: VF (MSB) for DAC 
 20[16] Input/Output: Pin_Function 
 21[17] Input/Output: Pin_Function 
 22[18] Input/Output: Pin_Function 
