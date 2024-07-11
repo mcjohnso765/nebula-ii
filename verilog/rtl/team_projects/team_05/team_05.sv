@@ -362,14 +362,14 @@ module t05_cpu_core(
 
     logic [31:0] val2;
 
-    // always_comb begin
-    //     // if (ALU_source) val2 = imm_32;
-    //     // else val2 = reg2;
-    //     val2 = reg2;
-    //     branch_ff = ((opcode == 7'b1100011) && ((funct3 == 3'b000 && (reg1 == val2)) | (funct3 == 3'b100 && (reg1 < val2)) | (funct3 == 3'b001 && (reg1 != val2)) | (funct3 == 3'b101 && (reg1 >= val2)))) | (opcode == 7'b1101111) | (opcode == 7'b1100111);
-    // end
+    always_comb begin
+        // if (ALU_source) val2 = imm_32;
+        // else val2 = reg2;
+        val2 = reg2;
+        branch_ff = ((opcode == 7'b1100011) && ((funct3 == 3'b000 && (reg1 == val2)) | (funct3 == 3'b100 && (reg1 < val2)) | (funct3 == 3'b001 && (reg1 != val2)) | (funct3 == 3'b101 && (reg1 >= val2)))) | (opcode == 7'b1101111) | (opcode == 7'b1100111);
+    end
 
-    assign branch_ff = 1'b0;
+    //assign branch_ff = 1'b0;
 
     //sort through mem management inputs/outputs
     t05_data_memory data_mem(
@@ -407,6 +407,7 @@ module t05_cpu_core(
         .memRead(mem_read_int),
         .clk(clk),
         .rst(rst),
+        .en(en),
         // outputs
         .state(state),
         .next_state(next_state),
@@ -424,10 +425,10 @@ module t05_cpu_core(
         .clr(rst),
         .load(load_pc),
         .inc(data_good & en),
-        .ALU_out(branch),
+        .ALU_out(branch_ff),
         .Disable(instr_wait),
         .data(pc_jump),
-        .imm_val(32'b0),   //should be imm_32
+        .imm_val(imm_32),   //should be imm_32
         .pc_val(pc_val));
 
 endmodule
@@ -602,7 +603,7 @@ module t05_control_unit(
                     funct3 = instruction[14:12];
                     rd = instruction[11:7];
                     rs1 = instruction[19:15];
-                    imm_32 = {20'(instruction[31]), instruction[31:20]};
+                    imm_32 = {{20{instruction[31]}}, instruction[31:20]};
                     funct7 = 7'b0;
                     rs2 = 5'b0;
                     ALU_source = 1'b1;
@@ -614,7 +615,7 @@ module t05_control_unit(
                     funct3 = instruction[14:12];
                     rd = instruction[11:7];
                     rs1 = instruction[19:15];
-                    imm_32 = {20'b0, instruction[31:20]};
+                    imm_32 = {{20{instruction[31]}}, instruction[31:20]};
                     funct7 = 7'b0;
                     rs2 = 5'b0;
                     ALU_source = 1'b1;
@@ -626,7 +627,7 @@ module t05_control_unit(
                     funct3 = instruction[14:12];
                     rd = instruction[11:7];
                     rs1 = instruction[19:15];
-                    imm_32 = {20'b0, instruction[31:20]};
+                    imm_32 = {{20{instruction[31]}}, instruction[31:20]};
                     funct7 = 7'b0;
                     rs2 = 5'b0;
                     ALU_source = 1'b1;
@@ -638,7 +639,7 @@ module t05_control_unit(
                     funct3 = instruction[14:12];
                     rs1 = instruction[19:15];
                     rs2 = instruction[24:20];
-                    imm_32 = {20'b0, instruction[31:25], instruction[11:7]};
+                    imm_32 = {{20{instruction[31]}}, instruction[31:25], instruction[11:7]};
                     funct7 = 7'b0;
                     rd = 5'b0;
                     ALU_source = 1'b1;
@@ -650,7 +651,8 @@ module t05_control_unit(
                     funct3 = instruction[14:12];
                     rs1 = instruction[19:15];
                     rs2 = instruction[24:20];
-                    imm_32 = {20'b0, instruction[31], instruction[7], instruction[30:25], instruction[11:8]};
+                    // imm_32 = {{20{instruction[31]}}, instruction[31], instruction[7], instruction[30:25], instruction[11:8]};
+                    imm_32 = ({{20{instruction[31]}}, instruction[31], instruction[7], instruction[30:25], instruction[11:8]} << 1);
                     funct7 = 7'b0;
                     rd = 5'b0;
                     ALU_source = 1'b1;
@@ -660,7 +662,7 @@ module t05_control_unit(
             7'b1101111: //j type instruction
                 begin
                     rd = instruction[11:7] ;
-                    imm_32 = {12'b0, instruction[31], instruction[19:12], instruction[20], instruction[30:21]};
+                    imm_32 = ({{12{instruction[31]}}, instruction[31], instruction[19:12], instruction[20], instruction[30:21]} << 1);
                     rs1 = 5'b0;
                     rs2 = 5'b0;
                     funct3 = 3'b0;
@@ -672,7 +674,7 @@ module t05_control_unit(
             7'b0110111: //u type instruction
                 begin
                     rd = instruction[11:7];
-                    imm_32 = {12'b0, instruction[31:12]};
+                    imm_32 = {{12{instruction[31]}}, instruction[31:12]};
                     rs1 = 5'b0;
                     rs2 = 5'b0;
                     funct3 = 3'b0;
@@ -812,7 +814,7 @@ module t05_memcontrol(
     // data_in_BUS and bus_full are the only inputs from the bus manager, so we need to figure those out on wednesday
     input logic [31:0] address_in, data_in_CPU, data_in_BUS,
     input logic data_en, instr_en, bus_full, memWrite, memRead,
-    input logic clk, rst,
+    input logic clk, rst, en,
     // outputs
     output logic [2:0] next_state, state,
     output logic bus_full_CPU,
@@ -845,7 +847,7 @@ module t05_memcontrol(
         next_instr = next_next_fetch;
         case(state)
             INIT: begin 
-                if (!rst) next_state = IDLE;
+                if (!rst & en) next_state = IDLE;
                 else next_state = INIT;
             end
             
@@ -942,15 +944,27 @@ module t05_pc(
     logic [31:0] next_pc;
     logic branch_choice;
 
+
+    //registering the imm_val for pranav dream
+    logic [31:0] imm_val_reg;
+    logic        ALU_out_reg;
+
+
     // Register 
     always_ff @(posedge clk, posedge clr) begin
 
         if (clr) begin
             pc_val <= 32'h33000000;
+
+            imm_val_reg <= '0;
+            ALU_out_reg <= '0;
         end
 
         else begin
             pc_val <= next_pc;
+
+            imm_val_reg <= imm_val;
+            ALU_out_reg <= ALU_out;
         end
     end
 
@@ -963,19 +977,19 @@ module t05_pc(
 	
         // Mux choice between next line address and jump address
         if (Disable) begin 
-		      next_pc = pc_val; 
-	      end
+		    next_pc = pc_val; 
+	    end
 
         else if (load) begin
-          next_pc = data;
+            next_pc = data;
         end
             
-        else if (ALU_out) begin
-		      next_pc = jump_ad ;
+        else if (ALU_out_reg) begin
+		    next_pc = pc_val + imm_val_reg;
 	    end
 	
         else if (inc) begin
-          next_pc= next_line_ad;
+            next_pc= pc_val + 32'd4;
         end
    end       
 endmodule

@@ -177,9 +177,9 @@ void main()
 	*(&sram_space + 3) = 0x7d018213;
 	*(&sram_space + 4) = 0x3e820293;
 	*(&sram_space + 5) = 0x000013b7;
-	*(&sram_space + 6) = 0x3e828513;
-	*(&sram_space + 7) = 0x3e828513;
-	*(&sram_space + 8) = 0x3e828513;
+	*(&sram_space + 6) = 0xfe0302e3;
+	*(&sram_space + 7) = 0x00230633;
+	*(&sram_space + 8) = 0xfddff06f;
 	*(&sram_space + 9) = 0x3e828513;
 
 
