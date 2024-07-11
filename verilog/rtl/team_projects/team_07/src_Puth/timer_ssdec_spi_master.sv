@@ -147,7 +147,12 @@ module timer_ssdec_spi_master (
                     if (sck_fl_enable) begin
                         nxt_sck = 0;
                         if (sck_sent == 6'd8) begin
-                            nxt_state = (state == SENT_CLN_1) ? WAIT_CLN_1 : WAIT_CLN_2;
+                            if (state == SENT_CLN_1) begin
+                                nxt_state = WAIT_CLN_1;
+                            end else begin
+                                nxt_state = WAIT_CLN_2;
+                            end
+                            // nxt_state = (state == SENT_CLN_1) ? WAIT_CLN_1 : WAIT_CLN_2;
                             nxt_sck_sent = 6'd0;
                         end else begin
                             nxt_sck_sent = sck_sent + 1;
@@ -166,11 +171,24 @@ module timer_ssdec_spi_master (
                     if (sck_fl_enable) begin
                         nxt_sck = 0;
                         if (sck_sent == 6'd8) begin
-                            nxt_state = (state == SENT_CMD_2) ? WAIT_CMD_2 :
-                                (state == SENT_DIG_2) ? WAIT_DIG_2 :
-                                (state == SENT_CMD_3) ? WAIT_CMD_3 :
-                                (state == SENT_DIG_3) ? WAIT_DIG_3 :
-                                (state == SENT_CMD_4) ? WAIT_CMD_4 : WAIT_DIG_4;
+                            if (state == SENT_CMD_2) begin
+                                nxt_state = WAIT_CMD_2;
+                            end else if (state == SENT_DIG_2) begin
+                                nxt_state = WAIT_DIG_2;
+                            end else if (state == SENT_CMD_3) begin
+                                nxt_state = WAIT_CMD_3;
+                            end else if (state == SENT_DIG_3) begin
+                                nxt_state = WAIT_DIG_3;
+                            end else if (state == SENT_CMD_4) begin
+                                nxt_state = WAIT_CMD_4;
+                            end else begin
+                                nxt_state = WAIT_DIG_4;
+                            end
+                            // nxt_state = (state == SENT_CMD_2) ? WAIT_CMD_2 :
+                            //     (state == SENT_DIG_2) ? WAIT_DIG_2 :
+                            //     (state == SENT_CMD_3) ? WAIT_CMD_3 :
+                            //     (state == SENT_DIG_3) ? WAIT_DIG_3 :
+                            //     (state == SENT_CMD_4) ? WAIT_CMD_4 : WAIT_DIG_4;
                             nxt_sck_sent = 6'd0;
                         end else begin
                             nxt_sck_sent = sck_sent + 1;
@@ -202,14 +220,33 @@ module timer_ssdec_spi_master (
                             if (state == WAIT_DIG_4) begin
                                 nxt_state = LOAD_2;
                             end else begin
-                                nxt_state = (state == WAIT_RST_1) ? SENT_CLN_1 :
-                                    (state == WAIT_CLN_1) ? SENT_CLN_2 :
-                                    (state == WAIT_CLN_2) ? SENT_CMD_2 :
-                                    (state == WAIT_CMD_2) ? SENT_DIG_2 :
-                                    (state == WAIT_DIG_2) ? SENT_CMD_3 :
-                                    (state == WAIT_CMD_3) ? SENT_DIG_3 :
-                                    (state == WAIT_DIG_3) ? SENT_CMD_4 :
-                                    (state == WAIT_CMD_4) ? SENT_DIG_4 : SENT_CLN_2;
+                                if (state == WAIT_RST_1) begin
+                                    nxt_state = SENT_CLN_1;
+                                end else if (state == WAIT_CLN_1) begin
+                                    nxt_state = SENT_CLN_2;
+                                end else if (state == WAIT_CLN_2) begin
+                                    nxt_state = SENT_CMD_2;
+                                end else if (state == WAIT_CMD_2) begin
+                                    nxt_state = SENT_DIG_2;
+                                end else if (state == WAIT_DIG_2) begin
+                                    nxt_state = SENT_CMD_3;
+                                end else if (state == WAIT_CMD_3) begin
+                                    nxt_state = SENT_DIG_3;
+                                end else if (state == WAIT_DIG_3) begin
+                                    nxt_state = SENT_CMD_4;
+                                end else if (state == WAIT_CMD_4) begin
+                                    nxt_state = SENT_DIG_4;
+                                end else begin
+                                    nxt_state = SENT_CLN_2;
+                                end 
+                                // nxt_state = (state == WAIT_RST_1) ? SENT_CLN_1 :
+                                //     (state == WAIT_CLN_1) ? SENT_CLN_2 :
+                                //     (state == WAIT_CLN_2) ? SENT_CMD_2 :
+                                //     (state == WAIT_CMD_2) ? SENT_DIG_2 :
+                                //     (state == WAIT_DIG_2) ? SENT_CMD_3 :
+                                //     (state == WAIT_CMD_3) ? SENT_DIG_3 :
+                                //     (state == WAIT_DIG_3) ? SENT_CMD_4 :
+                                //     (state == WAIT_CMD_4) ? SENT_DIG_4 : SENT_CLN_2;
                             end
                         end else begin
                             nxt_sck_sent = sck_sent + 1;

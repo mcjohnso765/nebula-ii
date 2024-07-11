@@ -97,7 +97,8 @@ module bomb_game(
 
     logic strobe, select, up, down, left, right, back;
     logic reg_edge_back, reg_edge_left, reg_edge_down, reg_edge_right, reg_edge_up, reg_edge_select;
-    logic [5:0] sync_button = {reg_edge_back, reg_edge_left, reg_edge_down, reg_edge_right, reg_edge_up, reg_edge_select};   
+    logic [5:0] sync_button;
+    assign sync_button = {reg_edge_back, reg_edge_left, reg_edge_down, reg_edge_right, reg_edge_up, reg_edge_select};   
     assign select = button[0];
     assign up = button[1];
     assign right = button[2];
@@ -106,7 +107,7 @@ module bomb_game(
     assign back = button[5];
     button_edge_detector DUT_button_edge_detector (
         .clk(clk),
-        .rst(nrst),
+        .nrst(nrst),
         .up(up),
         .down(down),
         .left(left),

@@ -50,7 +50,7 @@ module team_07 (
     logic [2:0] tft_state;
     logic audio;
 
-    assign button = gpio_in[5:0];
+    // assign button = gpio_in[5:0];
     assign gpio_out[6] = ssdec_sdi;
     assign gpio_out[7] = ssdec_ss;
     assign gpio_out[8]= ssdec_sck;
@@ -61,9 +61,10 @@ module team_07 (
     assign gpio_out[13] = tft_cs;
     assign gpio_out[16:14] = tft_state;
     assign gpio_out[17] = audio;
+    assign button = gpio_in[23:18];
 
     bomb_game team_07(
-    .nrst(nrst),
+    .nrst(nrst && en),
     .clk(clk),
     .button(button),   // input: button
     .ssdec_sdi(ssdec_sdi),     // output: ssdec lines

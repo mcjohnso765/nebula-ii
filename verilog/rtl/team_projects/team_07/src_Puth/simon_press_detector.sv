@@ -124,10 +124,21 @@ module simon_press_detector(
                 D1, D2, D3, D4, D5: begin
                     nxt_num_pressed = 0;
                     if (button == color_to_button(right_bt[0]) && strobe) begin
-                        nxt_simon_state = (simon_state == D1) ? I1 :
-                            (simon_state == D2) ? I2 :
-                            (simon_state == D3) ? I3 :
-                            (simon_state == D4) ? I4 : I5;
+                        if (simon_state == D1) begin
+                            nxt_simon_state = I1;
+                        end else if (simon_state == D2) begin
+                            nxt_simon_state = I2;
+                        end else if (simon_state == D3) begin
+                            nxt_simon_state = I3;
+                        end else if (simon_state == D4) begin
+                            nxt_simon_state = I4;
+                        end else begin
+                            nxt_simon_state = I5;
+                        end
+                        // nxt_simon_state = (simon_state == D1) ? I1 :
+                        //     (simon_state == D2) ? I2 :
+                        //     (simon_state == D3) ? I3 :
+                        //     (simon_state == D4) ? I4 : I5;
                         nxt_num_pressed = 3'd1;
                     end else if (button != `SELECT && button != `BACK && strobe) begin
                         simon_error = 1'd1;
@@ -145,20 +156,40 @@ module simon_press_detector(
                             end else begin                      // else
                                 nxt_stage = stage + 1;          // increase to the next stage
                                 nxt_num_pressed = 3'd0;         // reset the num_pressed to zero for the next stage
-                                nxt_simon_state = (simon_state == I1) ? D2 :
-                                    (simon_state == I2) ? D3 :
-                                    (simon_state == I3) ? D4 :
-                                    (simon_state == I4) ? D5 : D5;
+                                if (simon_state == I1) begin
+                                    nxt_simon_state = D2;
+                                end else if (simon_state == I2) begin
+                                    nxt_simon_state = D3;
+                                end else if (simon_state == I3) begin
+                                    nxt_simon_state = D4;
+                                end else if (simon_state == I4) begin
+                                    nxt_simon_state = D5;
+                                end
+                                // nxt_simon_state = (simon_state == I1) ? D2 :
+                                //     (simon_state == I2) ? D3 :
+                                //     (simon_state == I3) ? D4 :
+                                //     (simon_state == I4) ? D5 : D5;
                             end
                         end else begin                          // if not the last in the sequence,
                             nxt_num_pressed = num_pressed + 1;  // increase the num_pressed to check the next button in the sequence
                         end
                     end else if (button != `SELECT && button != `BACK && strobe) begin    // else,
-                        simon_error = 1'd1;                                     // send out the error signal
-                        nxt_simon_state = (simon_state == I1) ? D1 :                // go back to the displaying sequence state again
-                            (simon_state == I2) ? D2 :
-                            (simon_state == I3) ? D3 :
-                            (simon_state == I4) ? D4 : D5;
+                        simon_error = 1'd1;                     // send out the error signal
+                        if (simon_state == I1) begin            // go back to the displaying sequence state again
+                            nxt_simon_state = D1;
+                        end else if (simon_state == I2) begin
+                            nxt_simon_state = D2;
+                        end else if (simon_state == I3) begin
+                            nxt_simon_state = D3;
+                        end else if (simon_state == I4) begin
+                            nxt_simon_state = D4;
+                        end else begin
+                            nxt_simon_state = D5;
+                        end
+                        // nxt_simon_state = (simon_state == I1) ? D1 :                
+                        //     (simon_state == I2) ? D2 :
+                        //     (simon_state == I3) ? D3 :
+                        //     (simon_state == I4) ? D4 : D5;
                     end 
                 end
                 default:;

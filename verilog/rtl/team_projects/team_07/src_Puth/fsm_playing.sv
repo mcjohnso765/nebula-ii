@@ -82,7 +82,16 @@ module fsm_playing(
             case (playing_state)
                 MOD: begin
                     if (strobe && (button == `SELECT)) begin    // condition to go into MAZE game, but for rn, set to SELECT button
-                        next_playing_state = mod_select[mod_row][mod_col];
+                        if (mod_select[mod_row][mod_col] == MAZE) begin
+                            next_playing_state = MAZE;
+                        end else if (mod_select[mod_row][mod_col] == MEM) begin
+                            next_playing_state = MEM;
+                        end else if (mod_select[mod_row][mod_col] == WIRE) begin
+                            next_playing_state = WIRE;
+                        end else if (mod_select[mod_row][mod_col] == SIMON) begin
+                            next_playing_state = SIMON;
+                        end
+                        // next_playing_state = mod_select[mod_row][mod_col];
                     end
                 end
                 MAZE, WIRE, MEM, SIMON: begin
