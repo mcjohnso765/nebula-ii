@@ -87,6 +87,10 @@ module team_05 (
         .BUSY_O(BUSY_O)
     );
 
+    always @(WRITE_I, READ_I, ADR_I, CPU_DAT_I, SEL_I, CPU_DAT_O, BUSY_O) begin
+        $monitor("[Manager Monitor] WRITE_I=%h, READ_I=%h, ADR_I=%h, CPU_DAT_I=%h, SEL_I=%h, CPU_DAT_O=%h, BUSY_O=%h", WRITE_I, READ_I, ADR_I, CPU_DAT_I, SEL_I, CPU_DAT_O, BUSY_O);
+    end
+
 
     t05_cpu_core core(
         .data_in_BUS(CPU_DAT_O),
@@ -222,7 +226,8 @@ module t05_cpu_core(
 
     //Instruction Memory -> Memory Manager
     logic instr_fetch;
-    logic [31:0] instruction_adr_o; 
+    logic next_instr_fetch;
+    logic [31:0] instruction_adr_o;
 
     logic [31:0] mem_adr_i;
    // logic mem_read;
@@ -240,7 +245,8 @@ module t05_cpu_core(
         // mem_adr_i = (data_read | data_write_int) ? data_adr_o : instruction_adr_o;
         data_en = data_read | data_write_int;
         mem_read_int = data_read | instr_fetch;
-        next_instr_wait = ((~(read_address == 32'b0) | ~(write_address == 32'b0)) & ~data_good);
+        next_instr_wait = ((((read_address != 32'b0) | (write_address != 32'b0)) & ~data_good));
+        // next_instr_wait = (state != IDLE) ? 1'b1 : 1'b0;
     end
 
     logic [31:0] load_data_flipflop, reg_write_flipflop, instruction_adr_i;
@@ -251,6 +257,11 @@ module t05_cpu_core(
             reg_write_flipflop <= '0;
             load_data_flipflop <= '0;
             instr_wait <= 1'b0;
+            instruction_adr_i <= '0;
+            instruction_i <= '0;
+            prev_state <= INIT;
+            instr_fetch <= '0;
+            disable_pc_reg <= '0;
         end else begin
             memToReg_flipflop <= memToReg;
             reg_write_flipflop <= reg_write;
@@ -259,6 +270,8 @@ module t05_cpu_core(
             instruction_adr_i <= pc_val;
             instruction_i <= data_out_INSTR;
             prev_state <= state;
+            instr_fetch <= next_instr_fetch;
+            disable_pc_reg <= disable_pc;
         end
     end
 
@@ -287,7 +300,7 @@ module t05_cpu_core(
         .data_good(!bus_full),
         .rst(rst),
         .state(prev_state),
-        .instr_fetch(instr_fetch),
+        .instr_fetch(next_instr_fetch),
         .instruction_adr_o(instruction_adr_o),
         .instruction_o(instruction),
         .instr_wait(instr_wait));
@@ -300,8 +313,8 @@ module t05_cpu_core(
         .opcode(opcode),
         .funct7(funct7),
         .funct3(funct3),
-        .rs1(rs1), 
-        .rs2(rs2), 
+        .rs1(rs1),
+        .rs2(rs2),
         .rd(rd),
         .imm_32(imm_32), 
         .ALU_source(ALU_source), 
@@ -363,35 +376,36 @@ module t05_cpu_core(
     end
 
     logic [31:0] val2;
+    logic data_access;
 
     always_comb begin
         // if (ALU_source) val2 = imm_32;
         // else val2 = reg2;
         val2 = reg2;
-        branch_ff = ((opcode == 7'b1100011) && ((funct3 == 3'b000 && (reg1 == val2)) | (funct3 == 3'b100 && (reg1 < val2)) | (funct3 == 3'b001 && (reg1 != val2)) | (funct3 == 3'b101 && (reg1 >= val2)))) | (opcode == 7'b1101111) | (opcode == 7'b1100111);
+        branch_ff = (((opcode == 7'b1100011) && ((funct3 == 3'b000 && (reg1 == val2)) | (funct3 == 3'b100 && (reg1 < val2)) | (funct3 == 3'b001 && (reg1 != val2)) | (funct3 == 3'b101 && (reg1 >= val2)))) | (opcode == 7'b1101111) | (opcode == 7'b1100111)) ? 1'b1 : 1'b0;
     end
 
     //assign branch_ff = 1'b0;
 
     //sort through mem management inputs/outputs
     t05_data_memory data_mem(
-        // .data_read_adr_i(read_address),
-        // .data_write_adr_i(write_address),
-        // .data_cpu_i(reg2),
-        // .data_bus_i(data_out_CPU),
+        .data_read_adr_i(read_address),
+        .data_write_adr_i(write_address),
+        .data_cpu_i(reg2),
+        .data_bus_i(data_out_CPU),
         .clk(clk),
         .rst(rst),
-        // .data_good(!bus_full),
-        // .state(prev_state),
+        .data_good(!bus_full),
+        .state(prev_state),
 
-        .data_read_adr_i('0),
-        .data_write_adr_i('0),
-        .data_cpu_i('0),
-        .data_bus_i('0),
-        // .clk(clk),
-        // .rst(rst),
-        .data_good('0),
-        .state('0),
+        // .data_read_adr_i('0),
+        // .data_write_adr_i('0),
+        // .data_cpu_i('0),
+        // .data_bus_i('0),
+        // // .clk(clk),
+        // // .rst(rst),
+        // .data_good('0),
+        // .state('0),
 
         .data_read(data_read),
         .data_write(data_write_int),
@@ -419,18 +433,21 @@ module t05_cpu_core(
         .data_out_CPU(data_out_CPU), //to data mem
         .data_out_BUS(data_out_BUS_int), //to external output
         .data_out_INSTR(data_out_INSTR), //to instr mem
-        .bus_full_CPU(bus_full_CPU)); 
+        .bus_full_CPU(bus_full_CPU),
+        .data_access(data_access)); 
 
     // assign address_out = mem_adr_i;
     logic [31:0] pc_input;
+    logic disable_pc_reg, disable_pc;
+    assign disable_pc = instr_wait;
     // assign pc_input = (pc_jump != 32'b0) ? pc_jump : pc_data;
     t05_pc program_count(
         .clk(clk),
         .clr(rst),
         .load(load_pc),
-        .inc(data_good & en),
+        .inc(data_good & en & !data_access),
         .ALU_out(branch_ff),
-        .Disable(instr_wait),
+        .Disable(disable_pc_reg),
         .data(pc_jump),
         .imm_val(imm_32),   //should be imm_32
         .pc_val(pc_val));
@@ -460,6 +477,7 @@ module t05_ALU(
             7'b0000011:
                 begin
                     read_address = reg1 + val2;
+                    // read_address = 32'h33000004;
                 end
             7'b0100011:
                 begin
@@ -668,7 +686,7 @@ module t05_control_unit(
             7'b1101111: //j type instruction
                 begin
                     rd = instruction[11:7] ;
-                    imm_32 = ({{12{instruction[31]}}, instruction[31], instruction[19:12], instruction[20], instruction[30:21]} << 1);
+                    imm_32 = ({{12{instruction[31]}}, instruction[31], instruction[19:12], instruction[20], instruction[30:21]} << 1) - 32'd4;
                     rs1 = 5'b0;
                     rs2 = 5'b0;
                     funct3 = 3'b0;
@@ -795,6 +813,16 @@ module t05_data_memory(
             data_bus_o <= stored_write_data;
             data_bus_i_reg <= data_bus_i;
             data_cpu_i_reg <= data_cpu_i;
+
+            // data_adr_o <= 32'b0;
+            // data_bus_o <= 32'b0;
+            // data_cpu_o <= 32'b0;
+            // data_read <= 1'b0;
+            // data_write <= 1'b0;
+            // data_read_adr_reg <= '0;
+            // data_write_adr_reg <= '0;
+            // data_bus_i_reg <= '0;
+            // data_cpu_i_reg <= '0;
         end
     end
 endmodule
@@ -834,23 +862,28 @@ module t05_instruction_memory(
             // stored_instr_adr = instruction_adr_i;
             // stored_instr = instruction_o;
         end
+        if(instr_wait) begin
+            instruction_adr_o = instruction_adr_o;
+        end else begin
+            instruction_adr_o = instruction_adr_i;
+        end
     end
 
     always_ff @(posedge clk, posedge rst) begin
         if(rst) begin
-            instruction_adr_o <= 32'b0;
+            // instruction_adr_o <= 32'b0;
             instruction_o <= 32'b0;
             instr_fetch <= 1'b0;
             prev_d_good <= 0;
             prev_fetch <= 0;
         end else if(instr_wait) begin
-            instruction_adr_o <= instruction_adr_o;
+            // instruction_adr_o <= instruction_adr_o;
             instruction_o <= instruction_o;
             instr_fetch <= 1'b0;
             prev_fetch <= instr_fetch;
             prev_d_good <= data_good;
         end else begin
-            instruction_adr_o <= stored_instr_adr;
+            // instruction_adr_o <= stored_instr_adr;
             instruction_o <= stored_instr;
             instr_fetch <= next_fetch;
             prev_fetch <= instr_fetch;
@@ -867,21 +900,39 @@ module t05_memcontrol(
     input logic clk, rst, en,
     // outputs
     output logic [2:0] next_state, state,
-    output logic bus_full_CPU,
+    output logic bus_full_CPU, data_access,
     output logic [31:0] address_out, data_out_CPU, data_out_BUS, data_out_INSTR
 );
+
+    always @ (memRead, address_in, data_in_BUS) begin
+        $display("[Read monitor] time=%0t, memRead=%h, address_in=%h, data_in_BUS=%h", $time, memRead, address_in, data_in_BUS);
+    end
+    always @ (memWrite, address_in, data_in_CPU) begin
+        $display("[Write monitor] time=%0t, memWrite=%h, address_in=%h, data_in_CPU=%h", $time, memWrite, address_in, data_in_CPU);
+    end
+
+    always @ (address_in) begin
+        if (address_in == 33000024) #1 $stop;
+    end
 
     logic [2:0] prev_state;
     logic next_next_fetch;
     logic next_instr;
+    logic next_data_read;
+    logic next_next_data_read;
+    logic next_data_access;
 
     always_ff @(posedge clk, posedge rst) begin : startFSM
         if (rst) begin
             state <= INIT;
             next_next_fetch <= 0;
+            next_next_data_read <= 0;
+            data_access <= 0;
         end else begin
             state <= next_state;
             next_next_fetch <= next_instr;
+            next_next_data_read <= next_data_read;
+            data_access <= next_data_access;
         end
     end
 
@@ -895,6 +946,9 @@ module t05_memcontrol(
         next_state = state;
         prev_state = state;
         next_instr = next_next_fetch;
+        next_data_read = next_next_data_read;
+        next_data_access = data_access;
+
         case(state)
             INIT: begin 
                 if (!rst & en) next_state = IDLE;
@@ -905,9 +959,11 @@ module t05_memcontrol(
                 if (memRead) begin
                     next_state = Read_Request;
                     prev_state = Read_Request;
+                    next_data_access = 1'b1;
                 end else if (memWrite) begin
                     next_state = Write_Request;
                     prev_state = Write_Request;
+                    next_data_access = 1'b1;
                 end else begin
                     prev_state = IDLE;
                     next_state = IDLE;
@@ -923,8 +979,11 @@ module t05_memcontrol(
                     next_state = Wait;
                     prev_state = Read_Request;
                 end
-                if(instr_en) begin
+                if(data_en) begin
+                    next_data_read = 1'b1;
+                end else begin
                     next_instr = 1'b1;
+                    next_data_access = 1'b0;
                 end
             end
             
@@ -939,7 +998,7 @@ module t05_memcontrol(
             Read: begin 
                 address_out = address_in;
                 data_out_BUS = 32'b0;
-                if (data_en) begin
+                if (next_next_data_read) begin
                     data_out_CPU = data_in_BUS;
                     data_out_INSTR = 32'b0; // going to MUX
                 end
@@ -949,6 +1008,8 @@ module t05_memcontrol(
                 end
                 next_state = IDLE;
                 next_instr = 1'b0;
+                next_data_read = 1'b0;
+                next_data_access = 1'b0;
             end
             
             Write: begin 
@@ -957,6 +1018,7 @@ module t05_memcontrol(
                 data_out_INSTR = 32'b0;
                 data_out_CPU = 32'b0;
                 next_state = IDLE;
+                next_data_access = 1'b0;
             end
 
             Wait: begin

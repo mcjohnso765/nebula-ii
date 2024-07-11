@@ -511,3 +511,7 @@ tbsim-source-%:
 	make sim-source-$(lastword $(subst -, ,$*))
 
 # FYI: Run 'make clean' to clean all temporary files produced by testbenches
+
+.PHONY: team-05-sv2v
+team-05-sv2v:
+	sv2v verilog/rtl/team_projects/team_05/team_05.sv -w verilog/rtl/team_projects/team_05/project.v

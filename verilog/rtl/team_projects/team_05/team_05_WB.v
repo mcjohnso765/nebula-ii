@@ -82,6 +82,10 @@ module team_05_WB (
 
 	);
 
+	initial begin
+		$monitor("[WB Monitor] dat_i %h, ack_i %h, adr_o %h, dat_o %h, sel_o %h, we_o %h, stb_o %h, cyc_o %h", DAT_I, ACK_I, ADR_O, DAT_O, SEL_O, WE_O, STB_O, CYC_O);
+	end
+
 	assign	dat_o = 
 			(adr_i[`WB_AW-1:0] == EN_VAL_REG_OFFSET)	? EN_VAL_REG :
 			32'hDEADBEEF;

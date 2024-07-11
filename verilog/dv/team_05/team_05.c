@@ -177,6 +177,8 @@ void main()
 	*(&sram_space + 3) = 0x33000237;
 	*(&sram_space + 4) = 0x00420213;
 	*(&sram_space + 5) = 0x00022283;
+	// *(&sram_space + 6) = 0xFFFFFFFF;
+	*(&sram_space + 6) = 0x0000006f;
 
 	/**
 	*(&sram_space + 6) = 0xfe0302e3;
