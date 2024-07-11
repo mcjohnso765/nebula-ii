@@ -113,6 +113,7 @@ module team_09_tb;
 	endtask
 	initial begin
 		clock = 0;
+		mprj_io_in[35:29] = 1'b0;
 	end
 
 	// STUDENTS: This block here is important, but don't worry about trying to understand it
@@ -251,9 +252,9 @@ module team_09_tb;
         // ************************************************************************
 		
     	wait(uut.chip_core.mprj.mprj.team_09_Wrapper.team_09_WB.instance_to_wrap.\en == 1);
-		right_button_press();
+		left_button_press();
 		//#(CLK_PERIOD * 10000)
-    	#(CLK_PERIOD * 10000000);
+    	#(CLK_PERIOD * 40000000);
     	// down_button_press();
     	// #(CLK_PERIOD * 25000000);
 		`ifdef GL
@@ -272,7 +273,7 @@ module team_09_tb;
 	// Time Tracker
 	integer time_ms = 0;
 	always @(mprj_io) begin
-		#(10000) $display("@ %d ms, {GPIO[37:5], GPIO[0]} = 34'h%h ", ++time_ms, checkbits);
+		#(10000 * CLK_PERIOD) $display("@ %d ms, {GPIO[37:5], GPIO[0]} = 34'h%h ", ++time_ms, checkbits);
 	end
 
 	// Reset Operation
