@@ -23,10 +23,10 @@ module request_handler (
 	mem_write,
 	adr_to_mem,
 	data_to_mem,
-	sel_to_mem
+	sel_to_mem,
+	uart_address
 );
 	reg _sv2v_0;
-	parameter UART_ADDRESS = 500;
 	input wire clk;
 	input wire nRst;
 	input wire mem_busy;
@@ -51,6 +51,7 @@ module request_handler (
 	output reg [31:0] adr_to_mem;
 	output reg [31:0] data_to_mem;
 	output reg [3:0] sel_to_mem;
+	input wire [31:0] uart_address;
 	reg prev_busy;
 	wire busy_edge;
 	reg [1:0] current_client;
@@ -102,7 +103,7 @@ module request_handler (
 				adr_to_mem = VGA_adr;
 			else if (current_client == 2'd2)
 				adr_to_mem = CPU_instr_adr;
-			else if (CPU_data_adr == UART_ADDRESS)
+			else if (CPU_data_adr == uart_address)
 				adr_to_mem = 32'h00000000;
 			else begin
 				adr_to_mem = CPU_data_adr;
@@ -129,7 +130,7 @@ module request_handler (
 			data_to_mem = 32'b00000000000000000000000000000000;
 			sel_to_mem = 4'b1111;
 		end
-		else if (CPU_data_adr == UART_ADDRESS) begin
+		else if (CPU_data_adr == uart_address) begin
 			mem_read = 1'b0;
 			mem_write = 1'b0;
 			adr_to_mem = 32'h00000000;
@@ -168,7 +169,7 @@ module request_handler (
 		else begin
 			data_to_VGA = 32'b00000000000000000000000000000000;
 			next_instruction = instruction;
-			if (CPU_data_adr == UART_ADDRESS)
+			if (CPU_data_adr == uart_address)
 				data_to_CPU = data_from_UART;
 			else
 				data_to_CPU = data_from_mem;

@@ -12,13 +12,14 @@ module tippy_top (
 	Rx,
 	h_out,
 	v_out,
-	pixel_data
+	pixel_data,
+	memory_size
 );
 	input wire clk;
 	input wire nRst;
 	input wire button;
 	input wire mem_busy;
-	input [31:0] data_from_mem;
+	input wire [31:0] data_from_mem;
 	output wire mem_read;
 	output wire mem_write;
 	output wire [31:0] adr_to_mem;
@@ -28,6 +29,7 @@ module tippy_top (
 	output wire h_out;
 	output wire v_out;
 	output wire pixel_data;
+	input [31:0] memory_size;
 	wire [31:0] CPU_instructions;
 	wire [31:0] mem_data_to_CPU;
 	wire [31:0] CPU_adr_to_mem;
@@ -106,15 +108,15 @@ module tippy_top (
 		.BAUD_counter(),
 		.parity_error()
 	);
-	request_handler #(.UART_ADDRESS(1000)) reqhand(
+	request_handler reqhand(
 		.clk(clk),
 		.nRst(nRst),
 		.mem_busy(mem_busy),
-		.VGA_state(2'b00),
+		.VGA_state(VGA_state),
 		.CPU_enable(CPU_enable),
 		.VGA_enable(VGA_enable),
 		.VGA_read(VGA_read),
-		.VGA_adr((VGA_adr * 4) + 32'd2000),
+		.VGA_adr((memory_size - 32'd1536) + (VGA_adr * 4)),
 		.data_to_VGA(mem_data_to_VGA),
 		.data_from_UART({24'b000000000000000000000000, uart_out}),
 		.CPU_instr_adr(CPU_instr_adr),
@@ -130,7 +132,8 @@ module tippy_top (
 		.mem_write(mem_write),
 		.adr_to_mem(adr_to_mem),
 		.data_to_mem(data_to_mem),
-		.sel_to_mem(sel_to_mem)
+		.sel_to_mem(sel_to_mem),
+		.uart_address(memory_size - 32'd1532)
 	);
 	always @(posedge mem_write)
 		#(10)

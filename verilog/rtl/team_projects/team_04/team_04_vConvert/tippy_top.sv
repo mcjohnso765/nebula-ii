@@ -6,14 +6,18 @@ module tippy_top (
     input logic clk, nRst, button,
 
     input logic mem_busy, 
-    input [31:0] data_from_mem,
+    input logic [31:0] data_from_mem,
     output logic mem_read, mem_write,
-    output [31:0] adr_to_mem, data_to_mem,
-    output [3:0] sel_to_mem,
+    output logic [31:0] adr_to_mem, data_to_mem,
+    output logic [3:0] sel_to_mem,
 
     input logic Rx,
 
-    output logic h_out, v_out, pixel_data
+    output logic h_out, v_out, pixel_data,
+
+    input [31:0] memory_size
+
+    
 );
 
     logic [31:0] CPU_instructions;
@@ -120,20 +124,20 @@ module tippy_top (
         .parity_error() // ignore
     );
 
-    request_handler #(.UART_ADDRESS(1000)) reqhand
+    request_handler reqhand
     (
         .clk(clk),
         .nRst(nRst),
 
         .mem_busy(mem_busy),
-        .VGA_state(2'b0), //FIXME later
-        //.VGA_state(VGA_state),
+        // .VGA_state(2'b0), 
+        .VGA_state(VGA_state),
         .CPU_enable(CPU_enable),
         .VGA_enable(VGA_enable),
 
         .VGA_read(VGA_read),
         // .VGA_adr(VGA_adr),
-        .VGA_adr(VGA_adr*4+32'd2000),
+        .VGA_adr(memory_size - 32'd1536 + VGA_adr*4),
         // .data_to_VGA(VGA_adr),
         .data_to_VGA(mem_data_to_VGA),
         
@@ -155,7 +159,9 @@ module tippy_top (
         .adr_to_mem(adr_to_mem),
         // .data_to_mem(),
         .data_to_mem(data_to_mem),
-        .sel_to_mem(sel_to_mem)
+        .sel_to_mem(sel_to_mem),
+
+        .uart_address(memory_size - 32'd1532)
     );
     // assign mem_write = 1'b0;
     // assign data_to_mem = 32'h0;
@@ -1619,7 +1625,7 @@ typedef enum logic [1:0] {
     CPU_DATA = 2'd3
 } client_t;
 
-module request_handler #(parameter UART_ADDRESS = 500)(
+module request_handler (
     input logic clk,
     input logic nRst,
 
@@ -1653,7 +1659,9 @@ module request_handler #(parameter UART_ADDRESS = 500)(
     output logic mem_write,
     output logic [31:0] adr_to_mem,
     output logic [31:0] data_to_mem,
-    output logic [3:0] sel_to_mem
+    output logic [3:0] sel_to_mem,
+
+    input logic [31:0] uart_address
 
 );
 
@@ -1727,7 +1735,7 @@ module request_handler #(parameter UART_ADDRESS = 500)(
             end else if (current_client == CPU_INSTR) begin
                 adr_to_mem =    CPU_instr_adr;
             end else begin
-                if(CPU_data_adr == UART_ADDRESS) begin
+                if(CPU_data_adr == uart_address) begin
                     adr_to_mem =    32'h0;
                 end else begin
                     adr_to_mem =    CPU_data_adr;
@@ -1755,7 +1763,7 @@ module request_handler #(parameter UART_ADDRESS = 500)(
                 data_to_mem =   32'b0;
                 sel_to_mem =    4'b1111;
             end else begin // next_client == CPU_DATA
-                if (CPU_data_adr == UART_ADDRESS) begin
+                if (CPU_data_adr == uart_address) begin
                     mem_read =      1'b0;
                     mem_write =     1'b0;
                     adr_to_mem =    32'h0;
@@ -1802,7 +1810,7 @@ module request_handler #(parameter UART_ADDRESS = 500)(
             end else begin // current_client == CPU_DATA
                 data_to_VGA =       32'b0;
                 next_instruction =  instruction;
-                if (CPU_data_adr == UART_ADDRESS) begin
+                if (CPU_data_adr == uart_address) begin
                     data_to_CPU = data_from_UART;
                 end else begin
                     data_to_CPU = data_from_mem;
