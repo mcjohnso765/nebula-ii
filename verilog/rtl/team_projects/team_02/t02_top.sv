@@ -6,7 +6,7 @@ module t02_top (
 	input logic clk, nrst, enable,
   output logic [31:0] ramaddr, ramstore, 
   output logic Ren, Wen, 
-  input logic [31:0] ramload, start_addr,
+  input logic [31:0] ramload, 
   input logic busy_o
   // output logic lcd_en, lcd_rw, lcd_rs,
   // output logic [7:0] lcd_data,
@@ -36,7 +36,7 @@ t02_control controller (.cuOP(cuOP), .instruction(instruction),
 .reg_1(regsel1), .reg_2(regsel2), .rd(w_reg),
 .imm(imm), .aluOP(aluOP), .regWrite(regWrite), .memWrite(memWrite), .memRead(memRead), .aluSrc(aluSrc));
 
-t02_pc testpc(.clk(clk), .nRST(nrst), .ALUneg(negative), .Zero(zero), .iready(i_ready), .PCaddr(pc), .cuOP(cuOP), .rs1Read(regData1), .signExtend(immOut), .enable(enable), .start_addr(start_addr));
+t02_pc testpc(.clk(clk), .nRST(nrst), .ALUneg(negative), .Zero(zero), .iready(i_ready), .PCaddr(pc), .cuOP(cuOP), .rs1Read(regData1), .signExtend(immOut), .enable(enable));
 
 t02_writeToReg write(.cuOP(cuOP), .memload(memload), .aluOut(aluOut), .imm(immOut), .pc(pc), .writeData(writeData), .negative(negative));
 

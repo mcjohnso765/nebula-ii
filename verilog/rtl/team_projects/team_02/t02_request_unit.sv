@@ -29,11 +29,11 @@ always_ff@(posedge CLK, negedge nRST) begin
     end
 end
 always_comb begin
-    if (cuOP == CU_HALT) begin
-    imemRen = 0;
-    end else begin
-    imemRen = 1;
-    end
+    // if (cuOP == CU_HALT) begin
+    // imemRen = 0;
+    // end else begin
+    // imemRen = 1;
+    // end
     if (i_ready_i) begin
         if(cuOP == CU_LB| cuOP == CU_LH| cuOP == CU_LW | cuOP == CU_LBU | cuOP == CU_LHU) begin
         nxt_dmmRen = 1; 

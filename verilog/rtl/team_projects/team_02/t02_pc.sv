@@ -5,7 +5,6 @@ module t02_pc (
 input logic [5:0] cuOP,
 input logic [31:0] rs1Read, signExtend, 
 output logic [31:0] PCaddr, 
-input logic [31:0] start_addr,
 input logic ALUneg, Zero, iready, clk, nRST, enable
 );
         //     input logic clk, nRST,
@@ -34,7 +33,7 @@ typedef enum logic [5:0] {
 
             always_ff@(posedge clk, negedge nRST)
                 if (~nRST)
-                    PC <= start_addr;
+                    PC <= 32'h33000000;
                 // else if (!enable)
                 //     PC <= start_addr;
                 else
@@ -54,14 +53,14 @@ typedef enum logic [5:0] {
                         CU_BGE: next_pc = (~ALUneg | Zero? PC + (signExtend << 1) : PC + 4);
                         CU_BLTU: next_pc = (ALUneg? PC + (signExtend << 1): PC + 4);
                         CU_BGEU: next_pc = (~ALUneg | Zero? PC + (signExtend << 1) : PC + 4);
-                        CU_HALT: next_pc = start_addr;
+                        //CU_HALT: next_pc = 32'h33000000;
                         default: next_pc = PC + 4;
                     endcase
                 end else begin
                     next_pc = PC;
                 end
             end else begin
-                next_pc = start_addr- 32'd4;
+                next_pc = 32'h33000000;
             end
            end
            

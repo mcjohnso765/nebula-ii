@@ -34,8 +34,8 @@ module nebula_ii (
     // IRQ
     output [2:0] irq,
     
-    input en,
-    input [31:0] start_addr
+    input en
+    //input [31:0] start_addr
 );
     
     // Number of teams (only sample project for now)
