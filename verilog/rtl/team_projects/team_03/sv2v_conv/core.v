@@ -8,8 +8,12 @@ module core (
 	ADR_I,
 	SEL_I,
 	WRITE_I,
-	READ_I
+	READ_I,
+	gpio_in,
+	gpio_out,
+	gpio_oeb
 );
+	reg _sv2v_0;
 	input wire clock;
 	input wire reset;
 	input wire en;
@@ -20,6 +24,9 @@ module core (
 	output wire [3:0] SEL_I;
 	output wire WRITE_I;
 	output wire READ_I;
+	input wire [33:0] gpio_in;
+	output wire [33:0] gpio_out;
+	output wire [33:0] gpio_oeb;
 	wire [2:0] i_type;
 	wire [16:0] instruction;
 	wire [3:0] alu_op;
@@ -52,34 +59,40 @@ module core (
 	wire b_out;
 	wire [31:0] data_to_write;
 	wire [31:0] data_read;
+	wire [31:0] data_to_IO;
 	wire pc_en;
 	wire slt;
 	wire u;
-	wire i_ready;
-	wire d_ready;
+	wire d_hit;
+	wire i_hit;
+	wire i_request;
 	request_unit ru(
+		.i_request(i_request),
 		.en(en),
 		.clk(clock),
-		.nRST(reset),
-		.D_fetch(read_mem),
-		.D_write(write_mem),
-		.I_fetch(1'b1),
-		.data_adr(result),
-		.instr_adr(program_counter),
-		.writedata(data_to_write),
-		.i_done(i_ready),
-		.d_done(d_ready),
-		.instr(inst),
-		.data(data_read),
+		.rst(reset),
+		.memread(read_mem),
+		.memwrite(write_mem),
+		.data_to_write(data_to_write),
+		.instruction_address(program_counter),
+		.data_address(result),
 		.busy_o(BUSY_O),
 		.cpu_dat_o(CPU_DAT_O),
-		.write_i(WRITE_I),
 		.read_i(READ_I),
-		.adr_i(ADR_I),
+		.write_i(WRITE_I),
 		.cpu_dat_i(CPU_DAT_I),
-		.sel_i(SEL_I)
+		.instruction(inst),
+		.adr_i(ADR_I),
+		.data_read(data_to_IO),
+		.sel_i(SEL_I),
+		.i_hit(i_hit),
+		.d_hit(d_hit)
 	);
 	wire cpu_clock;
+	instruction_check ic(
+		.instruction(inst),
+		.i_request(i_request)
+	);
 	decoder decoder(
 		.inst(inst),
 		.rs1(regA),
@@ -113,6 +126,7 @@ module core (
 		.b_out(branch_choice)
 	);
 	pc pc(
+		.i_request(i_request),
 		.en(en),
 		.pc_out(program_counter),
 		.pc_add_out(program_counter_out),
@@ -120,11 +134,12 @@ module core (
 		.branch_decision(branch_choice),
 		.pc_write_value(regA_data),
 		.pc_add_write_value(pc_add_write_value),
-		.in_en(i_ready),
+		.in_en(i_hit),
 		.auipc_in(alu_mux_en),
 		.clock(clock),
 		.reset(reset)
 	);
+	reg register_file_en;
 	register_file register_file(
 		.en(en),
 		.clk(clock),
@@ -132,7 +147,7 @@ module core (
 		.regA_address(regA),
 		.regB_address(regB),
 		.rd_address(rd),
-		.register_write_en(reg_write_en),
+		.register_write_en(register_file_en),
 		.register_write_data(register_write_data),
 		.regA_data(regA_data),
 		.regB_data(regB_data)
@@ -154,6 +169,19 @@ module core (
 		.store_byte_en(store_byte),
 		.b_out(data_to_write)
 	);
+	IO_mod_enable IO_mod(
+		.clk(clock),
+		.rst(reset),
+		.write_mem(write_mem),
+		.read_mem(read_mem),
+		.data_from_mem(data_to_IO),
+		.data_address(result),
+		.data_to_write(data_to_write),
+		.data_read(data_read),
+		.IO_out(gpio_out[31:0]),
+		.IO_enable(gpio_oeb[31:0]),
+		.IO_in(gpio_in[31:0])
+	);
 	ALU ALU(
 		.srda(regA_data),
 		.fop(alu_op),
@@ -173,4 +201,16 @@ module core (
 		.type_i(i_type),
 		.imm_gen(imm_gen)
 	);
+	always @(*) begin
+		if (_sv2v_0)
+			;
+		register_file_en = 1'sb0;
+		if (reg_write_en) begin
+			if (read_mem)
+				register_file_en = d_hit;
+			else
+				register_file_en = 1'b1;
+		end
+	end
+	initial _sv2v_0 = 0;
 endmodule

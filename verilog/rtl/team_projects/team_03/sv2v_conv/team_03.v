@@ -36,8 +36,6 @@ module team_03 (
 	input wire [31:0] DAT_I;
 	input wire ACK_I;
 	assign la_data_out = 128'b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
-	assign gpio_out = 34'b0000000000000000000000000000000000;
-	assign gpio_oeb = 1'sb1;
 	wire WRITE_I;
 	wire READ_I;
 	wire BUSY_O;
@@ -55,11 +53,14 @@ module team_03 (
 		.ADR_I(ADR_I),
 		.SEL_I(SEL_I),
 		.WRITE_I(WRITE_I),
-		.READ_I(READ_I)
+		.READ_I(READ_I),
+		.gpio_in(gpio_in),
+		.gpio_out(gpio_out),
+		.gpio_oeb(gpio_oeb)
 	);
 	wishbone_manager wb(
 		.CLK(clk),
-		.nRST(!nrst),
+		.nRST(nrst),
 		.DAT_I(DAT_I),
 		.ACK_I(ACK_I),
 		.CPU_DAT_I(CPU_DAT_I),

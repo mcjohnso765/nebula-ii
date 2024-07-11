@@ -29,13 +29,17 @@ module register_file (
 		next_registers_state = registers_state;
 		regA_data = registers_state[regA_address * 32+:32];
 		regB_data = registers_state[regB_address * 32+:32];
-		if (register_write_en && (rd_address != 5'b00000))
+		if ((((register_write_en && (rd_address != 5'b00000)) && (rd_address != 5'd29)) && (rd_address != 5'd30)) && (rd_address != 5'd31))
 			next_registers_state[rd_address * 32+:32] = register_write_data;
 	end
 	always @(posedge clk or posedge rst)
-		if (rst)
+		if (rst) begin
 			registers_state <= 1'sb0;
-		else if (en)
+			registers_state[928+:32] <= 32'hfffffffc;
+			registers_state[960+:32] <= 32'hfffffffd;
+			registers_state[992+:32] <= 32'hffffffff;
+		end
+		else if (en & register_write_en)
 			registers_state <= next_registers_state;
 	initial _sv2v_0 = 0;
 endmodule

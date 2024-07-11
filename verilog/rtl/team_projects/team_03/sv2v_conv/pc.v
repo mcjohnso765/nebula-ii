@@ -1,5 +1,6 @@
 module pc (
 	en,
+	i_request,
 	pc_out,
 	pc_add_out,
 	generated_immediate,
@@ -13,6 +14,7 @@ module pc (
 );
 	reg _sv2v_0;
 	input wire en;
+	input wire i_request;
 	output wire [31:0] pc_out;
 	output wire [31:0] pc_add_out;
 	input wire [31:0] generated_immediate;
@@ -38,12 +40,12 @@ module pc (
 		if (_sv2v_0)
 			;
 		next_pc = current_pc;
-		if (in_en)
+		if (in_en && i_request)
 			next_pc = (branch_decision ? pc_add_immediate : pc_add_4);
 	end
 	always @(posedge clock or posedge reset)
 		if (reset)
-			current_pc <= 1'sb0;
+			current_pc <= 32'h00000000;
 		else if (en)
 			current_pc <= next_pc;
 	assign pc_out = current_pc;
