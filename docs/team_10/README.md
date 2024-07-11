@@ -18,45 +18,45 @@ Note that on the final chip, there are 38 gpio of which you have access to 4.
 The first number represents the GPIO on the physical board. The second number
 in brackets represents the number in your verilog code
 
-00[00] Input: Unassigned
-01[--] Input/Output: Pin_Function
-02[--] Input/Output: Pin_Function
-03[--] Input/Output: Pin_Function
-04[--] Input/Output: Pin_Function
-05[01] Input: Unassigned
-06[02] Input: Unassigned 
-07[03] Input: Unassigned 
-08[04] Input: Unassigned
-09[05] Input: Unassigned
-10[06] Output: ss7[0] (LCD data bit)
-11[07] Output: ss7[1] (LCD data bit)
-12[08] Output: ss7[2] (LCD data bit)
-13[09] Output: ss7[3] (LCD data bit)
-14[10] Output: ss7[4] (LCD data bit)
-15[11] Output: ss7[5] (LCD data bit)
-16[12] Output: ss7[6] (LCD data bit)
-17[13] Output: ss7[7] (LCD data bit)
-18[14] Input: nRst (negative reset for our game)
-19[15] Input: clk (global clock for our game)
-20[16] Output: blue (LED indicator that shows that data is being transmitted)
-21[17] Output: green (LED indicator that shows that the player has won)
-22[18] Input/Output: red (LED indicator that shows that the player has lost)
-23[19] Output: error_led (shows when the parity bit is incorrect which means that there was an error in data transmission)
-24[20] Input: rx_serial (serial input for the reciever from the transmitter)
-25[21] Input: read_row[0] (Player row input on the keypad, one of the 4 rows)
-26[22] Input: read_row[1] (Player row input on the keypad, one of the 4 rows)
-27[23] Input: read_row[2] (Player row input on the keypad, one of the 4 rows)
-28[24] Input: read_row[3] (Player row input on the keypad, one of the 4 rows)
-29[25] Output: tx_serial (transmission data that gets send from transmitter to reciever)
-30[26] Output: lcd_rs (lcd control signal)
-31[27] Output: lcd_rw (reads and writes to the lcd display)
-32[28] Output: lcd_en (enables the lcd to be able to read and write information)
-33[29] Output: scan_col[0] (Column tracker for the keypad that oscillates through the 4 columns)
-34[30] Output: scan_col[1] (Column tracker for the keypad that oscillates through the 4 columns)
-35[31] Output: scan_col[2] (Column tracker for the keypad that oscillates through the 4 columns)
-36[32] Output: scan_col[3] (Column tracker for the keypad that oscillates through the 4 columns)
-37[33] Input: mode (switches the game to player or host mode, player being 1 and host being 0)
-38[34] Input/Output: Pin_Function
+00[00] Input: Unassigned  
+01[--] Input/Output: Pin_Function  
+02[--] Input/Output: Pin_Function  
+03[--] Input/Output: Pin_Function  
+04[--] Input/Output: Pin_Function  
+05[01] Input: Unassigned  
+06[02] Input: Unassigned  
+07[03] Input: Unassigned  
+08[04] Input: Unassigned  
+09[05] Input: Unassigned  
+10[06] Output: ss7[0] (LCD data bit)  
+11[07] Output: ss7[1] (LCD data bit)  
+12[08] Output: ss7[2] (LCD data bit)  
+13[09] Output: ss7[3] (LCD data bit)  
+14[10] Output: ss7[4] (LCD data bit)  
+15[11] Output: ss7[5] (LCD data bit)  
+16[12] Output: ss7[6] (LCD data bit)  
+17[13] Output: ss7[7] (LCD data bit)  
+18[14] Input: nRst (negative reset for our game)  
+19[15] Input: clk (global clock for our game)  
+20[16] Output: blue (LED indicator that shows that data is being transmitted)  
+21[17] Output: green (LED indicator that shows that the player has won)  
+22[18] Input/Output: red (LED indicator that shows that the player has lost)  
+23[19] Output: error_led (shows when the parity bit is incorrect which means that there was an error in data transmission)  
+24[20] Input: rx_serial (serial input for the reciever from the transmitter)  
+25[21] Input: read_row[0] (Player row input on the keypad, one of the 4 rows)  
+26[22] Input: read_row[1] (Player row input on the keypad, one of the 4 rows)  
+27[23] Input: read_row[2] (Player row input on the keypad, one of the 4 rows)  
+28[24] Input: read_row[3] (Player row input on the keypad, one of the 4 rows)  
+29[25] Output: tx_serial (transmission data that gets send from transmitter to reciever)  
+30[26] Output: lcd_rs (lcd control signal)  
+31[27] Output: lcd_rw (reads and writes to the lcd display)  
+32[28] Output: lcd_en (enables the lcd to be able to read and write information)  
+33[29] Output: scan_col[0] (Column tracker for the keypad that oscillates through the 4 columns)  
+34[30] Output: scan_col[1] (Column tracker for the keypad that oscillates through the 4 columns)  
+35[31] Output: scan_col[2] (Column tracker for the keypad that oscillates through the 4 columns)  
+36[32] Output: scan_col[3] (Column tracker for the keypad that oscillates through the 4 columns)  
+37[33] Input: mode (switches the game to player or host mode, player being 1 and host being 0)  
+38[34] Input: Unassigned
 
 ## Supporting Equipment
 List all the required equipment and upload a breadboard with the equipment set up (recommend using tinkercad circuits if possible)
@@ -123,6 +123,7 @@ The host display shows how the user is currently doing in the game. With the top
 The message register is on the player side of the design, it passes on the 8 bit ASCII character selected by the player into the UART transmitter so the host can recieve the letter.
 
 - Keypad Controller
+![Keypad Controller RTL Diagrams (Host and Player)](https://github.com/STARS-Design-Track-2024/nebula-ii-team-10/assets/125313246/01cca860-028a-4e14-a93a-a28f0f988f86)
 - Keypad Controller Testbench
 ![Screenshot from 2024-07-10 13-48-06](https://github.com/STARS-Design-Track-2024/nebula-ii-team-10/assets/125313246/5989e4d7-5824-43d6-9d29-8aadbc4b1a93)
 The keypad controller is the heart of the input for the game. It allows for the game to have a game-end feature, a clear letter/word feature and a submit letter/word feature. The basic systen for inputting letters follows a classic matrix keypad. Where a user can cycle through letters by pressing a button over and over again. The user can then either submit a word or a letter and that information will be passed on into the next module.
