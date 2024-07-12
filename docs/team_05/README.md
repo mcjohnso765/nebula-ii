@@ -72,7 +72,7 @@ in brackets represents the number in your verilog code
 #### Memory control (request unit)
 ![mem_control](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/mem_control.png)
 
-![tb_mem_control](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/tb_sub_modules/tb_mem_control.png)
+![tb_mem_control](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/tb_sub_modules/tb_memcontrol.png)
 
 ## Statement from Purdue
 Pending
