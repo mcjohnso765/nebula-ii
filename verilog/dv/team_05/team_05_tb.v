@@ -561,7 +561,7 @@ module team_05_tb;
 */
 
 
-        #1500000;  // wait some time before ending
+        #5000000;  // wait some time before ending
         // ;  // wait some time before ending
 		// #963780;
 
