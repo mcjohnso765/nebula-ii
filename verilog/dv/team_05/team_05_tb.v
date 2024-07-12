@@ -527,7 +527,6 @@ module team_05_tb;
 
 	// Main Testbench and Output check
 	initial begin
-		press_button(4'b0010, 4'b1110); //press button 2????
 
     /*
 		wait(checkbits == 'b0);
@@ -561,10 +560,32 @@ module team_05_tb;
 		#300;  // wait some time before ending
 */
 
-		
+
         #5000000;  // wait some time before ending
         // ;  // wait some time before ending
 		// #963780;
+
+		press_button(4'b0010, 4'b1110); //press button 2
+
+		//check inputs and outputs, once they actually get fully connected
+
+		//press confirm
+
+		//clear
+
+		//press button A (add)
+
+		//pres confirm
+
+		//clear
+
+		//press button 3
+
+		//press confirm
+
+		//after sum is sent to LCD, double check output correctness
+
+
 		`ifdef GL
 	    	$display("Monitor: NEBULA II-Sample Project (GL) Passed");
 		`else
