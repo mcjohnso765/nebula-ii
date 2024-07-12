@@ -28,15 +28,47 @@ in brackets represents the number in your verilog code
 
 
 ## Supporting Equipment
-4x4 keypad
-![keypad](io_components\keypad.jpeg)
 
-16x2 GDM1602K LCD screen
+#### 4x4 keypad
+![keypad](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/io_components/keypad.jpeg)
+
+#### 16x2 GDM1602K LCD screen
+![lcd_screen](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/io_components/lcd_screen.jpg)
 
 ## RTL Diagrams
-All the stuff from the proposal goes here, obviously updated from the time you did the proposal to the final layout
-Include more than just block diagrams, including sub-block diagrams, state-transition diagrams, flowcharts, and timing diagrams.  If you include an image, a short (0.5-1 sentence description) is required.
-You may also place other files within this folder.
+
+### Top level RTLs
+
+#### General
+![top_general]()
+
+#### Detailed
+![top_detail]()
+
+### Sub-Modules
+
+#### Control Unit
+![control_unit](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/control_unit.png)
+
+![tb_control_unit](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/tb_sub_modules/tb_control_unit.png)
+
+#### Register File
+![reg_file](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/reg_file.png)
+
+![tb_reg_file](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/tb_sub_modules/tb_reg_file.png)
+
+#### 
+![]()
+
+#### 
+![]()
+
+#### 
+![]()
+
+#### 
+![]()
+
 
 ## Statement from Purdue
 Pending
