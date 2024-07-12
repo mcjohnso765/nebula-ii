@@ -79,6 +79,9 @@ in brackets represents the number in your verilog code.
 
 ![tb_mem_control](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/tb_sub_modules/tb_memcontrol.png)
 
+#### Final GDSII Image
+![image](https://github.com/user-attachments/assets/2a0e16cb-1f44-4dcc-a11f-6896aa5e9712)
+
 ## Statement from Purdue
 Pending
 
