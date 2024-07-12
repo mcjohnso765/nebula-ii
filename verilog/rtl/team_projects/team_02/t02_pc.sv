@@ -18,7 +18,7 @@ input logic ALUneg, Zero, iready, clk, nRST, enable
             logic[31:0] next_pc, PC;
             assign PCaddr = PC;
             logic [31:0] inter_next_pc;
-
+            logic en_latched;
 typedef enum logic [5:0] {
 		CU_LUI, CU_AUIPC, CU_JAL, CU_JALR, 
 		CU_BEQ, CU_BNE, CU_BLT, CU_BGE, CU_BLTU, CU_BGEU, 
@@ -28,12 +28,18 @@ typedef enum logic [5:0] {
 		CU_ERROR, CU_HALT
 	} cuOPType;	
 
-            
+    always_ff @( posedge clk, negedge nRST ) begin
+    if (~nRST) begin
+        en_latched <= '0;
+    end else begin
+        en_latched <= enable;
+    end
+    end        
 
 
             always_ff@(posedge clk, negedge nRST)
                 if (~nRST)
-                    PC <= 32'h33000000-4;
+                    PC <= 32'h33000000;
                 // else if (!enable)
                 //     PC <= start_addr;
                 else
@@ -41,7 +47,7 @@ typedef enum logic [5:0] {
 
            always_comb begin
             // inter_next_pc = rs1Read + signExtend;
-            if (enable) begin
+            if (en_latched) begin
                 
                 if (iready) begin
                     case(cuOP)
@@ -60,7 +66,7 @@ typedef enum logic [5:0] {
                     next_pc = PC;
                 end
             end else begin
-                next_pc = 32'h33000000-4;
+                next_pc = 32'h33000000;
             end
            end
            

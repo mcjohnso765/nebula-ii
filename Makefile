@@ -511,3 +511,32 @@ tbsim-source-%:
 	make sim-source-$(lastword $(subst -, ,$*))
 
 # FYI: Run 'make clean' to clean all temporary files produced by testbenches
+
+.PHONY: sv2v-team02
+sv2v-team02:
+	sv2v -w verilog/rtl/team_projects/team_02/project.v verilog/rtl/team_projects/team_02/*.sv
+
+
+
+
+
+# FYI: Run 'make clean' to clean all temporary files produced by testbenches
+
+# VSRC = nebula-ii-team-02/verilog/rtl/team_projects/team_02/VSRC
+# SRC = nebula-ii-team-02/verilog/rtl/team_projects/team_02
+# sv2v:
+
+# 	@echo "Making Verilog source directory"
+
+# 	@mkdir -p $(VSRC)
+
+# 	@echo  "Beginning sv2v conversion"
+
+# 	@sv2v --write=$(VSRC) $(SRC)/*
+
+# 	@echo  "Succesfull conversion sv2v conversion"
+
+# .PHONY: sv2v-team02
+# sv2v-team02:
+# 	sv2v -w verilog/rtl/team_projects/team_02/project.v verilog/rtl/team_projects/team_02/*.sv
+ 
