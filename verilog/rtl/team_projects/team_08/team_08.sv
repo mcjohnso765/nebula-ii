@@ -20,7 +20,7 @@ module team_08 (
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
     output wire [33:0] gpio_out, // Breakout Board Pins
-    output wire [33:0] gpio_oeb, // Active Low Output Enable
+    output wire [33:0] gpio_oeb // Active Low Output Enable
     
 );
 
@@ -36,7 +36,7 @@ module team_08 (
     assign gpio_oeb[30:3] = '0;
     assign gpio_oeb[33:31] = '1;
 
-    team_08_GPIOPins allocation(.in(gpio_in), .out(gpio_out), .clk(clk), .reset(nrst));
+    team_08_GPIOPins allocation(.in(gpio_in), .out(gpio_out), .clk(clk), .reset(en & nrst));
 
 
 

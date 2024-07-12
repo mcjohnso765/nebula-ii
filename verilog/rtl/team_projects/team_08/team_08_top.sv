@@ -36,7 +36,7 @@ team_08_GPIOPins game(
 always_comb begin
   
     in = {31'd0, pb[17], pb[18], ~pb[19]};
-    {empty[5:3], right[5], ss1[6:0], ss0[6:0], left[7:0], right[4:0], out[2:0]} = out;
+    {empty[5:3], right[5], ss1[6:0], ss0[6:0], left[7:0], right[4:0], empty[2:0]} = out;
   
 end
 
