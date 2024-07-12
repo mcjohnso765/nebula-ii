@@ -29,6 +29,7 @@ module VGA_data_controller (
 	reg [31:0] next_data;
 	reg [31:0] next_address;
 	reg [31:0] ready_data;
+	reg [31:0] next_ready;
 	always @(*) begin
 		if (_sv2v_0)
 			;
@@ -48,35 +49,38 @@ module VGA_data_controller (
 			state <= 2'd0;
 			data_to_VGA <= 32'b00000000000000000000000000000000;
 			SRAM_address <= 32'b00000000000000000000000000000000;
+			ready_data <= 32'b00000000000000000000000000000000;
 		end
 		else begin
 			state <= next_state;
 			data_to_VGA <= next_data;
 			SRAM_address <= next_address;
+			ready_data <= next_ready;
 		end
 	always @(*) begin
 		if (_sv2v_0)
 			;
 		next_data = data_to_VGA;
 		next_address = SRAM_address;
-		ready_data = data_from_SRAM;
+		next_ready = ready_data;
 		case (state)
 			2'd0: begin
 				next_data = data_from_SRAM;
-				ready_data = data_from_SRAM;
+				next_ready = data_from_SRAM;
 				next_state = 2'd2;
 				next_address = SRAM_address;
 			end
 			2'd2: begin
+				next_ready = ready_data;
 				next_data = ready_data;
 				next_address = SRAM_address;
 				next_state = 2'd1;
 			end
 			2'd1: begin
 				if (~mem_busy)
-					ready_data = data_from_SRAM;
+					next_ready = data_from_SRAM;
 				else
-					ready_data = ready_data;
+					next_ready = ready_data;
 				if (VGA_state == 1) begin
 					next_address = 32'h00000000;
 					next_data = ready_data;
