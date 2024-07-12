@@ -77,12 +77,12 @@ module VGA_data_controller (
 					next_state = 2'd2;
 				else if ((h_count[7:6] == 3) & ((v_count % 5) != 4)) begin
 					next_address = VGA_request_address - 3;
-					next_data = next_data;
+					next_data = data_from_SRAM;
 					next_state = 2'd1;
 				end
 				else begin
 					next_address = VGA_request_address + 1;
-					next_data = next_data;
+					next_data = data_from_SRAM;
 					next_state = 2'd1;
 				end
 			default: next_state = 2'd0;
