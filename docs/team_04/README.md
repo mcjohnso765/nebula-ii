@@ -1,11 +1,12 @@
 # STARS 2024 Design Final Project
 
 ## TEAM NAME
-* Team Member 1 Name
-* Team Member 2 Name
-* Team Member 3 Name
-* Team Member 4 Name
-* Peer Mentor Name
+* Travis Jakl
+* Andy Hu
+* Mary Francis
+* Michael Li
+* Duc Pham
+* Dhruv Khatri
 
 ## Project Type
 Short (2-3 sentences) project description
