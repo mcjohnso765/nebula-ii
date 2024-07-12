@@ -24,15 +24,19 @@ module team_04_tb;
 	reg CSB;
 	reg power1, power2;
 	reg power3, power4;
+	integer i;
 
 	wire gpio;
+	reg uart_in;
 	wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
+	assign mprj_io[9] = uart_in;
 
 	assign mprj_io_0 = mprj_io[7:0];
 	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
 
 	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
+	
 	// assign mprj_io[3] = 1'b1;
 
 	// External clock is used by default.  Make this artificially fast for the
@@ -40,7 +44,7 @@ module team_04_tb;
 	// would be the fast clock.
 
 	assign clk2 = clock;
-	always #12.5 clock <= (clock === 1'b0);
+	always #50 clock <= (clock === 1'b0);
 	initial begin
 		clock = 0;
 	end
@@ -174,8 +178,99 @@ module team_04_tb;
 		// wait(mprj_io_0 == 8'h0A);   
 		// wait(mprj_io_0 == 8'hFF);
 		// wait(mprj_io_0 == 8'h00);
+
 		
-		#(20*1000000);
+		for (i=0; i<1041; i++) begin
+            @(posedge clk2);
+            uart_in = 1;
+        end
+
+		for (i=0; i<521; i++) begin
+            @(posedge clk2);
+            uart_in = 0;
+        end
+
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 1 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 1;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 2 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 0;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 3 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 0;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 4 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 0;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 5 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 1;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 6 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 1;
+			end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 7 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 0;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 8 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 1;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, parity bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 0;
+            end
+        end
+
+        // Returning Rx to IDLE state
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 1;
+            end
+        end
+		#(5*1000000);
 
 		`ifdef GL
 	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
@@ -188,6 +283,7 @@ module team_04_tb;
 
 
 	initial begin
+		uart_in = 1;
 		RSTB <= 1'b0;
 		CSB  <= 1'b1;		// Force CSB high
 		#2000;
@@ -209,11 +305,12 @@ module team_04_tb;
 		power3 <= 1'b1;
 		#100;
 		power4 <= 1'b1;
+		
 	end
 
-	always @(mprj_io) begin
-		#1 $display("MPRJ-IO state = %b ", mprj_io);
-	end
+	// always @(mprj_io) begin
+	// 	#1 $display("MPRJ-IO state = %b ", mprj_io);
+	// end
 
 	wire flash_csb;
 	wire flash_clk;

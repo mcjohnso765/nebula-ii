@@ -323,7 +323,7 @@ void main()
     reg_mprj_io_6 = GPIO_MODE_USER_STD_OUTPUT;
     reg_mprj_io_7 = GPIO_MODE_USER_STD_OUTPUT;
     reg_mprj_io_8 = GPIO_MODE_USER_STD_OUTPUT;
-    reg_mprj_io_9 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_9 = GPIO_MODE_USER_STD_INPUT_PULLDOWN;
     reg_mprj_io_10 = GPIO_MODE_USER_STD_OUTPUT;
     reg_mprj_io_11 = GPIO_MODE_USER_STD_OUTPUT;
     reg_mprj_io_12 = GPIO_MODE_USER_STD_OUTPUT;
@@ -424,17 +424,18 @@ void main()
 	*(&sram_space + 22) = 0x0000006f; //jal x0, 0
 	
 	//unsigned int j = 1;
-	for (int i = 1023; i > 950; i--) {
-		if (i % 4 == 0) {
-		*(&sram_space + i) = 0x0f0f0f0f;
-		} else if (i% 4 == 1) {
-		*(&sram_space + i) = 0x55555555;
-		} else if (i % 4 == 2) {
-		*(&sram_space + i) = 0xFFFFFFFF;
-		} else {
-		*(&sram_space + i) = 0x12345678;
-		}
-	}
+	// Load VGA memory
+	// for (int i = 1023; i > 950; i--) {
+	// 	if (i % 4 == 0) {
+	// 	*(&sram_space + i) = 0x0f0f0f0f;
+	// 	} else if (i% 4 == 1) {
+	// 	*(&sram_space + i) = 0x55555555;
+	// 	} else if (i % 4 == 2) {
+	// 	*(&sram_space + i) = 0xFFFFFFFF;
+	// 	} else {
+	// 	*(&sram_space + i) = 0x12345678;
+	// 	}
+	// }
 
 
 	
