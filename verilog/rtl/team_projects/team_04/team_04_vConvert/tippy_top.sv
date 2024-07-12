@@ -175,13 +175,13 @@ module tippy_top (
     //     $readmemh("instrList.txt", instrMem);
     // end
 
-    always @(posedge mem_write) begin
-        #(10) $display("@ %t: Writing %h %h", $time, adr_to_mem, data_to_mem);
-    end
+    // always @(posedge mem_write) begin
+    //     #(10) $display("@ %t: Writing %h %h", $time, adr_to_mem, data_to_mem);
+    // end
 
-    always @(posedge mem_read) begin
-        #(10) $display("@ %t: Reading %h %h", $time, adr_to_mem, data_to_mem);
-    end
+    // always @(posedge mem_read) begin
+    //     #(10) $display("@ %t: Reading %h %h", $time, adr_to_mem, data_to_mem);
+    // end
 
 endmodule
 
