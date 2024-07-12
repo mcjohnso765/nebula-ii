@@ -174,11 +174,12 @@ void main()
 	sram_space = 0x3e800093;
     *(&sram_space + 1) = 0x7d000113;
     *(&sram_space + 2) = 0x002081b3;
-	*(&sram_space + 3) = 0x33000237;
-	*(&sram_space + 4) = 0x00420213;
-	*(&sram_space + 5) = 0x00022283;
-	// *(&sram_space + 6) = 0xFFFFFFFF;
-	*(&sram_space + 6) = 0x0000006f;
+	*(&sram_space + 3) = 0x0cc00237;
+	*(&sram_space + 4) = 0x3ff20213;
+	*(&sram_space + 5) = 0x00221213;
+	*(&sram_space + 6) = 0x00022283;
+	// *(&sram_space + 7) = 0x00322023;
+	*(&sram_space + 7) = 0x0000006f;
 
 	/**
 	*(&sram_space + 6) = 0xfe0302e3;

@@ -379,6 +379,8 @@ module team_05_tb;
 	wire [37:0] mprj_io;
 	reg [33:0] expected_io;
 	wire [33:0] checkbits;
+	reg [37:0] mprj_io_in;
+	assign mprj_io[37:34] = mprj_io_in[37:34]; //keyboard input
 
 	// Signals assignments
 	assign checkbits = {mprj_io[37:5], mprj_io[0]};
@@ -508,8 +510,24 @@ module team_05_tb;
 		$finish;
 	end
 
+	task press_button;
+		input [3:0] keyboard_in;
+		input [3:0] keyboard_out;
+		#(mprj_io[18:15] == keyboard_out);
+		mprj_io_in[37:34] = keyboard_in;
+		@(negedge clock);
+		@(negedge clock);
+		@(negedge clock);
+		@(negedge clock);
+		@(negedge clock);
+		mprj_io_in[37:34] = 4'h0;
+
+	endtask
+
+
 	// Main Testbench and Output check
 	initial begin
+		press_button(4'b0010, 4'b1110); //press button 2????
 
     /*
 		wait(checkbits == 'b0);
@@ -544,7 +562,7 @@ module team_05_tb;
 */
 
 		
-        #1050000;  // wait some time before ending
+        #5000000;  // wait some time before ending
         // ;  // wait some time before ending
 		// #963780;
 		`ifdef GL
