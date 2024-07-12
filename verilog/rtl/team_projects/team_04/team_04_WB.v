@@ -57,6 +57,8 @@ module team_04_WB (
 	wire [32-1:0]	mem_adr_start;
 	wire [32-1:0]	memory_size;
 
+	assign IRQ = 0;
+
 	// Register Definitions
 	reg [0:0]	EN_VAL_REG;
 	assign	en = EN_VAL_REG;
