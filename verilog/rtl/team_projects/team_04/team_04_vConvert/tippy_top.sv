@@ -1379,12 +1379,13 @@ module VGA_data_controller (
     input logic [9:0] h_count,
     input logic [8:0] v_count,
     input logic [1:0] VGA_state,
+    input logic mem_busy,
     output logic [3:0] byte_select_out,
     output logic read,
     output logic [31:0] data_to_VGA, SRAM_address
 );
 
-    logic [31:0] next_data, next_address;
+    logic [31:0] next_data, next_address, ready_data;
 
     always_comb begin
         if (VGA_state > 0) begin
@@ -1419,24 +1420,29 @@ module VGA_data_controller (
     always_comb begin
         next_data = data_to_VGA;
         next_address = SRAM_address;
+        ready_data = data_from_SRAM;
             case (state)
                 IDLE: begin
                     next_data = data_from_SRAM;
+                    ready_data = data_from_SRAM;
                     next_state = LOAD_NEW_REGISTER;
                     next_address = SRAM_address;
                 end
 
                 LOAD_NEW_REGISTER: begin
-                    next_data = data_from_SRAM;
+                    next_data = ready_data;
                     next_address = SRAM_address;
                     next_state = PREPARE_DATA;
                 end
 
                 PREPARE_DATA: begin
-                    if (VGA_state == 1) begin // preparing first word 
+                    if (~mem_busy) begin
+                        ready_data = data_from_SRAM;
+                    end
+                    if ((VGA_state == 1)) begin // preparing first word 
                       //SRAM_address <= 32'h3E80; // base of SRAM storage
                         next_address = 32'h0; // TESTBENCH CASE
-                        next_data = data_from_SRAM;
+                        next_data = ready_data;
                         next_state = LOAD_NEW_REGISTER;
                     end
                     
@@ -1444,11 +1450,12 @@ module VGA_data_controller (
                         next_state = LOAD_NEW_REGISTER;
                     end else if ((h_count[7:6] == 3) & ((v_count % 5) != 4))begin
                         next_address = VGA_request_address - 3; // preparing next word 
-                        next_data = data_from_SRAM;
+                        next_data = data_to_VGA;
+                        
                         next_state = PREPARE_DATA;
                     end else begin
                         next_address = VGA_request_address + 1; // preparing next word 
-                        next_data = data_from_SRAM;
+                        next_data = data_to_VGA;
                         next_state = PREPARE_DATA;
                     end
 
