@@ -11,6 +11,11 @@
 ## Project Type
 Our project was to create a 32-bit single-cycle RISC-V CPU. We integrated this with a 4x4 keypad for inputs and a 16x2 LCD screen for outputs. 
 
+## Demo Video
+Click on the thumbnail to go to the youtube video of our demo!
+
+[![YouTube](http://i.ytimg.com/vi/anySU9C3ncY/hqdefault.jpg)](https://www.youtube.com/watch?v=anySU9C3ncY)
+
 ## Pin Layout
 Note that on the final chip, there are 38 gpio of which you have access to 4.
 The first number represents the GPIO on the physical board. The second number
