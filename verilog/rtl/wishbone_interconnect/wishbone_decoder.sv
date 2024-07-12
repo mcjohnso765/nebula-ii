@@ -11,7 +11,7 @@
 //               Decoder
 //                | | |
 //                V V V
-//           gpio/la/user projects/sram
+//    team_0C/team_01/samp/la/gpio/sram
 //
 
 module wishbone_decoder #(
@@ -91,7 +91,6 @@ always @(*) begin
     // wbs_dat_o_m = '0;
 
     for(state_idx = 0; state_idx <= (NUM_TEAMS + 3); state_idx++) begin
-
         if(curr_state == '1) begin //SRAM special state
             next_state = 1 << 1;
 
@@ -142,7 +141,7 @@ always @(*) begin
                         wbs_dat_o_periph[0] = wbs_dat_i_m;
                         wbs_sel_o_periph[0] = wbs_sel_i_m;
                         next_dat_reg        = wbs_dat_i_periph[0];
-                        //next_ack_reg        = 1'b1;
+                        // next_ack_reg        = 1'b1;
                     end
                     32'h30??????: begin //user project address space
                         next_state = 1 << (3 + wbs_adr_i_m[19:16]);
