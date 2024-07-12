@@ -57,7 +57,8 @@ in brackets represents the number in your verilog code
 38[34] Input/Output: Pin_Function
 
 ## Supporting Equipment
-List all the required equipment and upload a breadboard with the equipment set up (recommend using tinkercad circuits if possible)
+* VGA Female Breakout Connector
+* 
 
 ## RTL Diagrams
 All the stuff from the proposal goes here, obviously updated from the time you did the proposal to the final layout
