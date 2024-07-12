@@ -283,7 +283,9 @@
 #define sram_space (*(volatile uint32_t*)0x33000000)
 
 // Team 4 Space
-#define reg_team_04_EN (*(volatile uint32_t*)0x30010000)
+#define reg_team_04_EN (*(volatile uint32_t*)0x30040000)
+#define reg_team_04_START_ADR (*(volatile uint32_t*)0x30040004)
+#define reg_team_04_MEM_SIZE (*(volatile uint32_t*)0x30040008)
 
 
 /*
@@ -421,8 +423,17 @@ void main()
 	// *(&sram_space + 28) = 0x0f405903; //lhu x18, 244(x0)
 	*(&sram_space + 22) = 0x0000006f; //jal x0, 0
 	
-	for (int i = 0; i < 384; i++) {
-		*(&sram_space + 500 + i) = 0xffffffff; //jal x0, 0
+	//unsigned int j = 1;
+	for (int i = 1023; i > 950; i--) {
+		if (i % 4 == 0) {
+		*(&sram_space + i) = 0x0f0f0f0f;
+		} else if (i% 4 == 1) {
+		*(&sram_space + i) = 0x55555555;
+		} else if (i % 4 == 2) {
+		*(&sram_space + i) = 0xFFFFFFFF;
+		} else {
+		*(&sram_space + i) = 0x12345678;
+		}
 	}
 
 
@@ -453,6 +464,12 @@ void main()
 	// *(&sram_space + 16) = 0x00000000;
 	// *(&sram_space + 17) = 0x0041f463; //bgeu x3, x4, 8
 	// *(&sram_space + 18) = 0xfe5ff06f; //jal x0, -28
+
+	// Set memory size
+	reg_team_04_MEM_SIZE = 4096;
+
+	// Set start address
+	reg_team_04_START_ADR = 0x33000000;
 
     // Enable CPU
     reg_team_04_EN = 1;

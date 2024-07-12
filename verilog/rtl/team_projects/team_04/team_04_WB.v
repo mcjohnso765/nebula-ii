@@ -44,7 +44,9 @@ module team_04_WB (
 	input	wire	[1-1:0]	ACK_I
 );
 
-	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30010000;
+	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30040000;
+	localparam	ADDR_START_VAL_REG_OFFSET = `WB_AW'h30040004;
+	localparam	MEM_SIZE_REG_REG_OFFSET = `WB_AW'h30040008;
 	wire		clk = clk_i;
 	wire		nrst = (~rst_i);
 
@@ -52,16 +54,28 @@ module team_04_WB (
 	`WB_CTRL_SIGNALS
 
 	wire [1-1:0]	en;
+	wire [32-1:0]	mem_adr_start;
+	wire [32-1:0]	memory_size;
 
 	// Register Definitions
 	reg [0:0]	EN_VAL_REG;
 	assign	en = EN_VAL_REG;
 	`WB_REG(EN_VAL_REG, 0, 1)
 
+	reg [31:0]	ADDR_START_VAL_REG;
+	assign	mem_adr_start = ADDR_START_VAL_REG;
+	`WB_REG(ADDR_START_VAL_REG, 0, 32)
+
+	reg [31:0]	MEM_SIZE_REG_REG;
+	assign	memory_size = MEM_SIZE_REG_REG;
+	`WB_REG(MEM_SIZE_REG_REG, 0, 32)
+
 	team_04 instance_to_wrap (
 		.clk(clk),
 		.nrst(nrst),
 		.en(en),
+		.mem_adr_start(mem_adr_start),
+		.memory_size(memory_size),
 		.la_data_in(la_data_in),
 		.la_data_out(la_data_out),
 		.la_oenb(la_oenb),
@@ -80,6 +94,8 @@ module team_04_WB (
 
 	assign	dat_o = 
 			(adr_i[`WB_AW-1:0] == EN_VAL_REG_OFFSET)	? EN_VAL_REG :
+			(adr_i[`WB_AW-1:0] == ADDR_START_VAL_REG_OFFSET)	? ADDR_START_VAL_REG :
+			(adr_i[`WB_AW-1:0] == MEM_SIZE_REG_REG_OFFSET)	? MEM_SIZE_REG_REG :
 			32'hDEADBEEF;
 
 	always @ (posedge clk_i or posedge rst_i)

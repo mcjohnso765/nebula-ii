@@ -15,7 +15,7 @@
 
 `default_nettype none
 
-`timescale 1 ns / 1 ps
+`timescale 1 ns / 100 ps
 
 module team_04_tb;
 	reg clock;
@@ -175,7 +175,7 @@ module team_04_tb;
 		// wait(mprj_io_0 == 8'hFF);
 		// wait(mprj_io_0 == 8'h00);
 		
-		#1254400;
+		#(20*1000000);
 
 		`ifdef GL
 	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");

@@ -1444,11 +1444,11 @@ module VGA_data_controller (
                         next_state = LOAD_NEW_REGISTER;
                     end else if ((h_count[7:6] == 3) & ((v_count % 5) != 4))begin
                         next_address = VGA_request_address - 3; // preparing next word 
-                        next_data = next_data;
+                        next_data = data_from_SRAM;
                         next_state = PREPARE_DATA;
                     end else begin
                         next_address = VGA_request_address + 1; // preparing next word 
-                        next_data = next_data;
+                        next_data = data_from_SRAM;
                         next_state = PREPARE_DATA;
                     end
 

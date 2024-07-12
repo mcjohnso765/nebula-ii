@@ -30,6 +30,14 @@ ports:
     width: 1
     direction: input
     description: Enables or disables team design
+  - name: mem_adr_start
+    width: 32
+    direction: input
+    description: Start Address
+  - name: memory_size
+    width: 32
+    direction: input
+    description: size of memory
 
 external_interface:
   - name: la_data_in
@@ -121,3 +129,19 @@ registers:
     bit_access: false
     write_port: en
     description: Enables or disables team design
+  - name: ADDR_START_VAL
+    size: 32
+    mode: w
+    fifo: false
+    offset: 4
+    bit_access: false
+    write_port: mem_adr_start
+    description: start address value
+  - name: MEM_SIZE_REG
+    size: 32
+    mode: w
+    fifo: false
+    offset: 8
+    bit_access: false
+    write_port: memory_size
+    description: size of memory
