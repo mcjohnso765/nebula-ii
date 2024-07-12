@@ -9,7 +9,7 @@
 * Dhruv Khatri
 
 ## Project Type
-Short (2-3 sentences) project description
+Our group designed and implemented a RISC-V 32-bit CPU with a serial UART input and outputs to a VGA display. The CPUs peripherals cooperate with the CPU via memory mapped I/O. Given the proper instructions, our CPU can serve multiple purposes, such as doing calculations, running games, and much more. 
 
 ## Pin Layout
 Note that on the final chip, there are 38 gpio of which you have access to 4.
