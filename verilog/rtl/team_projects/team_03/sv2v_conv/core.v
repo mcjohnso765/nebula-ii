@@ -26,7 +26,9 @@ module core (
 	output wire READ_I;
 	input wire [33:0] gpio_in;
 	output wire [33:0] gpio_out;
+	assign gpio_out[33:32] = 2'b0;
 	output wire [33:0] gpio_oeb;
+	assign gpio_oeb[33:32] = 2'b0;
 	wire [2:0] i_type;
 	wire [16:0] instruction;
 	wire [3:0] alu_op;
