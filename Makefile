@@ -35,16 +35,22 @@ USER_ARGS = -u $$(id -u $$USER):$$(id -g $$USER)
 ifeq ($(ROOTLESS), 1)
 	USER_ARGS =
 endif
-export OPENLANE_ROOT?=$(PWD)/dependencies/openlane_src
+# export OPENLANE_ROOT?=$(PWD)/dependencies/openlane_src
+export OPENLANE2_ROOT?=${HOME}/STARS2024/openlane2-2.0.7 # for nanoHUB
 export BUS_WRAP_ROOT?=$(PWD)/dependencies/BusWrap
 export PDK_ROOT?=$(PWD)/dependencies/pdks
+# export PDK_ROOT?=/apps/share64/rocky8/openlane2/openlane2-stars2024-20240613/PDKS   # for nanoHUB
 export DISABLE_LVS?=0
 
 export ROOTLESS
 
+# After students are done with nanoHUB,
+# before tapeout we may want to use the following:
+# export OPEN_PDKS_COMMIT?=78b7bc32ddb4b6f14f76883c2e2dc5b5de9d1cbc
+
 ifeq ($(PDK),sky130A)
 	SKYWATER_COMMIT=f70d8ca46961ff92719d8870a18a076370b85f6c
-	export OPEN_PDKS_COMMIT?=78b7bc32ddb4b6f14f76883c2e2dc5b5de9d1cbc
+	export OPEN_PDKS_COMMIT?=4d5af10bfee4dab799566aaf903bb22aee69bac9
 	export OPENLANE_TAG?=2023.07.19-1
 	MPW_TAG ?= mpw-9i
 
@@ -168,6 +174,7 @@ custom_run_verify =\
     export MCW_ROOT=$(MCW_ROOT) &&\
 	export GCC_PREFIX=riscv64-unknown-elf &&\
 	export GCC_PATH=/package/riscv-gnu-toolchain/bin/ &&\
+	export USER_PROJECT_VERILOG=$(PWD)/verilog &&\
     cd verilog/dv/$* && export SIM=${SIM} && make
 
 .PHONY: harden
@@ -458,10 +465,12 @@ zicsr-fix:
 
 #Clone BusWrap Repo
 .PHONY: bus-wrap-setup
-bus-wrap-setup:
+bus-wrap-setup: check_dependencies
 	pip install svmodule &&\
 	cd $(PWD)/dependencies &&\
-	git clone git@github.com:efabless/BusWrap.git
+	git clone git@github.com:efabless/BusWrap.git &&\
+	cd BusWrap &&\
+	git checkout e468b6b
 
 #Generate YAML files for teams
 .PHONY: bus-wrap-initialize
@@ -469,7 +478,7 @@ bus-wrap-initialize:
 	cd $(PWD)/verilog/rtl &&\
 	make initialize
 
-#Generate YAML files for teams
+#Generate Bus Wrap Verilog files for teams
 .PHONY: bus-wrap-generate
 bus-wrap-generate:
 	cd $(PWD)/verilog/rtl &&\
@@ -486,3 +495,19 @@ tb-module-%:
 	export USER_PROJECT_VERILOG=$(PWD)/verilog &&\
 	cd $(PWD)/verilog/dv/$(firstword $(subst -, ,$*))/module_tests &&\
 	make $(lastword $(subst -, ,$*)).vcd
+
+
+# Compilation and Simulation with Synopsys VCS
+# The testbenches must live within the dv/team_##/module_tests directory and will output there too
+# Example target: tbsim-source-sample_proj-flex_counter
+.PHONY: tbsim-source-%
+tbsim-source-%:
+	@echo "\n------------"
+	@echo "Team Folder: $(firstword $(subst -, ,$*))"
+	@echo "Module Name: $(lastword $(subst -, ,$*))"
+	@echo "------------\n"
+	export USER_PROJECT_VERILOG=$(PWD)/verilog &&\
+	cd $(PWD)/verilog/dv/$(firstword $(subst -, ,$*))/module_tests &&\
+	make sim-source-$(lastword $(subst -, ,$*))
+
+# FYI: Run 'make clean' to clean all temporary files produced by testbenches

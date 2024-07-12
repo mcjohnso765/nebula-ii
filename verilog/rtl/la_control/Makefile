@@ -14,9 +14,7 @@ generate_wb_yaml:
 #This removes the team_1_proj_WB.v file and generates a new one using the yml in this directory
 .PHONY: generate_wb_wrapper
 generate_wb_wrapper:
-	@if [ -f $(WB_DIRECTORY_NAME)_wb.v ]; then \
-        rm $(WB_DIRECTORY_NAME)_wb.v; \
+	@if [ ! -f $(WB_DIRECTORY_NAME)_WB.v ]; then \
+        python3 $(BUS_WRAP_ROOT)/scripts/bus_wrap.py $(WB_DIRECTORY_NAME).yml -wb > $(WB_DIRECTORY_NAME)_WB.v; \
     fi
-	python3 $(BUS_WRAP_ROOT)/scripts/bus_wrap.py $(WB_DIRECTORY_NAME).yml -wb > $(WB_DIRECTORY_NAME)_wb.v; \
-
 	

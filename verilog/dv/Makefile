@@ -20,7 +20,7 @@
 .SILENT: clean all
 
 
-PATTERNS = io_ports la_test1 la_test2 wb_port mprj_stimulus sample_proj team_01 team_02 team_03 team_04 team_05 team_06 team_07 team_08 team_09 team_10 team_11 team_12
+PATTERNS = io_ports la_test1 la_test2 wb_port wb_test mprj_stimulus sample_proj team_01 team_02 team_03 team_04 team_05 team_06 team_07 team_08 team_09 team_10 team_11 team_12
 
 all:  ${PATTERNS}
 
@@ -35,6 +35,9 @@ $(DV_PATTERNS): verify-% :
 clean:  ${PATTERNS}
 	for i in ${PATTERNS}; do \
 		( cd $$i && \rm  -f *.elf *.hex *.bin *.vvp *.log *.vcd *.lst *.hexe ) ; \
+	done
+	for i in $(filter-out io_ports la_test1 la_test2 wb_port mprj_stimulus, $(PATTERNS)); do \
+		( cd $$i && \cd module_tests && \make clean) ; \
 	done
 	rm -rf *.log
 	

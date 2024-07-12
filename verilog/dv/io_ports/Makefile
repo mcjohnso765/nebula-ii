@@ -27,6 +27,4 @@ CONFIG = caravel_user_project
 include $(MCW_ROOT)/verilog/dv/make/env.makefile
 include $(MCW_ROOT)/verilog/dv/make/var.makefile
 include $(MCW_ROOT)/verilog/dv/make/cpu.makefile
-include $(MCW_ROOT)/verilog/dv/make/sim.makefile
-
-
+include $(USER_PROJECT_VERILOG)/dv/make/sim.makefile  # Allow SV testbenches

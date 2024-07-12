@@ -1,0 +1,1210 @@
+
+===========================================================================
+report_checks -unconstrained
+===========================================================================
+======================= max_ff_n40C_1v95 Corner ===================================
+
+Startpoint: wb_rst_i (input port clocked by clk)
+Endpoint: _1143_ (recovery check against rising-edge clock clk)
+Path Group: asynchronous
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+---------------------------------------------------------------------------------------------
+                                  0.000000    0.000000   clock clk (rise edge)
+                                  5.570000    5.570000   clock network delay (propagated)
+                                 50.000000   55.570000 v input external delay
+    13    0.182564    0.000000    0.000000   55.570000 v wb_rst_i (in)
+                                                         wb_rst_i (net)
+                      0.110932    0.055465   55.625465 v fanout319/A (sky130_fd_sc_hd__buf_2)
+    12    0.063415    0.106342    0.177625   55.803089 v fanout319/X (sky130_fd_sc_hd__buf_2)
+                                                         net319 (net)
+                      0.106623    0.004643   55.807732 v fanout309/A (sky130_fd_sc_hd__buf_2)
+    12    0.051944    0.087837    0.166185   55.973919 v fanout309/X (sky130_fd_sc_hd__buf_2)
+                                                         net309 (net)
+                      0.087911    0.002156   55.976074 v fanout306/A (sky130_fd_sc_hd__buf_4)
+    10    0.057119    0.062846    0.149129   56.125202 v fanout306/X (sky130_fd_sc_hd__buf_4)
+                                                         net306 (net)
+                      0.062881    0.001450   56.126652 v fanout305/A (sky130_fd_sc_hd__buf_4)
+    10    0.056803    0.061874    0.139490   56.266144 v fanout305/X (sky130_fd_sc_hd__buf_4)
+                                                         net305 (net)
+                      0.062110    0.003304   56.269447 v _0985_/A (sky130_fd_sc_hd__inv_2)
+     1    0.004133    0.026071    0.041968   56.311417 ^ _0985_/Y (sky130_fd_sc_hd__inv_2)
+                                                         _0071_ (net)
+                      0.026072    0.000217   56.311634 ^ _1143_/RESET_B (sky130_fd_sc_hd__dfrtp_1)
+                                             56.311634   data arrival time
+
+                                100.000000  100.000000   clock clk (rise edge)
+                                  4.650000  104.649994   clock source latency
+   318    0.958274    0.610000    0.000000  104.649994 ^ wb_clk_i (in)
+                                                         wb_clk_i (net)
+                      1.306079    0.348045  104.998039 ^ _1143_/CLK (sky130_fd_sc_hd__dfrtp_1)
+                                 -0.250000  104.748039   clock uncertainty
+                                  0.000000  104.748039   clock reconvergence pessimism
+                                  0.213790  104.961830   library recovery time
+                                            104.961830   data required time
+---------------------------------------------------------------------------------------------
+                                            104.961830   data required time
+                                            -56.311634   data arrival time
+---------------------------------------------------------------------------------------------
+                                             48.650200   slack (MET)
+
+
+Startpoint: wbs_adr_i[7] (input port clocked by clk)
+Endpoint: wbs_dat_o[28] (output port clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+---------------------------------------------------------------------------------------------
+                                  0.000000    0.000000   clock clk (rise edge)
+                                  5.570000    5.570000   clock network delay (propagated)
+                                  3.890000    9.460000 v input external delay
+    12    0.181574    0.920000    0.000000    9.460000 v wbs_adr_i[7] (in)
+                                                         wbs_adr_i[7] (net)
+                      1.099948    0.089973    9.549973 v mprj.sample_team_proj_Wrapper/wbs_adr_i[7] (sample_team_proj_Wrapper)
+    47    0.171743    0.390243    3.028017   12.577991 v mprj.sample_team_proj_Wrapper/wbs_dat_o[28] (sample_team_proj_Wrapper)
+                                                         mprj.designs_wbs_dat_o[1][28] (net)
+                      0.433612    0.099022   12.677012 v _0893_/B (sky130_fd_sc_hd__and3_1)
+     2    0.019598    0.080840    0.291709   12.968721 v _0893_/X (sky130_fd_sc_hd__and3_1)
+                                                         _0506_ (net)
+                      0.080924    0.002334   12.971056 v _0894_/A3 (sky130_fd_sc_hd__o31a_2)
+     2    0.031979    0.085934    0.242012   13.213067 v _0894_/X (sky130_fd_sc_hd__o31a_2)
+                                                         net226 (net)
+                      0.086655    0.006104   13.219171 v output226/A (sky130_fd_sc_hd__buf_12)
+     1    0.191875    0.079314    0.150399   13.369570 v output226/X (sky130_fd_sc_hd__buf_12)
+                                                         wbs_dat_o[28] (net)
+                      0.081382    0.010217   13.379786 v wbs_dat_o[28] (out)
+                                             13.379786   data arrival time
+
+                                100.000000  100.000000   clock clk (rise edge)
+                                  4.650000  104.649994   clock network delay (propagated)
+                                 -0.250000  104.399994   clock uncertainty
+                                  0.000000  104.399994   clock reconvergence pessimism
+                                 -3.620000  100.779999   output external delay
+                                            100.779999   data required time
+---------------------------------------------------------------------------------------------
+                                            100.779999   data required time
+                                            -13.379786   data arrival time
+---------------------------------------------------------------------------------------------
+                                             87.400215   slack (MET)
+
+
+
+
+===========================================================================
+report_checks --slack_max -0.01
+============================================================================
+======================= max_ff_n40C_1v95 Corner ===================================
+
+No paths found.
+
+
+===========================================================================
+ report_check_types -max_slew -max_cap -max_fanout -violators
+============================================================================
+======================= max_ff_n40C_1v95 Corner ===================================
+
+max slew
+
+Pin                                        Limit        Slew       Slack
+------------------------------------------------------------------------
+mprj.sample_team_proj_Wrapper/gpio_in[7]    1.500000    2.482281   -0.982281 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[7]/DIODE    1.500000    2.482274   -0.982274 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[20]/DIODE    1.500000    2.442314   -0.942314 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[20]    1.500000    2.442290   -0.942290 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[122]/DIODE    1.500000    2.352658   -0.852658 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[122]    1.500000    2.352626   -0.852626 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[5]    1.500000    2.329035   -0.829035 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[5]/DIODE    1.500000    2.329027   -0.829027 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[121]/DIODE    1.500000    2.318543   -0.818543 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[121]    1.500000    2.318511   -0.818511 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[104]    1.500000    2.130570   -0.630571 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[104]/DIODE    1.500000    2.130554   -0.630554 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[12]    1.500000    2.090655   -0.590655 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[12]/DIODE    1.500000    2.090646   -0.590646 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[9]/DIODE    1.500000    2.060091   -0.560091 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[9]    1.500000    2.060063   -0.560063 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[8]/DIODE    1.500000    2.051878   -0.551879 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[8]    1.500000    2.051761   -0.551761 (VIOLATED)
+output7/A                               1.500000    2.035301   -0.535302 (VIOLATED)
+ANTENNA_output7_A/DIODE                 1.500000    2.034996   -0.534996 (VIOLATED)
+output5/A                               1.500000    2.030486   -0.530486 (VIOLATED)
+ANTENNA_output5_A/DIODE                 1.500000    2.030194   -0.530194 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[19]/DIODE    1.500000    2.020312   -0.520312 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[19]    1.500000    2.020283   -0.520283 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[100]/DIODE    1.500000    1.988689   -0.488689 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[100]    1.500000    1.988657   -0.488657 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[105]/DIODE    1.500000    1.985270   -0.485270 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[105]    1.500000    1.985238   -0.485239 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[119]/DIODE    1.500000    1.971059   -0.471059 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[119]    1.500000    1.971027   -0.471027 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[124]/DIODE    1.500000    1.943473   -0.443473 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[124]    1.500000    1.943441   -0.443441 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[13]/DIODE    1.500000    1.936404   -0.436404 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[13]    1.500000    1.936318   -0.436318 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wb_clk_i    1.500000    1.928028   -0.428028 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_wb_clk_i/DIODE    1.500000    1.928011   -0.428011 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[120]/DIODE    1.500000    1.899876   -0.399876 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[120]    1.500000    1.899844   -0.399844 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[15]/DIODE    1.500000    1.892690   -0.392690 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[15]    1.500000    1.892661   -0.392661 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[126]/DIODE    1.500000    1.875542   -0.375542 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[126]    1.500000    1.875510   -0.375511 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[101]/DIODE    1.500000    1.875101   -0.375101 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[101]    1.500000    1.875069   -0.375069 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[127]/DIODE    1.500000    1.872583   -0.372583 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[127]    1.500000    1.872551   -0.372552 (VIOLATED)
+output45/A                              1.500000    1.851473   -0.351473 (VIOLATED)
+ANTENNA_output45_A/DIODE                1.500000    1.851174   -0.351174 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[102]/DIODE    1.500000    1.843922   -0.343922 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[102]    1.500000    1.843890   -0.343890 (VIOLATED)
+ANTENNA__1202__CLK/DIODE                1.500000    1.839278   -0.339278 (VIOLATED)
+_1202_/CLK                              1.500000    1.839140   -0.339140 (VIOLATED)
+_1138_/CLK                              1.500000    1.838213   -0.338213 (VIOLATED)
+ANTENNA__1170__CLK/DIODE                1.500000    1.837801   -0.337801 (VIOLATED)
+_1200_/CLK                              1.500000    1.837570   -0.337570 (VIOLATED)
+ANTENNA__1138__CLK/DIODE                1.500000    1.837526   -0.337526 (VIOLATED)
+ANTENNA__1105__CLK/DIODE                1.500000    1.837417   -0.337417 (VIOLATED)
+_1105_/CLK                              1.500000    1.837379   -0.337379 (VIOLATED)
+_1201_/CLK                              1.500000    1.834188   -0.334188 (VIOLATED)
+ANTENNA__1203__CLK/DIODE                1.500000    1.834097   -0.334097 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[109]/DIODE    1.500000    1.832965   -0.332965 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[109]    1.500000    1.832933   -0.332933 (VIOLATED)
+_1203_/CLK                              1.500000    1.832608   -0.332608 (VIOLATED)
+_1172_/CLK                              1.500000    1.831238   -0.331238 (VIOLATED)
+ANTENNA__1109__CLK/DIODE                1.500000    1.831062   -0.331062 (VIOLATED)
+_1107_/CLK                              1.500000    1.831062   -0.331062 (VIOLATED)
+_1109_/CLK                              1.500000    1.830977   -0.330977 (VIOLATED)
+ANTENNA__1142__CLK/DIODE                1.500000    1.830950   -0.330950 (VIOLATED)
+_1142_/CLK                              1.500000    1.830946   -0.330946 (VIOLATED)
+_1174_/CLK                              1.500000    1.830268   -0.330268 (VIOLATED)
+ANTENNA__1174__CLK/DIODE                1.500000    1.830255   -0.330256 (VIOLATED)
+_1103_/CLK                              1.500000    1.830232   -0.330232 (VIOLATED)
+ANTENNA__1106__CLK/DIODE                1.500000    1.830174   -0.330174 (VIOLATED)
+_1106_/CLK                              1.500000    1.830053   -0.330053 (VIOLATED)
+ANTENNA__1139__CLK/DIODE                1.500000    1.829960   -0.329960 (VIOLATED)
+_1139_/CLK                              1.500000    1.829867   -0.329867 (VIOLATED)
+_1170_/CLK                              1.500000    1.829623   -0.329624 (VIOLATED)
+ANTENNA__1205__CLK/DIODE                1.500000    1.829594   -0.329594 (VIOLATED)
+ANTENNA__1206__CLK/DIODE                1.500000    1.829581   -0.329581 (VIOLATED)
+ANTENNA__1171__CLK/DIODE                1.500000    1.829198   -0.329198 (VIOLATED)
+_1173_/CLK                              1.500000    1.829148   -0.329148 (VIOLATED)
+_1171_/CLK                              1.500000    1.829089   -0.329089 (VIOLATED)
+ANTENNA__1173__CLK/DIODE                1.500000    1.829058   -0.329058 (VIOLATED)
+_1141_/CLK                              1.500000    1.827951   -0.327951 (VIOLATED)
+_1205_/CLK                              1.500000    1.827925   -0.327925 (VIOLATED)
+_1206_/CLK                              1.500000    1.827891   -0.327891 (VIOLATED)
+ANTENNA__1141__CLK/DIODE                1.500000    1.827881   -0.327881 (VIOLATED)
+_1108_/CLK                              1.500000    1.827814   -0.327814 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[123]/DIODE    1.500000    1.826408   -0.326408 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[123]    1.500000    1.826376   -0.326376 (VIOLATED)
+ANTENNA__1108__CLK/DIODE                1.500000    1.825953   -0.325953 (VIOLATED)
+ANTENNA__1215__CLK/DIODE                1.500000    1.825444   -0.325444 (VIOLATED)
+ANTENNA__1088__CLK/DIODE                1.500000    1.825409   -0.325409 (VIOLATED)
+_1088_/CLK                              1.500000    1.825406   -0.325406 (VIOLATED)
+_1121_/CLK                              1.500000    1.825173   -0.325173 (VIOLATED)
+_1153_/CLK                              1.500000    1.824960   -0.324960 (VIOLATED)
+ANTENNA__1121__CLK/DIODE                1.500000    1.824937   -0.324937 (VIOLATED)
+ANTENNA__1153__CLK/DIODE                1.500000    1.824915   -0.324915 (VIOLATED)
+ANTENNA__1120__CLK/DIODE                1.500000    1.824843   -0.324843 (VIOLATED)
+_1120_/CLK                              1.500000    1.824387   -0.324387 (VIOLATED)
+_1179_/CLK                              1.500000    1.823100   -0.323100 (VIOLATED)
+_1210_/CLK                              1.500000    1.823003   -0.323003 (VIOLATED)
+ANTENNA__1210__CLK/DIODE                1.500000    1.822956   -0.322956 (VIOLATED)
+_1178_/CLK                              1.500000    1.822827   -0.322827 (VIOLATED)
+ANTENNA__1178__CLK/DIODE                1.500000    1.822767   -0.322767 (VIOLATED)
+_1087_/CLK                              1.500000    1.822576   -0.322576 (VIOLATED)
+ANTENNA__1087__CLK/DIODE                1.500000    1.822530   -0.322530 (VIOLATED)
+_1177_/CLK                              1.500000    1.822451   -0.322451 (VIOLATED)
+ANTENNA__1177__CLK/DIODE                1.500000    1.822426   -0.322426 (VIOLATED)
+_1207_/CLK                              1.500000    1.822242   -0.322242 (VIOLATED)
+ANTENNA__1207__CLK/DIODE                1.500000    1.822208   -0.322208 (VIOLATED)
+ANTENNA__1179__CLK/DIODE                1.500000    1.821820   -0.321820 (VIOLATED)
+_1209_/CLK                              1.500000    1.821768   -0.321768 (VIOLATED)
+ANTENNA__1209__CLK/DIODE                1.500000    1.821703   -0.321703 (VIOLATED)
+_1175_/CLK                              1.500000    1.821581   -0.321581 (VIOLATED)
+ANTENNA__1175__CLK/DIODE                1.500000    1.821536   -0.321536 (VIOLATED)
+_1176_/CLK                              1.500000    1.821414   -0.321414 (VIOLATED)
+ANTENNA__1176__CLK/DIODE                1.500000    1.821386   -0.321386 (VIOLATED)
+ANTENNA__1211__CLK/DIODE                1.500000    1.821360   -0.321360 (VIOLATED)
+_1211_/CLK                              1.500000    1.821340   -0.321340 (VIOLATED)
+_1168_/CLK                              1.500000    1.821079   -0.321079 (VIOLATED)
+ANTENNA__1116__CLK/DIODE                1.500000    1.820688   -0.320688 (VIOLATED)
+_1208_/CLK                              1.500000    1.820389   -0.320389 (VIOLATED)
+ANTENNA__1208__CLK/DIODE                1.500000    1.820319   -0.320319 (VIOLATED)
+_1116_/CLK                              1.500000    1.819981   -0.319981 (VIOLATED)
+_1148_/CLK                              1.500000    1.819601   -0.319601 (VIOLATED)
+ANTENNA__1148__CLK/DIODE                1.500000    1.819560   -0.319560 (VIOLATED)
+ANTENNA__1145__CLK/DIODE                1.500000    1.819537   -0.319537 (VIOLATED)
+_1146_/CLK                              1.500000    1.819524   -0.319524 (VIOLATED)
+ANTENNA__1146__CLK/DIODE                1.500000    1.819494   -0.319494 (VIOLATED)
+_1077_/CLK                              1.500000    1.817672   -0.317672 (VIOLATED)
+ANTENNA__1077__CLK/DIODE                1.500000    1.817611   -0.317611 (VIOLATED)
+_1076_/CLK                              1.500000    1.817451   -0.317451 (VIOLATED)
+ANTENNA__1076__CLK/DIODE                1.500000    1.817396   -0.317396 (VIOLATED)
+_1075_/CLK                              1.500000    1.817227   -0.317228 (VIOLATED)
+_1216_/CLK                              1.500000    1.817212   -0.317212 (VIOLATED)
+ANTENNA__1075__CLK/DIODE                1.500000    1.817190   -0.317190 (VIOLATED)
+_1074_/CLK                              1.500000    1.817163   -0.317163 (VIOLATED)
+ANTENNA__1074__CLK/DIODE                1.500000    1.816608   -0.316608 (VIOLATED)
+_1180_/CLK                              1.500000    1.816330   -0.316330 (VIOLATED)
+ANTENNA__1149__CLK/DIODE                1.500000    1.816191   -0.316191 (VIOLATED)
+_1149_/CLK                              1.500000    1.816096   -0.316096 (VIOLATED)
+ANTENNA__1180__CLK/DIODE                1.500000    1.815839   -0.315839 (VIOLATED)
+_1212_/CLK                              1.500000    1.815797   -0.315798 (VIOLATED)
+ANTENNA__1212__CLK/DIODE                1.500000    1.815024   -0.315024 (VIOLATED)
+_1214_/CLK                              1.500000    1.814917   -0.314917 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[125]/DIODE    1.500000    1.814680   -0.314680 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[125]    1.500000    1.814648   -0.314648 (VIOLATED)
+ANTENNA__1214__CLK/DIODE                1.500000    1.814075   -0.314076 (VIOLATED)
+_1213_/CLK                              1.500000    1.813330   -0.313330 (VIOLATED)
+_1181_/CLK                              1.500000    1.813315   -0.313315 (VIOLATED)
+ANTENNA__1213__CLK/DIODE                1.500000    1.813284   -0.313284 (VIOLATED)
+ANTENNA__1181__CLK/DIODE                1.500000    1.813086   -0.313086 (VIOLATED)
+_1182_/CLK                              1.500000    1.812937   -0.312937 (VIOLATED)
+ANTENNA__1182__CLK/DIODE                1.500000    1.811712   -0.311712 (VIOLATED)
+ANTENNA__1150__CLK/DIODE                1.500000    1.810930   -0.310930 (VIOLATED)
+_1150_/CLK                              1.500000    1.810761   -0.310761 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[103]/DIODE    1.500000    1.810379   -0.310379 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[103]    1.500000    1.810347   -0.310347 (VIOLATED)
+_1152_/CLK                              1.500000    1.808714   -0.308714 (VIOLATED)
+ANTENNA__1152__CLK/DIODE                1.500000    1.808668   -0.308669 (VIOLATED)
+ANTENNA__1168__CLK/DIODE                1.500000    1.808661   -0.308661 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[118]/DIODE    1.500000    1.808558   -0.308558 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[118]    1.500000    1.808526   -0.308526 (VIOLATED)
+output4/A                               1.500000    1.807942   -0.307942 (VIOLATED)
+_1197_/CLK                              1.500000    1.807821   -0.307821 (VIOLATED)
+ANTENNA_output4_A/DIODE                 1.500000    1.807638   -0.307638 (VIOLATED)
+_1217_/CLK                              1.500000    1.805349   -0.305349 (VIOLATED)
+ANTENNA__1217__CLK/DIODE                1.500000    1.805338   -0.305338 (VIOLATED)
+_1185_/CLK                              1.500000    1.805338   -0.305338 (VIOLATED)
+ANTENNA__1185__CLK/DIODE                1.500000    1.805306   -0.305306 (VIOLATED)
+ANTENNA__1197__CLK/DIODE                1.500000    1.804977   -0.304977 (VIOLATED)
+_1099_/CLK                              1.500000    1.804941   -0.304941 (VIOLATED)
+_1229_/CLK                              1.500000    1.804546   -0.304546 (VIOLATED)
+_1165_/CLK                              1.500000    1.804469   -0.304469 (VIOLATED)
+ANTENNA__1103__CLK/DIODE                1.500000    1.804431   -0.304431 (VIOLATED)
+ANTENNA__1165__CLK/DIODE                1.500000    1.804371   -0.304371 (VIOLATED)
+ANTENNA__1099__CLK/DIODE                1.500000    1.801813   -0.301813 (VIOLATED)
+_1130_/CLK                              1.500000    1.801086   -0.301086 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[113]/DIODE    1.500000    1.799957   -0.299957 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[113]    1.500000    1.799925   -0.299926 (VIOLATED)
+_1097_/CLK                              1.500000    1.796223   -0.296223 (VIOLATED)
+_1218_/CLK                              1.500000    1.794812   -0.294812 (VIOLATED)
+ANTENNA__1218__CLK/DIODE                1.500000    1.794765   -0.294765 (VIOLATED)
+_1186_/CLK                              1.500000    1.794765   -0.294765 (VIOLATED)
+ANTENNA__1186__CLK/DIODE                1.500000    1.794717   -0.294717 (VIOLATED)
+_1155_/CLK                              1.500000    1.794377   -0.294377 (VIOLATED)
+ANTENNA__1155__CLK/DIODE                1.500000    1.794345   -0.294345 (VIOLATED)
+_1154_/CLK                              1.500000    1.793130   -0.293130 (VIOLATED)
+ANTENNA__1154__CLK/DIODE                1.500000    1.793084   -0.293084 (VIOLATED)
+ANTENNA__1201__CLK/DIODE                1.500000    1.792631   -0.292631 (VIOLATED)
+_1101_/CLK                              1.500000    1.792625   -0.292625 (VIOLATED)
+_1132_/CLK                              1.500000    1.792619   -0.292619 (VIOLATED)
+ANTENNA__1101__CLK/DIODE                1.500000    1.792582   -0.292582 (VIOLATED)
+_1134_/CLK                              1.500000    1.792243   -0.292243 (VIOLATED)
+ANTENNA__1200__CLK/DIODE                1.500000    1.792208   -0.292208 (VIOLATED)
+ANTENNA__1134__CLK/DIODE                1.500000    1.792129   -0.292129 (VIOLATED)
+_1166_/CLK                              1.500000    1.791984   -0.291984 (VIOLATED)
+_1196_/CLK                              1.500000    1.790156   -0.290156 (VIOLATED)
+ANTENNA__1164__CLK/DIODE                1.500000    1.790085   -0.290085 (VIOLATED)
+_1228_/CLK                              1.500000    1.789947   -0.289947 (VIOLATED)
+ANTENNA__1198__CLK/DIODE                1.500000    1.789575   -0.289575 (VIOLATED)
+_1156_/CLK                              1.500000    1.786516   -0.286516 (VIOLATED)
+ANTENNA__1156__CLK/DIODE                1.500000    1.786271   -0.286271 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[16]/DIODE    1.500000    1.785800   -0.285800 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[16]    1.500000    1.785720   -0.285720 (VIOLATED)
+_1164_/CLK                              1.500000    1.784331   -0.284331 (VIOLATED)
+_1198_/CLK                              1.500000    1.784253   -0.284253 (VIOLATED)
+_1230_/CLK                              1.500000    1.784016   -0.284016 (VIOLATED)
+ANTENNA__1230__CLK/DIODE                1.500000    1.783078   -0.283078 (VIOLATED)
+_1162_/CLK                              1.500000    1.782872   -0.282872 (VIOLATED)
+_1188_/CLK                              1.500000    1.780677   -0.280677 (VIOLATED)
+_1220_/CLK                              1.500000    1.780669   -0.280669 (VIOLATED)
+ANTENNA__1188__CLK/DIODE                1.500000    1.780648   -0.280648 (VIOLATED)
+ANTENNA__1220__CLK/DIODE                1.500000    1.780642   -0.280642 (VIOLATED)
+ANTENNA__1132__CLK/DIODE                1.500000    1.779984   -0.279984 (VIOLATED)
+_1161_/CLK                              1.500000    1.779937   -0.279937 (VIOLATED)
+ANTENNA__1166__CLK/DIODE                1.500000    1.779785   -0.279785 (VIOLATED)
+ANTENNA__1162__CLK/DIODE                1.500000    1.778558   -0.278558 (VIOLATED)
+ANTENNA__1231__CLK/DIODE                1.500000    1.776443   -0.276443 (VIOLATED)
+_1223_/CLK                              1.500000    1.776437   -0.276437 (VIOLATED)
+_1231_/CLK                              1.500000    1.776316   -0.276316 (VIOLATED)
+_1184_/CLK                              1.500000    1.774485   -0.274485 (VIOLATED)
+ANTENNA__1216__CLK/DIODE                1.500000    1.774420   -0.274420 (VIOLATED)
+ANTENNA__1184__CLK/DIODE                1.500000    1.774266   -0.274266 (VIOLATED)
+_1219_/CLK                              1.500000    1.774143   -0.274143 (VIOLATED)
+ANTENNA__1219__CLK/DIODE                1.500000    1.774102   -0.274102 (VIOLATED)
+_1187_/CLK                              1.500000    1.773733   -0.273733 (VIOLATED)
+ANTENNA__1187__CLK/DIODE                1.500000    1.773703   -0.273703 (VIOLATED)
+ANTENNA__1222__CLK/DIODE                1.500000    1.773136   -0.273136 (VIOLATED)
+_1222_/CLK                              1.500000    1.772628   -0.272628 (VIOLATED)
+ANTENNA__1223__CLK/DIODE                1.500000    1.772612   -0.272612 (VIOLATED)
+ANTENNA__1190__CLK/DIODE                1.500000    1.772611   -0.272611 (VIOLATED)
+ANTENNA__1191__CLK/DIODE                1.500000    1.772600   -0.272600 (VIOLATED)
+ANTENNA__1225__CLK/DIODE                1.500000    1.772526   -0.272526 (VIOLATED)
+_1194_/CLK                              1.500000    1.772384   -0.272384 (VIOLATED)
+ANTENNA__1196__CLK/DIODE                1.500000    1.772375   -0.272375 (VIOLATED)
+_1190_/CLK                              1.500000    1.772367   -0.272368 (VIOLATED)
+_1193_/CLK                              1.500000    1.772265   -0.272265 (VIOLATED)
+_1225_/CLK                              1.500000    1.772215   -0.272215 (VIOLATED)
+_1226_/CLK                              1.500000    1.772207   -0.272207 (VIOLATED)
+ANTENNA__1228__CLK/DIODE                1.500000    1.772180   -0.272180 (VIOLATED)
+ANTENNA__1194__CLK/DIODE                1.500000    1.772163   -0.272163 (VIOLATED)
+ANTENNA__1193__CLK/DIODE                1.500000    1.772086   -0.272086 (VIOLATED)
+ANTENNA__1226__CLK/DIODE                1.500000    1.772020   -0.272020 (VIOLATED)
+_1191_/CLK                              1.500000    1.770465   -0.270465 (VIOLATED)
+_1158_/CLK                              1.500000    1.768649   -0.268649 (VIOLATED)
+ANTENNA__1158__CLK/DIODE                1.500000    1.768622   -0.268622 (VIOLATED)
+ANTENNA__1161__CLK/DIODE                1.500000    1.759669   -0.259669 (VIOLATED)
+_1159_/CLK                              1.500000    1.740542   -0.240542 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[108]    1.500000    1.730988   -0.230988 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[108]/DIODE    1.500000    1.730955   -0.230955 (VIOLATED)
+ANTENNA__1130__CLK/DIODE                1.500000    1.724167   -0.224167 (VIOLATED)
+ANTENNA__1097__CLK/DIODE                1.500000    1.721654   -0.221654 (VIOLATED)
+ANTENNA__1129__CLK/DIODE                1.500000    1.721603   -0.221603 (VIOLATED)
+ANTENNA__1159__CLK/DIODE                1.500000    1.716089   -0.216089 (VIOLATED)
+_1126_/CLK                              1.500000    1.699141   -0.199141 (VIOLATED)
+ANTENNA__1126__CLK/DIODE                1.500000    1.699104   -0.199104 (VIOLATED)
+_1127_/CLK                              1.500000    1.698913   -0.198913 (VIOLATED)
+ANTENNA__1127__CLK/DIODE                1.500000    1.698895   -0.198895 (VIOLATED)
+ANTENNA__1096__CLK/DIODE                1.500000    1.677617   -0.177617 (VIOLATED)
+_1094_/CLK                              1.500000    1.676789   -0.176789 (VIOLATED)
+ANTENNA__1093__CLK/DIODE                1.500000    1.674645   -0.174645 (VIOLATED)
+ANTENNA__1094__CLK/DIODE                1.500000    1.674624   -0.174624 (VIOLATED)
+output46/A                              1.500000    1.664383   -0.164383 (VIOLATED)
+ANTENNA_output46_A/DIODE                1.500000    1.664066   -0.164067 (VIOLATED)
+output40/A                              1.500000    1.659830   -0.159830 (VIOLATED)
+ANTENNA_output40_A/DIODE                1.500000    1.659520   -0.159520 (VIOLATED)
+_1093_/CLK                              1.500000    1.658915   -0.158915 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[10]/DIODE    1.500000    1.656125   -0.156125 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[10]    1.500000    1.656021   -0.156021 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[115]/DIODE    1.500000    1.639225   -0.139225 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[115]    1.500000    1.639187   -0.139187 (VIOLATED)
+_1124_/CLK                              1.500000    1.636655   -0.136655 (VIOLATED)
+ANTENNA__1124__CLK/DIODE                1.500000    1.633445   -0.133445 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[111]/DIODE    1.500000    1.628470   -0.128470 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[111]    1.500000    1.628438   -0.128438 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[17]/DIODE    1.500000    1.621418   -0.121418 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[17]    1.500000    1.621386   -0.121386 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[117]/DIODE    1.500000    1.620897   -0.120897 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[117]    1.500000    1.620865   -0.120865 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[116]/DIODE    1.500000    1.618241   -0.118241 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[116]    1.500000    1.618209   -0.118210 (VIOLATED)
+_1123_/CLK                              1.500000    1.614861   -0.114861 (VIOLATED)
+ANTENNA__1123__CLK/DIODE                1.500000    1.614775   -0.114775 (VIOLATED)
+_1090_/CLK                              1.500000    1.614754   -0.114754 (VIOLATED)
+_1091_/CLK                              1.500000    1.613049   -0.113049 (VIOLATED)
+ANTENNA__1091__CLK/DIODE                1.500000    1.609608   -0.109608 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[24]/DIODE    1.500000    1.608341   -0.108341 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[114]/DIODE    1.500000    1.608329   -0.108329 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[114]    1.500000    1.608302   -0.108302 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[24]    1.500000    1.608261   -0.108261 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[112]/DIODE    1.500000    1.607903   -0.107903 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[112]    1.500000    1.607871   -0.107871 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[107]/DIODE    1.500000    1.605324   -0.105324 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[107]    1.500000    1.605292   -0.105292 (VIOLATED)
+output17/A                              1.500000    1.597589   -0.097589 (VIOLATED)
+ANTENNA_output17_A/DIODE                1.500000    1.597275   -0.097275 (VIOLATED)
+ANTENNA__1090__CLK/DIODE                1.500000    1.586551   -0.086551 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_la_data_in[106]/DIODE    1.500000    1.583235   -0.083235 (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_in[106]    1.500000    1.583203   -0.083203 (VIOLATED)
+ANTENNA_mprj.sample_team_proj_Wrapper_gpio_in[21]/DIODE    1.500000    1.583015   -0.083015 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_in[21]    1.500000    1.582944   -0.082944 (VIOLATED)
+_1204_/CLK                              1.500000    1.578062   -0.078062 (VIOLATED)
+_1140_/CLK                              1.500000    1.578053   -0.078053 (VIOLATED)
+ANTENNA__1107__CLK/DIODE                1.500000    1.577794   -0.077794 (VIOLATED)
+ANTENNA__1204__CLK/DIODE                1.500000    1.577384   -0.077384 (VIOLATED)
+ANTENNA__1172__CLK/DIODE                1.500000    1.577260   -0.077260 (VIOLATED)
+_1137_/CLK                              1.500000    1.577156   -0.077156 (VIOLATED)
+ANTENNA__1140__CLK/DIODE                1.500000    1.577017   -0.077017 (VIOLATED)
+_1104_/CLK                              1.500000    1.576602   -0.076602 (VIOLATED)
+_1136_/CLK                              1.500000    1.576210   -0.076210 (VIOLATED)
+ANTENNA__1136__CLK/DIODE                1.500000    1.576175   -0.076175 (VIOLATED)
+_1169_/CLK                              1.500000    1.576095   -0.076096 (VIOLATED)
+ANTENNA__1169__CLK/DIODE                1.500000    1.576058   -0.076058 (VIOLATED)
+_1102_/CLK                              1.500000    1.576047   -0.076047 (VIOLATED)
+_1199_/CLK                              1.500000    1.575989   -0.075989 (VIOLATED)
+ANTENNA__1137__CLK/DIODE                1.500000    1.575850   -0.075850 (VIOLATED)
+ANTENNA__1104__CLK/DIODE                1.500000    1.574911   -0.074911 (VIOLATED)
+_1167_/CLK                              1.500000    1.574776   -0.074777 (VIOLATED)
+_1163_/CLK                              1.500000    1.573195   -0.073195 (VIOLATED)
+ANTENNA__1167__CLK/DIODE                1.500000    1.573067   -0.073067 (VIOLATED)
+_1183_/CLK                              1.500000    1.572242   -0.072242 (VIOLATED)
+ANTENNA__1199__CLK/DIODE                1.500000    1.571953   -0.071953 (VIOLATED)
+_1133_/CLK                              1.500000    1.571880   -0.071880 (VIOLATED)
+_1100_/CLK                              1.500000    1.571859   -0.071859 (VIOLATED)
+ANTENNA__1100__CLK/DIODE                1.500000    1.571815   -0.071815 (VIOLATED)
+_1195_/CLK                              1.500000    1.571795   -0.071795 (VIOLATED)
+ANTENNA__1195__CLK/DIODE                1.500000    1.570915   -0.070915 (VIOLATED)
+_1131_/CLK                              1.500000    1.569372   -0.069372 (VIOLATED)
+ANTENNA__1163__CLK/DIODE                1.500000    1.567617   -0.067617 (VIOLATED)
+ANTENNA__1131__CLK/DIODE                1.500000    1.566777   -0.066777 (VIOLATED)
+_1129_/CLK                              1.500000    1.566475   -0.066475 (VIOLATED)
+ANTENNA__1229__CLK/DIODE                1.500000    1.566231   -0.066231 (VIOLATED)
+ANTENNA__1133__CLK/DIODE                1.500000    1.566118   -0.066118 (VIOLATED)
+_1096_/CLK                              1.500000    1.565893   -0.065893 (VIOLATED)
+_1227_/CLK                              1.500000    1.565568   -0.065568 (VIOLATED)
+ANTENNA__1227__CLK/DIODE                1.500000    1.565534   -0.065535 (VIOLATED)
+_1160_/CLK                              1.500000    1.564801   -0.064801 (VIOLATED)
+output47/A                              1.500000    1.564477   -0.064477 (VIOLATED)
+_1135_/CLK                              1.500000    1.563786   -0.063786 (VIOLATED)
+ANTENNA_output47_A/DIODE                1.500000    1.563749   -0.063749 (VIOLATED)
+ANTENNA__1102__CLK/DIODE                1.500000    1.563654   -0.063654 (VIOLATED)
+_1098_/CLK                              1.500000    1.563599   -0.063599 (VIOLATED)
+ANTENNA__1135__CLK/DIODE                1.500000    1.563596   -0.063596 (VIOLATED)
+ANTENNA__1098__CLK/DIODE                1.500000    1.563561   -0.063561 (VIOLATED)
+_1192_/CLK                              1.500000    1.563144   -0.063144 (VIOLATED)
+ANTENNA__1192__CLK/DIODE                1.500000    1.562827   -0.062827 (VIOLATED)
+ANTENNA__1160__CLK/DIODE                1.500000    1.562637   -0.062637 (VIOLATED)
+ANTENNA__1128__CLK/DIODE                1.500000    1.558006   -0.058006 (VIOLATED)
+_1128_/CLK                              1.500000    1.555362   -0.055362 (VIOLATED)
+_1224_/CLK                              1.500000    1.552428   -0.052428 (VIOLATED)
+output42/A                              1.500000    1.550239   -0.050239 (VIOLATED)
+ANTENNA_output42_A/DIODE                1.500000    1.549935   -0.049935 (VIOLATED)
+ANTENNA__1224__CLK/DIODE                1.500000    1.549439   -0.049439 (VIOLATED)
+_1189_/CLK                              1.500000    1.545287   -0.045287 (VIOLATED)
+ANTENNA__1095__CLK/DIODE                1.500000    1.544762   -0.044762 (VIOLATED)
+_1095_/CLK                              1.500000    1.544711   -0.044711 (VIOLATED)
+_1157_/CLK                              1.500000    1.544629   -0.044629 (VIOLATED)
+_1092_/CLK                              1.500000    1.544488   -0.044489 (VIOLATED)
+ANTENNA__1189__CLK/DIODE                1.500000    1.541397   -0.041397 (VIOLATED)
+ANTENNA__1157__CLK/DIODE                1.500000    1.541186   -0.041187 (VIOLATED)
+ANTENNA__1183__CLK/DIODE                1.500000    1.540664   -0.040664 (VIOLATED)
+ANTENNA__1092__CLK/DIODE                1.500000    1.536615   -0.036616 (VIOLATED)
+_1221_/CLK                              1.500000    1.536359   -0.036359 (VIOLATED)
+ANTENNA__1221__CLK/DIODE                1.500000    1.536258   -0.036258 (VIOLATED)
+ANTENNA__1089__CLK/DIODE                1.500000    1.535168   -0.035168 (VIOLATED)
+_1151_/CLK                              1.500000    1.533658   -0.033658 (VIOLATED)
+_1125_/CLK                              1.500000    1.533032   -0.033032 (VIOLATED)
+ANTENNA__1125__CLK/DIODE                1.500000    1.532591   -0.032591 (VIOLATED)
+_1122_/CLK                              1.500000    1.526979   -0.026979 (VIOLATED)
+ANTENNA__1122__CLK/DIODE                1.500000    1.523113   -0.023113 (VIOLATED)
+_1089_/CLK                              1.500000    1.521243   -0.021243 (VIOLATED)
+ANTENNA__1151__CLK/DIODE                1.500000    1.516751   -0.016751 (VIOLATED)
+_1110_/CLK                              1.500000    1.507994   -0.007994 (VIOLATED)
+ANTENNA__1119__CLK/DIODE                1.500000    1.507931   -0.007931 (VIOLATED)
+_1119_/CLK                              1.500000    1.507928   -0.007928 (VIOLATED)
+_1215_/CLK                              1.500000    1.507895   -0.007895 (VIOLATED)
+
+max fanout
+
+Pin                                   Limit Fanout  Slack
+---------------------------------------------------------
+wb_clk_i                                 10    317   -307 (VIOLATED)
+wbs_dat_i[14]                            10     95    -85 (VIOLATED)
+wbs_dat_i[17]                            10     94    -84 (VIOLATED)
+wbs_dat_i[15]                            10     93    -83 (VIOLATED)
+wbs_dat_i[20]                            10     83    -73 (VIOLATED)
+wbs_dat_i[22]                            10     83    -73 (VIOLATED)
+wbs_dat_i[25]                            10     83    -73 (VIOLATED)
+wbs_dat_i[30]                            10     81    -71 (VIOLATED)
+wbs_dat_i[28]                            10     54    -44 (VIOLATED)
+wbs_dat_i[18]                            10     47    -37 (VIOLATED)
+wbs_dat_i[19]                            10     47    -37 (VIOLATED)
+wbs_dat_i[21]                            10     47    -37 (VIOLATED)
+wbs_dat_i[24]                            10     47    -37 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[28]     10     47    -37 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[27]     10     43    -33 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[30]     10     43    -33 (VIOLATED)
+wbs_dat_i[26]                            10     41    -31 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[26]     10     40    -30 (VIOLATED)
+wbs_dat_i[5]                             10     33    -23 (VIOLATED)
+wbs_adr_i[15]                            10     27    -17 (VIOLATED)
+wbs_dat_i[16]                            10     27    -17 (VIOLATED)
+wbs_dat_i[23]                            10     27    -17 (VIOLATED)
+wbs_dat_i[27]                            10     27    -17 (VIOLATED)
+wbs_dat_i[29]                            10     27    -17 (VIOLATED)
+wbs_dat_i[31]                            10     27    -17 (VIOLATED)
+wbs_dat_i[3]                             10     24    -14 (VIOLATED)
+mprj.sample_team_proj_Wrapper/gpio_out[23]     10     23    -13 (VIOLATED)
+fanout239/X                              10     20    -10 (VIOLATED)
+fanout242/X                              10     20    -10 (VIOLATED)
+fanout244/X                              10     20    -10 (VIOLATED)
+fanout246/X                              10     20    -10 (VIOLATED)
+fanout248/X                              10     20    -10 (VIOLATED)
+fanout250/X                              10     20    -10 (VIOLATED)
+fanout252/X                              10     20    -10 (VIOLATED)
+fanout254/X                              10     20    -10 (VIOLATED)
+fanout256/X                              10     20    -10 (VIOLATED)
+fanout258/X                              10     20    -10 (VIOLATED)
+fanout260/X                              10     20    -10 (VIOLATED)
+fanout263/X                              10     20    -10 (VIOLATED)
+fanout264/X                              10     20    -10 (VIOLATED)
+fanout270/X                              10     20    -10 (VIOLATED)
+fanout272/X                              10     20    -10 (VIOLATED)
+fanout276/X                              10     20    -10 (VIOLATED)
+fanout278/X                              10     20    -10 (VIOLATED)
+fanout279/X                              10     20    -10 (VIOLATED)
+fanout283/X                              10     20    -10 (VIOLATED)
+fanout292/X                              10     20    -10 (VIOLATED)
+fanout295/X                              10     20    -10 (VIOLATED)
+fanout311/X                              10     20    -10 (VIOLATED)
+wbs_dat_i[0]                             10     18     -8 (VIOLATED)
+wbs_dat_i[1]                             10     18     -8 (VIOLATED)
+wbs_dat_i[2]                             10     18     -8 (VIOLATED)
+_0567_/Y                                 10     18     -8 (VIOLATED)
+_0709_/X                                 10     16     -6 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[16]     10     16     -6 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[18]     10     16     -6 (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[19]     10     16     -6 (VIOLATED)
+wbs_dat_i[10]                            10     15     -5 (VIOLATED)
+wbs_dat_i[11]                            10     15     -5 (VIOLATED)
+wbs_dat_i[12]                            10     15     -5 (VIOLATED)
+wbs_dat_i[13]                            10     15     -5 (VIOLATED)
+wbs_dat_i[4]                             10     15     -5 (VIOLATED)
+wbs_dat_i[6]                             10     15     -5 (VIOLATED)
+wbs_dat_i[7]                             10     15     -5 (VIOLATED)
+wbs_dat_i[8]                             10     15     -5 (VIOLATED)
+wbs_dat_i[9]                             10     15     -5 (VIOLATED)
+wbs_we_i                                 10     15     -5 (VIOLATED)
+_0527_/Y                                 10     14     -4 (VIOLATED)
+wb_rst_i                                 10     12     -2 (VIOLATED)
+wbs_adr_i[11]                            10     12     -2 (VIOLATED)
+wbs_adr_i[14]                            10     12     -2 (VIOLATED)
+fanout243/X                              10     12     -2 (VIOLATED)
+fanout262/X                              10     12     -2 (VIOLATED)
+fanout309/X                              10     12     -2 (VIOLATED)
+fanout314/X                              10     12     -2 (VIOLATED)
+fanout319/X                              10     12     -2 (VIOLATED)
+hold36/X                                 10     12     -2 (VIOLATED)
+hold39/X                                 10     12     -2 (VIOLATED)
+hold40/X                                 10     12     -2 (VIOLATED)
+hold41/X                                 10     12     -2 (VIOLATED)
+wbs_adr_i[7]                             10     11        (VIOLATED)
+wbs_cyc_i                                10     11        (VIOLATED)
+mprj.sample_team_proj_Wrapper/la_data_out[97]     10     11        (VIOLATED)
+mprj.sample_team_proj_Wrapper/wbs_dat_o[12]     10     11        (VIOLATED)
+
+
+
+===========================================================================
+report_parasitic_annotation -report_unannotated
+============================================================================
+Found 308 unannotated drivers.
+ analog_io[0]
+ analog_io[10]
+ analog_io[11]
+ analog_io[12]
+ analog_io[13]
+ analog_io[14]
+ analog_io[15]
+ analog_io[16]
+ analog_io[17]
+ analog_io[18]
+ analog_io[19]
+ analog_io[1]
+ analog_io[20]
+ analog_io[21]
+ analog_io[22]
+ analog_io[23]
+ analog_io[24]
+ analog_io[25]
+ analog_io[26]
+ analog_io[27]
+ analog_io[28]
+ analog_io[2]
+ analog_io[3]
+ analog_io[4]
+ analog_io[5]
+ analog_io[6]
+ analog_io[7]
+ analog_io[8]
+ analog_io[9]
+ la_oenb[0]
+ la_oenb[100]
+ la_oenb[101]
+ la_oenb[102]
+ la_oenb[103]
+ la_oenb[104]
+ la_oenb[105]
+ la_oenb[106]
+ la_oenb[107]
+ la_oenb[108]
+ la_oenb[109]
+ la_oenb[10]
+ la_oenb[110]
+ la_oenb[111]
+ la_oenb[112]
+ la_oenb[113]
+ la_oenb[114]
+ la_oenb[115]
+ la_oenb[116]
+ la_oenb[117]
+ la_oenb[118]
+ la_oenb[119]
+ la_oenb[11]
+ la_oenb[120]
+ la_oenb[121]
+ la_oenb[122]
+ la_oenb[123]
+ la_oenb[124]
+ la_oenb[125]
+ la_oenb[126]
+ la_oenb[127]
+ la_oenb[12]
+ la_oenb[13]
+ la_oenb[14]
+ la_oenb[15]
+ la_oenb[16]
+ la_oenb[17]
+ la_oenb[18]
+ la_oenb[19]
+ la_oenb[1]
+ la_oenb[20]
+ la_oenb[21]
+ la_oenb[22]
+ la_oenb[23]
+ la_oenb[24]
+ la_oenb[25]
+ la_oenb[26]
+ la_oenb[27]
+ la_oenb[28]
+ la_oenb[29]
+ la_oenb[2]
+ la_oenb[30]
+ la_oenb[31]
+ la_oenb[32]
+ la_oenb[33]
+ la_oenb[34]
+ la_oenb[35]
+ la_oenb[36]
+ la_oenb[37]
+ la_oenb[38]
+ la_oenb[39]
+ la_oenb[3]
+ la_oenb[40]
+ la_oenb[41]
+ la_oenb[42]
+ la_oenb[43]
+ la_oenb[44]
+ la_oenb[45]
+ la_oenb[46]
+ la_oenb[47]
+ la_oenb[48]
+ la_oenb[49]
+ la_oenb[4]
+ la_oenb[50]
+ la_oenb[51]
+ la_oenb[52]
+ la_oenb[53]
+ la_oenb[54]
+ la_oenb[55]
+ la_oenb[56]
+ la_oenb[57]
+ la_oenb[58]
+ la_oenb[59]
+ la_oenb[5]
+ la_oenb[60]
+ la_oenb[61]
+ la_oenb[62]
+ la_oenb[63]
+ la_oenb[64]
+ la_oenb[65]
+ la_oenb[66]
+ la_oenb[67]
+ la_oenb[68]
+ la_oenb[69]
+ la_oenb[6]
+ la_oenb[70]
+ la_oenb[71]
+ la_oenb[72]
+ la_oenb[73]
+ la_oenb[74]
+ la_oenb[75]
+ la_oenb[76]
+ la_oenb[77]
+ la_oenb[78]
+ la_oenb[79]
+ la_oenb[7]
+ la_oenb[80]
+ la_oenb[81]
+ la_oenb[82]
+ la_oenb[83]
+ la_oenb[84]
+ la_oenb[85]
+ la_oenb[86]
+ la_oenb[87]
+ la_oenb[88]
+ la_oenb[89]
+ la_oenb[8]
+ la_oenb[90]
+ la_oenb[91]
+ la_oenb[92]
+ la_oenb[93]
+ la_oenb[94]
+ la_oenb[95]
+ la_oenb[96]
+ la_oenb[97]
+ la_oenb[98]
+ la_oenb[99]
+ la_oenb[9]
+ user_clock2
+ _1232__331/HI
+ _1233__332/HI
+ _1234__333/HI
+ mprj.sample_team_proj_Wrapper/irq[0]
+ mprj.sample_team_proj_Wrapper/irq[1]
+ mprj.sample_team_proj_Wrapper/irq[2]
+ mprj.sample_team_proj_Wrapper_334/HI
+ mprj.sample_team_proj_Wrapper_335/HI
+ mprj.sample_team_proj_Wrapper_336/HI
+ mprj.sample_team_proj_Wrapper_337/HI
+ mprj.sample_team_proj_Wrapper_338/HI
+ mprj.sample_team_proj_Wrapper_339/HI
+ mprj.sample_team_proj_Wrapper_340/HI
+ mprj.sample_team_proj_Wrapper_341/HI
+ mprj.sample_team_proj_Wrapper_342/HI
+ mprj.sample_team_proj_Wrapper_343/HI
+ mprj.sample_team_proj_Wrapper_344/HI
+ mprj.sample_team_proj_Wrapper_345/HI
+ mprj.sample_team_proj_Wrapper_346/HI
+ mprj.sample_team_proj_Wrapper_347/HI
+ mprj.sample_team_proj_Wrapper_348/HI
+ mprj.sample_team_proj_Wrapper_349/HI
+ mprj.sample_team_proj_Wrapper_350/HI
+ mprj.sample_team_proj_Wrapper_351/HI
+ mprj.sample_team_proj_Wrapper_352/HI
+ mprj.sample_team_proj_Wrapper_353/HI
+ mprj.sample_team_proj_Wrapper_354/HI
+ mprj.sample_team_proj_Wrapper_355/HI
+ mprj.sample_team_proj_Wrapper_356/HI
+ mprj.sample_team_proj_Wrapper_357/HI
+ mprj.sample_team_proj_Wrapper_358/HI
+ mprj.sample_team_proj_Wrapper_359/HI
+ mprj.sample_team_proj_Wrapper_360/HI
+ mprj.sample_team_proj_Wrapper_361/HI
+ mprj.sample_team_proj_Wrapper_362/HI
+ mprj.sample_team_proj_Wrapper_363/HI
+ mprj.sample_team_proj_Wrapper_364/HI
+ mprj.sample_team_proj_Wrapper_365/HI
+ mprj.sample_team_proj_Wrapper_366/HI
+ mprj.sample_team_proj_Wrapper_367/HI
+ mprj.sample_team_proj_Wrapper_368/HI
+ mprj.sample_team_proj_Wrapper_369/HI
+ mprj.sample_team_proj_Wrapper_370/HI
+ mprj.sample_team_proj_Wrapper_371/HI
+ mprj.sample_team_proj_Wrapper_372/HI
+ mprj.sample_team_proj_Wrapper_373/HI
+ mprj.sample_team_proj_Wrapper_374/HI
+ mprj.sample_team_proj_Wrapper_375/HI
+ mprj.sample_team_proj_Wrapper_376/HI
+ mprj.sample_team_proj_Wrapper_377/HI
+ mprj.sample_team_proj_Wrapper_378/HI
+ mprj.sample_team_proj_Wrapper_379/HI
+ mprj.sample_team_proj_Wrapper_380/HI
+ mprj.sample_team_proj_Wrapper_381/HI
+ mprj.sample_team_proj_Wrapper_382/HI
+ mprj.sample_team_proj_Wrapper_383/HI
+ mprj.sample_team_proj_Wrapper_384/HI
+ mprj.sample_team_proj_Wrapper_385/HI
+ mprj.sample_team_proj_Wrapper_386/HI
+ mprj.sample_team_proj_Wrapper_387/HI
+ mprj.sample_team_proj_Wrapper_388/HI
+ mprj.sample_team_proj_Wrapper_389/HI
+ mprj.sample_team_proj_Wrapper_390/HI
+ mprj.sample_team_proj_Wrapper_391/HI
+ mprj.sample_team_proj_Wrapper_392/HI
+ mprj.sample_team_proj_Wrapper_393/HI
+ mprj.sample_team_proj_Wrapper_394/HI
+ mprj.sample_team_proj_Wrapper_395/HI
+ mprj.sample_team_proj_Wrapper_396/HI
+ mprj.sample_team_proj_Wrapper_397/HI
+ mprj.sample_team_proj_Wrapper_398/HI
+ mprj.sample_team_proj_Wrapper_399/HI
+ mprj.sample_team_proj_Wrapper_400/HI
+ mprj.sample_team_proj_Wrapper_401/HI
+ mprj.sample_team_proj_Wrapper_402/HI
+ mprj.sample_team_proj_Wrapper_403/HI
+ mprj.sample_team_proj_Wrapper_404/HI
+ mprj.sample_team_proj_Wrapper_405/HI
+ mprj.sample_team_proj_Wrapper_406/HI
+ mprj.sample_team_proj_Wrapper_407/HI
+ mprj.sample_team_proj_Wrapper_408/HI
+ mprj.sample_team_proj_Wrapper_409/HI
+ mprj.sample_team_proj_Wrapper_410/HI
+ mprj.sample_team_proj_Wrapper_411/HI
+ mprj.sample_team_proj_Wrapper_412/HI
+ mprj.sample_team_proj_Wrapper_413/HI
+ mprj.sample_team_proj_Wrapper_414/HI
+ mprj.sample_team_proj_Wrapper_415/HI
+ mprj.sample_team_proj_Wrapper_416/HI
+ mprj.sample_team_proj_Wrapper_417/HI
+ mprj.sample_team_proj_Wrapper_418/HI
+ mprj.sample_team_proj_Wrapper_419/HI
+ mprj.sample_team_proj_Wrapper_420/HI
+ mprj.sample_team_proj_Wrapper_421/HI
+ mprj.sample_team_proj_Wrapper_422/HI
+ mprj.sample_team_proj_Wrapper_423/HI
+ mprj.sample_team_proj_Wrapper_424/HI
+ mprj.sample_team_proj_Wrapper_425/HI
+ mprj.sample_team_proj_Wrapper_426/HI
+ mprj.sample_team_proj_Wrapper_427/HI
+ mprj.sample_team_proj_Wrapper_428/HI
+ mprj.sample_team_proj_Wrapper_429/HI
+ mprj.sample_team_proj_Wrapper_430/HI
+ mprj.sample_team_proj_Wrapper_431/HI
+ mprj.sample_team_proj_Wrapper_432/HI
+ mprj.sample_team_proj_Wrapper_433/HI
+ mprj.sample_team_proj_Wrapper_434/HI
+ mprj.sample_team_proj_Wrapper_435/HI
+ mprj.sample_team_proj_Wrapper_436/HI
+ mprj.sample_team_proj_Wrapper_437/HI
+ mprj.sample_team_proj_Wrapper_438/HI
+ mprj.sample_team_proj_Wrapper_439/HI
+ mprj.sample_team_proj_Wrapper_440/HI
+ mprj.sample_team_proj_Wrapper_441/HI
+ mprj.sample_team_proj_Wrapper_442/HI
+ mprj.sample_team_proj_Wrapper_443/HI
+ mprj.sample_team_proj_Wrapper_444/HI
+ mprj.sample_team_proj_Wrapper_445/HI
+ mprj.sample_team_proj_Wrapper_446/HI
+ mprj.sample_team_proj_Wrapper_447/HI
+ mprj.sample_team_proj_Wrapper_448/HI
+ mprj.sample_team_proj_Wrapper_449/HI
+ mprj.sample_team_proj_Wrapper_450/HI
+ mprj.sample_team_proj_Wrapper_451/HI
+ mprj.sample_team_proj_Wrapper_452/HI
+ mprj.sample_team_proj_Wrapper_453/HI
+ mprj.sample_team_proj_Wrapper_454/HI
+ mprj.sample_team_proj_Wrapper_455/HI
+ mprj.sample_team_proj_Wrapper_456/HI
+ mprj.sample_team_proj_Wrapper_457/HI
+ mprj.sample_team_proj_Wrapper_458/HI
+ mprj.sample_team_proj_Wrapper_459/HI
+ mprj.sample_team_proj_Wrapper_460/HI
+ mprj.sample_team_proj_Wrapper_461/HI
+ mprj.sample_team_proj_Wrapper_462/HI
+ mprj.sample_team_proj_Wrapper_463/HI
+ mprj.sample_team_proj_Wrapper_464/HI
+ mprj.sample_team_proj_Wrapper_465/HI
+ mprj.sample_team_proj_Wrapper_466/HI
+ mprj.sample_team_proj_Wrapper_467/HI
+ mprj.sample_team_proj_Wrapper_468/HI
+ mprj.sample_team_proj_Wrapper_469/HI
+ mprj.sample_team_proj_Wrapper_470/HI
+ mprj.sample_team_proj_Wrapper_471/HI
+ mprj.sample_team_proj_Wrapper_472/HI
+ mprj.sample_team_proj_Wrapper_473/HI
+ mprj.sample_team_proj_Wrapper_474/HI
+ mprj.sample_team_proj_Wrapper_475/HI
+ mprj.sample_team_proj_Wrapper_476/HI
+ mprj.sample_team_proj_Wrapper_477/HI
+Found 0 partially unannotated drivers.
+
+===========================================================================
+max slew violation count 378
+max fanout violation count 84
+max cap violation count 0
+============================================================================
+
+===========================================================================
+check_setup -verbose -unconstrained_endpoints -multiple_clock -no_clock -no_input_delay -loops -generated_clocks
+===========================================================================
+Warning: There are 68 input ports missing set_input_delay.
+  analog_io[0]
+  analog_io[10]
+  analog_io[11]
+  analog_io[12]
+  analog_io[13]
+  analog_io[14]
+  analog_io[15]
+  analog_io[16]
+  analog_io[17]
+  analog_io[18]
+  analog_io[19]
+  analog_io[1]
+  analog_io[20]
+  analog_io[21]
+  analog_io[22]
+  analog_io[23]
+  analog_io[24]
+  analog_io[25]
+  analog_io[26]
+  analog_io[27]
+  analog_io[28]
+  analog_io[2]
+  analog_io[3]
+  analog_io[4]
+  analog_io[5]
+  analog_io[6]
+  analog_io[7]
+  analog_io[8]
+  analog_io[9]
+  io_in[0]
+  io_in[10]
+  io_in[11]
+  io_in[12]
+  io_in[13]
+  io_in[14]
+  io_in[15]
+  io_in[16]
+  io_in[17]
+  io_in[18]
+  io_in[19]
+  io_in[1]
+  io_in[20]
+  io_in[21]
+  io_in[22]
+  io_in[23]
+  io_in[24]
+  io_in[25]
+  io_in[26]
+  io_in[27]
+  io_in[28]
+  io_in[29]
+  io_in[2]
+  io_in[30]
+  io_in[31]
+  io_in[32]
+  io_in[33]
+  io_in[34]
+  io_in[35]
+  io_in[36]
+  io_in[37]
+  io_in[3]
+  io_in[4]
+  io_in[5]
+  io_in[6]
+  io_in[7]
+  io_in[8]
+  io_in[9]
+  user_clock2
+Warning: There are 236 unconstrained endpoints.
+  analog_io[0]
+  analog_io[10]
+  analog_io[11]
+  analog_io[12]
+  analog_io[13]
+  analog_io[14]
+  analog_io[15]
+  analog_io[16]
+  analog_io[17]
+  analog_io[18]
+  analog_io[19]
+  analog_io[1]
+  analog_io[20]
+  analog_io[21]
+  analog_io[22]
+  analog_io[23]
+  analog_io[24]
+  analog_io[25]
+  analog_io[26]
+  analog_io[27]
+  analog_io[28]
+  analog_io[2]
+  analog_io[3]
+  analog_io[4]
+  analog_io[5]
+  analog_io[6]
+  analog_io[7]
+  analog_io[8]
+  analog_io[9]
+  io_oeb[0]
+  io_oeb[10]
+  io_oeb[11]
+  io_oeb[12]
+  io_oeb[13]
+  io_oeb[14]
+  io_oeb[15]
+  io_oeb[16]
+  io_oeb[17]
+  io_oeb[18]
+  io_oeb[19]
+  io_oeb[1]
+  io_oeb[20]
+  io_oeb[21]
+  io_oeb[22]
+  io_oeb[23]
+  io_oeb[24]
+  io_oeb[25]
+  io_oeb[26]
+  io_oeb[27]
+  io_oeb[28]
+  io_oeb[29]
+  io_oeb[2]
+  io_oeb[30]
+  io_oeb[31]
+  io_oeb[32]
+  io_oeb[33]
+  io_oeb[34]
+  io_oeb[35]
+  io_oeb[36]
+  io_oeb[37]
+  io_oeb[3]
+  io_oeb[4]
+  io_oeb[5]
+  io_oeb[6]
+  io_oeb[7]
+  io_oeb[8]
+  io_oeb[9]
+  io_out[0]
+  io_out[10]
+  io_out[11]
+  io_out[12]
+  io_out[13]
+  io_out[14]
+  io_out[15]
+  io_out[16]
+  io_out[17]
+  io_out[18]
+  io_out[19]
+  io_out[1]
+  io_out[20]
+  io_out[21]
+  io_out[22]
+  io_out[23]
+  io_out[24]
+  io_out[25]
+  io_out[26]
+  io_out[27]
+  io_out[28]
+  io_out[29]
+  io_out[2]
+  io_out[30]
+  io_out[31]
+  io_out[32]
+  io_out[33]
+  io_out[34]
+  io_out[35]
+  io_out[36]
+  io_out[37]
+  io_out[3]
+  io_out[4]
+  io_out[5]
+  io_out[6]
+  io_out[7]
+  io_out[8]
+  io_out[9]
+  la_data_out[0]
+  la_data_out[100]
+  la_data_out[101]
+  la_data_out[102]
+  la_data_out[103]
+  la_data_out[104]
+  la_data_out[105]
+  la_data_out[106]
+  la_data_out[107]
+  la_data_out[108]
+  la_data_out[109]
+  la_data_out[10]
+  la_data_out[110]
+  la_data_out[111]
+  la_data_out[112]
+  la_data_out[113]
+  la_data_out[114]
+  la_data_out[115]
+  la_data_out[116]
+  la_data_out[117]
+  la_data_out[118]
+  la_data_out[119]
+  la_data_out[11]
+  la_data_out[120]
+  la_data_out[121]
+  la_data_out[122]
+  la_data_out[123]
+  la_data_out[124]
+  la_data_out[125]
+  la_data_out[126]
+  la_data_out[127]
+  la_data_out[12]
+  la_data_out[13]
+  la_data_out[14]
+  la_data_out[15]
+  la_data_out[16]
+  la_data_out[17]
+  la_data_out[18]
+  la_data_out[19]
+  la_data_out[1]
+  la_data_out[20]
+  la_data_out[21]
+  la_data_out[22]
+  la_data_out[23]
+  la_data_out[24]
+  la_data_out[25]
+  la_data_out[26]
+  la_data_out[27]
+  la_data_out[28]
+  la_data_out[29]
+  la_data_out[2]
+  la_data_out[30]
+  la_data_out[31]
+  la_data_out[32]
+  la_data_out[33]
+  la_data_out[34]
+  la_data_out[35]
+  la_data_out[36]
+  la_data_out[37]
+  la_data_out[38]
+  la_data_out[39]
+  la_data_out[3]
+  la_data_out[40]
+  la_data_out[41]
+  la_data_out[42]
+  la_data_out[43]
+  la_data_out[44]
+  la_data_out[45]
+  la_data_out[46]
+  la_data_out[47]
+  la_data_out[48]
+  la_data_out[49]
+  la_data_out[4]
+  la_data_out[50]
+  la_data_out[51]
+  la_data_out[52]
+  la_data_out[53]
+  la_data_out[54]
+  la_data_out[55]
+  la_data_out[56]
+  la_data_out[57]
+  la_data_out[58]
+  la_data_out[59]
+  la_data_out[5]
+  la_data_out[60]
+  la_data_out[61]
+  la_data_out[62]
+  la_data_out[63]
+  la_data_out[64]
+  la_data_out[65]
+  la_data_out[66]
+  la_data_out[67]
+  la_data_out[68]
+  la_data_out[69]
+  la_data_out[6]
+  la_data_out[70]
+  la_data_out[71]
+  la_data_out[72]
+  la_data_out[73]
+  la_data_out[74]
+  la_data_out[75]
+  la_data_out[76]
+  la_data_out[77]
+  la_data_out[78]
+  la_data_out[79]
+  la_data_out[7]
+  la_data_out[80]
+  la_data_out[81]
+  la_data_out[82]
+  la_data_out[83]
+  la_data_out[84]
+  la_data_out[85]
+  la_data_out[86]
+  la_data_out[87]
+  la_data_out[88]
+  la_data_out[89]
+  la_data_out[8]
+  la_data_out[90]
+  la_data_out[91]
+  la_data_out[92]
+  la_data_out[93]
+  la_data_out[94]
+  la_data_out[95]
+  la_data_out[96]
+  la_data_out[97]
+  la_data_out[98]
+  la_data_out[99]
+  la_data_out[9]
+  user_irq[0]
+  user_irq[1]
+  user_irq[2]
