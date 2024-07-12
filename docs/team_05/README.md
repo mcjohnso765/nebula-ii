@@ -20,15 +20,11 @@ in brackets represents the number in your verilog code
 [33:0] keypad_in
 
 ### Outputs
-[00] lcd_rw
-
-[01] lcd_rs
-
-[02] lcd_en
-
-[10:3] lcd_data
-
-[14:11] keypad_out
+* [00] lcd_rw
+* [01] lcd_rs
+* [02] lcd_en
+* [10:3] lcd_data
+* [14:11] keypad_out
 
 
 ## Supporting Equipment
