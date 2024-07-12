@@ -89,10 +89,6 @@ module team_05 (
         .BUSY_O(BUSY_O)
     );
 
-    always @(WRITE_I, READ_I, ADR_I, CPU_DAT_I, SEL_I, CPU_DAT_O, BUSY_O) begin
-        $monitor("[Manager Monitor] WRITE_I=%h, READ_I=%h, ADR_I=%h, CPU_DAT_I=%h, SEL_I=%h, CPU_DAT_O=%h, BUSY_O=%h", WRITE_I, READ_I, ADR_I, CPU_DAT_I, SEL_I, CPU_DAT_O, BUSY_O);
-    end
-
     t05_complete_design total_design(
         .data_in_BUS(CPU_DAT_O),
         .bus_full(BUSY_O),
@@ -234,7 +230,14 @@ module t05_complete_design(
             //write to only a specific word of storage
             lcd_interim[lcd_word] <= LCD_out;
         end else begin
-            lcd_interim <= lcd_interim;
+            lcd_interim[7] <= lcd_interim[7];
+            lcd_interim[6] <= lcd_interim[6];
+            lcd_interim[5] <= lcd_interim[5];
+            lcd_interim[4] <= lcd_interim[4];
+            lcd_interim[3] <= lcd_interim[3];
+            lcd_interim[2] <= lcd_interim[2];
+            lcd_interim[1] <= lcd_interim[1];
+            lcd_interim[0] <= lcd_interim[0];
         end
     end
 
@@ -1029,7 +1032,7 @@ module t05_instruction_memory(
 );
 
     logic next_fetch, prev_fetch, prev_d_good;
-    logic [31:0] stored_instr, stored_instr_adr;
+    logic [31:0] stored_instr, stored_instr_adr, instruction_adr_stored;
 
 
     always_comb begin
@@ -1056,7 +1059,7 @@ module t05_instruction_memory(
             // stored_instr = instruction_o;
         end
         if(instr_wait) begin
-            instruction_adr_o = instruction_adr_o;
+            instruction_adr_o = instruction_adr_stored;
         end else begin
             instruction_adr_o = instruction_adr_i;
         end
@@ -1064,13 +1067,13 @@ module t05_instruction_memory(
 
     always_ff @(posedge clk, posedge rst) begin
         if(rst) begin
-            // instruction_adr_o <= 32'b0;
+            instruction_adr_stored <= 32'b0;
             instruction_o <= 32'b0;
             instr_fetch <= 1'b0;
             prev_d_good <= 0;
             prev_fetch <= 0;
         end else if(instr_wait) begin
-            // instruction_adr_o <= instruction_adr_o;
+            instruction_adr_stored <= instruction_adr_o;
             instruction_o <= instruction_o;
             instr_fetch <= 1'b0;
             prev_fetch <= instr_fetch;
@@ -1096,17 +1099,6 @@ module t05_memcontrol(
     output logic bus_full_CPU, data_access,
     output logic [31:0] address_out, data_out_CPU, data_out_BUS, data_out_INSTR
 );
-
-    always @ (memRead, address_in, data_in_BUS) begin
-        $display("[Read monitor] time=%0t, memRead=%h, address_in=%h, data_in_BUS=%h", $time, memRead, address_in, data_in_BUS);
-    end
-    always @ (memWrite, address_in, data_in_CPU) begin
-        $display("[Write monitor] time=%0t, memWrite=%h, address_in=%h, data_in_CPU=%h", $time, memWrite, address_in, data_in_CPU);
-    end
-
-    always @ (address_in) begin
-        if (address_in == 33000024) #1 $stop;
-    end
 
     logic [2:0] prev_state;
     logic next_next_fetch;
