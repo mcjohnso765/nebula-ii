@@ -131,6 +131,30 @@ module t05_complete_design(
     output logic lcd_en, lcd_rw, lcd_rs //I/O
 );
 
+    logic [31:0] data_out_BUS_int;
+    logic [3:0] keypad_out_int;
+    logic [7:0] lcd_data_int;
+    logic lcd_en_int, lcd_rs_int, lcd_rw_int;
+
+    always_comb begin
+        if(!en) begin
+            data_out_BUS = '0;
+            keypad_out = '0;
+            lcd_data = '0;
+            lcd_en = '0;
+            lcd_rs = '0;
+            lcd_rw = '0;
+        end else begin
+            data_out_BUS = data_out_BUS_int;
+            keypad_out = keypad_out_int;
+            lcd_data = lcd_data_int;
+            lcd_en = lcd_en_int;
+            lcd_rs = lcd_rs_int;
+            lcd_rw = lcd_rw_int;
+        end
+    end
+
+
     logic [31:0] data_to_CPU, data_from_CPU, CPU_address;
     logic [31:0] data_from_keypad, LCD_out, data_to_LCD;
 
@@ -180,7 +204,7 @@ module t05_complete_design(
         .clk(clk),
         .rst(rst),
         .columns(keypad_in), //input
-        .rows(keypad_out), //output
+        .rows(keypad_out_int), //output
         .key_out_bin(data_from_keypad),
         .key_confirm(key_confirm)
     );
@@ -195,10 +219,10 @@ module t05_complete_design(
         .rst(rst),
         .row_1(lcd_storage[255:128]),
         .row_2(lcd_storage[127:0]),
-        .lcd_en(lcd_en),
-        .lcd_rw(lcd_rw),
-        .lcd_rs(lcd_rs),
-        .lcd_data(lcd_data)
+        .lcd_en(lcd_en_int),
+        .lcd_rw(lcd_rw_int),
+        .lcd_rs(lcd_rs_int),
+        .lcd_data(lcd_data_int)
     );
 
     memory_mapping map(
@@ -209,7 +233,7 @@ module t05_complete_design(
         .output_address(address_out),
         .data_to_CPU(data_to_CPU),
         .data_to_LCD(data_to_LCD),
-        .data_to_memory(data_out_BUS),
+        .data_to_memory(data_out_BUS_int),
         .lcd_word(lcd_word),
         .mem_access(mem_access),
         .key_data(comb_key_data)
@@ -1029,7 +1053,7 @@ module t05_instruction_memory(
 );
 
     logic next_fetch, prev_fetch, prev_d_good;
-    logic [31:0] stored_instr, stored_instr_adr;
+    logic [31:0] stored_instr, stored_instr_adr, instruction_adr_stored;
 
 
     always_comb begin
@@ -1056,7 +1080,7 @@ module t05_instruction_memory(
             // stored_instr = instruction_o;
         end
         if(instr_wait) begin
-            instruction_adr_o = instruction_adr_o;
+            instruction_adr_o = instruction_adr_stored;
         end else begin
             instruction_adr_o = instruction_adr_i;
         end
@@ -1069,12 +1093,14 @@ module t05_instruction_memory(
             instr_fetch <= 1'b0;
             prev_d_good <= 0;
             prev_fetch <= 0;
+            instruction_adr_stored <= 0;
         end else if(instr_wait) begin
             // instruction_adr_o <= instruction_adr_o;
             instruction_o <= instruction_o;
             instr_fetch <= 1'b0;
             prev_fetch <= instr_fetch;
             prev_d_good <= data_good;
+            instruction_adr_stored <= instruction_adr_o;
         end else begin
             // instruction_adr_o <= stored_instr_adr;
             instruction_o <= stored_instr;
