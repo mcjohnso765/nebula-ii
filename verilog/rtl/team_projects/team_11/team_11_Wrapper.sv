@@ -4,6 +4,8 @@
 // Author:      <Full Name>
 // Description: <Module Description>
 
+
+
 module team_11_Wrapper (
 
 `ifdef USE_POWER_PINS
@@ -66,6 +68,7 @@ module team_11_Wrapper (
     *--------------------------------------------------------------
     */
 
+ 
     //Assign to unused outputs
     assign irq = 3'b000;	// Unused
     assign gpio_oeb[4:1] = 4'b1111;//Set all to inputs
@@ -98,3 +101,5 @@ module team_11_Wrapper (
     );
 
 endmodule
+
+top wrappertop(.hz10M(wb_clk_i), .reset(wb_rst_i), .pb(gpio_in[37:18]), .right(gpio_out[37:30]), .left(gpio_out[29:22]));
