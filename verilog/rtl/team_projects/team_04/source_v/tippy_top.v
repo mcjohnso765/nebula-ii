@@ -143,12 +143,6 @@ module tippy_top (
 		.sel_to_mem(sel_to_mem),
 		.uart_address(memory_size - 32'd1532)
 	);
-	always @(posedge mem_write)
-		#(10)
-			$display("@ %t: Writing %h %h", $time, adr_to_mem, data_to_mem);
-	always @(posedge mem_read)
-		#(10)
-			$display("@ %t: Reading %h %h", $time, adr_to_mem, data_to_mem);
 endmodule
 module CPU (
 	instruction,
@@ -972,7 +966,7 @@ module program_counter (
 		else
 			linkAddress = 32'h00000000;
 	end
-	always @(negedge clk or negedge nRst)
+	always @(posedge clk or negedge nRst)
 		if (~nRst)
 			instructionAddress <= 32'd0;
 		else if (enable) begin
