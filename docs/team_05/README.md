@@ -9,15 +9,15 @@
 * Peer Mentor: Pranav Wadhwa
 
 ## Project Type
-Our project was to create a 32-bit single-cycle RISC-V CPU.
+Our project was to create a 32-bit single-cycle RISC-V CPU. We integrated this with a 4x4 keypad for inputs and a 16x2 LCD screen for outputs. 
 
 ## Pin Layout
 Note that on the final chip, there are 38 gpio of which you have access to 4.
 The first number represents the GPIO on the physical board. The second number
-in brackets represents the number in your verilog code
+in brackets represents the number in your verilog code.
 
 ### Inputs
-* [33:0] keypad_in
+* [33:30] keypad_in
 
 ### Outputs
 * [00] lcd_rw
