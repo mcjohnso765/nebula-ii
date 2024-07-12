@@ -517,7 +517,6 @@ module team_05_tb;
 		mprj_io_in[37:34] = keyboard_in;
 		#(150);
 		mprj_io_in[37:34] = 4'h0;
-
 	endtask
 
 
