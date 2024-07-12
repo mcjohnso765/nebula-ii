@@ -515,11 +515,7 @@ module team_05_tb;
 		input [3:0] keyboard_out;
 		#(mprj_io[18:15] == keyboard_out);
 		mprj_io_in[37:34] = keyboard_in;
-		@(negedge clock);
-		@(negedge clock);
-		@(negedge clock);
-		@(negedge clock);
-		@(negedge clock);
+		#(150);
 		mprj_io_in[37:34] = 4'h0;
 
 	endtask
@@ -570,18 +566,19 @@ module team_05_tb;
 		//check inputs and outputs, once they actually get fully connected
 
 		//press confirm
-
+		press_button(4'b0001, 4'b0111); //press confirm
 		//clear
-
+		press_button(4'b0100, 4'b0111); //clear shift_reg
 		//press button A (add)
-
+		press_button(4'b0001, 4'b1110); //press A
 		//pres confirm
-
+		press_button(4'b0001, 4'b0111); //press confirm
 		//clear
-
+		press_button(4'b0100, 4'b0111); //clear shift_reg
 		//press button 3
-
+		press_button(4'b0100, 4'b1110);
 		//press confirm
+		press_button(4'b0001, 4'b0111); //press confirm
 
 		//after sum is sent to LCD, double check output correctness
 
