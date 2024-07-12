@@ -518,5 +518,5 @@ tbsim-source-%:
 sv2v:
 	@echo "Making VSRC Directory"
 	@mkdir -p $(VSRC)
-	@sv2v --write=$(VSRC) $(SRC)/*
+	@sv2v --write=$(VSRC)/tippy_top.v $(SRC)/*
 	@echo "Done Conversion"

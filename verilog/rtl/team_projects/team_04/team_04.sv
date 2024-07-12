@@ -49,7 +49,7 @@ module team_04 (
     */
     
     logic h_out, v_out, pixel_data; //wires to VGA from CPU
-    //logic opcode_error, alu_error;
+    logic opcode_error, alu_error;
 
     //input from wishbone interconnect
     
@@ -82,8 +82,8 @@ module team_04 (
         .h_out(h_out),
         .v_out(v_out),
         .pixel_data(pixel_data),
-        //.opcode_error(opcode_error),
-        //.alu_error(alu_error),
+        .opcode_error(opcode_error),
+        .alu_error(alu_error),
         .mem_busy(BUSY_O | !en),
         .mem_read(READ_I),
         .mem_write(WRITE_I),
@@ -125,17 +125,17 @@ module team_04 (
     gpio_out = 34'b0; //Inputs, but set low anyways
     gpio_oeb = '1;//All 1's inputs
 
-        if(~en) begin
-            gpio_out[2:0] = 0;
-        end else begin
+        // if(~en) begin
+        //     gpio_out[4:0] = 0;
+        // end else begin
             gpio_oeb[4:0] = '0;
             gpio_out[0] = h_out;
             gpio_out[1] = v_out;
             gpio_out[2] = pixel_data;
-            //gpio_out[3] = opcode_error;
-            //gpio_out[4] = alu_error;
+            gpio_out[3] = opcode_error;
+            gpio_out[4] = alu_error;
         end
-    end
+    // end
 
 
 endmodule

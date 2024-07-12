@@ -13,7 +13,7 @@ module tippy_top (
 
     input logic Rx,
 
-    output logic h_out, v_out, pixel_data,
+    output logic h_out, v_out, pixel_data, opcode_error, alu_error,
 
     input [31:0] memory_size
 
@@ -53,7 +53,8 @@ module tippy_top (
 
         .alu_result(), //ignore
         .reg_window(), //ignore
-        .err_flag(), //ignore
+        .err_flag(alu_error), 
+        .Error(opcode_error),
         
         .addr_to_mem(CPU_adr_to_mem),
         .data_to_mem(CPU_data_to_mem),
@@ -78,7 +79,8 @@ module tippy_top (
         .byte_select_out(), //ignore
         .read(VGA_read),
         .data_to_VGA(data_to_VGA),
-        .SRAM_address(VGA_adr)
+        .SRAM_address(VGA_adr),
+        .mem_busy(mem_busy)
     );
 
 
@@ -203,6 +205,7 @@ module CPU (
     output logic err_flag, //ALU flag invalid operation, from ALU
     output logic [31:0] addr_to_mem, data_to_mem,//signals from memory handler to mem
     output logic [31:0] nextInstruction, //next instruction address from PC
+    output logic Error, //invalid opcode error, from control unit
 
     output logic MemWrite, MemRead,
     output logic [3:0] select,
@@ -222,7 +225,7 @@ module CPU (
 
     //from control_unit
     logic [1:0] RegWriteSrc;
-    logic ALUSrc, RegWrite, Jump, Branch, Error;
+    logic ALUSrc, RegWrite, Jump, Branch, AUIlink;
 
     //from ALU mux
     logic [31:0] opB;
@@ -275,7 +278,9 @@ module CPU (
         .Branch(Branch), //control signal indicating a Branch, (conditional jump)
         .MemWrite(MemWrite), //control signal indicating Memory will be written to 
         .MemRead(MemRead), //control signal indicating memory will be read from
-        .Error(Error) //testing signal indicating invalid Opcode
+        .Error(Error), //testing signal indicating invalid Opcode
+        .AUIlink(AUIlink) //control signal indicating auipc instruction
+
     );
 
     //decide whether a register value or immediate is used as the second operand in an operation
@@ -354,7 +359,8 @@ module CPU (
         .condJumpValue(condJumpValue),
         .doRegJump(~opcode[3]),
         .instructionAddress(nextInstruction), //to Instruction memory
-        .linkAddress(PCData)
+        .linkAddress(PCData),
+        .AUIlink(AUIlink)
 
     );  
 endmodule
@@ -447,7 +453,9 @@ module control_unit (
     Branch, //ON: The next instruction should be taken from the address determined by the immediate value if some condition is fulfilled, to PC
     MemWrite, //ON: Memory will be written to, to Data Memory
     MemRead, //ON: Memory will be read from, to Data Memory
-    Error //ON: Invalid Opcode 
+    Error, //ON: Invalid Opcode
+    AUIlink //ON: auipc instruction, requires 
+
 );
     
 
@@ -462,6 +470,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b0010111: begin //(auipc)
@@ -473,6 +482,8 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 1;
+
         end
         
         7'b1101111: begin //(jal)
@@ -484,6 +495,8 @@ module control_unit (
             Jump = 1;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
+
         end
 
         7'b1100111: begin //(jalr)
@@ -496,6 +509,7 @@ module control_unit (
             Jump = 1;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b1100011: begin //(B-Type):
@@ -507,6 +521,7 @@ module control_unit (
             Jump = 0;
             Branch = 1;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b0000011: begin //(I-Type):
@@ -518,6 +533,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b0100011: begin //(S-Type):
@@ -529,6 +545,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b0010011: begin //(I-Type):
@@ -540,6 +557,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b0110011: begin //(R-Type):    
@@ -551,6 +569,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
         
         default: begin
@@ -562,6 +581,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 1;
+            AUIlink = 0;
         end
         endcase
     end
@@ -1079,25 +1099,59 @@ endmodule
 module program_counter (
   input logic nRst, enable, clk,
   input logic [31:0] immJumpValue, regJumpValue,
-  input logic doForceJump, doCondJump, condJumpValue, doRegJump,
+  input logic doForceJump, doCondJump, condJumpValue, doRegJump, AUIlink,
   output logic [31:0] instructionAddress, linkAddress
 
 );
+  //does not include auipc
+//   always_ff @( posedge clk, negedge nRst ) begin
+//     if(~nRst) begin
+//       instructionAddress <= 32'd0;
+//       linkAddress <= 32'd0;
+//     end else begin
+//       if (enable) begin
+
+
+//         if (doForceJump) begin
+//           linkAddress <= instructionAddress + 32'd4;
+//         end else begin
+//           linkAddress <= 32'd0;
+//         end
+
+//         if (doForceJump | (doCondJump & condJumpValue)) begin
+
+//           if (doRegJump & !doCondJump) begin
+//             instructionAddress <= regJumpValue + immJumpValue;
+//           end else begin
+//             instructionAddress <= instructionAddress + immJumpValue;
+//           end
+//         end else begin
+//           instructionAddress <= instructionAddress + 32'd4;
+//         end
+//       end else begin
+//         instructionAddress <= instructionAddress;
+//         linkAddress <= 32'd0;
+//       end
+//     end
+//   end
+
+//includes auipc
+  always_comb begin
+    if (doForceJump) begin
+        linkAddress = instructionAddress + 32'd4;
+    end else if (AUIlink) begin
+        linkAddress = instructionAddress + immJumpValue;
+    end else begin
+        linkAddress = 32'h0;
+    end
+  end
   
-  always_ff @( posedge clk, negedge nRst ) begin
+  always_ff @( negedge clk, negedge nRst ) begin //michael 6/28 - changed from negedge to posedge :)
     if(~nRst) begin
       instructionAddress <= 32'd0;
-      linkAddress <= 32'd0;
+    //   linkAddress <= 32'd0;
     end else begin
       if (enable) begin
-
-
-        if (doForceJump) begin
-          linkAddress <= instructionAddress + 32'd4;
-        end else begin
-          linkAddress <= 32'd0;
-        end
-
         if (doForceJump | (doCondJump & condJumpValue)) begin
 
           if (doRegJump & !doCondJump) begin
@@ -1110,12 +1164,10 @@ module program_counter (
         end
       end else begin
         instructionAddress <= instructionAddress;
-        linkAddress <= 32'd0;
+        // linkAddress <= 32'd0;
       end
     end
   end
-
-
 endmodule
 
 
@@ -1379,12 +1431,13 @@ module VGA_data_controller (
     input logic [9:0] h_count,
     input logic [8:0] v_count,
     input logic [1:0] VGA_state,
+    input logic mem_busy,
     output logic [3:0] byte_select_out,
     output logic read,
     output logic [31:0] data_to_VGA, SRAM_address
 );
 
-    logic [31:0] next_data, next_address;
+    logic [31:0] next_data, next_address, ready_data, next_ready;
 
     always_comb begin
         if (VGA_state > 0) begin
@@ -1409,34 +1462,46 @@ module VGA_data_controller (
             state <= IDLE;
             data_to_VGA <= 32'b0;
             SRAM_address <= 32'b0;
+            ready_data <= 32'b0;
         end else begin
             state <= next_state;
             data_to_VGA <= next_data;
             SRAM_address <= next_address;
+            ready_data <= next_ready;
         end
     end
 
     always_comb begin
         next_data = data_to_VGA;
         next_address = SRAM_address;
+        next_ready = ready_data;
+
             case (state)
                 IDLE: begin
                     next_data = data_from_SRAM;
+                    next_ready = data_from_SRAM;
                     next_state = LOAD_NEW_REGISTER;
                     next_address = SRAM_address;
                 end
 
                 LOAD_NEW_REGISTER: begin
-                    next_data = data_from_SRAM;
+                    next_ready = ready_data;
+                    next_data = ready_data;
                     next_address = SRAM_address;
                     next_state = PREPARE_DATA;
                 end
 
                 PREPARE_DATA: begin
-                    if (VGA_state == 1) begin // preparing first word 
+                    if (~mem_busy) begin
+                        next_ready = data_from_SRAM;
+                    end else begin
+                        next_ready = ready_data;
+                    end
+
+                    if ((VGA_state == 1)) begin // preparing first word 
                       //SRAM_address <= 32'h3E80; // base of SRAM storage
                         next_address = 32'h0; // TESTBENCH CASE
-                        next_data = data_from_SRAM;
+                        next_data = ready_data;
                         next_state = LOAD_NEW_REGISTER;
                     end
                     
@@ -1444,11 +1509,12 @@ module VGA_data_controller (
                         next_state = LOAD_NEW_REGISTER;
                     end else if ((h_count[7:6] == 3) & ((v_count % 5) != 4))begin
                         next_address = VGA_request_address - 3; // preparing next word 
-                        next_data = next_data;
+                        next_data = data_to_VGA;
+                        
                         next_state = PREPARE_DATA;
                     end else begin
                         next_address = VGA_request_address + 1; // preparing next word 
-                        next_data = next_data;
+                        next_data = data_to_VGA;
                         next_state = PREPARE_DATA;
                     end
 

@@ -386,41 +386,22 @@ void main()
 	*(&sram_space + 1) = 0x03300313; //addi x6, x0, 0x33
 	*(&sram_space + 2) = 0x01831313; //slli x6, x6, 24
 	*(&sram_space + 3) = 0x05400293;  //addi x5, x0, 0x54
-	*(&sram_space + 4) = 0x02502023; //sw x5, 32(x0)
-	// *(&sram_space + 3) = 0x00000000; //sw x6, 52(x0)
-	// *(&sram_space + 4) = 0x02602a23; //sw x6, 52(x0)
-	// *(&sram_space + 5) = 0x00000000; //sw x6, 52(x0)
-	// *(&sram_space + 6) = 0x00000000; //sw x6, 52(x0)
+	*(&sram_space + 4) = 0x06502223; //sw x5, 100(x0)
 	
 
 	*(&sram_space + 5) = 0x0db00293; //addi x5, x0, 219
 	*(&sram_space + 6) = 0x00500a13; //addi x20, x0, 5
 
 	*(&sram_space + 7) = 0x02002f83; //lw x31, 32(x0)
-	// *(&sram_space + 4) = 0x06300093; //addi x1, x0, 99
-	// *(&sram_space + 5) = 0x00508133; //add x2, x1, x5
-	// *(&sram_space + 6) = 0x0640a113; //slti x2, x1, 100
-	// *(&sram_space + 7) = 0xff503113; //sltiu x2, x0, -11
-	// *(&sram_space + 8) = 0x1682c193; //xori x3, x5, 360
-	// *(&sram_space + 9) = 0x1682e193; //ori x3, x5, 360
-	// *(&sram_space + 10) = 0x3e70f313; //andi x6, x1, 999
-	// *(&sram_space + 11) = 0x00229393; //slli x7, x5, 2
-	// *(&sram_space + 12) = 0x0022d413; //srli x8, x5, 2
-	// *(&sram_space + 13) = 0x4642d493; //srai x9, x5, 100
-	// *(&sram_space + 14) = 0x40838533; //sub x10, x7, x8
-	// *(&sram_space + 15) = 0x014395b3; //sll x11, x7, x20
-	// *(&sram_space + 16) = 0x01432633; //slt x12, x6, x20
-	// *(&sram_space + 17) = 0x01433633; //sltu x12, x6, x20
-	// *(&sram_space + 18) = 0x014656b3; //srl x13, x12, x20
-	// *(&sram_space + 19) = 0x41445733; //sra x14, x8, x20
-	// *(&sram_space + 20) = 0x005667b3; //or x15, x12, x5
+	*(&sram_space + 8) = 0x003e7517; //auipc x10, 999
+	*(&sram_space + 9) = 0x0feed5b7; //lui x11, 65261
 
 	//*(&sram_space + 21) = 0x0c600623; //sb x6, 204(x0)
 	//*(&sram_space + 22) = 0x0c601823; //sh x6, 208(x0)
 	// *(&sram_space + 24) = 0x0f000803; //lb x16, 240(x0)
 	// *(&sram_space + 25) = 0x0f401883; //lh x17, 244(x0)
 	// *(&sram_space + 27) = 0x0f004903; //lbu x18, 240(x0)
-	// *(&sram_space + 28) = 0x0f405903; //lhu x18, 244(x0)
+	// *(&sram_space + 28) = 0x0fend405903; //lhu x18, 244(x0)
 	*(&sram_space + 22) = 0x0000006f; //jal x0, 0
 	
 	//unsigned int j = 1;

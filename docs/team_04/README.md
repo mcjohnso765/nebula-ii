@@ -12,20 +12,20 @@
 Our group designed and implemented a RISC-V 32-bit CPU with a serial UART input and outputs to a VGA display. The CPUs peripherals cooperate with the CPU via memory mapped I/O. Given the proper instructions, our CPU can serve multiple purposes, such as doing calculations, running games, and much more. 
 
 ## Pin Layout
-Note that on the final chip, there are 38 gpio of which you have access to 4.
+Note that on the final chip, there are 38 gpio of which you have access to 34.
 The first number represents the GPIO on the physical board. The second number
 in brackets represents the number in your verilog code
 
-00[00] Input/Output: Pin_Function
+00[00] Input/Output: h_out (VGA)
 01[--] Input/Output: Pin_Function
 02[--] Input/Output: Pin_Function
 03[--] Input/Output: Pin_Function
 04[--] Input/Output: Pin_Function
-05[01] Input/Output: Pin_Function
-06[02] Input/Output: Pin_Function 
-07[03] Input/Output: Pin_Function 
-08[04] Input/Output: Pin_Function 
-09[05] Input/Output: Pin_Function 
+05[01] Input/Output: v_out (VGA)
+06[02] Input/Output: pixel_data (VGA) 
+07[03] Input/Output: opcode_error (control unit does not recognize instruction) 
+08[04] Input/Output: alu_error (ALU does not recognize instruction)
+09[05] Input/Output: Rx (UART input)
 10[06] Input/Output: Pin_Function
 11[07] Input/Output: Pin_Function
 12[08] Input/Output: Pin_Function

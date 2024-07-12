@@ -270,7 +270,7 @@ module team_04_tb;
                 uart_in = 1;
             end
         end
-		#(5*1000000);
+		#(15*1000000);
 
 		`ifdef GL
 	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
