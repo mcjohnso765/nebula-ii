@@ -1,6 +1,6 @@
 # STARS 2024 Design Final Project
 
-## TEAM NAME
+## CPU TEAM 5
 * Ainsley Strothkamp
 * Alex Tauriainen
 * Berin Celik
