@@ -1386,7 +1386,7 @@ module VGA_data_controller (
     output logic [31:0] data_to_VGA, SRAM_address
 );
 
-    logic [31:0] next_data, next_address, ready_data;
+    logic [31:0] next_data, next_address, ready_data, next_ready;
 
     always_comb begin
         if (VGA_state > 0) begin
@@ -1411,26 +1411,30 @@ module VGA_data_controller (
             state <= IDLE;
             data_to_VGA <= 32'b0;
             SRAM_address <= 32'b0;
+            ready_data <= 32'b0;
         end else begin
             state <= next_state;
             data_to_VGA <= next_data;
             SRAM_address <= next_address;
+            ready_data <= next_ready;
         end
     end
 
     always_comb begin
         next_data = data_to_VGA;
         next_address = SRAM_address;
-        ready_data = data_from_SRAM;
+        next_ready = ready_data;
+
             case (state)
                 IDLE: begin
                     next_data = data_from_SRAM;
-                    ready_data = data_from_SRAM;
+                    next_ready = data_from_SRAM;
                     next_state = LOAD_NEW_REGISTER;
                     next_address = SRAM_address;
                 end
 
                 LOAD_NEW_REGISTER: begin
+                    next_ready = ready_data;
                     next_data = ready_data;
                     next_address = SRAM_address;
                     next_state = PREPARE_DATA;
@@ -1438,10 +1442,11 @@ module VGA_data_controller (
 
                 PREPARE_DATA: begin
                     if (~mem_busy) begin
-                        ready_data = data_from_SRAM;
+                        next_ready = data_from_SRAM;
                     end else begin
-                        ready_data = ready_data;
+                        next_ready = ready_data;
                     end
+
                     if ((VGA_state == 1)) begin // preparing first word 
                       //SRAM_address <= 32'h3E80; // base of SRAM storage
                         next_address = 32'h0; // TESTBENCH CASE
