@@ -76,7 +76,8 @@ module tippy_top (
 		.byte_select_out(),
 		.read(VGA_read),
 		.data_to_VGA(data_to_VGA),
-		.SRAM_address(VGA_adr)
+		.SRAM_address(VGA_adr),
+		.mem_busy(mem_busy)
 	);
 	VGA_out vga(
 		.SRAM_data_in(data_to_VGA),
