@@ -78,7 +78,7 @@ module Button (
 	input         noisy,   // noisy button input
 	output        debounce // debounced button output, 
 );     
-  parameter LIMIT = 12000; // set the bouncing threshold to 10ms, 10ms / (1/12MHz) = 120000 clock cycles
+  parameter LIMIT = 120000; // set the bouncing threshold to 10ms, 10ms / (1/12MHz) = 120000 clock cycles
   
   reg    [16:0] r_counter;  // size need to be larger or equal to LIMIT
   reg    r_debounce;
