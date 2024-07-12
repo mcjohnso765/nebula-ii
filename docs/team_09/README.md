@@ -35,25 +35,27 @@ in brackets represents the number in your verilog code
 17[13] Output: VD for DAC 
 18[14] Output: VE for DAC 
 19[15] Output: VF (MSB) for DAC 
-20[16] Input/Output: Pin_Function 
-21[17] Input/Output: Pin_Function 
-22[18] Input/Output: Pin_Function 
-23[19] Input/Output: Pin_Function 
-24[20] Input/Output: Pin_Function 
-25[21] Input/Output: Pin_Function 
-26[22] Input/Output: Pin_Function 
-27[23] Input/Output: Pin_Function 
-28[24] Input/Output: Pin_Function 
-29[25] Input/Output: Pin_Function
-30[26] Input/Output: Pin_Function
-31[27] Input/Output: Pin_Function
-32[28] Input/Output: Pin_Function
-33[29] Input/Output: Pin_Function
-34[30] Input/Output: Pin_Function
-35[31] Input/Output: Pin_Function
-36[32] Input/Output: Pin_Function
-37[33] Input/Output: Pin_Function
-38[34] Input/Output: Pin_Function
+20[16] Output: First Pin for Seven Segment Display 
+21[17] Output: Second Pin for Seven Segment Display 
+22[18] Output: Third Pin for Seven Segment Display 
+23[19] Output: Fourth Pin for Seven Segment Display 
+24[20] Output: Fifth Pin for Seven Segment Display 
+25[21] Output: Sixth Pin for Seven Segment Display 
+26[22] Output: Seventh Pin for Seven Segment Display 
+27[23] Output: Enable B Pin for Seven Segment Display 
+28[24] Output: Enable A Pin for Seven Segment Display 
+29[25] Input: Up Button
+30[26] Input: Down Button
+31[27] Input: Right Button 
+32[28] Input: Left Button
+33[29] Input: Mode Button (changes the speed)
+34[30] Input: Obstacle Toggle Button 
+35[31] Input: Reset Button (Press when game is over)
+36[32] Input/Output: Empty
+37[33] Input/Output: Empty
+38[34] Input/Output: Empty
+
+#NOTE: ALL BUTTONS MUST BE EXTERNALLY DEBOUNCED, THERE IS NO DEBOUNCING LOGIC IN OUR DESIGN
 
 ## Supporting Equipment
 List all the required equipment and upload a breadboard with the equipment set up (recommend using tinkercad circuits if possible)
