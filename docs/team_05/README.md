@@ -17,7 +17,7 @@ The first number represents the GPIO on the physical board. The second number
 in brackets represents the number in your verilog code
 
 ### Inputs
-[33:0] keypad_in
+* [33:0] keypad_in
 
 ### Outputs
 * [00] lcd_rw
