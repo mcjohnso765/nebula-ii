@@ -75,6 +75,8 @@ module VGA_data_controller (
 			2'd1: begin
 				if (~mem_busy)
 					ready_data = data_from_SRAM;
+				else
+					ready_data = ready_data;
 				if (VGA_state == 1) begin
 					next_address = 32'h00000000;
 					next_data = ready_data;
