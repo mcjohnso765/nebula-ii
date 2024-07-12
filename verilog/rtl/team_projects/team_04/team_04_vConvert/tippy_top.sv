@@ -1439,6 +1439,8 @@ module VGA_data_controller (
                 PREPARE_DATA: begin
                     if (~mem_busy) begin
                         ready_data = data_from_SRAM;
+                    end else begin
+                        ready_data = ready_data;
                     end
                     if ((VGA_state == 1)) begin // preparing first word 
                       //SRAM_address <= 32'h3E80; // base of SRAM storage
