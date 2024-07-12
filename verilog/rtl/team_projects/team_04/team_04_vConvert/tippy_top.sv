@@ -174,13 +174,13 @@ module tippy_top (
     //     $readmemh("instrList.txt", instrMem);
     // end
 
-    always @(posedge mem_write) begin
-        #(10) $display("@ %t: Writing %h %h", $time, adr_to_mem, data_to_mem);
-    end
+    // always @(posedge mem_write) begin
+    //     #(10) $display("@ %t: Writing %h %h", $time, adr_to_mem, data_to_mem);
+    // end
 
-    always @(posedge mem_read) begin
-        #(10) $display("@ %t: Reading %h %h", $time, adr_to_mem, data_to_mem);
-    end
+    // always @(posedge mem_read) begin
+    //     #(10) $display("@ %t: Reading %h %h", $time, adr_to_mem, data_to_mem);
+    // end
 
 endmodule
 
@@ -204,7 +204,7 @@ module CPU (
     output logic err_flag, //ALU flag invalid operation, from ALU
     output logic [31:0] addr_to_mem, data_to_mem,//signals from memory handler to mem
     output logic [31:0] nextInstruction, //next instruction address from PC
-    output logic Error, //opcode error, from control unit
+    output logic Error, //opcode error, from control
 
     output logic MemWrite, MemRead,
     output logic [3:0] select,
@@ -224,7 +224,7 @@ module CPU (
 
     //from control_unit
     logic [1:0] RegWriteSrc;
-    logic ALUSrc, RegWrite, Jump, Branch;
+    logic ALUSrc, RegWrite, Jump, Branch, AUIlink;
 
     //from ALU mux
     logic [31:0] opB;
@@ -277,7 +277,8 @@ module CPU (
         .Branch(Branch), //control signal indicating a Branch, (conditional jump)
         .MemWrite(MemWrite), //control signal indicating Memory will be written to 
         .MemRead(MemRead), //control signal indicating memory will be read from
-        .Error(Error) //testing signal indicating invalid Opcode
+        .Error(Error), //testing signal indicating invalid Opcode
+        .AUIlink(AUIlink)
     );
 
     //decide whether a register value or immediate is used as the second operand in an operation
@@ -356,7 +357,8 @@ module CPU (
         .condJumpValue(condJumpValue),
         .doRegJump(~opcode[3]),
         .instructionAddress(nextInstruction), //to Instruction memory
-        .linkAddress(PCData)
+        .linkAddress(PCData),
+        .AUIlink(AUIlink)
 
     );  
 endmodule
@@ -449,7 +451,8 @@ module control_unit (
     Branch, //ON: The next instruction should be taken from the address determined by the immediate value if some condition is fulfilled, to PC
     MemWrite, //ON: Memory will be written to, to Data Memory
     MemRead, //ON: Memory will be read from, to Data Memory
-    Error //ON: Invalid Opcode 
+    Error, //ON: Invalid Opcode 
+    AUIlink //ON: auipc instruction
 );
     
 
@@ -464,6 +467,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b0010111: begin //(auipc)
@@ -475,6 +479,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 1;
         end
         
         7'b1101111: begin //(jal)
@@ -486,6 +491,7 @@ module control_unit (
             Jump = 1;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b1100111: begin //(jalr)
@@ -498,6 +504,7 @@ module control_unit (
             Jump = 1;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b1100011: begin //(B-Type):
@@ -509,6 +516,7 @@ module control_unit (
             Jump = 0;
             Branch = 1;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b0000011: begin //(I-Type):
@@ -520,6 +528,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b0100011: begin //(S-Type):
@@ -531,6 +540,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b0010011: begin //(I-Type):
@@ -542,6 +552,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
 
         7'b0110011: begin //(R-Type):    
@@ -553,6 +564,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 0;
+            AUIlink = 0;
         end
         
         default: begin
@@ -564,6 +576,7 @@ module control_unit (
             Jump = 0;
             Branch = 0;
             Error = 1;
+            AUIlink = 0;
         end
         endcase
     end
@@ -1081,24 +1094,36 @@ endmodule
 module program_counter (
   input logic nRst, enable, clk,
   input logic [31:0] immJumpValue, regJumpValue,
-  input logic doForceJump, doCondJump, condJumpValue, doRegJump,
+  input logic doForceJump, doCondJump, condJumpValue, doRegJump, AUIlink,
   output logic [31:0] instructionAddress, linkAddress
 
 );
+
+  always_comb begin
+    if (doForceJump) begin
+        linkAddress = instructionAddress + 32'd4;
+    end else if (AUIlink) begin
+        linkAddress = instructionAddress + immJumpValue;
+    end else begin
+        linkAddress = 32'h0;
+    end
+  end
   
-  always_ff @( posedge clk, negedge nRst ) begin
+  always_ff @( negedge clk, negedge nRst ) begin //michael 6/28 - changed from negedge to posedge :)
     if(~nRst) begin
       instructionAddress <= 32'd0;
-      linkAddress <= 32'd0;
+    //   linkAddress <= 32'd0;
     end else begin
       if (enable) begin
 
 
-        if (doForceJump) begin
-          linkAddress <= instructionAddress + 32'd4;
-        end else begin
-          linkAddress <= 32'd0;
-        end
+        // if (doForceJump) begin
+        //   linkAddress <= instructionAddress + 32'd4;
+        // end else if (AUIlink) begin
+        //   linkAddress <= instructionAddress + immJumpValue;
+        // end else begin
+        //   linkAddress <= 32'h0;
+        // end
 
         if (doForceJump | (doCondJump & condJumpValue)) begin
 
@@ -1112,13 +1137,59 @@ module program_counter (
         end
       end else begin
         instructionAddress <= instructionAddress;
-        linkAddress <= 32'd0;
+        // linkAddress <= 32'd0;
       end
     end
   end
 
-
+// always_ff @( posedge clk ) begin
+//     if(AUIlink) begin
+//         linkAddress <= instructionAddress + immJumpValue;
+//     end
+// end
 endmodule
+
+// module program_counter (
+//   input logic nRst, enable, clk,
+//   input logic [31:0] immJumpValue, regJumpValue,
+//   input logic doForceJump, doCondJump, condJumpValue, doRegJump,
+//   output logic [31:0] instructionAddress, linkAddress
+
+// );
+  
+//   always_ff @( posedge clk, negedge nRst ) begin
+//     if(~nRst) begin
+//       instructionAddress <= 32'd0;
+//       linkAddress <= 32'd0;
+//     end else begin
+//       if (enable) begin
+
+
+//         if (doForceJump) begin
+//           linkAddress <= instructionAddress + 32'd4;
+//         end else begin
+//           linkAddress <= 32'd0;
+//         end
+
+//         if (doForceJump | (doCondJump & condJumpValue)) begin
+
+//           if (doRegJump & !doCondJump) begin
+//             instructionAddress <= regJumpValue + immJumpValue;
+//           end else begin
+//             instructionAddress <= instructionAddress + immJumpValue;
+//           end
+//         end else begin
+//           instructionAddress <= instructionAddress + 32'd4;
+//         end
+//       end else begin
+//         instructionAddress <= instructionAddress;
+//         linkAddress <= 32'd0;
+//       end
+//     end
+//   end
+
+
+// endmodule
 
 
 module VGA_out(
