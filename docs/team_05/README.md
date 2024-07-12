@@ -28,7 +28,10 @@ in brackets represents the number in your verilog code
 
 
 ## Supporting Equipment
-4x4 keypad, 16x2 GDM1602K LCD screen
+4x4 keypad
+![keypad](io_components\keypad.jpeg)
+
+16x2 GDM1602K LCD screen
 
 ## RTL Diagrams
 All the stuff from the proposal goes here, obviously updated from the time you did the proposal to the final layout
