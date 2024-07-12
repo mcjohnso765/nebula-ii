@@ -242,3 +242,220 @@ f81ff06f
 fff30313
 fe031ee3
 f39ff06f
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// test for instructions
+
+// test branch equal
+               
+addi x1, x0, 10       
+addi x2, x0 10     
+beq x1, x2, label_equal  
+
+label_equal:
+addi x3, x0, 1
+             
+// test branch not equal
+      
+addi x1, x0, 10       
+addi x2, x0, 20    
+beq x1, x2 label_not_equal  
+
+label_not_equal:
+addi x3, x0, 2
+
+// test b if less than
+        
+addi x1, x0, 10      
+addi x2, x0 20     
+blt x1, x2, label_less_than
+
+label_less_than:
+addi x3, x0, 3       
+
+
+// test b if greater than 
+               
+addi x1, x0, 20      
+addi x2, x0, 10       
+bge x1, x2, label_greater_equal 
+
+label_greater_equal:
+addi x3, x0, 4    
+
+
+// test Branch if Less Than, Unsigned
+                
+addi x1, x0, 10       
+addi x2, x0, 20     
+bltu x1, x2, label_less_than_unsigned  
+
+label_less_than_unsigned:
+addi x3, x0, 5    
+
+// test Branch if Greater Than or Equal, Unsigned
+
+addi x1, x0, 10
+addi x2, x0, 20       
+bltu x1, x2, label_less_than_unsigned      
+
+label_less_than_unsigned:
+addi x3, x0, 5   
+
+
+// test Branch if Greater Than or Equal, Unsigned
+
+addi x1, x0, 20     
+addi x2, x0, 10       
+bgeu x1, x2, label_greater_equal_unsigned  
+   
+label_greater_equal_unsigned:
+addi x3, x0, 6  
+
+
+//test add
+    addi x0, x0, 5  
+    addi x1, x0, 10  
+    addi x3, x0, 4
+    addi x4, x0, 7 
+    add x2, x0, x1
+    add x5, x3, x4   
+
+// test sub
+    addi x0, x0, 15  
+    addi x1, x0, 10  
+    addi x3, x0, 6  
+    addi x4, x0, 4 
+    sub x2, x0, x1  
+    sub x5, x3, x4
+
+//test xor 
+    addi x0, x0, 5   
+    addi x1, x0, 3  
+    addi x3, x0, 8  
+    addi x4, x0, 1    
+    xor x2, x0, x1
+    xor x5, x3, x4  
+
+//test or
+    addi x0, x0, 5   
+    addi x1, x0, 3  
+    addi x3, x0, 1  
+    addi x4, x0, 2 
+    or x2, x0, x1    
+    or x5, x3, x4
+
+// test and 
+    addi x0, x0, 5   
+    addi x1, x0, 3   
+    addi x3, x0, 1  
+    addi x4, x0, 1 
+    and x2, x0, x1 
+    and x5, x3, x4  
+
+// test shift left 
+    addi x0, x0, 5    
+    addi x1, x0, 1  
+    addi x5, x0, 8   
+    addi x6, x0, 2 
+    sll x2, x0, x1  
+    sll x4, x5, x6
+
+
+// test shift right
+    addi x0, x0, 10  
+    addi x1, x0, 1  
+    addi x4, x0, 2   
+    addi x3, x0, 2 
+    srl x2, x0, x1  
+    srl x7, x4, x3
+
+
+// test shift right arithmetic
+    addi x0, x0, 5   
+    addi x1, x0, 3 
+    addi x3, x0, -10 
+    addi x4, x0, 1   
+    sra x2, x0, x1   
+    sra x8, x3, x4
+
+// test set less than
+    addi x0, x0, 5   
+    addi x1, x0, 10  
+    addi x3, x0, 15   
+    addi x4, x0, 18
+    slt x2, x0, x1 
+    slt x6, x3, x4 
+
+// test set less than unsigned
+    addi x0, x0, 5 
+    addi x1, x0, 10
+    addi x3, x0, 5   
+    addi x4, x0, 3   
+    sltu x2, x0, x1 
+    sltu x8, x3, x4
+
+
+// test addi 
+    addi x7, x0, 0
+    addi x0, x0, 5   
+    addi x2, x0, 10  
+    addi x5, x2, 3
+    
+
+// test exclusive or imm
+    addi x0, x0, 5  
+    addi x3, x0, 2
+    xori x2, x0, 3
+    xori x5, x3, 7
+
+
+// test logical or imm
+    addi x0, x0, 5   
+    addi x2, x0, 9
+    ori x2, x0, 3  
+    ori x3, x2, 7
+
+
+// test logical and imm
+    addi x0, x0, 5 
+    addi x3, x0, 33   
+    andi x2, x0, 3 
+    andi x5, x3, 2
+
+
+// test shift left logical imm
+    addi x1, x0, 4
+    addi x0, x0, 5  
+    addi x4, x1, 2
+    slli x2, x0, 1  
+    slli x6, x4, 2
+
+
+// test shift right log imm
+    addi x0, x0, 10  
+    addi x1, x0, -4
+    srli x2, x0, 1 
+    srli x3, x1, 2 
+
+
+//test shift right arith immm
+    addi x0, x0, -10
+    addi x3, x0, -3
+    srai x2, x0, 1  
+    srai x5, x3, 3
+
+
+// test set less than imm
+    addi x0, x0, 5   
+    addi x1, x0, 3
+    slti x2, x0, 10  
+    slti x3, x1, 4
+
+
+// test set less than imm unsigned
+    addi x0, x0, 5 
+    addi x1, x0, 2
+    sltiu x2, x0, 10 
+    sltiu x3, x1, 3
+
