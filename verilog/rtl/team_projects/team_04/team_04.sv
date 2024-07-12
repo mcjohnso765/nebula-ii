@@ -122,8 +122,8 @@ module team_04 (
     always_comb begin 
          // All outputs must have a value even if not used
     la_data_out = 128'b0;
-    gpio_out = 34'b0; //Inputs, but set low anyways
-    gpio_oeb = '1;//All 1's inputs
+    gpio_out[33:5] = 29'b0; //Inputs, but set low anyways
+    gpio_oeb[33:5] = 29'b1;//All 1's inputs
 
         // if(~en) begin
         //     gpio_out[4:0] = 0;
