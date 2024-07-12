@@ -1744,7 +1744,7 @@ module keypad_interface(
         else begin
             counter = counter + 1;
             key_clk = 0;
-            if (counter == 150000) begin
+            if (counter == 150) begin  //150000
                 counter = 0;
                 key_clk = 1;
             end
