@@ -143,6 +143,12 @@ module tippy_top (
 		.sel_to_mem(sel_to_mem),
 		.uart_address(memory_size - 32'd1532)
 	);
+	always @(posedge mem_write)
+		#(10)
+			$display("@ %t: Writing %h %h", $time, adr_to_mem, data_to_mem);
+	always @(posedge mem_read)
+		#(10)
+			$display("@ %t: Reading %h %h", $time, adr_to_mem, data_to_mem);
 endmodule
 module CPU (
 	instruction,
@@ -188,7 +194,6 @@ module CPU (
 	wire RegWrite;
 	wire Jump;
 	wire Branch;
-	wire AUIlink;
 	wire [31:0] opB;
 	wire [31:0] alu_result_wire;
 	wire condJumpValue;
@@ -220,8 +225,7 @@ module CPU (
 		.Branch(Branch),
 		.MemWrite(MemWrite),
 		.MemRead(MemRead),
-		.Error(Error),
-		.AUIlink(AUIlink)
+		.Error(Error)
 	);
 	aluop_mux ALUOpB(
 		.regB(regB),
@@ -289,8 +293,7 @@ module CPU (
 		.condJumpValue(condJumpValue),
 		.doRegJump(~opcode[3]),
 		.instructionAddress(nextInstruction),
-		.linkAddress(PCData),
-		.AUIlink(AUIlink)
+		.linkAddress(PCData)
 	);
 endmodule
 module decode (
@@ -376,8 +379,7 @@ module control_unit (
 	Branch,
 	MemWrite,
 	MemRead,
-	Error,
-	AUIlink
+	Error
 );
 	reg _sv2v_0;
 	input wire [6:0] opcode;
@@ -389,7 +391,6 @@ module control_unit (
 	output reg MemWrite;
 	output reg MemRead;
 	output reg Error;
-	output reg AUIlink;
 	always @(*) begin
 		if (_sv2v_0)
 			;
@@ -403,7 +404,6 @@ module control_unit (
 				Jump = 0;
 				Branch = 0;
 				Error = 0;
-				AUIlink = 0;
 			end
 			7'b0010111: begin
 				RegWrite = 1;
@@ -414,7 +414,6 @@ module control_unit (
 				Jump = 0;
 				Branch = 0;
 				Error = 0;
-				AUIlink = 1;
 			end
 			7'b1101111: begin
 				RegWrite = 1;
@@ -425,7 +424,6 @@ module control_unit (
 				Jump = 1;
 				Branch = 0;
 				Error = 0;
-				AUIlink = 0;
 			end
 			7'b1100111: begin
 				RegWrite = 1;
@@ -436,7 +434,6 @@ module control_unit (
 				Jump = 1;
 				Branch = 0;
 				Error = 0;
-				AUIlink = 0;
 			end
 			7'b1100011: begin
 				RegWrite = 0;
@@ -447,7 +444,6 @@ module control_unit (
 				Jump = 0;
 				Branch = 1;
 				Error = 0;
-				AUIlink = 0;
 			end
 			7'b0000011: begin
 				RegWrite = 1;
@@ -458,7 +454,6 @@ module control_unit (
 				Jump = 0;
 				Branch = 0;
 				Error = 0;
-				AUIlink = 0;
 			end
 			7'b0100011: begin
 				RegWrite = 0;
@@ -469,7 +464,6 @@ module control_unit (
 				Jump = 0;
 				Branch = 0;
 				Error = 0;
-				AUIlink = 0;
 			end
 			7'b0010011: begin
 				RegWrite = 1;
@@ -480,7 +474,6 @@ module control_unit (
 				Jump = 0;
 				Branch = 0;
 				Error = 0;
-				AUIlink = 0;
 			end
 			7'b0110011: begin
 				RegWrite = 1;
@@ -491,7 +484,6 @@ module control_unit (
 				Jump = 0;
 				Branch = 0;
 				Error = 0;
-				AUIlink = 0;
 			end
 			default: begin
 				RegWrite = 0;
@@ -502,7 +494,6 @@ module control_unit (
 				Jump = 0;
 				Branch = 0;
 				Error = 1;
-				AUIlink = 0;
 			end
 		endcase
 	end
@@ -939,11 +930,9 @@ module program_counter (
 	doCondJump,
 	condJumpValue,
 	doRegJump,
-	AUIlink,
 	instructionAddress,
 	linkAddress
 );
-	reg _sv2v_0;
 	input wire nRst;
 	input wire enable;
 	input wire clk;
@@ -953,23 +942,18 @@ module program_counter (
 	input wire doCondJump;
 	input wire condJumpValue;
 	input wire doRegJump;
-	input wire AUIlink;
 	output reg [31:0] instructionAddress;
 	output reg [31:0] linkAddress;
-	always @(*) begin
-		if (_sv2v_0)
-			;
-		if (doForceJump)
-			linkAddress = instructionAddress + 32'd4;
-		else if (AUIlink)
-			linkAddress = instructionAddress + immJumpValue;
-		else
-			linkAddress = 32'h00000000;
-	end
 	always @(posedge clk or negedge nRst)
-		if (~nRst)
+		if (~nRst) begin
 			instructionAddress <= 32'd0;
+			linkAddress <= 32'd0;
+		end
 		else if (enable) begin
+			if (doForceJump)
+				linkAddress <= instructionAddress + 32'd4;
+			else
+				linkAddress <= 32'd0;
 			if (doForceJump | (doCondJump & condJumpValue)) begin
 				if (doRegJump & !doCondJump)
 					instructionAddress <= regJumpValue + immJumpValue;
@@ -979,9 +963,10 @@ module program_counter (
 			else
 				instructionAddress <= instructionAddress + 32'd4;
 		end
-		else
+		else begin
 			instructionAddress <= instructionAddress;
-	initial _sv2v_0 = 0;
+			linkAddress <= 32'd0;
+		end
 endmodule
 module VGA_out (
 	SRAM_data_in,
