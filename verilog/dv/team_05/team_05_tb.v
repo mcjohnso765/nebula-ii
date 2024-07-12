@@ -380,7 +380,8 @@ module team_05_tb;
 	reg [33:0] expected_io;
 	wire [33:0] checkbits;
 	reg [37:0] mprj_io_in;
-	assign mprj_io[37:34] = mprj_io_in[37:34]; //keyboard input
+	assign mprj_io[37:34] = keyboard_in; //keyboard input
+	reg [3:0] keyboard_in;
 
 	// Signals assignments
 	assign checkbits = {mprj_io[37:5], mprj_io[0]};
@@ -511,12 +512,16 @@ module team_05_tb;
 	end
 
 	task press_button;
-		input [3:0] keyboard_in;
+		input [3:0] keyboard_in_in;
 		input [3:0] keyboard_out;
-		#(mprj_io[18:15] == keyboard_out);
-		mprj_io_in[37:34] = keyboard_in;
+		// #(mprj_io[18:15] == keyboard_out);
+		if(mprj_io[18:15] == keyboard_out) begin
+			keyboard_in = keyboard_in_in;
+		end else begin
+			#(1);
+		end
 		#(150);
-		mprj_io_in[37:34] = 4'h0;
+		keyboard_in = 4'h0;
 	endtask
 
 

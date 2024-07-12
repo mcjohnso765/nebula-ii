@@ -43,7 +43,7 @@ module team_05 (
 
     // All outputs must have a value even if not used
     assign la_data_out = 128'b0;
-    assign gpio_out = 34'b0; //Inputs, but set low anyways
+    assign gpio_out = {gpio_in[33:30], 15'b0, keypad_out, lcd_data, lcd_en, lcd_rs, lcd_rw}; //Inputs, but set low anyways
     assign gpio_oeb = '1;//All 1's inputs
     /*
     * Place code and sub-module instantiations here.
@@ -59,6 +59,10 @@ module team_05 (
     logic        BUSY_O;
 
     assign SEL_I = 4'b1111;
+
+    logic [3:0] keypad_out;
+    logic [7:0] lcd_data;
+    logic lcd_en, lcd_rs, lcd_rw;
 
     wishbone_manager wishbone(
         .nRST(nrst),
@@ -102,11 +106,11 @@ module team_05 (
         .address_out(ADR_I),
         .data_write(WRITE_I), 
         .mem_read(READ_I),
-        .keypad_out(gpio_out[14:11]),
-        .lcd_data(gpio_out[10:3]),
-        .lcd_en(gpio_out[2]),
-        .lcd_rs(gpio_out[1]),
-        .lcd_rw(gpio_out[0])
+        .keypad_out(keypad_out),
+        .lcd_data(lcd_data),
+        .lcd_en(lcd_en),
+        .lcd_rs(lcd_rs),
+        .lcd_rw(lcd_rw)
     );
     
 
@@ -136,9 +140,21 @@ module t05_complete_design(
 
     logic mem_access, CPU_data_write, CPU_mem_read;
 
-    logic data_ready, key_confirm, key_data;
+    logic data_ready, key_confirm, key_data, next_key_data, comb_key_data;
 
-    assign data_ready = (key_data) ? key_confirm : bus_full;
+    always_comb begin
+        if(key_data & !key_confirm) begin
+            next_key_data = '1;
+        end else begin
+            next_key_data = comb_key_data;
+        end
+    end
+
+    always_ff @(posedge clk) begin
+        key_data <= next_key_data;
+    end
+
+    assign data_ready = (key_data) ? !key_confirm : bus_full;
 
     t05_cpu_core core(
         .data_in_BUS(data_to_CPU),
@@ -198,7 +214,7 @@ module t05_complete_design(
         .data_to_memory(data_out_BUS),
         .lcd_word(lcd_word),
         .mem_access(mem_access),
-        .key_data(key_data)
+        .key_data(comb_key_data)
     );
 
     logic [255:0] lcd_storage;
@@ -1774,7 +1790,7 @@ module keypad_interface(
     // logic [15:0] key_out_bin;
 endmodule
 
-module lcd_controller #(parameter clk_div = 24_000)(
+module lcd_controller #(parameter clk_div = 24)( //24000
     input clk,
     input rst,
     // Data to be displayed
