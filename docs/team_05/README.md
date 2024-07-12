@@ -6,7 +6,7 @@
 * Berin Celik
 * Medha Shinde
 * Shrienidhi Gopalakrishnan
-* Pranav Wadhwa
+* Peer Mentor: Pranav Wadhwa
 
 ## Project Type
 Our project was to create a 32-bit RISC-V CPU
@@ -16,15 +16,18 @@ Note that on the final chip, there are 38 gpio of which you have access to 4.
 The first number represents the GPIO on the physical board. The second number
 in brackets represents the number in your verilog code
 
-00[00] Input/Output: Pin_Function
-01[--] Input/Output: Pin_Function
-02[--] Input/Output: Pin_Function
-03[--] Input/Output: Pin_Function
-04[--] Input/Output: Pin_Function
-05[01] Input/Output: Pin_Function
-06[02] Input/Output: Pin_Function 
-07[03] Input/Output: Pin_Function 
-08[04] Input/Output: Pin_Function 
+00[00] Output: lcd_rw
+
+01[--] Output: lcd_rs
+
+02[--] Output: lcd_en
+
+03[--] Input/Output: lcd_data
+04[--] Input/Output: lcd_data
+05[01] Input/Output: lcd_data
+06[02] Input/Output: lcd_data 
+07[03] Input/Output: lcd_data 
+08[04] Input/Output: lcd_data 
 09[05] Input/Output: Pin_Function 
 10[06] Input/Output: Pin_Function
 11[07] Input/Output: Pin_Function
