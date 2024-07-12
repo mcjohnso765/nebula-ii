@@ -41,23 +41,26 @@
 -v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
 
 # Sample Team project
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_WB.v
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/dinoJumpMain.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/cactusmove.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/collision_detector.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/imageGenerator.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/random_generator.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/rectangleGenerator.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/spi.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/tft_ili9341_spi.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/tft_ili9341.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/top.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/snakeGame.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/sv2v/team_08_final_project.v
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_dinoGame.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_GPIOPins.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_GameState.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_cactusMove.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_collision_detector.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_dinoJump.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_imageGenerator.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_parallelDisplay.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_random_generator.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_rectangleGenerator.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_score_counter.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_ssdec.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_tft_ili9341.sv  
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_08/team_08_tft_ili9341_spi.sv
 
+# SRAM
 -v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/SRAM_1024x32.v
 -v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/ram_controller.v
 -v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper.v

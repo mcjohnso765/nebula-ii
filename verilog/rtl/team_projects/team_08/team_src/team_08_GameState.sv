@@ -30,7 +30,7 @@ end
 //next state logic
 always_comb begin
   //initialize 
-  next_state = state;//default
+  next_state = state;
 
   case(state)
     IDLE: begin
