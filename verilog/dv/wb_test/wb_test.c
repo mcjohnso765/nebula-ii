@@ -121,31 +121,36 @@ void main()
 	reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
 
 	// Configure GPIOs outputs to be selected by sample project
-	reg_gpio_PIN_0TO7 = 0x11111111;
-	reg_gpio_PIN_8TO15 = 0x11111111;
-	reg_gpio_PIN_16TO23 = 0x11111111;
-	reg_gpio_PIN_24TO31 = 0x11111111;
-	reg_gpio_PIN_32TO37 = 0x111111;
+	reg_gpio_PIN_0TO7 = 0x55555555;
+	reg_gpio_PIN_8TO15 = 0x55555555;
+	reg_gpio_PIN_16TO23 = 0x55555555;
+	reg_gpio_PIN_24TO31 = 0x55555555;
+	reg_gpio_PIN_32TO37 = 0x555555;
 
-	// Enable the design
-	sram_space = 0x3e800093;
-    *(&sram_space + 1) = 0x7d000113;
-    *(&sram_space + 2) = 0x002081b3;
-	*(&sram_space + 3) = 0x0cc00237;
-	*(&sram_space + 4) = 0x3ff20213;
-	*(&sram_space + 5) = 0x00221213;
-	*(&sram_space + 6) = 0x00022283;
-	// *(&sram_space + 7) = 0x00322023;
-	*(&sram_space + 7) = 0x0000006f;
+    // Do stuff with SRAM
+    // sram_space = 0x00500513;
+    // *(&sram_space + 1) = 0x00800613;
+    // *(&sram_space + 2) = 0x00c50663;
+    // *(&sram_space + 3) = 0x00250593;
+    // *(&sram_space + 4) = 0x00008067;
+    // *(&sram_space + 5) = 0x00350593;
+    // *(&sram_space + 6) = 0x00008067;
 
-	/**
-	*(&sram_space + 6) = 0xfe0302e3;
-	*(&sram_space + 7) = 0x00230633;
-	*(&sram_space + 8) = 0xfddff06f;
-	*(&sram_space + 9) = 0x3e828513;
-	*/
+    // reg_team_05_proj_EN = 0x1;
+
+    // reg_sample_proj_EN = (sram_space == 0xFEED0000);
+    // reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
+    // reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
 
 
-	reg_team_05_EN = 1;
+    // write sram
+    // write
+    // write
+    // write
+
+    // write your design (enable)
+
+    // your design:
+    // read from sram
     
 }
