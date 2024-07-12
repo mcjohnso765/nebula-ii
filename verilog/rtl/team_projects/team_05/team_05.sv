@@ -73,13 +73,11 @@ module team_05 (
         .ADR_I(ADR_I),
         .SEL_I(SEL_I),
 
-
         // .WRITE_I(WRITE_I),
         // .READ_I(READ_I),
 
         .WRITE_I(WRITE_I),
         .READ_I(READ_I),
-
 
         .ADR_O(ADR_O),
         .DAT_O(DAT_O),
