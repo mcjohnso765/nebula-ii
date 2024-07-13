@@ -30,31 +30,33 @@
 
 // endmodule
 
-
 module debouncer(
   input clk,
   input nrst,
   input logic keyvalid,
-  output logic receive_ready
+  output logic strobe
   );
 
-  logic next_receive_ready;
+  logic receive_ready, next_receive_ready;
   
-  always_ff @(posedge clk, negedge nrst)
-
-    if(!nrst)
+  always_ff @(posedge clk, negedge nrst) begin
+    if(!nrst) begin
       receive_ready <= 0;
-    else 
-      receive_ready <= next_receive_ready;
-       
-  always_comb begin
-    if (keyvalid == 1)
-    next_receive_ready = 1'b1;
-    else if (keyvalid == 0)
-    next_receive_ready = 1'b0;
-    else 
-    next_receive_ready = receive_ready;
-
-
+      
+    end else begin
+      receive_ready <= keyvalid;
+      next_receive_ready <= receive_ready;
+      
+    end
   end
+
+  assign strobe = ((~next_receive_ready) & (receive_ready));
+
+  // always_comb begin
+  //   //next_receive_ready = receive_ready;
+  //   if (keyvalid == 1)
+  //   next_receive_ready = 1'b1;
+  //   else 
+  //   next_receive_ready = 1'b0;
+  // end
 endmodule

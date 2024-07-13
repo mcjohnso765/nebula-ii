@@ -1,35 +1,42 @@
 `default_nettype none
 
-`include "src/debouncer.sv"
-`include "src/decoder.sv"
-`include "src/keypad.sv"
-`include "src/controls.sv"
-`include "src/buffer.sv"
+module keypad_control(
+    input logic [3:0]readrow,
+    input logic clk,
+    input logic nrst,
+    output logic [3:0]scancol,
+    output logic msg_tx_ctrl,
+    output logic [127:0]msg_1
+    //output logic [1:0]key_count,
+    //output logic receive_ready,
+    //output logic keyvalid,
+    // output logic [127:0]msg_2
+    );
 
-module keypad_control (
-input logic [3:0]readrow,
-input logic clk,
-input logic nrst,
+    logic [7:0]keycode;
+    logic keyvalid;
+    logic receive_ready;
+    logic [7:0]keycode_previous;
+    logic upper;
+    logic mode;
+    logic [1:0]key_count;
+    logic new_clk;
+    logic noisy;
+    logic btn_ctrl;
+    logic at_max;
+    logic [29:0]max;
 
-output logic [3:0]scancol,
-output logic [127:0] msg_1,
-output logic msg_tx_ctrl
-);
-
-logic [7:0]keycode;
-logic keyvalid;
-logic receive_ready;
-logic [7:0]keycode_previous;
-logic upper;
-logic mode;
-logic [1:0]key_count;
-
-keypad keypadtop(.clk(clk), .nrst(nrst), .readrow(readrow), .scancol(scancol), .keycode(keycode), .keyvalid(keyvalid));
-buffer buffertop(.keycode(keycode), .clk(clk), .nrst(nrst), .receive_ready(receive_ready), .keycode_previous(keycode_previous));
-controls controlstop(.clk(clk), .nrst(nrst), .keycode_previous(keycode_previous), .keycode(keycode), .upper(upper), .mode(mode), .key_count(key_count), .msg_tx_ctrl(msg_tx_ctrl));
-decoder decodertop(.clk(clk), .nrst(nrst), .keycode(keycode), .keycode_previous(keycode_previous), .key_count(key_count), .mode(mode), .upper(upper), .data_received(msg_1));
-debouncer debouncertop(.clk(clk), .nrst(nrst), .keyvalid(keyvalid), .receive_ready(receive_ready));
-
+    keyclk_div clkdivtop(.clk(clk), .nrst(nrst), .at_max(at_max), .max(30'd100000));
+    keypad keypadtop(.clk(clk), .enable(at_max), .nrst(nrst), .readrow(readrow), .scancol(scancol), .keycode(keycode), .keyvalid(keyvalid));
+    //newkeypad keypadtop(.clk(clk), .nrst(nrst), .receive_ready(receive_ready), .data_received(keycode), .readrow(readrow), .scancol(scancol));
+    buffer buffertop(.keycode(keycode), .clk(clk), .nrst(nrst), .receive_ready(receive_ready), .keycode_previous(keycode_previous));
+    controls controlstop(.clk(clk), .strobe(receive_ready), .nrst(nrst), .keycode_previous(keycode_previous), .keycode(keycode), .upper(upper), .mode(mode), .key_count(key_count), .msg_tx_ctrl(msg_tx_ctrl));
+    decoder decodertop(.clk(clk), .nrst(nrst), .keycode(keycode), .keycode_previous(keycode_previous), .key_count(key_count), .mode(mode), 
+    .upper(upper), .data_received(msg_1), .receive_ready(receive_ready));
+    debouncer debouncertop(.clk(clk), .nrst(nrst), .keyvalid(keyvalid), .strobe(receive_ready));
+    //fakemessage fpgatrial(.clk(clk), .nrst(nrst), .msg_tx_ctrl(msg_tx_ctrl), .msg_1(msg_1), .msg_2(msg_2));
+    //button btntop(.clk(clk), .noisy(noisy), .btn_ctrl(btn_ctrl));
+    //nokia nokiatop(.clk(clk), .nrst(nrst), .readrow(readrow), .scancol(scancol), .msg_1(msg_1), .msg_tx_ctrl(msg_tx_ctrl));
 endmodule
 
 // module keypad(

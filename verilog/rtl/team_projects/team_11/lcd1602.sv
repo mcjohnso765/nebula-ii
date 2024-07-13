@@ -1,6 +1,7 @@
-module lcd1602 #(parameter clk_div = 24_000)(
+module lcd1602 #(parameter clk_div = 20_000)(
     input logic clk,
     input logic nrst,
+    
     // Data to be displayed
     input logic [127:0] row_1,
     input logic [127:0] row_2,
@@ -11,13 +12,17 @@ module lcd1602 #(parameter clk_div = 24_000)(
     output reg lcd_rs,
     output reg [7:0] lcd_data
     );
-
-    reg [5:0] currentState;
-    reg [5:0] nextState;
+    //logic lcd_ctrl;
+    reg [7:0] currentState;
+    reg [7:0] nextState;
     reg [17:0] cnt_20ms;
     reg [14:0] cnt_500hz;
     wire delay_done;
-  
+    logic lcd_ctrl;
+
+
+
+
     localparam TIME_500HZ = clk_div; 
     // Wait for 20 ms before intializing.
     localparam TIME_20MS = TIME_500HZ * 10;
@@ -220,5 +225,4 @@ module lcd1602 #(parameter clk_div = 24_000)(
         else
             lcd_data <= lcd_data ;
     end
-
 endmodule
