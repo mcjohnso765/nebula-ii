@@ -46,7 +46,7 @@
 #define reg_la_sel (*(volatile uint32_t*)0x31000000)
 
 // SRAM address space
-#define sram_space0 (*(volatile uint32_t*)0x33000000)
+#define sram_space (*(volatile uint32_t*)0x33000000)
 #define sram_space1 (*(volatile uint32_t*)0x33000004)
 #define sram_space2 (*(volatile uint32_t*)0x33000008)
 #define sram_space3 (*(volatile uint32_t*)0x3300000C)
@@ -89,40 +89,40 @@ void main()
 	// all of the GPIO pins to be used for user functions.
 
 	// Configure IO[0] and IO[37:5] to outputs
-	reg_mprj_io_0 =  GPIO_MODE_USER_STD_BIDIRECTIONAL;
-	reg_mprj_io_5 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_6 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_7 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_8 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_9 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_10 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_11 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_12 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_13 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_14 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_15 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_16 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_17 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_18 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_19 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_20 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_21 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_22 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_23 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_24 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_25 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_26 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_27 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_28 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_29 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_30 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_31 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_32 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_33 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_34 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_35 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_36 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
-    reg_mprj_io_37 = GPIO_MODE_USER_STD_BIDIRECTIONAL;
+	reg_mprj_io_0 =  GPIO_MODE_USER_STD_OUTPUT;
+	reg_mprj_io_5 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_6 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_7 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_8 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_9 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_10 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_11 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_12 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_13 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_14 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_15 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_16 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_17 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_18 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_19 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_20 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_21 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_22 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_23 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_24 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_25 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_26 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_27 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_28 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_29 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_30 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_31 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_32 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_33 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_34 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_35 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_36 = GPIO_MODE_USER_STD_OUTPUT;
+    reg_mprj_io_37 = GPIO_MODE_USER_STD_OUTPUT;
 
 	// Now, apply configuration
 	reg_mprj_xfer = 1;
@@ -148,17 +148,73 @@ void main()
 00800613
 00a62023
  */
+    // *(&sram_space + 0) = 0x00500513;
+    // *(&sram_space + 1) = 0x00300593;
+    // *(&sram_space + 2) = 0x00100613;
+    // *(&sram_space + 3) = 0x00c58863;
+    // *(&sram_space + 4) = 0x00a507b3;
+    // *(&sram_space + 5) = 0xfff58593;
+    // *(&sram_space + 6) = 0xfe000ae3;
+    // *(&sram_space + 7) = 0x00f82023;
+    // *(&sram_space + 8) = 0x00082883;
+    // *(&sram_space + 12) = 0x00008067;
 
-sram_space0 = 0x00500513; // li x10, 5
-sram_space1 = 0x00800593; // li x11, 8
-sram_space2 = 0x00a00613; // li x12, 10
-sram_space3 = 0x00a5d863; // bgt x11, x10, BRANCH
-sram_space4 = 0x00a62023; // sw x10, 0(x12)
-sram_space5 = 0x00062583; // lw x11, 0(x12)
-sram_space6 = 0x00008067; // ret
-sram_space7 = 0x00b62023; // sw x11, 0(x12)
-sram_space8 = 0x00062503; // lw x10, 0(x12)
-sram_space9 = 0x00008067; // ret
+    // 5 * 5 program 
+    *(&sram_space + 0) = 0x00500513;
+    *(&sram_space + 1) = 0x00800593;
+    *(&sram_space + 2) = 0x00a00613;
+    *(&sram_space + 3) = 0x00a5d863;
+    *(&sram_space + 4) = 0x00b62023;
+    *(&sram_space + 5) = 0x00062503;
+    *(&sram_space + 6) = 0x0140006f;
+    *(&sram_space + 7) = 0x00a62023;
+    *(&sram_space + 8) = 0x00062583;
+    *(&sram_space + 9) = 0x00062783;
+    *(&sram_space + 10) = 0x00b50263;
+    *(&sram_space + 11) = 0x00078863;
+    *(&sram_space + 12) = 0x00a888b3;
+    *(&sram_space + 13) = 0xfff78793;
+    *(&sram_space + 14) = 0xfe000ae3;
+    *(&sram_space + 15) = 0x01162423;
+    *(&sram_space + 16) = 0x00862903;
+    *(&sram_space + 17) = 0x00008067;
+    
+
+    // sram_space = 0x00500513;
+    // *(&sram_space + 1) = 0x00800593;
+    // *(&sram_space + 2) = 0x00a00613;
+    // *(&sram_space + 3) = 0x00100813;
+    // *(&sram_space + 4) = 0x00a5d863;
+    // *(&sram_space + 5) = 0x00b62023;
+    // *(&sram_space + 6) = 0x00062503;
+    // *(&sram_space + 7) = 0x0140006f;
+    // *(&sram_space + 8) = 0x00a62023;
+    // *(&sram_space + 9) = 0x00062583;
+    // *(&sram_space + 10) = 0x00300793;
+    // *(&sram_space + 11) = 0x00b50263;
+    // *(&sram_space + 12) = 0x01078863;
+    // *(&sram_space + 13) = 0x00b508b3;
+    // *(&sram_space + 14) = 0xfff78793;
+    // *(&sram_space + 15) = 0xfe000ae3;
+    // *(&sram_space + 16) = 0x01162423;
+    // *(&sram_space + 17) = 0x00862903;
+    // *(&sram_space + 18) = 0x00008067;
+
+    //#10000000
+
+
+// sram_space = 0x00500513; // li x10, 5
+// sram_space1 = 0x00800593; // li x11, 8
+// sram_space2 = 0x00a00613; // li x12, 10
+// sram_space3 = 0x00a5d863; // bgt x11, x10, BRANCH
+// sram_space4 = 0x00a62023; // sw x10, 0(x12)
+// sram_space5 = 0x00062583; // lw x11, 0(x12)
+// sram_space6 = 0x00008067; // ret
+// sram_space7 = 0x00b62023; // sw x11, 0(x12)
+// sram_space8 = 0x00062503; // lw x10, 0(x12)
+// sram_space9 = 0x00008067; // ret
+
+
     // sram_space3 = 0x00b54863;
     // sram_space4 = 0x00a62023;
     // sram_space5 = 0x00062583;

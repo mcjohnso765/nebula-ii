@@ -74,7 +74,7 @@ always_comb begin
     next_i_hit = 1'b0;
     next_d_hit = 1'b0;
     next_data_read = data_read;
-    next_instruction = instruction;
+    next_instruction = 32'b0;
     case(state) 
         IDLE: begin
                 if(memwrite && !d_hit && en) begin
@@ -96,11 +96,18 @@ always_comb begin
                     next_read_i = 1'b1;
                     next_write_i = 1'b0;
                     next_adr = instruction_address + 32'h33000000;
+                    next_instruction = 32'b0;
                     //next_cpu_dat = '0;
-           end 
+                end else if (instruction == 32'h00008067) begin
+                    next_state = state;
+                    next_read_i = 1'b0;
+                    next_write_i = 1'b0;
+                    next_adr = adr_i;
+                    next_instruction = instruction;
+                end 
         end
         MEM_WRITE : begin
-            //next_instruction = instruction;
+            next_instruction = instruction;
             next_adr = adr_i;
             next_cpu_dat = cpu_dat_i;
             // next_write_i = write_i;
@@ -113,7 +120,7 @@ always_comb begin
             end 
         end
         MEM_READ : begin
-            //next_instruction = instruction;
+            next_instruction = instruction;
             next_adr = adr_i;
             // next_read_i = read_i;
             //next_cpu_dat = '0;
@@ -126,7 +133,7 @@ always_comb begin
             end
         end
         INSTRUCTION_READ : begin
-            //next_instruction = '0; // NOP
+            next_instruction = '0; // NOP
             next_adr = adr_i;
             // next_read_i = read_i;
             //next_cpu_dat = '0;
@@ -141,9 +148,11 @@ always_comb begin
         WAIT_READ : begin
             next_adr = adr_i;
             // next_read_i = 1'b1;
+            next_instruction = instruction;
             next_state = MEM_READ;
         end
         WAIT_WRITE : begin
+            next_instruction = instruction;
             next_adr = adr_i;
             // next_write_i = 1'b1;
             next_cpu_dat = cpu_dat_i;
@@ -151,6 +160,7 @@ always_comb begin
         end
         WAIT_INSTRUCTION : begin
             next_adr = adr_i;
+            next_instruction = 32'b0;
             // next_read_i = 1'b1;
             next_state = INSTRUCTION_READ;
         end
