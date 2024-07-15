@@ -52,7 +52,7 @@ ifeq ($(PDK),sky130A)
 	SKYWATER_COMMIT=f70d8ca46961ff92719d8870a18a076370b85f6c
 	export OPEN_PDKS_COMMIT?=4d5af10bfee4dab799566aaf903bb22aee69bac9
 	export OPENLANE_TAG?=2023.07.19-1
-	MPW_TAG ?= mpw-9i
+	MPW_TAG ?= mpw-9a
 
 ifeq ($(CARAVEL_LITE),1)
 	CARAVEL_NAME := caravel-lite
@@ -70,7 +70,8 @@ ifeq ($(PDK),sky130B)
 	SKYWATER_COMMIT=f70d8ca46961ff92719d8870a18a076370b85f6c
 	export OPEN_PDKS_COMMIT?=78b7bc32ddb4b6f14f76883c2e2dc5b5de9d1cbc
 	export OPENLANE_TAG?=2023.07.19-1
-	MPW_TAG ?= mpw-9i
+	MPW_TAG ?= mpw-9a
+#New tag matches caravel install
 
 ifeq ($(CARAVEL_LITE),1)
 	CARAVEL_NAME := caravel-lite
@@ -138,6 +139,7 @@ dv-targets-rtl=$(dv_patterns:%=verify-%-rtl)
 purdue-dv-targets-rtl=$(dv_patterns:%=purdue-verify-%-rtl)
 cocotb-dv-targets-rtl=$(cocotb-dv_patterns:%=cocotb-verify-%-rtl)
 dv-targets-gl=$(dv_patterns:%=verify-%-gl)
+purdue-dv-targets-gl=$(dv_patterns:%=purdue-verify-%-gl)
 cocotb-dv-targets-gl=$(cocotb-dv_patterns:%=cocotb-verify-%-gl)
 dv-targets-gl-sdf=$(dv_patterns:%=verify-%-gl-sdf)
 
@@ -203,6 +205,10 @@ $(purdue-dv-targets-rtl): purdue-verify-%-rtl: zicsr-fix
 $(dv-targets-gl): SIM=GL
 $(dv-targets-gl): verify-%-gl: $(dv_base_dependencies)
 	$(docker_run_verify)
+
+$(purdue-dv-targets-gl): SIM=GL
+$(purdue-dv-targets-gl): purdue-verify-%-gl: zicsr-fix
+	$(custom_run_verify)
 
 $(dv-targets-gl-sdf): SIM=GL_SDF
 $(dv-targets-gl-sdf): verify-%-gl-sdf: $(dv_base_dependencies)
