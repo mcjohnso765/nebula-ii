@@ -58,7 +58,21 @@ in brackets represents the number in your verilog code
 #NOTE: ALL BUTTONS MUST BE EXTERNALLY DEBOUNCED, THERE IS NO DEBOUNCING LOGIC IN OUR DESIGN
 
 ## Supporting Equipment
-List all the required equipment and upload a breadboard with the equipment set up (recommend using tinkercad circuits if possible)
+- MI0283QT-9A TFT Display (1) 
+- Seven Segment display (3) 
+- Buttons (7) 
+- Resistors (totaling 40 ohms) 
+- 1K Ohm Resistors (7) 
+- 500 Ohm Resistors (7) 
+- 1.5K Ohm Resistors (2) 
+- 2A104J Radial Polyester Film Capacitor (1) - 0.1 microfarad 
+- 105 Ceramic Capacitor (1) - 1 microfarad 
+- M575 LF356 Operational Amplifier (1) 
+- SN74HC04 – HEX Inverter (1)
+- SN74HC08 - Quad AND Gate (1)
+  ![image](https://github.com/user-attachments/assets/1f805009-144c-4a64-8e48-ade35dd9651f)
+  ![image](https://github.com/user-attachments/assets/36583b63-e938-44a6-8faf-d1b38dfb6198)
+  ![image](https://github.com/user-attachments/assets/779d61e2-6cd4-4c24-af7b-cacc024f239a)
 
 ## RTL Diagrams
 All the stuff from the proposal goes here, obviously updated from the time you did the proposal to the final layout
