@@ -75,9 +75,18 @@ in brackets represents the number in your verilog code
   ![image](https://github.com/user-attachments/assets/779d61e2-6cd4-4c24-af7b-cacc024f239a)
 
 ## RTL Diagrams
-All the stuff from the proposal goes here, obviously updated from the time you did the proposal to the final layout
-Include more than just block diagrams, including sub-block diagrams, state-transition diagrams, flowcharts, and timing diagrams.  If you include an image, a short (0.5-1 sentence description) is required.
-You may also place other files within this folder.
+Image Generator RTL with state machines
+![image](https://github.com/user-attachments/assets/7ce9f342-2a4d-4418-b049-1c6e3151fa7b)
+Top Level RTL
+![image](https://github.com/user-attachments/assets/2b107ba2-351f-4ee0-bcb8-6e202715a3d9)
+Submodules:
+![image](https://github.com/user-attachments/assets/84cf4cd9-acc5-4871-ae76-b469f46bd940)
+![image](https://github.com/user-attachments/assets/60c0ab0a-5479-4a14-af33-f6e7cd181491)
+![image](https://github.com/user-attachments/assets/044ccb93-c610-45c2-9fe8-2c0d9a77c245)
+![image](https://github.com/user-attachments/assets/e55c82e5-31bc-40a7-8cac-58badec5f79e)
+![image](https://github.com/user-attachments/assets/cfccb4ed-00b6-42a8-8a9e-9d38d540c715)
+![image](https://github.com/user-attachments/assets/30297a3d-f80c-461e-af4f-bbb739e0f447)
+![image](https://github.com/user-attachments/assets/d4815264-9df9-44c6-982b-9051840e65db)
 
 ## Statement from Purdue
 Pending
