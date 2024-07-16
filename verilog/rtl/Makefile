@@ -1,5 +1,4 @@
-PATTERNS = gpio_control sample_team_proj la_control $(addprefix team_projects/, team_07)
-# On the line above, replace xx with your team number (e.g., 01, 03, 12, etc.)
+PATTERNS = gpio_control sample_team_proj la_control $(addprefix team_projects/, team_05 team_07)
 
 #Bus Wrap Initialize
 .PHONY: initialize
