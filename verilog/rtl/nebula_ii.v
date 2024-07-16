@@ -62,9 +62,18 @@ module nebula_ii (
     wire [31:0] wbs_dat_i_m;
     wire [3:0]  wbs_sel_i_m;
 
-    wire [NUM_TEAMS-1:0] wbs_ack_i_proj, wbs_cyc_o_proj, wbs_stb_o_proj,  wbs_we_o_proj;
-    wire [NUM_TEAMS-1:0][31:0] wbs_dat_i_proj,  wbs_adr_o_proj, wbs_dat_o_proj;
-    wire [NUM_TEAMS-1:0][3:0] wbs_sel_o_proj;
+    // Wishbone Slave signals for all projects
+    wire   [NUM_TEAMS:0]     wbs_ack_i_proj;
+    wire [NUM_TEAMS:0][31:0] wbs_dat_i_proj;
+    wire     [NUM_TEAMS:0]   wbs_cyc_o_proj;
+    wire    [NUM_TEAMS:0]    wbs_stb_o_proj;
+    wire    [NUM_TEAMS:0]    wbs_we_o_proj;
+    wire [NUM_TEAMS:0][31:0] wbs_adr_o_proj;
+    wire [NUM_TEAMS:0][31:0] wbs_dat_o_proj;
+    wire [NUM_TEAMS:0][3:0]  wbs_sel_o_proj;
+    
+    wire        wbs_ack_i_samp, wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
+    wire [31:0] wbs_dat_i_samp, wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
 
     wire        wbs_ack_i_team5, wbs_ack_i_samp, wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
     wire [31:0] wbs_dat_i_team5, wbs_dat_i_samp, wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
@@ -87,7 +96,7 @@ module nebula_ii (
 
     // Sample Project Instance
     // (replace this with your team design instance when testing)
-    team_07_Wrapper team_07_Wrapper (
+    team_10_Wrapper team_10_Wrapper (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
@@ -95,6 +104,7 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
+
         .wbs_stb_i(wbs_stb_o_proj[7]),
         .wbs_cyc_i(wbs_cyc_o_proj[7]),
         .wbs_we_i(wbs_we_o_proj[7]),
@@ -111,8 +121,8 @@ module nebula_ii (
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
-        .gpio_out(designs_gpio_out[7]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[7]) // Active Low Output Enable
+        .gpio_out(designs_gpio_out[10]), // Breakout Board Pins
+        .gpio_oeb(designs_gpio_oeb[10]) // Active Low Output Enable
     );
 
     // Flattened GPIO outputs
