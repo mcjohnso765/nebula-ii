@@ -51,6 +51,12 @@ module nebula_ii (
     // wire [2:0] designs_irq [NUM_TEAMS:0];
     assign irq = 3'b0; // Default of 0
 
+    //Project Manager Arbitrator Signals
+    wire [31:0] wbs_dat_i_team_01, wbs_data_o_team_01, wbs_adr_i_team_01, wbs_dat_o_team_01;
+    wire [3:0] wbs_sel_i_team_01;
+    wire wbs_ack_o_team_01;
+    wire wbs_we_i_team_01, wbs_stb_i_team_01, wbs_cyc_i_team01;
+
     //to arbitrator
     wire        wbs_ack_o_m;
     wire [31:0] wbs_dat_o_m;
@@ -124,6 +130,7 @@ module nebula_ii (
         .gpio_out(designs_gpio_out[9]), // Breakout Board Pins
         .gpio_oeb(designs_gpio_oeb[9]) // Active Low Output Enable
     );
+
 
     // Flattened GPIO outputs
     reg [38*(NUM_TEAMS+1)-1:0] designs_gpio_out_flat;
@@ -266,7 +273,7 @@ module nebula_ii (
         .wbs_adr_i_m(wbs_adr_i_m),
         .wbs_dat_i_m(wbs_dat_i_m),
         .wbs_sel_i_m(wbs_sel_i_m),
-
+   
         .wbs_cyc_o_periph({wbs_cyc_o_proj[NUM_TEAMS:1], wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_sram}),
         .wbs_stb_o_periph({wbs_stb_o_proj[NUM_TEAMS:1], wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_sram}),
         .wbs_we_o_periph({wbs_we_o_proj[NUM_TEAMS:1], wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_sram}),
