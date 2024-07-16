@@ -210,6 +210,46 @@ module team_1_tb;
 		#1 $display("MPRJ-IO state = %b ", mprj_io[7:0]);
 	end
 
+	initial begin
+		$dumpfile("team_03.vcd");
+		$dumpvars(0, team_03_tb);
+	end
+
+	initial begin
+		#10000000;
+		`ifdef GL
+	    	$display("Monitor: NEBULA II-TEAM-03 Project (GL) Passed");
+		`else
+		    $display("Monitor: NEBULA II-TEAM-03 Project (RTL) Passed");
+		`endif
+	    $finish;
+	end
+
+	always @(mprj_io) begin
+		#1 $display("{GPIO[37:5], GPIO[0]} = 34'h%h ", checkbits);
+	end
+
+	// Reset Operation
+	initial begin
+		RSTB <= 1'b0;
+		CSB  <= 1'b1;		// Force CSB high
+		#2000;
+		RSTB <= 1'b1;	    	// Release reset
+		#100000;
+		CSB = 1'b0;		// CSB can be released
+	end
+
+	// Power-up sequence
+	initial begin
+		power1 <= 1'b0;
+		power2 <= 1'b0;
+		#200;
+		power1 <= 1'b1;
+		#200;
+		power2 <= 1'b1;
+	end
+
+
 	wire flash_csb;
 	wire flash_clk;
 	wire flash_io0;
