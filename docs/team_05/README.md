@@ -1,67 +1,86 @@
 # STARS 2024 Design Final Project
 
-## TEAM NAME
-* Team Member 1 Name
-* Team Member 2 Name
-* Team Member 3 Name
-* Team Member 4 Name
-* Peer Mentor Name
+## CPU TEAM 5
+* Ainsley Strothkamp
+* Alex Tauriainen
+* Berin Celik
+* Medha Shinde
+* Shrienidhi Gopalakrishnan
+* Peer Mentor: Pranav Wadhwa
 
 ## Project Type
-Short (2-3 sentences) project description
+Our project was to create a 32-bit single-cycle RISC-V CPU. We integrated this with a 4x4 keypad for inputs and a 16x2 LCD screen for outputs. 
+
+## Demo Video
+Click on the thumbnail to go to the youtube video of our demo!
+
+[![YouTube](http://i.ytimg.com/vi/anySU9C3ncY/hqdefault.jpg)](https://www.youtube.com/watch?v=anySU9C3ncY)
 
 ## Pin Layout
 Note that on the final chip, there are 38 gpio of which you have access to 4.
 The first number represents the GPIO on the physical board. The second number
-in brackets represents the number in your verilog code
+in brackets represents the number in your verilog code.
 
-00[00] Input/Output: Pin_Function
-01[--] Input/Output: Pin_Function
-02[--] Input/Output: Pin_Function
-03[--] Input/Output: Pin_Function
-04[--] Input/Output: Pin_Function
-05[01] Input/Output: Pin_Function
-06[02] Input/Output: Pin_Function 
-07[03] Input/Output: Pin_Function 
-08[04] Input/Output: Pin_Function 
-09[05] Input/Output: Pin_Function 
-10[06] Input/Output: Pin_Function
-11[07] Input/Output: Pin_Function
-12[08] Input/Output: Pin_Function
-13[09] Input/Output: Pin_Function 
-14[10] Input/Output: Pin_Function 
-15[11] Input/Output: Pin_Function 
-16[12] Input/Output: Pin_Function 
-17[13] Input/Output: Pin_Function 
-18[14] Input/Output: Pin_Function 
-19[15] Input/Output: Pin_Function 
-20[16] Input/Output: Pin_Function 
-21[17] Input/Output: Pin_Function 
-22[18] Input/Output: Pin_Function 
-23[19] Input/Output: Pin_Function 
-24[20] Input/Output: Pin_Function 
-25[21] Input/Output: Pin_Function 
-26[22] Input/Output: Pin_Function 
-27[23] Input/Output: Pin_Function 
-28[24] Input/Output: Pin_Function 
-29[25] Input/Output: Pin_Function
-30[26] Input/Output: Pin_Function
-31[27] Input/Output: Pin_Function
-32[28] Input/Output: Pin_Function
-33[29] Input/Output: Pin_Function
-34[30] Input/Output: Pin_Function
-35[31] Input/Output: Pin_Function
-36[32] Input/Output: Pin_Function
-37[33] Input/Output: Pin_Function
-38[34] Input/Output: Pin_Function
+### Inputs
+* [33:30] keypad_in
+
+### Outputs
+* [00] lcd_rw
+* [01] lcd_rs
+* [02] lcd_en
+* [10:3] lcd_data
+* [14:11] keypad_out
+
 
 ## Supporting Equipment
-List all the required equipment and upload a breadboard with the equipment set up (recommend using tinkercad circuits if possible)
+
+#### 4x4 keypad
+![keypad](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/io_components/keypad.jpeg)
+
+#### 16x2 GDM1602K LCD screen
+![lcd_screen](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/io_components/lcd_screen.jpg)
 
 ## RTL Diagrams
-All the stuff from the proposal goes here, obviously updated from the time you did the proposal to the final layout
-Include more than just block diagrams, including sub-block diagrams, state-transition diagrams, flowcharts, and timing diagrams.  If you include an image, a short (0.5-1 sentence description) is required.
-You may also place other files within this folder.
+
+### Top level RTLs
+
+#### General
+![top_general](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/top_level/top_general.png)
+
+#### Detailed
+![top_detail](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/top_level/top_detail.jpg)
+
+### Sub-Modules
+
+#### Control Unit
+![control_unit](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/control_unit.png)
+
+![tb_control_unit](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/tb_sub_modules/tb_control_unit.png)
+
+#### Register File
+![reg_file](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/reg_file.png)
+
+![tb_reg_file](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/tb_sub_modules/tb_reg_file.png)
+
+#### PC
+![pc_1](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/pc_1.png)
+
+![pc_2](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/pc_2.png)
+
+![tb_pc](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/tb_sub_modules/tb_pc.png)
+
+#### ALU
+![alu](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/alu.png)
+
+![tb_alu](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/tb_sub_modules/tb_alu.png)
+
+#### Memory control (request unit)
+![mem_control](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/mem_control.png)
+
+![tb_mem_control](https://github.com/STARS-Design-Track-2024/nebula-ii-team-05/blob/main/docs/team_05/sub_modules/tb_sub_modules/tb_memcontrol.png)
+
+#### Final GDSII Image
+![image](https://github.com/user-attachments/assets/2a0e16cb-1f44-4dcc-a11f-6896aa5e9712)
 
 ## Statement from Purdue
 Pending
