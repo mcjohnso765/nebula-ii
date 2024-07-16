@@ -27,6 +27,11 @@
 `include			"wb_wrapper.vh"
 
 module gpio_control_WB (
+
+`ifdef USE_POWER_PINS
+	inout VPWR,
+	inout VGND,
+`endif
 	`WB_SLAVE_PORTS,
 	input	wire	[494-1:0]	io_oeb,
 	input	wire	[494-1:0]	io_out,
@@ -39,7 +44,23 @@ module gpio_control_WB (
 	localparam	PIN_16TO23_SEL_VAL_REG_OFFSET = `WB_AW'h0008;
 	localparam	PIN_24TO731_SEL_VAL_REG_OFFSET = `WB_AW'h000C;
 	localparam	PIN_32TO37_SEL_VAL_REG_OFFSET = `WB_AW'h0010;
-	wire		clk = clk_i;
+
+        wire clk_g;
+        wire clk_gated_en = GCLK_REG[0];
+
+    (* keep *) sky130_fd_sc_hd__dlclkp_4 clk_gate(
+    `ifdef USE_POWER_PINS 
+        .VPWR(VPWR), 
+        .VGND(VGND), 
+        .VNB(VGND),
+		.VPB(VPWR),
+    `endif 
+        .GCLK(clk_g), 
+        .GATE(clk_gated_en), 
+        .CLK(clk_i)
+        );
+        
+	wire		clk = clk_g;
 	wire		nrst = (~rst_i);
 
 
@@ -71,6 +92,10 @@ module gpio_control_WB (
 	reg [23:0]	PIN_32TO37_SEL_VAL_REG;
 	assign	pin_32to37_sel = PIN_32TO37_SEL_VAL_REG;
 	`WB_REG(PIN_32TO37_SEL_VAL_REG, 0, 24)
+
+	localparam	GCLK_REG_OFFSET = `WB_AW'hFF10;
+	reg [0:0] GCLK_REG;
+	`WB_REG(GCLK_REG, 0, 1)
 
 	gpio_control instance_to_wrap (
 		.clk(clk),

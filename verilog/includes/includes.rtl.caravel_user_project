@@ -41,11 +41,166 @@
 -v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
 
 # Sample Team project
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_WB.v
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_WB.v
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
+
+# Team_06 project
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/BorderGen.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/body_control.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/DirectionLogic.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/syncEdge.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/apple_check_wall_mode.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/apple_gen_all.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/apple_luck_selector.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/apple_wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/assembly.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/body_wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/clock.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/collisionDetector.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/collisionLogic.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/collisionLogic_wall.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/gameMode.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/gameState.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/game_speed_selector.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/lcd1602.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/main_file.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/rand_wall_mode.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/random_num_gen.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/random_num_gen_wall_mode.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/two_apple_mode.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/wall_wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/fsm.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/sound.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/image_generator.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/clk_enable.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/counter.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/sync.v  
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/edgeDetect.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/fsm_control.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/frame_tracker.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/pixel_updater.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/display_wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/display.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/update_controller.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/command_lut2.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/synchronizer.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/edge_detect.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/clk_div.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/PWM.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/team_06_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/team_06.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/team_06_WB.v
+
+# Team_01 project
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_alu.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_branch_logic.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_cpu.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_control_unit.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_counter.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_data_memory.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_fsm.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_immediate_generator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_instruction_memory.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_keypad.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_lcd1602.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_mux.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_program_counter.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_register_file.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_request_unit.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_shift_reg.sv
+
+-v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
+
+
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
+
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/team_05_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/team_05_WB.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/team_05.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/project.v
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
+#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
+
+# Team 07
+-v $(USER_PROJECT_VERILOG)/rtl/wb_wrapper.vh
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/team_07_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/team_07.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/team_07_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/audio_sm.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/bomb_game.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/button_edge_detector.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/fsm_game_control.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/fsm_playing_mod_locator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/fsm_playing.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_boom.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_border.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_circle.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_defused.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_flag.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_heart.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_mem.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_mod_square.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_play_button.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_player.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_simon.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/generate_wire.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/imageGenerator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/maze_clear_detector.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/maze_mazer_locator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/maze_pos_gen.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/maze_wall_detector.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/maze.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/mem_game.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/mem_num_gen.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/mem_select_detector.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/mem_select_locator.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/pll.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/random_gen_maze_ms.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/random_gen_maze_pos.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/random_gen_mem_num.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/random_gen_simon.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/random_gen_wire_color.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/random_gen_wire_num.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/rising_edge_detector.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/simon_game.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/simon_light_control.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/simon_press_detector.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/simon_sequence_gen.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/spi.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/tft_ili9341_spi.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/tft_ili9341.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/timer_counter.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/timer_sec_divider.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/timer_ssdec_decoder.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/timer_ssdec_sck_divider.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/timer_ssdec_spi_master.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/wire_cut_detector.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/wire_game.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/wire_wire_locator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/wire_wire_gen.sv
+
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/team_10_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/team_10_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/team_10.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_buffer.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_clock_divider.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_disp_fsm.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_game_logic.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_host_disp.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_host_msg_reg.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_keypad_controller.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_keypad_fsm.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_lcd_controller.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_msg_reg.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_uart_Rx.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_uart_Tx.sv
 
 # SRAM
 -v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/SRAM_1024x32.v
@@ -54,9 +209,9 @@
 -v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/beh_models/EF_SRAM_1024x32.tt_180V_25C.v
 #-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper_LVS.v
 
+
 # Team 04
 #-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/tippy_top.sv
-
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04_Wrapper.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04_WB.v
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04.sv
@@ -77,3 +232,39 @@
 #-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/VGA_data_controller.v
 #-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/VGA_out.v
 #-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/project.v
+
+# Team 9 Snake Game
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/team_09_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/team_09_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/team_09.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/applegenerator2.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/border_generator.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/collision.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/command_lut2.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/dac_counter.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/edge_detect.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/frame_tracker.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/fsm_control.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/fsm_direction.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/fsm_mode.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/image_generator.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/location_check.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/obstacle_random.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/obstacle_sync_edge.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/obstaclegen2.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/obstacleMode.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/oscillator.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/pixel_updater.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/rainbowRand.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/score_posedge_detector.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/score_tracker3.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/snake_body_controller.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/sound_fsm.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/sound_generator.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/sound_posedge_detector.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/ssdec.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/synchronizer.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/toggle_screen.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/update_body.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/update_controller.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/variable_clock_divider.v

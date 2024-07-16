@@ -73,6 +73,10 @@ module team_06_Wrapper (
 
     // Instantiate Bus Wrapper module here
     team_06_WB team_06_WB (
+        `ifdef USE_POWER_PINS
+            .VPWR(vccd1),	// User area 1 1.8V power
+            .VGND(vssd1),	// User area 1 digital ground
+        `endif
         .ext_clk(wb_clk_i),
         .clk_i(wb_clk_i),
         .rst_i(wb_rst_i),
@@ -84,7 +88,6 @@ module team_06_Wrapper (
         .stb_i(wbs_stb_i),
         .ack_o(wbs_ack_o),
         .we_i(wbs_we_i),
-        .IRQ(),//1 bit
         .la_data_in(la_data_in),
         .la_data_out(la_data_out),
         .la_oenb(la_oenb),

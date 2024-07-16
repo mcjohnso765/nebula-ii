@@ -52,18 +52,13 @@ module nebula_ii (
     // wire [2:0] designs_irq [NUM_TEAMS:0];
     assign irq = 3'b0; // Default of 0
 
-    // Wishbone Master Signals
-    //team specific Master -> arbitrator signals
-    //team specific Arbitrator -> master signals
-    wire [31:0] ADR_O;
-    wire [31:0] DAT_O;
-    wire [3:0]  SEL_O;
-    wire        WE_O;
-    wire        STB_O;
-    wire        CYC_O;
 
-    wire [31:0] DAT_I;
-    wire        ACK_I;
+    //Project Manager Arbitrator Signals
+    wire [31:0] wbs_dat_i_team_01, wbs_data_o_team_01, wbs_adr_i_team_01, wbs_dat_o_team_01;
+    wire [3:0] wbs_sel_i_team_01;
+    wire wbs_ack_o_team_01;
+    wire wbs_we_i_team_01, wbs_stb_i_team_01, wbs_cyc_i_team01;
+
 
     //to arbitrator
     wire        wbs_ack_o_m;
@@ -85,16 +80,23 @@ module nebula_ii (
     wire [NUM_TEAMS:0][31:0] wbs_adr_o_proj;
     wire [NUM_TEAMS:0][31:0] wbs_dat_o_proj;
     wire [NUM_TEAMS:0][3:0]  wbs_sel_o_proj;
-    
+
     wire        wbs_ack_i_samp, wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
     wire [31:0] wbs_dat_i_samp, wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
 
-    wire        wbs_cyc_o_samp, wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_sram;
-    wire        wbs_stb_o_samp, wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_sram;
-    wire        wbs_we_o_samp, wbs_we_o_gpio, wbs_we_o_la, wbs_we_o_sram;
-    wire [31:0] wbs_adr_o_samp, wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
-    wire [31:0] wbs_dat_o_samp, wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
-    wire [3:0]  wbs_sel_o_samp, wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
+    wire        wbs_ack_i_team5, wbs_ack_i_samp, wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
+    wire [31:0] wbs_dat_i_team5, wbs_dat_i_samp, wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
+
+    wire        wbs_cyc_o_team5, wbs_cyc_o_samp, wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_sram;
+    wire        wbs_stb_o_team5, wbs_stb_o_samp, wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_sram;
+    wire        wbs_we_o_team5, wbs_we_o_samp, wbs_we_o_gpio, wbs_we_o_la, wbs_we_o_sram;
+    wire [31:0] wbs_adr_o_team5, wbs_adr_o_samp, wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
+    wire [31:0] wbs_dat_o_team5, wbs_dat_o_samp, wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
+    wire [3:0]  wbs_sel_o_team5, wbs_sel_o_samp, wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
+
+    wire [31:0] adr_cpu, dat_i_cpu, dat_o_cpu;
+    wire [3:0] sel_cpu;
+    wire we_cpu, stb_cpu, cyc_cpu, ack_cpu;
     
     // Assign default values to index 0 of output arrays
     assign designs_la_data_out[0] = 'b0;
@@ -103,7 +105,8 @@ module nebula_ii (
 
     // Sample Project Instance
     // (replace this with your team design instance when testing)
-    team_04_Wrapper team_04_Wrapper(
+
+    team_09_Wrapper team_09_Wrapper (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
@@ -123,24 +126,16 @@ module nebula_ii (
         // Logic Analyzer
         .la_data_in(la_data_in),
         .la_data_out(designs_la_data_out[4]),
+
         .la_oenb(la_oenb),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
-        .gpio_out(designs_gpio_out[4]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[4]), // Active Low Output Enable
 
-        // Wishbone master signals
-        .ADR_O(ADR_O),
-        .DAT_O(DAT_O),
-		.SEL_O(SEL_O),
-		.WE_O(WE_O),
-		.STB_O(STB_O),
-		.CYC_O(CYC_O),
-
-        .DAT_I(DAT_I),
-        .ACK_I(ACK_I)
+        .gpio_out(designs_gpio_out[9]), // Breakout Board Pins
+        .gpio_oeb(designs_gpio_oeb[9]) // Active Low Output Enable
     );
+
 
     // Flattened GPIO outputs
     reg [38*(NUM_TEAMS+1)-1:0] designs_gpio_out_flat;
@@ -233,16 +228,16 @@ module nebula_ii (
         .nRST(~wb_rst_i),
 
         //manager to arbitrator, input
-        .A_ADR_I({ADR_O, wbs_adr_i}),
-        .A_DAT_I({DAT_O, wbs_dat_i}),
-        .A_SEL_I({SEL_O, wbs_sel_i}),
-        .A_WE_I({WE_O, wbs_we_i}),
-        .A_STB_I({STB_O, wbs_stb_i}),
-        .A_CYC_I({CYC_O, wbs_cyc_i}),
+        .A_ADR_I({adr_cpu ,wbs_adr_i}),
+        .A_DAT_I({dat_o_cpu, wbs_dat_i}),
+        .A_SEL_I({sel_cpu, wbs_sel_i}),
+        .A_WE_I({we_cpu, wbs_we_i}),
+        .A_STB_I({stb_cpu, wbs_stb_i}),
+        .A_CYC_I({cyc_cpu, wbs_cyc_i}),
 
         //arbitrator to manager, output
-        .A_DAT_O({DAT_I, wbs_dat_o}),
-        .A_ACK_O({ACK_I, wbs_ack_o}),
+        .A_DAT_O({dat_i_cpu, wbs_dat_o}),
+        .A_ACK_O({ack_cpu, wbs_ack_o}),
 
         //arbitrator to peripheral, input
         .DAT_I(wbs_dat_o_m),
