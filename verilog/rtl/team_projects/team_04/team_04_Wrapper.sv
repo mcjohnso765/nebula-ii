@@ -1,8 +1,8 @@
 // $Id: $
 // File name:   team_04_Wrapper.sv
-// Created:     MM/DD/YYYY
-// Author:      <Full Name>
-// Description: <Module Description>
+// Created:     07/05/2024
+// Author:      <Andy Hu & Dhruve>
+// Description: <Wrapper Module for Team 04 CPU>
 
 module team_04_Wrapper (
 
@@ -10,10 +10,6 @@ module team_04_Wrapper (
     inout vccd1,	// User area 1 1.8V supply
     inout vssd1,	// User area 1 digital ground
 `endif
-
-    // Chip Select (Active Low)
-    input wire ncs,
-
     /*
     *--------------------------------------------------------------
     * NOTE: You may not need to include all of these.
@@ -47,7 +43,17 @@ module team_04_Wrapper (
     output wire [37:0] gpio_oeb, // Active Low Output Enable
 
     // IRQ signal
-    output wire [2:0] irq
+    output wire [2:0] irq,
+
+    // Wishbone Master signals
+    output wire [31:0] ADR_O,
+    output wire [31:0] DAT_O,
+    output wire [3:0]  SEL_O,
+    output wire        WE_O,
+    output wire        STB_O,
+    output wire        CYC_O,
+    input  wire [31:0] DAT_I,
+    input wire         ACK_I
 );
     /*
     *--------------------------------------------------------------
@@ -90,7 +96,15 @@ module team_04_Wrapper (
         .la_oenb(la_oenb),
         .gpio_in({gpio_in[37:5], gpio_in[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_out({gpio_out[37:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
-        .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}) //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        .ADR_O(ADR_O),
+        .DAT_O(DAT_O),
+        .SEL_O(SEL_O),
+        .WE_O(WE_O),
+        .STB_O(STB_O),
+        .CYC_O(CYC_O),
+        .DAT_I(DAT_I),
+        .ACK_I(ACK_I)
     );
 
 endmodule

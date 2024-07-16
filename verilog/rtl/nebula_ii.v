@@ -33,6 +33,7 @@ module nebula_ii (
 
     // IRQ
     output [2:0] irq
+
 );
     
     // Number of teams (only sample project for now)
@@ -51,11 +52,13 @@ module nebula_ii (
     // wire [2:0] designs_irq [NUM_TEAMS:0];
     assign irq = 3'b0; // Default of 0
 
+
     //Project Manager Arbitrator Signals
     wire [31:0] wbs_dat_i_team_01, wbs_data_o_team_01, wbs_adr_i_team_01, wbs_dat_o_team_01;
     wire [3:0] wbs_sel_i_team_01;
     wire wbs_ack_o_team_01;
     wire wbs_we_i_team_01, wbs_stb_i_team_01, wbs_cyc_i_team01;
+
 
     //to arbitrator
     wire        wbs_ack_o_m;
@@ -68,7 +71,6 @@ module nebula_ii (
     wire [31:0] wbs_dat_i_m;
     wire [3:0]  wbs_sel_i_m;
 
-
     // Wishbone Slave signals for all projects
     wire   [NUM_TEAMS:0]     wbs_ack_i_proj;
     wire [NUM_TEAMS:0][31:0] wbs_dat_i_proj;
@@ -78,7 +80,7 @@ module nebula_ii (
     wire [NUM_TEAMS:0][31:0] wbs_adr_o_proj;
     wire [NUM_TEAMS:0][31:0] wbs_dat_o_proj;
     wire [NUM_TEAMS:0][3:0]  wbs_sel_o_proj;
- 
+
     wire        wbs_ack_i_samp, wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
     wire [31:0] wbs_dat_i_samp, wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
 
@@ -103,6 +105,7 @@ module nebula_ii (
 
     // Sample Project Instance
     // (replace this with your team design instance when testing)
+
     team_09_Wrapper team_09_Wrapper (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
@@ -111,23 +114,24 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-
-        .wbs_stb_i(wbs_stb_o_proj[7]),
-        .wbs_cyc_i(wbs_cyc_o_proj[7]),
-        .wbs_we_i(wbs_we_o_proj[7]),
-        .wbs_sel_i(wbs_sel_o_proj[7]),
-        .wbs_dat_i(wbs_dat_o_proj[7]),
-        .wbs_adr_i(wbs_adr_o_proj[7]),
-        .wbs_ack_o(wbs_ack_i_proj[7]),
-        .wbs_dat_o(wbs_dat_i_proj[7]),
+        .wbs_stb_i(wbs_stb_o_proj[4]),
+        .wbs_cyc_i(wbs_cyc_o_proj[4]),
+        .wbs_we_i(wbs_we_o_proj[4]),
+        .wbs_sel_i(wbs_sel_o_proj[4]),
+        .wbs_dat_i(wbs_dat_o_proj[4]),
+        .wbs_adr_i(wbs_adr_o_proj[4]),
+        .wbs_ack_o(wbs_ack_i_proj[4]),
+        .wbs_dat_o(wbs_dat_i_proj[4]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
-        .la_data_out(designs_la_data_out[7]),
+        .la_data_out(designs_la_data_out[4]),
+
         .la_oenb(la_oenb),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
+
         .gpio_out(designs_gpio_out[9]), // Breakout Board Pins
         .gpio_oeb(designs_gpio_oeb[9]) // Active Low Output Enable
     );
@@ -274,7 +278,7 @@ module nebula_ii (
         .wbs_adr_i_m(wbs_adr_i_m),
         .wbs_dat_i_m(wbs_dat_i_m),
         .wbs_sel_i_m(wbs_sel_i_m),
-   
+
         .wbs_cyc_o_periph({wbs_cyc_o_proj[NUM_TEAMS:1], wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_sram}),
         .wbs_stb_o_periph({wbs_stb_o_proj[NUM_TEAMS:1], wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_sram}),
         .wbs_we_o_periph({wbs_we_o_proj[NUM_TEAMS:1], wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_sram}),

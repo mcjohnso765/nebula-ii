@@ -44,6 +44,9 @@
 // SRAM address space
 #define sram_space (*(volatile uint32_t*)0x33000000)
 
+// Team 4 Space
+#define reg_team_04_EN (*(volatile uint32_t*)0x30040000)
+
 
 /*
 	Sample Team Project Test:
@@ -121,6 +124,7 @@ void main()
 	reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
 
 	// Configure GPIOs outputs to be selected by sample project
+
 	reg_gpio_PIN_0TO7 = 0x55555555;
 	reg_gpio_PIN_8TO15 = 0x55555555;
 	reg_gpio_PIN_16TO23 = 0x55555555;

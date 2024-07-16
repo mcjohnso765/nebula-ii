@@ -1,0 +1,461 @@
+//////////////// v Space Invaders type///////
+15400093
+00700113
+17f00193
+18000213
+00200293
+00600393
+00400413
+00800493
+00300693
+00100593
+00700613
+60000737
+400007b7
+70000837
+00200893
+00000913
+01800a13
+06c00e37
+7bbc0eb7
+07c00f37
+02800fb7
+01000db7
+18000313
+fff30313
+00032023
+fe031ce3
+0020a023
+ff10ae23
+01c02223
+01c022a3
+01c02323
+01c023a3
+01d02423
+01d024a3
+01d02523
+01d025a3
+01e02623
+01e026a3
+01e02723
+01e027a3
+01f02823
+01f028a3
+01f02923
+01f029a3
+01b02a23
+01b02aa3
+01b02b23
+01b02ba3
+00022503
+00550863
+00850e63
+08950c63
+10c0006f
+fe090c23
+00008913
+00088993
+0fc0006f
+0000a023
+0000a0a3
+fe00ae23
+00f10c63
+04e10a63
+03010a63
+00111113
+00189893
+00011e63
+fff08093
+00700113
+00189893
+0020a023
+ff10ae23
+0c00006f
+0020a023
+ff10ae23
+0b40006f
+00100113
+fe20afa3
+60000137
+0020a023
+00189893
+ff10ae23
+0980006f
+00300113
+fe20afa3
+40000137
+00100893
+0020a023
+ff10ada3
+07c0006f
+0000a023
+fe00afa3
+fe00ae23
+0018d893
+00115113
+00010863
+04b10263
+02d10463
+00011c63
+00108093
+70000137
+0020a023
+ff10ae23
+0440006f
+0020a023
+ff10ae23
+0380006f
+40000137
+0020a0a3
+00300113
+0020a023
+ff10ae23
+0200006f
+60000137
+0020a0a3
+00100113
+400008b7
+0020a023
+ff10aea3
+0040006f
+00018337
+6a03031b
+fff30313
+fe031ee3
+00094c63
+01494e63
+ffc90913
+ff392c23
+fe092e23
+ec1ff06f
+00000913
+eb9ff06f
+01b92023
+fff92e23
+013dfd33
+080d1c63
+013ffd33
+060d1463
+013f7d33
+040d1063
+013efd33
+020d1063
+013e7d33
+000d1463
+e85ff06f
+013e4e33
+ffc92823
+00000913
+e75ff06f
+013eceb3
+ffd92a23
+013e7d33
+fe0d12e3
+00000913
+e5dff06f
+013f4f33
+ffe92c23
+013efd33
+fc0d1ee3
+013e7d33
+fc0d12e3
+00000913
+e3dff06f
+013fcfb3
+fff92e23
+013f7d33
+fc0d1ae3
+013efd33
+fa0d1ae3
+013e7d33
+f80d1ee3
+00000913
+e15ff06f
+013dcdb3
+01b92023
+013ffd33
+fc0d16e3
+013f7d33
+fa0d12e3
+013efd33
+f80d12e3
+013e7d33
+f60d16e3
+00000913
+de5ff06f
+
+//////////////// ^ Space Invaders type/////// v Moving Pixel Around Screen///////////
+
+0c100093
+00100113
+17f00193
+18000213
+0020a023
+00200293
+00600393
+00400413
+00800493
+00022503
+00550a63
+02750863
+04850663
+06950663
+fddff06f
+0000a023
+ffc08093
+0000c663
+0020a023
+0800006f
+18008093
+0020a023
+0740006f
+0000a023
+00408093
+0030d663
+0020a023
+0600006f
+e8008093
+0020a023
+0540006f
+0000a023
+00111113
+00011a63
+fff08093
+00100113
+0020a023
+f81ff06f
+0020a023
+0300006f
+0000a023
+00115113
+00010463
+00011c63
+00108093
+40000137
+00111113
+0020a023
+00c0006f
+0020a023
+0040006f
+00018337
+6a03031b
+fff30313
+fe031ee3
+f39ff06f
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// test for instructions
+
+// test branch equal
+               
+addi x1, x0, 10       
+addi x2, x0 10     
+beq x1, x2, label_equal  
+
+label_equal:
+addi x3, x0, 1
+             
+// test branch not equal
+      
+addi x1, x0, 10       
+addi x2, x0, 20    
+beq x1, x2 label_not_equal  
+
+label_not_equal:
+addi x3, x0, 2
+
+// test b if less than
+        
+addi x1, x0, 10      
+addi x2, x0 20     
+blt x1, x2, label_less_than
+
+label_less_than:
+addi x3, x0, 3       
+
+
+// test b if greater than 
+               
+addi x1, x0, 20      
+addi x2, x0, 10       
+bge x1, x2, label_greater_equal 
+
+label_greater_equal:
+addi x3, x0, 4    
+
+
+// test Branch if Less Than, Unsigned
+                
+addi x1, x0, 10       
+addi x2, x0, 20     
+bltu x1, x2, label_less_than_unsigned  
+
+label_less_than_unsigned:
+addi x3, x0, 5    
+
+// test Branch if Greater Than or Equal, Unsigned
+
+addi x1, x0, 10
+addi x2, x0, 20       
+bltu x1, x2, label_less_than_unsigned      
+
+label_less_than_unsigned:
+addi x3, x0, 5   
+
+
+// test Branch if Greater Than or Equal, Unsigned
+
+addi x1, x0, 20     
+addi x2, x0, 10       
+bgeu x1, x2, label_greater_equal_unsigned  
+   
+label_greater_equal_unsigned:
+addi x3, x0, 6  
+
+
+//test add
+    addi x0, x0, 5  
+    addi x1, x0, 10  
+    addi x3, x0, 4
+    addi x4, x0, 7 
+    add x2, x0, x1
+    add x5, x3, x4   
+
+// test sub
+    addi x0, x0, 15  
+    addi x1, x0, 10  
+    addi x3, x0, 6  
+    addi x4, x0, 4 
+    sub x2, x0, x1  
+    sub x5, x3, x4
+
+//test xor 
+    addi x0, x0, 5   
+    addi x1, x0, 3  
+    addi x3, x0, 8  
+    addi x4, x0, 1    
+    xor x2, x0, x1
+    xor x5, x3, x4  
+
+//test or
+    addi x0, x0, 5   
+    addi x1, x0, 3  
+    addi x3, x0, 1  
+    addi x4, x0, 2 
+    or x2, x0, x1    
+    or x5, x3, x4
+
+// test and 
+    addi x0, x0, 5   
+    addi x1, x0, 3   
+    addi x3, x0, 1  
+    addi x4, x0, 1 
+    and x2, x0, x1 
+    and x5, x3, x4  
+
+// test shift left 
+    addi x0, x0, 5    
+    addi x1, x0, 1  
+    addi x5, x0, 8   
+    addi x6, x0, 2 
+    sll x2, x0, x1  
+    sll x4, x5, x6
+
+
+// test shift right
+    addi x0, x0, 10  
+    addi x1, x0, 1  
+    addi x4, x0, 2   
+    addi x3, x0, 2 
+    srl x2, x0, x1  
+    srl x7, x4, x3
+
+
+// test shift right arithmetic
+    addi x0, x0, 5   
+    addi x1, x0, 3 
+    addi x3, x0, -10 
+    addi x4, x0, 1   
+    sra x2, x0, x1   
+    sra x8, x3, x4
+
+// test set less than
+    addi x0, x0, 5   
+    addi x1, x0, 10  
+    addi x3, x0, 15   
+    addi x4, x0, 18
+    slt x2, x0, x1 
+    slt x6, x3, x4 
+
+// test set less than unsigned
+    addi x0, x0, 5 
+    addi x1, x0, 10
+    addi x3, x0, 5   
+    addi x4, x0, 3   
+    sltu x2, x0, x1 
+    sltu x8, x3, x4
+
+
+// test addi 
+    addi x7, x0, 0
+    addi x0, x0, 5   
+    addi x2, x0, 10  
+    addi x5, x2, 3
+    
+
+// test exclusive or imm
+    addi x0, x0, 5  
+    addi x3, x0, 2
+    xori x2, x0, 3
+    xori x5, x3, 7
+
+
+// test logical or imm
+    addi x0, x0, 5   
+    addi x2, x0, 9
+    ori x2, x0, 3  
+    ori x3, x2, 7
+
+
+// test logical and imm
+    addi x0, x0, 5 
+    addi x3, x0, 33   
+    andi x2, x0, 3 
+    andi x5, x3, 2
+
+
+// test shift left logical imm
+    addi x1, x0, 4
+    addi x0, x0, 5  
+    addi x4, x1, 2
+    slli x2, x0, 1  
+    slli x6, x4, 2
+
+
+// test shift right log imm
+    addi x0, x0, 10  
+    addi x1, x0, -4
+    srli x2, x0, 1 
+    srli x3, x1, 2 
+
+
+//test shift right arith immm
+    addi x0, x0, -10
+    addi x3, x0, -3
+    srai x2, x0, 1  
+    srai x5, x3, 3
+
+
+// test set less than imm
+    addi x0, x0, 5   
+    addi x1, x0, 3
+    slti x2, x0, 10  
+    slti x3, x1, 4
+
+
+// test set less than imm unsigned
+    addi x0, x0, 5 
+    addi x1, x0, 2
+    sltiu x2, x0, 10 
+    sltiu x3, x1, 3
+
