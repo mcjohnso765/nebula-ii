@@ -41,11 +41,61 @@
 -v $(USER_PROJECT_VERILOG)/rtl/la_control/la_control.sv
 
 # Sample Team project
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_WB.v
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
+-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/sample_team_proj.sv
+-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
+-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
+
+# Team_01 project
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_alu.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_branch_logic.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_cpu.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_control_unit.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_counter.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_data_memory.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_fsm.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_immediate_generator.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_instruction_memory.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_keypad.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_lcd1602.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_mux.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_program_counter.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_register_file.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_request_unit.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_shift_reg.sv
+
+# Team_04 project
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/tippy_top.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04.sv
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/alu.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/alu_control_unit.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/aluop_mux.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/control_unit.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/CPU.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/decode.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/imm_gen.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/memory_handler.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/program_counter.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/reg_write_mux.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/register_file.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/request_handler.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/tippy_top.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/UART_Receiver.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/VGA_data_controller.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/VGA_out.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/project.v
+
+# Team_05 project
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/team_05_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/team_05_WB.v
+#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/team_05.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/project.v
 
 # Team_06 project
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/converted_submodules/BorderGen.v
@@ -94,41 +144,7 @@
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/team_06.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_06/team_06_WB.v
 
-# Team_01 project
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_Wrapper.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_WB.v
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_alu.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_branch_logic.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_cpu.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_control_unit.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_counter.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_data_memory.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_fsm.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_immediate_generator.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_instruction_memory.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_keypad.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_lcd1602.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_mux.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_program_counter.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_register_file.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_request_unit.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_shift_reg.sv
-
--v $(USER_PROJECT_VERILOG)/rtl/wishbone_manager/wishbone_manager.sv
-
-
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
--v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
-
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/team_05_Wrapper.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/team_05_WB.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/team_05.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_05/project.v
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
-#-v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
-
-# Team 07
+# Team_07 project
 -v $(USER_PROJECT_VERILOG)/rtl/wb_wrapper.vh
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/team_07_Wrapper.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/team_07.sv
@@ -186,54 +202,7 @@
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/wire_wire_locator.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_07/src_Puth/wire_wire_gen.sv
 
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/team_10_Wrapper.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/team_10_WB.v
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/team_10.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_buffer.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_clock_divider.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_disp_fsm.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_game_logic.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_host_disp.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_host_msg_reg.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_keypad_controller.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_keypad_fsm.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_lcd_controller.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_msg_reg.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_uart_Rx.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_uart_Tx.sv
-
-# SRAM
--v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/SRAM_1024x32.v
--v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/ram_controller.v
--v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper.v
--v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/beh_models/EF_SRAM_1024x32.tt_180V_25C.v
-#-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper_LVS.v
-
-
-# Team 04
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/tippy_top.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04_Wrapper.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04_WB.v
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/team_04.sv
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/alu.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/alu_control_unit.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/aluop_mux.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/control_unit.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/CPU.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/decode.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/imm_gen.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/memory_handler.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/program_counter.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/reg_write_mux.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/register_file.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/request_handler.v
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/tippy_top.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/UART_Receiver.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/VGA_data_controller.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/VGA_out.v
-#-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_04/source_v/project.v
-
-# Team 9 Snake Game
+# Team_09 project
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/team_09_Wrapper.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/team_09_WB.v
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/team_09.v
@@ -268,3 +237,27 @@
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/update_body.v
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/update_controller.v
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_09/converted_submodules/variable_clock_divider.v
+
+# Team_10 project
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/team_10_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/team_10_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/team_10.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_buffer.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_clock_divider.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_disp_fsm.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_game_logic.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_host_disp.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_host_msg_reg.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_keypad_controller.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_keypad_fsm.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_lcd_controller.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_msg_reg.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_uart_Rx.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_uart_Tx.sv
+
+# SRAM
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/SRAM_1024x32.v
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/ram_controller.v
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper.v
+-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/beh_models/EF_SRAM_1024x32.tt_180V_25C.v
+#-v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/EF_SRAM_1024x32_wrapper_LVS.v
