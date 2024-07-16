@@ -68,6 +68,7 @@ module nebula_ii (
     wire [31:0] wbs_dat_i_m;
     wire [3:0]  wbs_sel_i_m;
 
+
     // Wishbone Slave signals for all projects
     wire   [NUM_TEAMS:0]     wbs_ack_i_proj;
     wire [NUM_TEAMS:0][31:0] wbs_dat_i_proj;
@@ -77,7 +78,7 @@ module nebula_ii (
     wire [NUM_TEAMS:0][31:0] wbs_adr_o_proj;
     wire [NUM_TEAMS:0][31:0] wbs_dat_o_proj;
     wire [NUM_TEAMS:0][3:0]  wbs_sel_o_proj;
-    
+ 
     wire        wbs_ack_i_samp, wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
     wire [31:0] wbs_dat_i_samp, wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
 

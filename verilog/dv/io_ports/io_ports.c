@@ -122,4 +122,3 @@ void main()
 	// Enable the sample project design
 	// reg_sample_proj_EN = 0x1;
 }
-
