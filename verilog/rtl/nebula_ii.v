@@ -96,7 +96,7 @@ module nebula_ii (
 
     // Sample Project Instance
     // (replace this with your team design instance when testing)
-    team_10_Wrapper team_10_Wrapper (
+    team_09_Wrapper team_09_Wrapper (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
@@ -121,8 +121,8 @@ module nebula_ii (
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
-        .gpio_out(designs_gpio_out[10]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[10]) // Active Low Output Enable
+        .gpio_out(designs_gpio_out[9]), // Breakout Board Pins
+        .gpio_oeb(designs_gpio_oeb[9]) // Active Low Output Enable
     );
 
     // Flattened GPIO outputs

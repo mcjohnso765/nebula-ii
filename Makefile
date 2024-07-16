@@ -512,6 +512,15 @@ tbsim-source-%:
 
 # FYI: Run 'make clean' to clean all temporary files produced by testbenches
 
+VSRC = $(PWD)/verilog/rtl/team_projects/team_09/converted_submodules
+SRC = $(PWD)/verilog/rtl/team_projects/team_09/team_09_submodules
+sv2v:
+	@echo "Making verilog source directory"
+	@mkdir -p $(VSRC)
+	@echo "beginning conversion"
+	@sv2v --write=$(VSRC) $(SRC)/*
+	@echo "sucess"
+
 .PHONY: team-05-sv2v
 team-05-sv2v:
 	sv2v verilog/rtl/team_projects/team_05/team_05.sv -w verilog/rtl/team_projects/team_05/project.v
