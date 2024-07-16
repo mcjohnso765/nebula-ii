@@ -18,6 +18,7 @@
 `timescale 1 ns / 1 ps
 
 module wb_test_tb;
+	localparam CLK_PERIOD = 25;
 	// Signals declaration
 	reg clock;
 	wire clock_in;
@@ -27,7 +28,7 @@ module wb_test_tb;
 
 	wire gpio;
 	wire [37:0] mprj_io;
-	reg [37:0] mprj_io_in = mprj_io;
+	reg [37:0] mprj_io_in = mprj_io; 
 	reg [33:0] expected_io;
 	wire [33:0] checkbits;
 
@@ -38,7 +39,75 @@ module wb_test_tb;
 
 	// Clock generation
 	always #12.5 clock <= (clock === 1'b0);
+	task left_button_press;
+    begin
+        @(negedge clock_in);
+        mprj_io_in[29] = 1'b1;
+        @(negedge clock);
+        mprj_io_in[29] = 1'b0;
+        @(posedge clock_in);
+    end
+    endtask
 
+    task right_button_press;
+    begin
+        @(negedge clock_in);
+        mprj_io_in[30] = 1'b1;
+        @(negedge clock_in);
+        mprj_io_in[30] = 1'b0;
+        @(posedge clock_in);
+    end
+    endtask
+
+    task down_button_press;
+    begin
+        @(negedge clock_in);
+        mprj_io_in[31] = 1'b1;
+        @(negedge clock);
+        mprj_io_in[31] = 1'b0;
+        @(posedge clock_in);
+    end
+    endtask
+
+    task up_button_press;
+    begin
+        @(negedge clock_in);
+        mprj_io_in[32] = 1'b1;
+        @(negedge clock_in);
+        mprj_io_in[32] = 1'b0;
+        @(posedge clock);
+    end
+    endtask
+
+	task obstacle_gen_press;
+	begin
+		@(negedge clock_in);
+		mprj_io_in[34] = 1'b1;
+		@(negedge clock_in);
+        mprj_io_in[34] = 1'b0;
+        @(posedge clock_in);
+	end
+	endtask
+	
+	task mode_press;
+	begin
+		@(negedge clock_in);
+		mprj_io_in[33] = 1'b1;
+		@(negedge clock_in);
+        mprj_io_in[33] = 1'b0;
+        @(posedge clock_in);
+	end
+	endtask
+
+	task new_game_press;
+	begin
+		@(negedge clock);
+		mprj_io_in[35] = 1'b1;
+		@(negedge clock_in);
+        mprj_io_in[35] = 1'b0;
+        @(posedge clock_in);
+	end
+	endtask
 	initial begin
 		clock = 0;
 	end
@@ -254,6 +323,28 @@ module wb_test_tb;
 		`else
 		    $display("Monitor: NEBULA II-Sample Project (RTL) Passed");
 		`endif
+	    
+		// ************************************************************************
+        // Test Case 0: Power-on-Reset of the DUT
+        // ************************************************************************
+		RSTB <= 1'b0;
+		CSB  <= 1'b1;		// Force CSB high
+		#2000;
+		RSTB <= 1'b1;	    	// Release reset
+		#100000;
+		CSB = 1'b0;		// CSB can be released
+		#(CLK_PERIOD * 200000);
+		@(negedge clock);
+		//new_game_press();
+		#(CLK_PERIOD * 2000000);
+		// ************************************************************************
+        // Test Case 1: Snake Eats an Apple
+        // ************************************************************************
+		
+    	right_button_press();
+    	#(CLK_PERIOD * 50000000);
+    	// down_button_press();
+    	// #(CLK_PERIOD * 25000000);
 	    $finish;
 	end
 

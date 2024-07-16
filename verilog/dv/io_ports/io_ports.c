@@ -120,5 +120,5 @@ void main()
 	reg_gpio_PIN_32TO37 = 0x111111;
 
 	// Enable the sample project design
-	reg_sample_proj_EN = 0x1;
+	// reg_sample_proj_EN = 0x1;
 }

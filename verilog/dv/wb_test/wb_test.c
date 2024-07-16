@@ -21,16 +21,15 @@
 
 // List of Wishbone Slave Addresses
 // Sample Project
-#define reg_team_05_EN (*(volatile uint32_t*)0x30020000)
-
-
-
 #define reg_sample_proj_EN (*(volatile uint32_t*)0x30010000)
 #define reg_sample_proj_PRESCALER (*(volatile uint32_t*)0x30010004)
 #define reg_sample_proj_IM (*(volatile uint32_t*)0x3001FF00)
 #define reg_sample_proj_MIS (*(volatile uint32_t*)0x3001FF04)
 #define reg_sample_proj_RIS (*(volatile uint32_t*)0x3001FF08)
 #define reg_sample_proj_IC (*(volatile uint32_t*)0x3001FF0C)
+
+#define reg_team_05_EN (*(volatile uint32_t*)0x30050000)
+
 
 // GPIO Control
 #define reg_gpio_PIN_0TO7 (*(volatile uint32_t*)0x32000000)
@@ -76,40 +75,40 @@ void main()
 	// all of the GPIO pins to be used for user functions.
 
 	// Configure IO[0] and IO[37:5] to outputs
-	reg_mprj_io_0 =  GPIO_MODE_USER_STD_INPUT_PULLDOWN; // Reset
-	reg_mprj_io_5 = GPIO_MODE_USER_STD_INPUT_PULLDOWN;  // Right
-    reg_mprj_io_6 = GPIO_MODE_USER_STD_INPUT_PULLDOWN;  // Left
-    reg_mprj_io_7 = GPIO_MODE_USER_STD_INPUT_PULLDOWN;  // Up
-    reg_mprj_io_8 = GPIO_MODE_USER_STD_INPUT_PULLDOWN;  // Down
-    reg_mprj_io_9 = GPIO_MODE_USER_STD_INPUT_PULLDOWN;  // Start / Pause
-    reg_mprj_io_10 = GPIO_MODE_USER_STD_OUTPUT; // LCD Game Data
-    reg_mprj_io_11 = GPIO_MODE_USER_STD_OUTPUT; // LCD Game Data
-    reg_mprj_io_12 = GPIO_MODE_USER_STD_OUTPUT; // LCD Game Data
-    reg_mprj_io_13 = GPIO_MODE_USER_STD_OUTPUT; // LCD Game Data
-    reg_mprj_io_14 = GPIO_MODE_USER_STD_OUTPUT; // LCD Game Data
-    reg_mprj_io_15 = GPIO_MODE_USER_STD_OUTPUT; // LCD Game Data
-    reg_mprj_io_16 = GPIO_MODE_USER_STD_OUTPUT; // LCD Game Data
-    reg_mprj_io_17 = GPIO_MODE_USER_STD_OUTPUT; // LCD Game Data
-    reg_mprj_io_18 = GPIO_MODE_USER_STD_OUTPUT; // LCD Game WR
-    reg_mprj_io_19 = GPIO_MODE_USER_STD_OUTPUT; // LCD Game DCX
-    reg_mprj_io_20 = GPIO_MODE_USER_STD_OUTPUT; // Audio 
-    reg_mprj_io_21 = GPIO_MODE_USER_STD_OUTPUT; // GoodCollision Pin
-    reg_mprj_io_22 = GPIO_MODE_USER_STD_OUTPUT; // LCD Game RS
-    reg_mprj_io_23 = GPIO_MODE_USER_STD_OUTPUT; // LCD Menu rw
-    reg_mprj_io_24 = GPIO_MODE_USER_STD_OUTPUT; // LCD Menu en
-    reg_mprj_io_25 = GPIO_MODE_USER_STD_OUTPUT; // LCD Menu Data
-    reg_mprj_io_26 = GPIO_MODE_USER_STD_OUTPUT; // LCD Menu Data
-    reg_mprj_io_27 = GPIO_MODE_USER_STD_OUTPUT; // LCD Menu Data
-    reg_mprj_io_28 = GPIO_MODE_USER_STD_OUTPUT; // LCD Menu Data
-    reg_mprj_io_29 = GPIO_MODE_USER_STD_OUTPUT; // LCD Menu Data
-    reg_mprj_io_30 = GPIO_MODE_USER_STD_OUTPUT; // LCD Menu Data
-    reg_mprj_io_31 = GPIO_MODE_USER_STD_OUTPUT; // LCD Menu Data
-    reg_mprj_io_32 = GPIO_MODE_USER_STD_OUTPUT; // LCD Menu Data
-    reg_mprj_io_33 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; // STAGNANT INPUT
-    reg_mprj_io_34 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; // STAGNANT INPUT
-    reg_mprj_io_35 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; // STAGNANT INPUT
-    reg_mprj_io_36 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; // STAGNANT INPUT
-    reg_mprj_io_37 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; // STAGNANT INPUT
+	reg_mprj_io_0 =  GPIO_MODE_USER_STD_OUTPUT; //tft display
+	reg_mprj_io_5 = GPIO_MODE_USER_STD_OUTPUT; //tft display
+    reg_mprj_io_6 = GPIO_MODE_USER_STD_OUTPUT; //tft display
+    reg_mprj_io_7 = GPIO_MODE_USER_STD_OUTPUT; //tft display
+    reg_mprj_io_8 = GPIO_MODE_USER_STD_OUTPUT; //tft display
+    reg_mprj_io_9 = GPIO_MODE_USER_STD_OUTPUT; //tft display
+    reg_mprj_io_10 = GPIO_MODE_USER_STD_OUTPUT; //tft display
+    reg_mprj_io_11 = GPIO_MODE_USER_STD_OUTPUT; //tft display
+    reg_mprj_io_12 = GPIO_MODE_USER_STD_OUTPUT; //tft display
+    reg_mprj_io_13 = GPIO_MODE_USER_STD_OUTPUT; //tft display
+    reg_mprj_io_14 = GPIO_MODE_USER_STD_OUTPUT; //sound
+    reg_mprj_io_15 = GPIO_MODE_USER_STD_OUTPUT; //sound
+    reg_mprj_io_16 = GPIO_MODE_USER_STD_OUTPUT; //sound
+    reg_mprj_io_17 = GPIO_MODE_USER_STD_OUTPUT; //sound
+    reg_mprj_io_18 = GPIO_MODE_USER_STD_OUTPUT; //sound
+    reg_mprj_io_19 = GPIO_MODE_USER_STD_OUTPUT; //sound
+    reg_mprj_io_20 = GPIO_MODE_USER_STD_OUTPUT; //sseg
+    reg_mprj_io_21 = GPIO_MODE_USER_STD_OUTPUT; //sseg
+    reg_mprj_io_22 = GPIO_MODE_USER_STD_OUTPUT; //sseg
+    reg_mprj_io_23 = GPIO_MODE_USER_STD_OUTPUT; //sseg
+    reg_mprj_io_24 = GPIO_MODE_USER_STD_OUTPUT; //sseg
+    reg_mprj_io_25 = GPIO_MODE_USER_STD_OUTPUT; //sseg
+    reg_mprj_io_26 = GPIO_MODE_USER_STD_OUTPUT; //sseg
+    reg_mprj_io_27 = GPIO_MODE_USER_STD_OUTPUT; //sseg select
+    reg_mprj_io_28 = GPIO_MODE_USER_STD_OUTPUT; //sseg select
+    reg_mprj_io_29 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; //button
+    reg_mprj_io_30 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; //button
+    reg_mprj_io_31 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; //button
+    reg_mprj_io_32 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; //button
+    reg_mprj_io_33 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; //button
+    reg_mprj_io_34 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; //button
+    reg_mprj_io_35 = GPIO_MODE_USER_STD_INPUT_PULLDOWN; //button
+    reg_mprj_io_36 = GPIO_MODE_USER_STD_OUTPUT; //unused
+    reg_mprj_io_37 = GPIO_MODE_USER_STD_OUTPUT; //unused
 
 	// Now, apply configuration
 	reg_mprj_xfer = 1;
@@ -122,20 +121,27 @@ void main()
 	reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
 
 	// Configure GPIOs outputs to be selected by sample project
-	reg_gpio_PIN_0TO7 = 0x11111111;
-	reg_gpio_PIN_8TO15 = 0x11111111;
-	reg_gpio_PIN_16TO23 = 0x11111111;
-	reg_gpio_PIN_24TO31 = 0x11111111;
-	reg_gpio_PIN_32TO37 = 0x111111;
+	reg_gpio_PIN_0TO7 = 0x55555555;
+	reg_gpio_PIN_8TO15 = 0x55555555;
+	reg_gpio_PIN_16TO23 = 0x55555555;
+	reg_gpio_PIN_24TO31 = 0x55555555;
+	reg_gpio_PIN_32TO37 = 0x555555;
 
     // Do stuff with SRAM
-    sram_space = 0xFEED0000;
-    *(&sram_space + 1) = 0xABCDEF78;
-    *(&sram_space + 3) = 0x12345678;
-    reg_sample_proj_EN = (sram_space == 0xFEED0000);
-    reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
-    reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
 
+    // sram_space = 0x00500513;
+    // *(&sram_space + 1) = 0x00800613;
+    // *(&sram_space + 2) = 0x00c50663;
+    // *(&sram_space + 3) = 0x00250593;
+    // *(&sram_space + 4) = 0x00008067;
+    // *(&sram_space + 5) = 0x00350593;
+    // *(&sram_space + 6) = 0x00008067;
+
+    // reg_team_05_proj_EN = 0x1;
+
+    // reg_sample_proj_EN = (sram_space == 0xFEED0000);
+    // reg_sample_proj_EN = (*(&sram_space + 1) == 0xABCDEF78);
+    // reg_sample_proj_EN = (*(&sram_space + 3) == 0x12345678);
 
     // write sram
     // write
@@ -143,7 +149,7 @@ void main()
     // write
 
     // write your design (enable)
-
+    reg_sample_proj_EN = 1;
     // your design:
     // read from sram
     
