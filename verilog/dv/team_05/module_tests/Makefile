@@ -6,7 +6,7 @@ BUILD = sim_build
 
 # Running simulations with iVerilog
 #g flag enables sv support
-%.vvp: %_tb.sv
+%.vvp: tb_%.sv
 	iverilog -Ttyp -DFUNCTIONAL -DSIM -DUSE_POWER_PINS -DUNIT_DELAY=#1 \
 	-g2012 \
 	-f$(USER_PROJECT_VERILOG)/includes/includes.rtl.caravel_user_project -o $@ $<
@@ -25,7 +25,7 @@ source_files:
 
 # Run source simulations with VCS and DVE
 .PHONY: sim-source-%
-sim-source-%: %_tb.sv source_files
+sim-source-%: tb_%.sv source_files
 	mkdir -p ./$(BUILD)
 	vcs -sverilog -lca -debug_access+all -Mdir=$(BUILD)/csrc -o $(BUILD)/simv -f files.f \
 	$(USER_PROJECT_VERILOG)/dv/tb_macros.vh $<
