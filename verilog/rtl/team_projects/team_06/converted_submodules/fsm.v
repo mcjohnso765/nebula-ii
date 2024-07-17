@@ -1,4 +1,4 @@
-module fsm (
+module t06_fsm (
 	clk,
 	nrst,
 	goodCollision,
@@ -19,13 +19,13 @@ module fsm (
 	reg [18:0] length;
 	reg [18:0] next_length;
 	reg [18:0] REST = 30;
-	clk_div c1(
+	t06_clk_div c1(
 		.max_i(length),
 		.clk(clk),
 		.nrst(nrst),
 		.atmax_o(out_clk)
 	);
-	clk_enable a1(
+	t06_clk_enable a1(
 		.max_i(16'd50000),
 		.clk(clk),
 		.nrst(nrst),

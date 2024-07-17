@@ -1,4 +1,4 @@
-module counter (
+module t06_counter (
 	clk,
 	nrst,
 	max,

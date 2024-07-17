@@ -1,4 +1,4 @@
-module obstacle_sync_edge (
+module t09_obstacle_sync_edge (
 	clk,
 	nRst_i,
 	button_i,

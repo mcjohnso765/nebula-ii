@@ -1,4 +1,4 @@
-module ALU_reg (
+module t05_ALU_reg (
     // All inputs
     // register_file
     input logic [31:0] reg_write, 
@@ -22,7 +22,7 @@ module ALU_reg (
     // assign reg1 = regfile1;
     // assign reg2 = regfile2;
     
-    register_file regfile(.reg_write(reg_write),
+    t05_register_file regfile(.reg_write(reg_write),
                         .rd(rd),
                         .rs1(rs1),
                         .rs2(rs2),
@@ -32,7 +32,7 @@ module ALU_reg (
                         .reg1(regALU1),
                         .reg2(regALU2));
 
-    ALU call_ALU (.ALU_source(ALU_source),
+    t05_ALU call_ALU (.ALU_source(ALU_source),
                   .opcode(opcode),
                   .funct3(funct3),
                   .funct7(funct7),
@@ -45,7 +45,7 @@ module ALU_reg (
                   .branch(branch));
 endmodule
 
-module ALU(
+module t05_ALU(
         input logic ALU_source,
         input logic [6:0] opcode,
         input logic [2:0] funct3,
@@ -134,7 +134,7 @@ module ALU(
         end
 endmodule
 
-module register_file (
+module t05_register_file (
         input logic [31:0] reg_write, 
         input logic [4:0] rd, rs1, rs2, 
         input logic clk, rst, write,

@@ -1,5 +1,5 @@
 `default_nettype none
-module apple_luck_selector (
+module t06_apple_luck_selector (
 	button,
 	nrst,
 	clk,

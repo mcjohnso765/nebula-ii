@@ -1,5 +1,5 @@
 `default_nettype none
-module pixel_updater (
+module t06_pixel_updater (
 	init_cycle,
 	en_update,
 	clk,
@@ -26,7 +26,7 @@ module pixel_updater (
 	wire [2:0] mode;
 	wire cmd_finished;
 	wire pause;
-	update_controller update(
+	t06_update_controller update(
 		.init_cycle(init_cycle),
 		.en_update(en_update),
 		.clk(clk),
@@ -37,7 +37,7 @@ module pixel_updater (
 		.wr(wr),
 		.mode(mode)
 	);
-	command_lut2 commands(
+	t06_command_lut2 commands(
 		.mode(mode),
 		.clk(clk),
 		.nrst(nrst),

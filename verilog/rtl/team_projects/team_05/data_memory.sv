@@ -1,4 +1,4 @@
-module data_memory(
+module t05_data_memory(
     input logic [31:0] data_read_adr_i, data_write_adr_i, data_bus_i, data_cpu_i,
     input logic clk, data_good, rst,
     output logic data_read, data_write,

@@ -40,7 +40,7 @@ module top(
 
 logic [31:0] data_from_mem, adr_to_mem, data_to_mem;
   logic mem_write;
-  tippy_top tt(
+  t04_tippy_top tt(
     .clk(Hz10M),
     .nRst(~reset),
     .button(),
@@ -82,7 +82,7 @@ endmodule
 
 
 
-module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
+module t04_ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
     parameter addr_width = 32;
     parameter data_width = 32;
     input [addr_width-1:0] addr_r, addr_w;

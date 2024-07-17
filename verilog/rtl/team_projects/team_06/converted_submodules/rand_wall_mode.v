@@ -1,5 +1,5 @@
 `default_nettype none
-module rand_wall_mode (
+module t06_rand_wall_mode (
 	good_collision,
 	system_clk,
 	nreset,
@@ -62,13 +62,13 @@ module rand_wall_mode (
 	reg collisions;
 	reg start_enable;
 	wire collisions_n2;
-	collisionLogic absxs(
+	t06_collisionLogic absxs(
 		.next_head({y_next, x_next}),
 		.body_x(snakeArrayX),
 		.body_y(snakeArrayY),
 		.collision(collisions_n)
 	);
-	collisionLogic_wall abduyd(
+	t06_collisionLogic_wall abduyd(
 		.next_wall({y_next, x_next}),
 		.walls(apple_locations),
 		.collision(collisions_n2)

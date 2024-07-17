@@ -1,4 +1,4 @@
-module dmem_ALU (
+module t05_dmem_ALU (
     input logic MemToReg,
     input logic ALU_source,
     input logic [6:0] opcode,
@@ -13,7 +13,7 @@ module dmem_ALU (
     output logic [31:0] data_adr_o, data_bus_o, data_cpu_o
 );
     
-    ALU alu_grab(
+    t05_ALU alu_grab(
         //input
         .ALU_source(ALU_source),
         .opcode(opcode),
@@ -29,7 +29,7 @@ module dmem_ALU (
         .branch(branch)
         );    
 
-    data_memory init(
+    t05_data_memory init(
         //input
         .data_read_adr_i(read_address),
         .data_write_adr_i(write_address),
@@ -48,7 +48,7 @@ module dmem_ALU (
 
 endmodule
 
-module data_memory(
+module t05_data_memory(
     input logic [31:0] data_read_adr_i, data_write_adr_i, data_bus_i, data_cpu_i,
     input logic clk, data_good, rst,
     output logic data_read, data_write,
@@ -102,7 +102,7 @@ module data_memory(
     end
     endmodule
 
-module ALU(
+module t05_ALU(
     input logic ALU_source,
     input logic [6:0] opcode,
     input logic [2:0] funct3,

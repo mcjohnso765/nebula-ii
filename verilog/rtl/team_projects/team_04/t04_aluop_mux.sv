@@ -1,7 +1,7 @@
 `default_nettype none
 
 //this module will be integrated in the top or regfile module
-module aluop_mux (
+module t04_aluop_mux (
 input logic [31:0] regB, //from regfile
 input logic [31:0] imm, //from immgen
 input logic alu_src, //from control unit

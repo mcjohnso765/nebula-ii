@@ -1,4 +1,4 @@
-module apple_check_wall_mode (
+module t06_apple_check_wall_mode (
 	xmax,
 	xmin,
 	ymax,
@@ -32,22 +32,22 @@ module apple_check_wall_mode (
 	wire collision_downn;
 	wire collision_leftn;
 	wire collision_rightn;
-	collisionLogic_wall above(
+	t06_collisionLogic_wall above(
 		.next_wall(up),
 		.walls(wall_locations),
 		.collision(collision_upn)
 	);
-	collisionLogic_wall below(
+	t06_collisionLogic_wall below(
 		.next_wall(down),
 		.walls(wall_locations),
 		.collision(collision_downn)
 	);
-	collisionLogic_wall right2(
+	t06_collisionLogic_wall right2(
 		.next_wall(right),
 		.walls(wall_locations),
 		.collision(collision_rightn)
 	);
-	collisionLogic_wall left2(
+	t06_collisionLogic_wall left2(
 		.next_wall(left),
 		.walls(wall_locations),
 		.collision(collision_leftn)

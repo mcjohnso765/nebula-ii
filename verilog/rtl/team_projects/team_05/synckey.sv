@@ -1,4 +1,4 @@
-module synckey(
+module t05_synckey(
     input logic [19:0] in,
     input logic clock, reset,
     output logic [4:0] out,

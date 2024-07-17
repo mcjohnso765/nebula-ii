@@ -1,4 +1,4 @@
-module oscillator (
+module t09_oscillator (
 	clk,
 	nRst,
 	goodColl,

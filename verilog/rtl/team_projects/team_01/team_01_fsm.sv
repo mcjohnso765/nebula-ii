@@ -1,4 +1,4 @@
-module fsm (
+module t01_fsm (
     input logic         clk, nRST, en,
     // From Keypad
     input logic [7:0]   data,

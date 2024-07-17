@@ -1,6 +1,6 @@
 logic [31:0] data_from_mem, adr_to_mem, data_to_mem;
   logic mem_write;
-  tippy_top tt(
+  t04_tippy_top tt(
     .clk(hz100),
     .nRst(~reset),
     .button(),
@@ -21,7 +21,7 @@ logic [31:0] data_from_mem, adr_to_mem, data_to_mem;
     .pixel_data(left[3])
   );
 
-  ram ranch(
+  t04_ram ranch(
     .din(data_to_mem),
     .addr_r({2'b0, adr_to_mem[31:2]}),
     .addr_w({2'b0, adr_to_mem[31:2]}),
@@ -31,7 +31,7 @@ logic [31:0] data_from_mem, adr_to_mem, data_to_mem;
   );
 
 
-module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
+module t04_ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
     parameter addr_width = 32;
     parameter data_width = 32;
     input [addr_width-1:0] addr_r, addr_w;

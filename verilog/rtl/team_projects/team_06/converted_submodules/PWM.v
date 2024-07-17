@@ -1,4 +1,4 @@
-module PWM (
+module t06_PWM (
 	clk,
 	nrst,
 	enable,
@@ -18,7 +18,7 @@ module PWM (
 	reg [18:0] ratio_in;
 	wire [18:0] ratio_lookup;
 	wire [5:0] note;
-	fsm f1(
+	t06_fsm f1(
 		.clk(clk),
 		.enable(enable),
 		.goodCollision(goodCollision),
@@ -26,12 +26,12 @@ module PWM (
 		.nrst(nrst),
 		.state(note)
 	);
-	sound notes(
+	t06_sound notes(
 		.note(note),
 		.max_in(max_in),
 		.ratio_lookup(ratio_lookup)
 	);
-	counter counter1(
+	t06_counter counter1(
 		.clk(clk),
 		.enable(enable),
 		.nrst(nrst),

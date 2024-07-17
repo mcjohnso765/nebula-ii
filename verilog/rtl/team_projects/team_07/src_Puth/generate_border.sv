@@ -26,7 +26,7 @@
         generage the gray squares of the entire map based on the 
     input template
  */
-module generate_border
+module t07_generate_border
 (
     input logic nrst,
     input logic clk,

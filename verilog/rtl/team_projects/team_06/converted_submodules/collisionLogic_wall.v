@@ -1,5 +1,5 @@
 `default_nettype none
-module collisionLogic_wall (
+module t06_collisionLogic_wall (
 	next_wall,
 	walls,
 	collision

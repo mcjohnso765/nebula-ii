@@ -26,7 +26,7 @@
         generage the gray squares of the entire map based on the 
     input template
 // */
-module generate_mod_square
+module t07_generate_mod_square
 (
     input logic nrst,
     input logic clk,

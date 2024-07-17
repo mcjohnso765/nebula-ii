@@ -15,7 +15,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module fsm_game_control(
+module t07_fsm_game_control(
     input logic nrst,
     input logic clk,
     input logic strobe,

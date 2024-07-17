@@ -1,5 +1,5 @@
 `default_nettype none
-module apple_wrapper (
+module t06_apple_wrapper (
 	system_clk,
 	clk_body,
 	nreset,
@@ -51,7 +51,7 @@ module apple_wrapper (
 	wire enablea2;
 	wire enablea;
 	wire [7:0] apple_location2_n;
-	two_apple_mode twoapples(
+	t06_two_apple_mode twoapples(
 		.good_collision(good_collision2),
 		.enable_in(enable_in),
 		.system_clk(system_clk),
@@ -69,7 +69,7 @@ module apple_wrapper (
 		.apple_location(apple_location2_n),
 		.enable(enablea2)
 	);
-	random_num_gen twomode(
+	t06_random_num_gen twomode(
 		.enable(enablea2),
 		.system_clk(system_clk),
 		.nreset(nreset),
@@ -86,7 +86,7 @@ module apple_wrapper (
 	wire steady_e;
 	reg [1:0] steady;
 	wire [7:0] apple_location1_n;
-	edgeDetect off_bc(
+	t06_edgeDetect off_bc(
 		.D(steady[1]),
 		.clk(system_clk),
 		.nrst(nreset),
@@ -109,7 +109,7 @@ module apple_wrapper (
 			{apple_location1, apple_location2} <= {apple_location1_n, apple_location2a};
 		else
 			{apple_location1, apple_location2} <= {apple_location1, apple_location2};
-	apple_gen_all ab(
+	t06_apple_gen_all ab(
 		.good_collision(good_collision),
 		.wall_locations(wall_locations),
 		.system_clk(system_clk),
@@ -127,7 +127,7 @@ module apple_wrapper (
 		.apple_location(apple_location1_n),
 		.enable(enablea)
 	);
-	random_num_gen normal1(
+	t06_random_num_gen normal1(
 		.enable(enablea),
 		.system_clk(system_clk),
 		.nreset(nreset),

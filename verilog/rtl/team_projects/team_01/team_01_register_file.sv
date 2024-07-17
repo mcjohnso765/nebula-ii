@@ -1,4 +1,4 @@
-module register_file (
+module t01_register_file (
     input   logic        clk, nRST, RegWrite,
     input   logic [4:0]  ReadReg1, ReadReg2, WriteReg,
     input   logic [31:0] WriteData,

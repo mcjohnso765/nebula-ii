@@ -3,7 +3,7 @@
     Description:
         generate the pixel logic for the simon says game
 */
-module generate_simon(
+module t07_generate_simon(
     input logic nrst,
     input logic clk,
     input logic [8:0] x,

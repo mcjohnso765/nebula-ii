@@ -1,5 +1,5 @@
 `default_nettype none
-module wall_wrapper (
+module t06_wall_wrapper (
 	system_clk,
 	nrst,
 	enable_in2,
@@ -43,7 +43,7 @@ module wall_wrapper (
 	wire [7:0] apple_possible;
 	wire enable_out;
 	wire collision;
-	BorderGen genborder(
+	t06_BorderGen genborder(
 		.clk(system_clk),
 		.score(score),
 		.enable_in(enable_in2),
@@ -53,7 +53,7 @@ module wall_wrapper (
 		.YMAX(ymax),
 		.YMIN(ymin)
 	);
-	rand_wall_mode rand_wall(
+	t06_rand_wall_mode rand_wall(
 		.good_collision(good_collision),
 		.system_clk(system_clk),
 		.nreset(nrst),
@@ -71,13 +71,13 @@ module wall_wrapper (
 		.apple_locations(wall_locations),
 		.enable(enable_out)
 	);
-	random_num_gen_wall_mode abc(
+	t06_random_num_gen_wall_mode abc(
 		.enable(enable_out),
 		.system_clk(system_clk),
 		.nreset(nrst),
 		.number_out(apple_possible)
 	);
-	collisionLogic_wall wallcollision(
+	t06_collisionLogic_wall wallcollision(
 		.next_wall({y, x}),
 		.walls(wall_locations),
 		.collision(collision)

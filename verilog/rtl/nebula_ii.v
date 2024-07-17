@@ -71,11 +71,6 @@ module nebula_ii (
     wire [31:0] wbs_adr_o_samp, wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
     wire [31:0] wbs_dat_o_samp, wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
     wire [3:0]  wbs_sel_o_samp, wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
-    
-    // Assign default values to index 0 of output arrays
-    assign designs_la_data_out[0] = 'b0;
-    assign designs_gpio_out[0] = 'b0;
-    assign designs_gpio_oeb[0] = '1;
 
     // Sample Project Instance
     sample_team_proj_Wrapper sample_team_proj_Wrapper (

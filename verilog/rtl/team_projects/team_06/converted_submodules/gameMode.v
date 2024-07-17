@@ -1,5 +1,5 @@
 `default_nettype none
-module gameMode (
+module t06_gameMode (
 	button,
 	nrst,
 	system_clk,

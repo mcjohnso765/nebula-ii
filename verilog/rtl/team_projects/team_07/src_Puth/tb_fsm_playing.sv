@@ -15,7 +15,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module tb_fsm_playing ();
+module t07_tb_fsm_playing ();
 
     typedef enum logic [2:0] {
         MENU = 3'd0, PLAY = 3'd1, LOST = 3'd2, WON = 3'd3
@@ -52,7 +52,7 @@ module tb_fsm_playing ();
     end
 
     // instantiate the playing_fsm DUT and assign the ports
-    fsm_playing DUT(
+    t07_fsm_playing DUT(
         .nrst(tb_nrst),
         .clk(tb_clk),
         .strobe(tb_strobe),

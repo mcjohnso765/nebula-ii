@@ -12,7 +12,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module maze_clear_detector(
+module t07_maze_clear_detector(
     input logic [2:0] pos_x,
     input logic [2:0] pos_y,
     input logic [2:0] dest_x,

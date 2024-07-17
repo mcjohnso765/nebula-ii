@@ -53,7 +53,7 @@ module team_09 (
 	wire [623:0] body;
 	wire [1:0] blinkToggle;
 	wire [1:0] junk;
-	image_generator img_gen(
+	t09_image_generator img_gen(
 		.snakeBody(snakeBody),
 		.snakeHead(snakeHead),
 		.apple(apple),
@@ -69,12 +69,12 @@ module team_09 (
 		.x(x),
 		.y(y)
 	);
-	border_generator border_gen(
+	t09_border_generator border_gen(
 		.x(x),
 		.y(y),
 		.isBorder(border)
 	);
-	snake_body_controller #(.MAX_LENGTH(MAX_LENGTH)) control(
+	t09_snake_body_controller #(.MAX_LENGTH(MAX_LENGTH)) control(
 		.direction_pb(gpio_in[28:25]),
 		.x(x),
 		.y(y),
@@ -87,14 +87,14 @@ module team_09 (
 		.snakeHead(snakeHead),
 		.snakeBody(snakeBody)
 	);
-	obstacleMode obsmode(
+	t09_obstacleMode obsmode(
 		.sync_reset(sync),
 		.obstacle_pb(gpio_in[30]),
 		.clk(clk),
 		.nrst(nrst&&  en),
 		.obstacleFlag(obstacleFlag)
 	);
-	obstacle_random obsrand1(
+	t09_obstacle_random obsrand1(
 		.clk(clk),
 		.nRst(nrst && en),
 		.randX(randX),
@@ -103,7 +103,7 @@ module team_09 (
 		.randY2(randY2),
 		.obstacleFlag(obstacleFlag)
 	);
-	applegenerator2 #(.MAX_LENGTH(MAX_LENGTH)) ag2(
+	t09_applegenerator2 #(.MAX_LENGTH(MAX_LENGTH)) ag2(
 		.x(x),
 		.y(y),
 		.randX(randX),
@@ -115,7 +115,7 @@ module team_09 (
 		.body(body),
 		.apple(apple)
 	);
-	obstaclegen2 #(.MAX_LENGTH(MAX_LENGTH)) obsg2(
+	t09_obstaclegen2 #(.MAX_LENGTH(MAX_LENGTH)) obsg2(
 		.curr_length(curr_length),
 		.obstacleCount(dispObs),
 		.clk(clk),
@@ -130,7 +130,7 @@ module team_09 (
 		.obstacle(obstacle),
 		.obstacleFlag(obstacleFlag)
 	);
-	collision coll(
+	t09_collision coll(
 		.clk(clk),
 		.nRst(nrst && en),
 		.snakeHead(snakeHead),
@@ -140,7 +140,7 @@ module team_09 (
 		.goodColl(goodColl),
 		.badColl(badColl)
 	);
-	score_posedge_detector score_detect(
+	t09_score_posedge_detector score_detect(
 		.clk(clk),
 		.nRst(nrst && en),
 		.goodColl_i(goodColl),
@@ -148,7 +148,7 @@ module team_09 (
 		.goodColl(good_coll),
 		.badColl(bad_coll)
 	);
-	score_tracker3 track(
+	t09_score_tracker3 track(
 		.clk(clk),
 		.nRst(nrst && en),
 		.goodColl(good_coll),
@@ -160,7 +160,7 @@ module team_09 (
 		.dispScore(dispScore),
 		.isGameComplete(isGameComplete)
 	);
-	toggle_screen toggle1(
+	t09_toggle_screen toggle1(
 		.displayOut(displayOut),
 		.blinkToggle(blinkToggle),
 		.clk(clk),
@@ -169,13 +169,13 @@ module team_09 (
 		.bcd_tens(bcd_tens),
 		.bcd_hundreds(bcd_hundreds)
 	);
-	ssdec ssdec1(
+	t09_ssdec ssdec1(
 		.in(displayOut),
 		.enable(1),
 		.out(gpio_out[22:16])
 	);
 	assign gpio_out[24:23] = blinkToggle;
-	sound_generator sound_gen(
+	t09_sound_generator sound_gen(
 		.clk(clk),
 		.rst(~nrst && ~en),
 		.goodColl_i(goodColl),

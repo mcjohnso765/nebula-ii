@@ -172,7 +172,7 @@ module t05_complete_design(
         end
     end
 
-    keypad_interface keypad0(
+    t05_keypad_interface keypad0(
         .clk(clk),
         .rst(rst),
         .columns(keypad_in), //input
@@ -181,7 +181,7 @@ module t05_complete_design(
         .key_confirm(key_confirm)
     );
 
-    bin_to_LCD bin2lcd(
+    t05_bin_to_LCD bin2lcd(
         .binary_in(data_to_LCD),
         .LCD_out(LCD_out)
     );
@@ -197,7 +197,7 @@ module t05_complete_design(
         .lcd_data(lcd_data)
     );
 
-    memory_mapping map(
+    t05_memory_mapping map(
         .mem_address(CPU_address),
         .data_from_CPU(data_from_CPU),
         .data_from_keypad(data_from_keypad),
@@ -248,7 +248,7 @@ endmodule
 // Memory-mapped I/O
 ////////////////////////////////////
 
-module memory_mapping(
+module t05_memory_mapping(
     input logic [31:0] mem_address, data_from_CPU, data_from_keypad, data_from_memory,
     output logic [31:0] output_address, data_to_CPU, data_to_LCD, data_to_memory,
     output logic [2:0] lcd_word,
@@ -1374,7 +1374,7 @@ endmodule
 
 
 
-module wishbone_manager(
+module t05_wishbone_manager(
     //clock and reset of course
     input logic nRST, CLK,
     
@@ -1564,7 +1564,7 @@ endmodule
 
 typedef enum {KEY_IDLE, SCAN} key_state;
 
-module keypad_interface(
+module t05_keypad_interface(
     input logic clk, rst,
     input logic [3:0] columns,
     output logic [3:0] rows,
@@ -1765,7 +1765,7 @@ module keypad_interface(
         end
     end
     
-    bcd2bin partyyyyy(
+    t05_bcd2bin partyyyyy(
                     // .bcd7(key_out[31:28]),
                     // .bcd6(key_out[27:24]),
                     // .bcd5(key_out[23:20]),
@@ -1780,7 +1780,7 @@ module keypad_interface(
     // logic [15:0] key_out_bin;
 endmodule
 
-module lcd_controller #(parameter clk_div = 24)( //24000
+module t05_lcd_controller #(parameter clk_div = 24)( //24000
     input clk,
     input rst,
     // Data to be displayed
@@ -2007,7 +2007,7 @@ module lcd_controller #(parameter clk_div = 24)( //24000
 
 endmodule
 
-module bcd2bin
+module t05_bcd2bin
    (
     // input logic [3:0] bcd7, // 10,000,000
     // input logic [3:0] bcd6, // 1,000,000
@@ -2033,7 +2033,7 @@ module bcd2bin
 
 endmodule
 
-module bin_to_LCD(
+module t05_bin_to_LCD(
     input logic [31:0] binary_in,
     output logic [31:0] LCD_out
 );

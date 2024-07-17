@@ -1,5 +1,5 @@
 `default_nettype none
-module random_num_gen (
+module t06_random_num_gen (
 	enable,
 	system_clk,
 	nreset,

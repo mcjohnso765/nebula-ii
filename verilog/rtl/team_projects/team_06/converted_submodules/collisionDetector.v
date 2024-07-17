@@ -1,5 +1,5 @@
 `default_nettype none
-module collisionDetector (
+module t06_collisionDetector (
 	clk,
 	nrst,
 	check_enable,
@@ -46,13 +46,13 @@ module collisionDetector (
 	reg badCollision_n;
 	reg goodCollision_n2;
 	wire badCollision_n2;
-	collisionLogic snakeLogic(
+	t06_collisionLogic snakeLogic(
 		.next_head({snakeHeadY, snakeHeadX}),
 		.body_x(snakeArrayX),
 		.body_y(snakeArrayY),
 		.collision(collision_n)
 	);
-	collisionLogic_wall rndwall(
+	t06_collisionLogic_wall rndwall(
 		.next_wall({snakeHeadY, snakeHeadX}),
 		.walls(wall_array),
 		.collision(badCollision_n2)

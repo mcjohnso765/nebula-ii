@@ -1,4 +1,4 @@
-module shift_reg (
+module t01_shift_reg (
     input   logic         clk, nRST, enable,
     input   logic [7:0]   char_in, 
     output  logic [127:0] shift_register

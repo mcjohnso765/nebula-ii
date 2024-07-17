@@ -2,7 +2,7 @@
 // Set to operate at 1 MHz frequency - change the count parameter to set it to the correct frequency
 // Sends and receives 16 bits at a time
 
-module spi #(
+module t07_spi #(
         parameter FREQ_COUNTER = 6,         // Counter for the clock divider - should be equal to (system clk freq/desired clk freq)/2
         parameter FREQ_COUNTER_WIDTH = 4    // Number of bits needed for the counter
     )(

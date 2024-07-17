@@ -1,5 +1,5 @@
 `default_nettype none
-module main_file (
+module t06_main_file (
 	clk,
 	nrst,
 	button_right_in,
@@ -80,7 +80,7 @@ module main_file (
 	wire [7:0] apple_location;
 	wire [7:0] apple_location2;
 	wire [199:0] wall_locations;
-	clock clock1(
+	t06_clock clock1(
 		.system_clk(clk),
 		.nreset(reset_button),
 		.game_state(game_state),
@@ -89,7 +89,7 @@ module main_file (
 		.clk_body(clk_body),
 		.game_speed(game_speed)
 	);
-	display_wrapper kyle(
+	t06_display_wrapper kyle(
 		.score(score),
 		.clk(main_clk),
 		.nreset(reset_button),
@@ -102,7 +102,7 @@ module main_file (
 		.out3(rs),
 		.out4(lcd8)
 	);
-	PWM randy(
+	t06_PWM randy(
 		.clk(main_clk),
 		.nrst(reset_button),
 		.enable((game_state == 2'b00) | (game_state == 2'b11)),
@@ -110,14 +110,14 @@ module main_file (
 		.badCollision(bad_collision),
 		.out(song)
 	);
-	gameMode modea(
+	t06_gameMode modea(
 		.button(right_direction),
 		.nrst(reset_button),
 		.state(game_state),
 		.mode(game_mode),
 		.system_clk(main_clk)
 	);
-	gameState state1(
+	t06_gameState state1(
 		.button(start_pause_button),
 		.badCollision(bad_collision),
 		.clk(main_clk),
@@ -125,7 +125,7 @@ module main_file (
 		.gameMode(game_state),
 		.state(game_state)
 	);
-	collisionDetector detectabc(
+	t06_collisionDetector detectabc(
 		.clk(main_clk),
 		.wall_array(wall_locations),
 		.nrst(reset_button),
@@ -146,58 +146,58 @@ module main_file (
 		.goodCollision(good_collision),
 		.good_collision2(good_collision2)
 	);
-	apple_luck_selector luck1(
+	t06_apple_luck_selector luck1(
 		.clk(main_clk),
 		.button(down_direction),
 		.nrst(reset_button),
 		.state(game_state),
 		.apple_luck(apple_luck)
 	);
-	game_speed_selector speed1(
+	t06_game_speed_selector speed1(
 		.system_clk(main_clk),
 		.button(up_direction),
 		.nrst(reset_button),
 		.state(game_state),
 		.game_speed(game_speed)
 	);
-	syncEdge up_button(
+	t06_syncEdge up_button(
 		.clk(main_clk),
 		.nreset(reset_button),
 		.but(button_up_in),
 		.direction(up_direction)
 	);
-	syncEdge down_button(
+	t06_syncEdge down_button(
 		.clk(main_clk),
 		.nreset(reset_button),
 		.but(button_down_in),
 		.direction(down_direction)
 	);
-	syncEdge left_button(
+	t06_syncEdge left_button(
 		.clk(main_clk),
 		.nreset(reset_button),
 		.but(button_left_in),
 		.direction(left_direction)
 	);
-	syncEdge right_button(
+	t06_syncEdge right_button(
 		.clk(main_clk),
 		.nreset(reset_button),
 		.but(button_right_in),
 		.direction(right_direction)
 	);
-	syncEdge start_pause_button1(
+	t06_syncEdge start_pause_button1(
 		.clk(main_clk),
 		.nreset(reset_button),
 		.but(button_start_pause_in),
 		.direction(start_pause_button)
 	);
-	syncEdge reset_button1(
+	t06_syncEdge reset_button1(
 		.clk(main_clk),
 		.nreset(~nrst),
 		.but(button_reset_in),
 		.direction(reset_button_a)
 	);
 	assign reset_button = ~(reset_button_a | nrst);
-	wall_wrapper walls(
+	t06_wall_wrapper walls(
 		.system_clk(main_clk),
 		.score(score),
 		.nrst(reset_button),
@@ -218,7 +218,7 @@ module main_file (
 		.ymin(ymin),
 		.wall_locations(wall_locations)
 	);
-	apple_wrapper applesa(
+	t06_apple_wrapper applesa(
 		.system_clk(main_clk),
 		.clk_body(clk_body),
 		.nreset(reset_button),
@@ -241,7 +241,7 @@ module main_file (
 		.apple_location2(apple_location2),
 		.good_collision2(good_collision2)
 	);
-	body_wrapper bodymain1(
+	t06_body_wrapper bodymain1(
 		.system_clk(main_clk),
 		.body_clk(clk_body),
 		.pause_clk(pause_clk),
@@ -260,7 +260,7 @@ module main_file (
 		.body_y(snakeArrayY),
 		.score(score)
 	);
-	DirectionLogic direction1(
+	t06_DirectionLogic direction1(
 		.clk(main_clk),
 		.bad_collision(bad_collision),
 		.pause_clk(pause_clk),

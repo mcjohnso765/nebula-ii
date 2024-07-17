@@ -1,5 +1,5 @@
 `default_nettype none
-module clock (
+module t06_clock (
 	system_clk,
 	nreset,
 	game_state,

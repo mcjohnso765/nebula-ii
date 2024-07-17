@@ -1,4 +1,4 @@
-module rainbowRand (
+module t09_rainbowRand (
 	clk,
 	reset,
 	enable,

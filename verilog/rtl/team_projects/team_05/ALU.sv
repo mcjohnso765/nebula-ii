@@ -1,4 +1,4 @@
-module ALU(
+module t05_ALU(
     input logic ALU_source,
     input logic [6:0] opcode,
     input logic [2:0] funct3,

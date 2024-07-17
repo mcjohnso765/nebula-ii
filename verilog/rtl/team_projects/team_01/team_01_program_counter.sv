@@ -1,4 +1,4 @@
-module program_counter (
+module t01_program_counter (
     input   logic        clk, nRST,
     input   logic        enable,
     input   logic [31:0] new_pc,  

@@ -1,5 +1,5 @@
 
-module pc(
+module t05_pc(
     input logic clk, clr, load, inc, Disable, ALU_out,
     input logic [31:0] data, imm_val, 
     output logic [31:0] pc_val 

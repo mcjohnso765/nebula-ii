@@ -1,4 +1,4 @@
-module command_lut2 (
+module t09_command_lut2 (
 	mode,
 	clk,
 	nrst,
@@ -50,7 +50,7 @@ module command_lut2 (
 		else
 			enable = 0;
 	end
-	rainbowRand rR1(
+	t09_rainbowRand rR1(
 		.clk(clk),
 		.reset(nrst),
 		.rainbowRNG(rainbowRNG),

@@ -4,7 +4,7 @@
         random the simon_sequence and wire_color, when the game starts (activate_rand)
     and send the output to other wire modules.
 */
-module simon_sequence_gen (
+module t07_simon_sequence_gen (
     input logic nrst,
     input logic clk,
     input logic activate_rand,
@@ -13,7 +13,7 @@ module simon_sequence_gen (
     logic [9:0] nxt_simon_sequence_bus;
     logic [9:0] rand_simon_sequence_bus;
 
-    random_gen_simon random_gen_simon_0 ( 
+    t07_random_gen_simon random_gen_simon_0 ( 
         .nrst(nrst),
         .clk(clk),
         .random_seed(12'd1867),

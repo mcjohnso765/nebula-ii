@@ -1,4 +1,4 @@
-module tippy_top (
+module t04_tippy_top (
 	clk,
 	nRst,
 	button,
@@ -53,7 +53,7 @@ module tippy_top (
 	wire [31:0] data_to_VGA;
 	wire [31:0] VGA_adr;
 	wire VGA_enable;
-	CPU cpu(
+	t04_CPU cpu(
 		.instruction(CPU_instructions),
 		.clk(clk),
 		.nrst(nRst),
@@ -70,7 +70,7 @@ module tippy_top (
 		.select(CPU_sel),
 		.enable(CPU_enable)
 	);
-	VGA_data_controller VGA_data_control(
+	t04_VGA_data_controller VGA_data_control(
 		.clk(clk),
 		.nrst(nRst),
 		.VGA_request_address(VGA_request_address),
@@ -84,7 +84,7 @@ module tippy_top (
 		.SRAM_address(VGA_adr),
 		.mem_busy(mem_busy)
 	);
-	VGA_out vga(
+	t04_VGA_out vga(
 		.SRAM_data_in(data_to_VGA),
 		.SRAM_busy(1'b0),
 		.clk(clk),
@@ -103,7 +103,7 @@ module tippy_top (
 	);
 	wire [7:0] uart_out;
 	wire uart_data_ready;
-	UART_Receiver uart(
+	t04_UART_Receiver uart(
 		.nRst(nRst),
 		.clk(clk),
 		.enable(1),
@@ -116,7 +116,7 @@ module tippy_top (
 		.BAUD_counter(),
 		.parity_error()
 	);
-	request_handler reqhand(
+	t04_request_handler reqhand(
 		.clk(clk),
 		.nRst(nRst),
 		.mem_busy(mem_busy),
@@ -144,7 +144,7 @@ module tippy_top (
 		.uart_address(memory_size - 32'd1532)
 	);
 endmodule
-module CPU (
+module t04_CPU (
 	instruction,
 	clk,
 	nrst,
@@ -197,7 +197,7 @@ module CPU (
 	wire [31:0] regB;
 	wire [31:0] MemData;
 	wire [31:0] PCData;
-	decode decoder(
+	t04_decode decoder(
 		.instruction(instruction),
 		.rs1(rs1),
 		.rs2(rs2),
@@ -206,12 +206,12 @@ module CPU (
 		.ALUOp(func3),
 		.func7(func7)
 	);
-	imm_gen make_imm(
+	t04_imm_gen make_imm(
 		.instruction(instruction),
 		.imm(imm),
 		.flag()
 	);
-	control_unit cntrl(
+	t04_control_unit cntrl(
 		.opcode(opcode),
 		.RegWriteSource(RegWriteSrc),
 		.ALUSrc(ALUSrc),
@@ -223,13 +223,13 @@ module CPU (
 		.Error(Error),
 		.AUIlink(AUIlink)
 	);
-	aluop_mux ALUOpB(
+	t04_aluop_mux ALUOpB(
 		.regB(regB),
 		.imm(imm),
 		.alu_src(ALUSrc),
 		.opB(opB)
 	);
-	alu ALU(
+	t04_alu ALU(
 		.opcode(opcode),
 		.alu_op(func3),
 		.func7(func7),
@@ -241,7 +241,7 @@ module CPU (
 		.condJumpValue(condJumpValue)
 	);
 	assign alu_result = alu_result_wire;
-	reg_write_mux reg_write_control(
+	t04_reg_write_mux reg_write_control(
 		.immData(imm),
 		.ALUData(alu_result_wire),
 		.MemData(MemData),
@@ -251,7 +251,7 @@ module CPU (
 	);
 	wire [1024:1] sv2v_tmp_regs_reg_file;
 	always @(*) reg_window = sv2v_tmp_regs_reg_file;
-	register_file regs(
+	t04_register_file regs(
 		.read_addr_1(rs1),
 		.read_addr_2(rs2),
 		.write_addr(rd),
@@ -264,7 +264,7 @@ module CPU (
 		.reg_file(sv2v_tmp_regs_reg_file),
 		.enable(enable)
 	);
-	memory_handler mem(
+	t04_memory_handler mem(
 		.addr(alu_result_wire),
 		.read_data_2(regB),
 		.data_from_mem(data_from_mem),
@@ -278,7 +278,7 @@ module CPU (
 		.mem_read(),
 		.mem_write()
 	);
-	program_counter PC(
+	t04_program_counter PC(
 		.nRst(nrst),
 		.enable(enable),
 		.clk(clk),
@@ -293,7 +293,7 @@ module CPU (
 		.AUIlink(AUIlink)
 	);
 endmodule
-module decode (
+module t04_decode (
 	instruction,
 	rs1,
 	rs2,
@@ -316,7 +316,7 @@ module decode (
 	assign ALUOp = instruction[14:12];
 	assign func7 = instruction[31:25];
 endmodule
-module imm_gen (
+module t04_imm_gen (
 	instruction,
 	imm,
 	flag
@@ -367,7 +367,7 @@ module imm_gen (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module control_unit (
+module t04_control_unit (
 	opcode,
 	RegWriteSource,
 	ALUSrc,
@@ -509,7 +509,7 @@ module control_unit (
 	initial _sv2v_0 = 0;
 endmodule
 `default_nettype none
-module aluop_mux (
+module t04_aluop_mux (
 	regB,
 	imm,
 	alu_src,
@@ -531,7 +531,7 @@ module aluop_mux (
 	initial _sv2v_0 = 0;
 endmodule
 `default_nettype none
-module alu (
+module t04_alu (
 	opcode,
 	alu_op,
 	func7,
@@ -558,7 +558,7 @@ module alu (
 	assign opB_signed = opB;
 	wire [3:0] alu_control_input;
 	wire ctrl_err;
-	alu_control_unit ex1(
+	t04_alu_control_unit ex1(
 		.opcode(opcode),
 		.alu_op(alu_op),
 		.func7(func7),
@@ -661,7 +661,7 @@ module alu (
 	initial _sv2v_0 = 0;
 endmodule
 `default_nettype none
-module alu_control_unit (
+module t04_alu_control_unit (
 	opcode,
 	alu_op,
 	func7,
@@ -777,7 +777,7 @@ module alu_control_unit (
 	initial _sv2v_0 = 0;
 endmodule
 `default_nettype none
-module reg_write_mux (
+module t04_reg_write_mux (
 	immData,
 	ALUData,
 	MemData,
@@ -807,7 +807,7 @@ module reg_write_mux (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module register_file (
+module t04_register_file (
 	read_addr_1,
 	read_addr_2,
 	write_addr,
@@ -848,7 +848,7 @@ module register_file (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module memory_handler (
+module t04_memory_handler (
 	addr,
 	read_data_2,
 	data_from_mem,
@@ -929,7 +929,7 @@ module memory_handler (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module program_counter (
+module t04_program_counter (
 	nRst,
 	enable,
 	clk,
@@ -983,7 +983,7 @@ module program_counter (
 			instructionAddress <= instructionAddress;
 	initial _sv2v_0 = 0;
 endmodule
-module VGA_out (
+module t04_VGA_out (
 	SRAM_data_in,
 	SRAM_busy,
 	clk,
@@ -1201,7 +1201,7 @@ module VGA_out (
 	assign x_coord = 5'b11111 - h_count[5:1];
 	initial _sv2v_0 = 0;
 endmodule
-module VGA_data_controller (
+module t04_VGA_data_controller (
 	clk,
 	nrst,
 	VGA_request_address,
@@ -1306,7 +1306,7 @@ module VGA_data_controller (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module UART_Receiver (
+module t04_UART_Receiver (
 	nRst,
 	clk,
 	enable,
@@ -1417,7 +1417,7 @@ module UART_Receiver (
 			BAUD_counter_state <= 1'b0;
 		end
 endmodule
-module request_handler (
+module t04_request_handler (
 	clk,
 	nRst,
 	mem_busy,

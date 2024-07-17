@@ -1,4 +1,4 @@
-module instruction_memory(
+module t05_instruction_memory(
     input logic [31:0] instruction_adr_i, instruction_i,
     input logic clk, data_good, rst,
     output logic instr_fetch,

@@ -6,7 +6,7 @@ typedef enum logic [3:0] {
     BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR=4'bxx
     } operation_t;
 
-module alu (
+module t04_alu (
 input logic [6:0] opcode,
 input logic [2:0] alu_op,
 input logic [6:0] func7,
@@ -27,7 +27,7 @@ operation_t alu_control_input;
 
 logic ctrl_err;
 //INSTANTING alu_control_unit here
-    alu_control_unit ex1 (.opcode(opcode), 
+    t04_alu_control_unit ex1 (.opcode(opcode), 
                           .alu_op(alu_op), 
                           .func7(func7), 
                           .ctrl_err(ctrl_err),

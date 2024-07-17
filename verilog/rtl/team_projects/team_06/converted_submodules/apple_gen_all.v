@@ -1,5 +1,5 @@
 `default_nettype none
-module apple_gen_all (
+module t06_apple_gen_all (
 	good_collision,
 	system_clk,
 	nreset,
@@ -57,13 +57,13 @@ module apple_gen_all (
 	reg collisions;
 	reg start_enable;
 	wire impossible;
-	collisionLogic absxs(
+	t06_collisionLogic absxs(
 		.next_head({y_next, x_next}),
 		.body_x(snakeArrayX),
 		.body_y(snakeArrayY),
 		.collision(collisions_n)
 	);
-	apple_check_wall_mode check_walls(
+	t06_apple_check_wall_mode check_walls(
 		.clk(system_clk),
 		.nreset(nreset),
 		.xmax(XMAX),

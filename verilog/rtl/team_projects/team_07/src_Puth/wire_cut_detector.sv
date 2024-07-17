@@ -23,7 +23,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module wire_cut_detector(
+module t07_wire_cut_detector(
     input logic nrst,
     input logic clk,
     input logic activate_rand,          // signal when move from MENU to PLAY

@@ -1,5 +1,5 @@
 `default_nettype none
-module body_wrapper (
+module t06_body_wrapper (
 	system_clk,
 	body_clk,
 	pause_clk,
@@ -37,7 +37,7 @@ module body_wrapper (
 	output wire [(MAX_LENGTH * 4) - 1:0] body_y;
 	output wire [7:0] score;
 	wire collision;
-	body_control main(
+	t06_body_control main(
 		.main_clk(system_clk),
 		.body_clk(body_clk),
 		.pause_clk(pause_clk),
@@ -52,7 +52,7 @@ module body_wrapper (
 		.body_y(body_y),
 		.score(score)
 	);
-	collisionLogic col(
+	t06_collisionLogic col(
 		.next_head({y, x}),
 		.body_x(body_x),
 		.body_y(body_y),

@@ -10,7 +10,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module rising_edge_detector
+module t07_rising_edge_detector
 (
     input logic nrst,
     input logic clk,

@@ -1,4 +1,4 @@
-module collision (
+module t09_collision (
 	clk,
 	nRst,
 	snakeHead,

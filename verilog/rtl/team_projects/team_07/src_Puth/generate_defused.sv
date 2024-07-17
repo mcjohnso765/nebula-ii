@@ -1,4 +1,4 @@
-module generate_defused (
+module t07_generate_defused (
 // This module intakes coordinates of the blocks containing the defused and outputs the pixel the defused is on
 input logic clk, nrst,
 input logic [8:0] x,

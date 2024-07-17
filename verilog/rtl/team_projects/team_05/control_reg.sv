@@ -1,4 +1,4 @@
-module control_reg (
+module t05_control_reg (
     //control unit 
     //input
     input logic [31:0] instruction,
@@ -17,7 +17,7 @@ module control_reg (
 
 );
 
-    control_unit controlUnit (
+    t05_control_unit controlUnit (
             .instruction(instruction),
             .opcode(opcode),
             .funct7(funct7),
@@ -30,7 +30,7 @@ module control_reg (
             .memToReg(memToReg),
             .load_pc(load_pc));
 
-    register_file regfile(.reg_write(reg_write),
+    t05_register_file regfile(.reg_write(reg_write),
             .rd(rd),
             .rs1(rs1),
             .rs2(rs2),
@@ -41,7 +41,7 @@ module control_reg (
             .reg2(reg1));
 endmodule
 
-module register_file (
+module t05_register_file (
     input logic [31:0] reg_write, 
     input logic [4:0] rd, rs1, rs2, 
     input logic clk, rst, write,
@@ -75,7 +75,7 @@ module register_file (
     end
 endmodule
 
-module control_unit(
+module t05_control_unit(
     input logic [31:0] instruction,
     output logic [6:0] opcode, funct7,
     output logic [2:0] funct3,

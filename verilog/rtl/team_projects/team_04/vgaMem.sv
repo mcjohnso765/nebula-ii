@@ -1,4 +1,4 @@
-module vgaMem (
+module t04_vgaMem (
     input logic clk,
     nRst, 
     write_enable, //control signal enabling writing

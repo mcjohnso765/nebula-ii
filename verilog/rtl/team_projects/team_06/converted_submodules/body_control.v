@@ -1,4 +1,4 @@
-module body_control (
+module t06_body_control (
 	main_clk,
 	body_clk,
 	pause_clk,

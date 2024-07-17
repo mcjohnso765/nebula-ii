@@ -10,7 +10,7 @@ typedef enum logic [2:0] {
     Wait = 6
 } state_t;
 
-module instruction_fetch(
+module t05_instruction_fetch(
     input logic [31:0] data_in_CPU, data_in_BUS,
     input logic data_en, bus_full, memWrite,
     input logic clk, rst,
@@ -28,7 +28,7 @@ module instruction_fetch(
         good_data = bus_full_CPU & (state == Read);
     end
 
-    memcontrol memory (
+    t05_memcontrol memory (
         .address_in(address_in), 
         .data_in_CPU(data_in_CPU),
         .data_in_BUS(data_in_BUS),
@@ -48,7 +48,7 @@ module instruction_fetch(
         .bus_full_CPU(bus_full_CPU)
         );
 
-    instruction_memory instr_mem(
+    t05_instruction_memory instr_mem(
         .instruction_adr_i(instruction_adr_i),
         .instruction_i(data_out_INSTR),
         .clk(clk),

@@ -1,7 +1,7 @@
 `timescale 1ms / 100us
 
 
-module tb_random_generator ();
+module t07_tb_random_generator ();
     //Timing 
     localparam CLK_PERIOD = 83.3; // 12 MHz clock (for FPGA)
     localparam PROPAGATION_DELAY = 5.5; // Allow for 5.5ns for FF propogation delay
@@ -14,7 +14,7 @@ module tb_random_generator ();
     logic [2:0]tb_rand_x;
     logic [2:0]tb_rand_y;
 
-random_gen DUT(
+t07_random_gen DUT(
     .clk(tb_clk),
     .nrst(tb_nrst),
     .random_seed(tb_random_seed),

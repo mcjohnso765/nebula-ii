@@ -1,5 +1,5 @@
 //generate immediate value from instruction code, send whereever needed (WB, PC, ALU)
-module imm_gen (
+module t04_imm_gen (
     input logic [31:0] instruction,
     output logic [31:0] imm,
 	output logic flag

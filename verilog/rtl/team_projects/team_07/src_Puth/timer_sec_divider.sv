@@ -1,4 +1,4 @@
-module timer_sec_divider (
+module t07_timer_sec_divider (
 input logic clk,
 input logic nrst,
 input logic clear, 

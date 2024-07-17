@@ -1,4 +1,4 @@
-module clk_div (
+module t06_clk_div (
 	clk,
 	nrst,
 	max_i,

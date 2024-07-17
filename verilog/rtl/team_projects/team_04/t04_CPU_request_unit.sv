@@ -1,4 +1,4 @@
-module CPU_request_unit (
+module t04_CPU_request_unit (
     input logic clk, nRST,
     
     // From Bus 

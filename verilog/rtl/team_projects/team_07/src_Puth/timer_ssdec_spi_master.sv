@@ -3,7 +3,7 @@
     Description:
         Set the SPI communication for the Sparkfun seven segment display
 */
-module timer_ssdec_spi_master (
+module t07_timer_ssdec_spi_master (
     input logic clk, nrst,          // System clk, reset 
     input logic [2:0] cnt_min,      // Counts input minutes
     input logic [2:0] cnt_sec_ten,  // Count input tens place seu
@@ -42,9 +42,9 @@ module timer_ssdec_spi_master (
     logic [7:0] rst_cmd, nxt_rst_cmd;
     logic [15:0] cln_cmd, nxt_cln_cmd;
 
-    timer_ssdec_decoder decoder_min({1'b0, cnt_min}, ssdec_cnt_min);
-    timer_ssdec_decoder decoder_sec_ten({1'b0, cnt_sec_ten}, ssdec_cnt_sec_ten);
-    timer_ssdec_decoder decoder_sec_one(cnt_sec_one, ssdec_cnt_sec_one);
+    t07_timer_ssdec_decoder decoder_min({1'b0, cnt_min}, ssdec_cnt_min);
+    t07_timer_ssdec_decoder decoder_sec_ten({1'b0, cnt_sec_ten}, ssdec_cnt_sec_ten);
+    t07_timer_ssdec_decoder decoder_sec_one(cnt_sec_one, ssdec_cnt_sec_one);
 
     always_ff @(posedge clk, negedge nrst) begin
         if (!nrst) begin

@@ -1,5 +1,5 @@
 `default_nettype none
-module command_lut2 (
+module t06_command_lut2 (
 	mode,
 	clk,
 	nrst,

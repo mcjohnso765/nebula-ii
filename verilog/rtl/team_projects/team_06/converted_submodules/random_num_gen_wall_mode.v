@@ -1,5 +1,5 @@
 `default_nettype none
-module random_num_gen_wall_mode (
+module t06_random_num_gen_wall_mode (
 	enable,
 	system_clk,
 	nreset,

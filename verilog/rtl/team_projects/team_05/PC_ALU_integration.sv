@@ -1,4 +1,4 @@
-module PC_ALU_integration(
+module t05_PC_ALU_integration(
     input logic clk, nRst, load, inc, Disable, ALU_source,
     input logic [6:0] opcode,
     input logic [2:0] funct3,
@@ -10,18 +10,18 @@ module PC_ALU_integration(
 
     
 
-    ALU ALU1(.ALU_source(ALU_source), .opcode(opcode), .funct3(funct3), .funct7(funct7), 
+    t05_ALU ALU1(.ALU_source(ALU_source), .opcode(opcode), .funct3(funct3), .funct7(funct7), 
     .reg1(reg1), .reg2(reg2), .immediate(imm_val), .read_address(read_ad), .write_address(write_ad),
     .result(result), .branch(branch));
 
-    pc pc1(.clk(clk), .clr(nRst), .load(load), .inc(inc), .Disable(Disable), .ALU_out(branch), .data(data), .imm_val(imm_val), .pc_val(pc_val));
+    t05_pc pc1(.clk(clk), .clr(nRst), .load(load), .inc(inc), .Disable(Disable), .ALU_out(branch), .data(data), .imm_val(imm_val), .pc_val(pc_val));
 
 endmodule
 
 
 
 
-module pc(
+module t05_pc(
     input logic clk, clr, load, inc, Disable, ALU_out,
     input logic [31:0] data, imm_val, 
     output logic [31:0] pc_val 
@@ -80,7 +80,7 @@ module pc(
     
  endmodule
 
- module ALU(
+ module t05_ALU(
     input logic ALU_source,
     input logic [6:0] opcode,
     input logic [2:0] funct3,

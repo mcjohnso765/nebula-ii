@@ -1,4 +1,4 @@
-module fsm_mode (
+module t09_fsm_mode (
 	signal,
 	clk,
 	nrst,

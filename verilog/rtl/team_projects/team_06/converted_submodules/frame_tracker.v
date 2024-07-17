@@ -1,5 +1,5 @@
 `default_nettype none
-module frame_tracker (
+module t06_frame_tracker (
 	body,
 	head,
 	apple,

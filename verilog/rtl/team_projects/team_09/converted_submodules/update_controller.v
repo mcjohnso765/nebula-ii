@@ -1,5 +1,5 @@
 `default_nettype none
-module update_controller (
+module t09_update_controller (
 	init_cycle,
 	en_update,
 	clk,

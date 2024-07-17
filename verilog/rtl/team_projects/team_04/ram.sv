@@ -1,4 +1,4 @@
-module ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
+module t04_ram (din, addr_r, addr_w, write_en, clk, dout); // 512x8
   parameter addr_width = 32;
   parameter data_width = 32;
   input [addr_width-1:0] addr_r, addr_w;

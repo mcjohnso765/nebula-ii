@@ -1,4 +1,4 @@
-module ram (
+module t04_ram (
     input logic clk, rst,
     input logic [31:0] data_address, // alu result to be read or written
     input logic [31:0] instruction_address, // no brainer, it is the insturction address

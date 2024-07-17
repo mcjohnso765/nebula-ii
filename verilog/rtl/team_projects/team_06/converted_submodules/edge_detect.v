@@ -1,5 +1,5 @@
 `default_nettype none
-module edge_detect (
+module t06_edge_detect (
 	signal,
 	clk,
 	nrst,

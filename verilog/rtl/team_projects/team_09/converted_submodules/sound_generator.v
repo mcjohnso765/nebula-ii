@@ -1,4 +1,4 @@
-module sound_generator (
+module t09_sound_generator (
 	clk,
 	rst,
 	goodColl_i,
@@ -20,7 +20,7 @@ module sound_generator (
 	wire [7:0] freq;
 	wire playSound;
 	wire at_max;
-	sound_posedge_detector posDetector1(
+	t09_sound_posedge_detector posDetector1(
 		.clk(clk),
 		.nRst(~rst),
 		.button_i(button_i),
@@ -29,14 +29,14 @@ module sound_generator (
 		.goodColl(goodColl),
 		.badColl(badColl)
 	);
-	oscillator osc1(
+	t09_oscillator osc1(
 		.at_max(at_max),
 		.clk(clk),
 		.nRst(~rst),
 		.goodColl(goodColl),
 		.badColl(badColl)
 	);
-	dac_counter dac1(
+	t09_dac_counter dac1(
 		.dacCount(soundOut),
 		.clk(clk),
 		.nRst(~rst),

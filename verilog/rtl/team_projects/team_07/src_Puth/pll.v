@@ -1,4 +1,4 @@
-module pll
+module t07_pll
 (
     input in_clk, // 12 MHz, 0 deg
     output lcd_clk, // 48 MHz, 0 deg

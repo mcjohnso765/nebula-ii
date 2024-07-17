@@ -21,7 +21,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module wire_wire_locator(
+module t07_wire_wire_locator(
     input logic nrst,
     input logic clk,
     input logic [2:0] playing_state_in,

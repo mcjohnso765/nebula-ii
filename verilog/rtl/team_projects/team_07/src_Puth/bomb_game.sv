@@ -4,7 +4,7 @@
         integrate the bomb_game all together
 */
 
-module bomb_game(
+module t07_bomb_game(
     input logic nrst,
     input logic clk,
     input logic [5:0] button,   // input: button
@@ -24,7 +24,7 @@ module bomb_game(
     logic error;
     assign submodule_clear_edge = maze_clear_edge | wire_clear | mem_clear | simon_clear;
     assign error = maze_error | wire_error | mem_error | simon_error;
-    audio_sm audio_0 (
+    t07_audio_sm audio_0 (
         .nrst(nrst), 
         .clk(clk), 
         .s_strobe(s_strobe),
@@ -43,7 +43,7 @@ module bomb_game(
     logic s_strobe_fast;
     logic s_strobe_faster;
     logic [23:0] cnt;
-    timer_sec_divider timer_sec_divider_0 (
+    t07_timer_sec_divider timer_sec_divider_0 (
         .clk(clk),
         .nrst(nrst),
         .clear(timer_clear),
@@ -55,7 +55,7 @@ module bomb_game(
     logic [2:0] cnt_min;
     logic [2:0] cnt_sec_ten;
     logic [3:0] cnt_sec_one;
-    timer_counter timer_counter_0(
+    t07_timer_counter timer_counter_0(
         .clk(clk),
         .nrst(nrst),
         .s_strobe(s_strobe),
@@ -71,7 +71,7 @@ module bomb_game(
     logic sck_clear;
     logic sck_rs_enable;
     logic sck_fl_enable;
-    timer_ssdec_sck_divider timer_ssdec_sck_divider_0 (
+    t07_timer_ssdec_sck_divider timer_ssdec_sck_divider_0 (
         .clk(clk),
         .nrst(nrst),
         .clear(sck_clear),
@@ -79,7 +79,7 @@ module bomb_game(
         .sck_fl_enable(sck_fl_enable)
     );
 
-    timer_ssdec_spi_master timer_ssdec_spi_master_0 (
+    t07_timer_ssdec_spi_master timer_ssdec_spi_master_0 (
         .clk(clk),
         .nrst(nrst),
         .cnt_min(cnt_min),
@@ -105,7 +105,7 @@ module bomb_game(
     assign down = button[3];
     assign left = button[4];
     assign back = button[5];
-    button_edge_detector DUT_button_edge_detector (
+    t07_button_edge_detector DUT_button_edge_detector (
         .clk(clk),
         .nrst(nrst),
         .up(up),
@@ -132,7 +132,7 @@ module bomb_game(
     logic [3:0] max_sec_one;
     logic activate_rand;
     logic timer_clear;
-    fsm_game_control DUT_fsm_game_control(
+    t07_fsm_game_control DUT_fsm_game_control(
         .nrst(nrst),
         .clk(clk),
         .strobe(strobe),
@@ -154,7 +154,7 @@ module bomb_game(
 
     logic mod_row;
     logic mod_col;
-    fsm_playing_mod_locator DUT_fsm_playing_mod_locator(
+    t07_fsm_playing_mod_locator DUT_fsm_playing_mod_locator(
         .nrst(nrst),
         .clk(clk),
         .strobe(strobe),
@@ -167,7 +167,7 @@ module bomb_game(
 
     logic [2:0] playing_state;
     logic [3:0] submodule_cleared;
-    fsm_playing DUT_fsm_playing (
+    t07_fsm_playing DUT_fsm_playing (
         .nrst(nrst),
         .clk(clk),
         .strobe(strobe),
@@ -188,7 +188,7 @@ module bomb_game(
     logic [2:0] dest_y;
     logic [2:0] map_select;
     logic maze_error;
-    maze DUT_maze(
+    t07_maze DUT_maze(
         .nrst(nrst),
         .clk(clk),
         .button(sync_button),
@@ -207,7 +207,7 @@ module bomb_game(
 
     logic maze_clear_edge;
     logic maze_clear;
-    rising_edge_detector maze_clear_edge_detector(
+    t07_rising_edge_detector maze_clear_edge_detector(
         .nrst(nrst),
         .clk(clk),
         .in(maze_clear),
@@ -222,7 +222,7 @@ module bomb_game(
     logic wireHighlightPixel;
     logic wire_error;
     logic wire_clear;
-    wire_game wire_game_0 (
+    t07_wire_game wire_game_0 (
         .nrst(nrst),
         .clk(clk),
         .button(sync_button),
@@ -244,7 +244,7 @@ module bomb_game(
     logic [9:0] display_num_bus;    // 5 stages, 2-bit value 1-4
     logic [39:0] label_num_bus;     // 5 stages, 4 positions, 2-bit value 1-4
     logic [2:0] stage;
-    mem_game mem_game_0 (
+    t07_mem_game mem_game_0 (
         .nrst(nrst),
         .clk(clk),
         .button(sync_button),
@@ -264,7 +264,7 @@ module bomb_game(
     logic simon_clear;
     logic [3:0] simon_light_up_state;
     logic [3:0] simon_light_up_manual;
-    simon_game simon_game_0(
+    t07_simon_game simon_game_0(
         .nrst(nrst),
         .clk(clk),
         .button(sync_button),
@@ -287,26 +287,26 @@ module bomb_game(
     logic defusedPixel, boomPixel, displayPixel, buttonPixel, stagePixel, buttonHighlightPixel;
     logic [3:0] labelPixel;
     logic [3:0] simonPixel;
-    generate_flag recFLAG(.clk(clk), .nrst(nrst), .flagPixel(flagPixel), .flag_x(dest_x), .flag_y(dest_y), .x(x), .y(y));
-    generate_player recPLAYER(.clk(clk), .nrst(nrst), .playerPixel(playerPixel), .pos_x(pos_x), .pos_y(pos_y),  .x(x), .y(y));
-    generate_circle recGen(.clk(clk), .nrst(nrst), .circlePixel(circlePixel), .map_select(map_select), .x(x), .y(y));
-    generate_border borderGen(.clk(clk), .nrst(nrst), .x(x), .y(y), .borderPixel(borderPixel));
-    generate_heart recHEART( .clk(clk), .nrst(nrst), .x(x), .y(y), .lives(lives), .heartPixel(heartPixel)); 
-    generate_play_button recPLAY(.clk(clk), .nrst(nrst), .x(x), .y(y), .playButtonPixel(playButtonPixel));
-    generate_mod_square recMOD(.clk(clk), .nrst(nrst), .x(x), .y(y), .mod_row(mod_row), .mod_col(mod_col),
+    t07_generate_flag recFLAG(.clk(clk), .nrst(nrst), .flagPixel(flagPixel), .flag_x(dest_x), .flag_y(dest_y), .x(x), .y(y));
+    t07_generate_player recPLAYER(.clk(clk), .nrst(nrst), .playerPixel(playerPixel), .pos_x(pos_x), .pos_y(pos_y),  .x(x), .y(y));
+    t07_generate_circle recGen(.clk(clk), .nrst(nrst), .circlePixel(circlePixel), .map_select(map_select), .x(x), .y(y));
+    t07_generate_border borderGen(.clk(clk), .nrst(nrst), .x(x), .y(y), .borderPixel(borderPixel));
+    t07_generate_heart recHEART( .clk(clk), .nrst(nrst), .x(x), .y(y), .lives(lives), .heartPixel(heartPixel)); 
+    t07_generate_play_button recPLAY(.clk(clk), .nrst(nrst), .x(x), .y(y), .playButtonPixel(playButtonPixel));
+    t07_generate_mod_square recMOD(.clk(clk), .nrst(nrst), .x(x), .y(y), .mod_row(mod_row), .mod_col(mod_col),
         .modSquaresPixel(modSquaresPixel), .modHighlightPixel(modHighlightPixel));
-    generate_defused defusedGen(.clk(clk), .nrst(nrst), .x(x), .y(y), .defusedPixel(defusedPixel));
-    generate_boom boomGen(.clk(clk), .nrst(nrst), .x(x), .y(y), .boomPixel(boomPixel));
-    generate_wire wireGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .wire_num(wire_num), .wire_status(wire_status), .wire_pos(wire_pos),
+    t07_generate_defused defusedGen(.clk(clk), .nrst(nrst), .x(x), .y(y), .defusedPixel(defusedPixel));
+    t07_generate_boom boomGen(.clk(clk), .nrst(nrst), .x(x), .y(y), .boomPixel(boomPixel));
+    t07_generate_wire wireGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .wire_num(wire_num), .wire_status(wire_status), .wire_pos(wire_pos),
        .wirePixel(wirePixel), .wireHighlightPixel(wireHighlightPixel));
-    generate_mem memGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .display_num_bus(display_num_bus), .label_num_bus(label_num_bus), .stage(stage), .mem_pos(mem_pos),
+    t07_generate_mem memGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .display_num_bus(display_num_bus), .label_num_bus(label_num_bus), .stage(stage), .mem_pos(mem_pos),
         .displayPixel(displayPixel), .buttonPixel(buttonPixel), .labelPixel(labelPixel), .stagePixel(stagePixel), .buttonHighlightPixel(buttonHighlightPixel));
-    generate_simon simonGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .simonPixel(simonPixel));
+    t07_generate_simon simonGen(.nrst(nrst), .clk(clk), .x(x), .y(y), .simonPixel(simonPixel));
 
     logic tft_sdo;
     assign tft_sdo = 1'd0;
     logic tftstate;
-    imageGenerator lcdOutput(
+    t07_imageGenerator lcdOutput(
         .clk(clk), 
         .nrst(nrst), 
         .tft_sdo(tft_sdo), 

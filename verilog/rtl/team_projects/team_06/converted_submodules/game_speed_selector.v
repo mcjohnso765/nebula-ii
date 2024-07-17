@@ -1,5 +1,5 @@
 `default_nettype none
-module game_speed_selector (
+module t06_game_speed_selector (
 	button,
 	nrst,
 	system_clk,

@@ -1,4 +1,4 @@
-module fsm_control (
+module t09_fsm_control (
 	GameOver,
 	cmd_done,
 	diff,
@@ -25,13 +25,13 @@ module fsm_control (
 	reg [1:0] next;
 	wire sync;
 	wire detect;
-	synchronizer button5(
+	t09_synchronizer button5(
 		.button(mode_pb),
 		.clk(clk),
 		.nrst(nrst),
 		.signal(sync)
 	);
-	edge_detect detect4(
+	t09_edge_detect detect4(
 		.signal(sync),
 		.clk(clk),
 		.nrst(nrst),

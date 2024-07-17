@@ -1,4 +1,4 @@
-module obstacleMode (
+module t09_obstacleMode (
 	sync_reset,
 	obstacle_pb,
 	clk,
@@ -14,7 +14,7 @@ module obstacleMode (
 	wire osbtacle_pb_i;
 	wire obstacle_pb_o;
 	reg nextObstacleFlag;
-	obstacle_sync_edge sOBSMODE(
+	t09_obstacle_sync_edge sOBSMODE(
 		.clk(clk),
 		.nRst_i(nrst),
 		.button_i(obstacle_pb),

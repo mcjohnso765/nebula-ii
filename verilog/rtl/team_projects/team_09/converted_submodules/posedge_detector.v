@@ -1,5 +1,5 @@
 `default_nettype none
-module posedge_detector (
+module t09_posedge_detector (
 	clk,
 	nRst,
 	goodColl_i,

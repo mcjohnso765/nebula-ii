@@ -1,4 +1,4 @@
-module edgeDetect (
+module t06_edgeDetect (
 	D,
 	clk,
 	nrst,

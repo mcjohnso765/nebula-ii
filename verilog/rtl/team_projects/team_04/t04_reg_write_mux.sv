@@ -1,7 +1,7 @@
 `default_nettype none
 
 //this module will be integrated in the top or regfile module
-module reg_write_mux (
+module t04_reg_write_mux (
 input logic [31:0] immData, //from imm_gen
                 ALUData, //from ALU
                 MemData, //from Memory Handler

@@ -1,4 +1,4 @@
-module generate_rectangle(
+module t07_generate_rectangle(
     input logic clk,
     input logic nrst,
     input logic [8:0] x,

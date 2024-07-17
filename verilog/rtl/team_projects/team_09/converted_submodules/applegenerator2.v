@@ -1,4 +1,4 @@
-module applegenerator2 (
+module t09_applegenerator2 (
 	x,
 	y,
 	randX,

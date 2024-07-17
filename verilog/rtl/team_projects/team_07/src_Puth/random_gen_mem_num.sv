@@ -3,7 +3,7 @@
     Description:
         Generate a random number (1-4), for display and button order 1-4, for stage 1-5
 */
-module random_gen_mem_num
+module t07_random_gen_mem_num
 (
     input logic nrst,
     input logic clk,

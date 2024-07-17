@@ -13,7 +13,7 @@ typedef enum logic [1:0] {
   ACTIVE = 2'b10
 } VGA_state_t;
 
-module request_handler (
+module t04_request_handler (
   input logic nRst, clk,
 
   //signals for determining data flow control

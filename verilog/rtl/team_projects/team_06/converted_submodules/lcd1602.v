@@ -1,5 +1,5 @@
 `default_nettype none
-module lcd1602 (
+module t06_lcd1602 (
 	clk,
 	rst,
 	row_1,

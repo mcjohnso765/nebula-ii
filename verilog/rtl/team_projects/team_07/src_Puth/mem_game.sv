@@ -3,7 +3,7 @@
     Description:    
         implement the memory game
 */
-module mem_game (
+module t07_mem_game (
     input logic nrst,
     input logic clk,
     input logic strobe,
@@ -25,7 +25,7 @@ module mem_game (
     // assign label_num[3] = {2'd3, 2'd0, 2'd1, 2'd2}; 
     // assign label_num[4] = {2'd0, 2'd1, 2'd2, 2'd3};
    
-    mem_num_gen mem_num_gen_0 (
+    t07_mem_num_gen mem_num_gen_0 (
         .nrst(nrst),
         .clk(clk),
         .activate_rand(activate_rand),
@@ -33,7 +33,7 @@ module mem_game (
         .label_num_bus(label_num_bus)
     );
 
-    mem_select_detector wire_cut_detector_0 (
+    t07_mem_select_detector wire_cut_detector_0 (
         .nrst(nrst),
         .clk(clk),
         .activate_rand(activate_rand),          
@@ -49,7 +49,7 @@ module mem_game (
         .mem_error(mem_error)             
     );  
 
-    mem_select_locator wire_locator_0 (
+    t07_mem_select_locator wire_locator_0 (
         .nrst(nrst),
         .clk(clk),
         .playing_state_in(playing_state_in),

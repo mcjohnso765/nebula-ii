@@ -3,7 +3,7 @@
     Description:    
         implement the wire game
 */
-module wire_game (
+module t07_wire_game (
     input logic nrst,
     input logic clk,
     input logic strobe,
@@ -22,7 +22,7 @@ module wire_game (
     // assign wire_color = {3'd5, 3'd5, 3'd5, 3'd2, 3'd1, 3'd0};   // wire 6 first, then 5, 4, 3, 2, 1
 
     // color code: 0 - red, 1 - white, 2 - yellow, 3 - blue, 4 - gray, 5 - no wire
-    wire_wire_gen wire_wire_gen_0 (
+    t07_wire_wire_gen wire_wire_gen_0 (
         .nrst(nrst),
         .clk(clk),
         .activate_rand(activate_rand),
@@ -30,7 +30,7 @@ module wire_game (
         .wire_color_bus(wire_color_bus)
     );
 
-    wire_cut_detector wire_cut_detector_0 (
+    t07_wire_cut_detector wire_cut_detector_0 (
         .nrst(nrst),
         .clk(clk),
         .activate_rand(activate_rand),          
@@ -44,7 +44,7 @@ module wire_game (
         .wire_clear(wire_clear),            
         .wire_error(wire_error)             
     );  
-    wire_wire_locator wire_locator_0 (
+    t07_wire_wire_locator wire_locator_0 (
         .nrst(nrst),
         .clk(clk),
         .playing_state_in(playing_state_in),

@@ -1,5 +1,5 @@
 `default_nettype none
-module image_generator (
+module t06_image_generator (
 	snakeBody,
 	snakeHead,
 	apple,
@@ -35,7 +35,7 @@ module image_generator (
 	wire en_update;
 	wire diff;
 	wire [2:0] obj_code;
-	fsm_control control(
+	t06_fsm_control control(
 		.GameOver(GameOver),
 		.cmd_done(cmd_done),
 		.diff(diff),
@@ -47,7 +47,7 @@ module image_generator (
 		.en_update(en_update),
 		.sync_reset(sync)
 	);
-	frame_tracker tracker(
+	t06_frame_tracker tracker(
 		.body(snakeBody),
 		.head(snakeHead),
 		.apple(apple),
@@ -61,7 +61,7 @@ module image_generator (
 		.y(y),
 		.diff(diff)
 	);
-	pixel_updater updater(
+	t06_pixel_updater updater(
 		.init_cycle(init_cycle),
 		.en_update(en_update),
 		.clk(clk),

@@ -1,5 +1,5 @@
 `default_nettype none
-module update_body (
+module t09_update_body (
 	clk,
 	nrst,
 	pulse,

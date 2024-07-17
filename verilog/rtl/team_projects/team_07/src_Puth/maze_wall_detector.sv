@@ -20,7 +20,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module maze_wall_detector(
+module t07_maze_wall_detector(
     input logic nrst,                   // negedge reset
     input logic clk,                    // clock
     input logic [2:0] playing_state_in, // game_state_in input

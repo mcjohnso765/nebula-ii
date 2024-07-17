@@ -1,5 +1,5 @@
 //output proper control signals according to given opcode
-module control_unit (
+module t04_control_unit (
     input logic [6:0] opcode, //7 bit code dictating what signals to output
     output logic [1:0] RegWriteSource,  
     // 00: The value to be written to a register comes from the ALU, 01: The value to be written to a register comes from Memory, 

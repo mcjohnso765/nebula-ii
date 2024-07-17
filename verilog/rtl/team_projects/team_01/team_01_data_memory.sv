@@ -1,6 +1,6 @@
 typedef enum logic [1:0] {BYTE, HALFWORD, WORD} data_width;
 
-module data_memory (
+module t01_data_memory (
     input logic         clk, nRST,
     input logic [31:0]  address, writedata, data_i,
     input logic         MemRead, MemWrite, dhit, ihit,

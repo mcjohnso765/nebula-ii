@@ -1,5 +1,5 @@
 `default_nettype none
-module toggle_screen (
+module t09_toggle_screen (
 	clk,
 	rst,
 	bcd_ones,

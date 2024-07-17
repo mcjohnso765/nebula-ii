@@ -2,7 +2,7 @@
 //INCLUDES REQUEST HANDLER
 
 
-module tippy_top (
+module t04_tippy_top (
     input logic clk, nRst, button,
 
     input logic mem_busy, 
@@ -43,7 +43,7 @@ module tippy_top (
     logic VGA_enable;
     
 
-    CPU cpu(
+    t04_CPU cpu(
         .instruction(CPU_instructions),
 
         .clk(clk),
@@ -68,7 +68,7 @@ module tippy_top (
     );
 
     
-    VGA_data_controller VGA_data_control(
+    t04_VGA_data_controller VGA_data_control(
         .clk(clk),
         .nrst(nRst),
         .VGA_request_address(VGA_request_address),
@@ -85,7 +85,7 @@ module tippy_top (
 
 
     
-    VGA_out vga(
+    t04_VGA_out vga(
         .SRAM_data_in(data_to_VGA),
         //.SRAM_data_in({4{uart_out}}), 
         //.SRAM_data_in({32{1'b1}}), 
@@ -112,7 +112,7 @@ module tippy_top (
     logic [7:0] uart_out;
     logic uart_data_ready; // flags that the UART data is ready to be received
 
-    UART_Receiver uart(
+    t04_UART_Receiver uart(
         .nRst(nRst), .clk(clk), .enable(1), .Rx(Rx),
 
         .data_out(uart_out),
@@ -128,7 +128,7 @@ module tippy_top (
         .parity_error() // ignore
     );
 
-    request_handler reqhand
+    t04_request_handler reqhand
     (
         .clk(clk),
         .nRst(nRst),
@@ -195,7 +195,7 @@ typedef enum logic [3:0] {
     BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR = 4'bxxxx
     } operation_t;
 
-module CPU (
+module t04_CPU (
     input logic [31:0] instruction, //instruction to CPU
     input logic clk, nrst, //timing & reset signals
     input logic [31:0] data_from_mem,
@@ -251,7 +251,7 @@ module CPU (
     //instantiation of modules
 
     //decode data and addresses withing instruction
-    decode decoder (
+    t04_decode decoder (
         .instruction(instruction), //32-bit instruction
         .rs1(rs1), //address of source register 1
         .rs2(rs2), //address of source register 2
@@ -262,14 +262,14 @@ module CPU (
     );
 
     //genrate immediate value based on instruction format and values
-    imm_gen make_imm (
+    t04_imm_gen make_imm (
         .instruction(instruction), //32-bit instruction
         .imm(imm), //32-bit genrated immediate value (signed)
         .flag() //error flag (ignore, used for tb)
         );
 
     //generate control signals based on Opcode
-    control_unit cntrl (
+    t04_control_unit cntrl (
         .opcode(opcode), //7-bit Opcode (decoded from intrsuction)
         .RegWriteSource(RegWriteSrc), //2-bit control signal specifiying what is writing to the regs
         .ALUSrc(ALUSrc), //control signal indicating use of immediate
@@ -284,7 +284,7 @@ module CPU (
     );
 
     //decide whether a register value or immediate is used as the second operand in an operation
-    aluop_mux ALUOpB(
+    t04_aluop_mux ALUOpB(
         .regB(regB), //value from register
         .imm(imm), //immediate value
         .alu_src(ALUSrc), //control signal
@@ -292,7 +292,7 @@ module CPU (
     ); 
 
     //perform arithmetic and logical operation
-    alu ALU (
+    t04_alu ALU (
         .opcode(opcode), //control signals
         .alu_op(func3), 
         .func7(func7), 
@@ -308,7 +308,7 @@ module CPU (
     assign alu_result = alu_result_wire;
 
     //determine register write source
-    reg_write_mux reg_write_control (
+    t04_reg_write_mux reg_write_control (
         .immData(imm), //immediate value
         .ALUData(alu_result_wire), //ALU result value
         .MemData(MemData), //memory value
@@ -318,7 +318,7 @@ module CPU (
         );
 
     //read to and write from registers
-    register_file regs (
+    t04_register_file regs (
         .read_addr_1(rs1), //read addresses
         .read_addr_2(rs2), 
         .write_addr(rd), //write address
@@ -332,7 +332,7 @@ module CPU (
         .enable(enable)
         );
 
-    memory_handler mem (
+    t04_memory_handler mem (
         .addr(alu_result_wire), //alu result, used as address
         .read_data_2(regB), 
         .data_from_mem(data_from_mem), //requested data from memory
@@ -348,7 +348,7 @@ module CPU (
         );
 
 
-    program_counter PC (
+    t04_program_counter PC (
         .nRst(nrst),
         .enable(enable), //global enable from busy signal of wishbone fixme
         .clk(clk),
@@ -367,7 +367,7 @@ endmodule
 
 
 //decode instruction into register addresses and Opcode
-module decode (
+module t04_decode (
     input logic [31:0] instruction, //32 bit instruction signal, from Program Memory
     output logic [4:0] rs1, rs2, rd, //5 bit register addresses, to registers 
     output logic [6:0] opcode, //7 bit Opcode, to Control Unit
@@ -385,7 +385,7 @@ module decode (
 endmodule
 
 //generate immediate value from instruction code, send whereever needed (WB, PC, ALU)
-module imm_gen (
+module t04_imm_gen (
     input logic [31:0] instruction,
     output logic [31:0] imm,
 	output logic flag
@@ -441,7 +441,7 @@ module imm_gen (
 endmodule
 
 //output proper control signals according to given opcode
-module control_unit (
+module t04_control_unit (
     input logic [6:0] opcode, //7 bit code dictating what signals to output
     output logic [1:0] RegWriteSource,  
     // 00: The value to be written to a register comes from the ALU, 01: The value to be written to a register comes from Memory, 
@@ -591,7 +591,7 @@ module control_unit (
     `default_nettype none
 
     //this module will be integrated in the top or regfile module
-    module aluop_mux (
+    module t04_aluop_mux (
     input logic [31:0] regB, //from regfile
     input logic [31:0] imm, //from immgen
     input logic alu_src, //from control unit
@@ -618,7 +618,7 @@ endmodule
 //     BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR=4'b
 //     } operation_t;
 
-module alu (
+module t04_alu (
 input logic [6:0] opcode,
 input logic [2:0] alu_op,
 input logic [6:0] func7,
@@ -639,7 +639,7 @@ output logic condJumpValue  //send out condJumpValue instead of less_flag and eq
 
     logic ctrl_err;
     //INSTANTING alu_control_unit here
-        alu_control_unit ex1 (.opcode(opcode), 
+        t04_alu_control_unit ex1 (.opcode(opcode), 
                             .alu_op(alu_op), 
                             .func7(func7), 
                             .ctrl_err(ctrl_err),
@@ -772,7 +772,7 @@ endmodule
     // BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15, ERR = 4'bxxxx
     // } operation_t;
 
-module alu_control_unit(
+module t04_alu_control_unit(
 input logic [6:0] opcode,
 input logic [2:0] alu_op,
 input logic [6:0] func7,
@@ -955,7 +955,7 @@ endmodule
 `default_nettype none
 
 //this module will be integrated in the top or regfile module
-module reg_write_mux (
+module t04_reg_write_mux (
     input logic [31:0] immData, //from imm_gen
                     ALUData, //from ALU
                     MemData, //from Memory Handler
@@ -989,7 +989,7 @@ module reg_write_mux (
 
 endmodule
 
-module register_file(
+module t04_register_file(
     input logic [4:0] read_addr_1, read_addr_2, write_addr,
     input logic clk, nrst, reg_enable_write,
     input logic [31:0] write_data,
@@ -1022,7 +1022,7 @@ module register_file(
 endmodule
 
 
-module memory_handler(
+module t04_memory_handler(
   input logic [31:0] addr, read_data_2, data_from_mem,
   input logic en_read, en_write,
   input logic [2:0] size,
@@ -1096,7 +1096,7 @@ module memory_handler(
 
 endmodule
 
-module program_counter (
+module t04_program_counter (
   input logic nRst, enable, clk,
   input logic [31:0] immJumpValue, regJumpValue,
   input logic doForceJump, doCondJump, condJumpValue, doRegJump, AUIlink,
@@ -1171,7 +1171,7 @@ module program_counter (
 endmodule
 
 
-module VGA_out(
+module t04_VGA_out(
     input logic [31:0] SRAM_data_in, // These are 32 bits that the VGA receives from memory that gets sent as pixel_data
     input logic SRAM_busy,          // SRAM busy flag, acts as an enable to send pixel_data
     input logic clk, nrst,
@@ -1425,7 +1425,7 @@ module VGA_out(
 
 endmodule
 
-module VGA_data_controller (
+module t04_VGA_data_controller (
     input logic clk, nrst,
     input logic [31:0] VGA_request_address, data_from_SRAM,
     input logic [9:0] h_count,
@@ -1535,7 +1535,7 @@ typedef enum logic {
 } BAUD_counter_state_t;
 
 
-module UART_Receiver #(
+module t04_UART_Receiver #(
   parameter BAUD_RATE = 9600,
   parameter CLOCK_FREQ = 10000000,
   parameter CYCLES_PER_BIT = CLOCK_FREQ / BAUD_RATE //number of clock cycles per UART bit
@@ -1694,7 +1694,7 @@ typedef enum logic [1:0] {
     CPU_DATA = 2'd3
 } client_t;
 
-module request_handler (
+module t04_request_handler (
     input logic clk,
     input logic nRst,
 

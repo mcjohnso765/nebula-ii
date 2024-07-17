@@ -1,5 +1,5 @@
 
-module generate_heart (
+module t07_generate_heart (
  // This module intakes coordinates of the blocks containing the heart and outputs the pixel the heart is on
  input  logic       clk, nrst,
  input  logic [8:0] x, // not needded since SCo1 and SPo1 is hardcoded

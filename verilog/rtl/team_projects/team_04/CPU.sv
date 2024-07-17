@@ -3,7 +3,7 @@ typedef enum logic [3:0] {
     BEQ=10, BNE=11, BLT=12, BGE=13, BLTU=14, BGEU=15
     } operation_t;
 
-module CPU (
+module t04_CPU (
     input logic [31:0] instruction, //instruction to CPU
     input logic clk, nrst, //timing & reset signals
     output logic [31:0] alu_result,  //numerical/logical output of ALU
@@ -49,7 +49,7 @@ logic [31:0] MemData;
 //instantiation of modules
 
 //decode data and addresses withing instruction
-decode decoder (
+t04_decode decoder (
     .instruction(instruction), //32-bit instruction
     .rs1(rs1), //address of source register 1
     .rs2(rs2), //address of source register 2
@@ -60,14 +60,14 @@ decode decoder (
 );
 
 //genrate immediate value based on instruction format and values
-imm_gen make_imm (
+t04_imm_gen make_imm (
     .instruction(instruction), //32-bit instruction
     .imm(imm), //32-bit genrated immediate value (signed)
     .flag() //error flag (ignore, used for tb)
     );
 
 //generate control signals based on Opcode
-control_unit cntrl (
+t04_control_unit cntrl (
     .opcode(opcode), //7-bit Opcode (decoded from intrsuction)
     .RegWriteSource(RegWriteSrc), //2-bit control signal specifiying what is writing to the regs
     .ALUSrc(ALUSrc), //control signal indicating use of immediate
@@ -80,7 +80,7 @@ control_unit cntrl (
 );
 
 //decide whether a register value or immediate is used as the second operand in an operation
-aluop_mux ALUOpB(
+t04_aluop_mux ALUOpB(
     .regB(regB), //value from register
     .imm(imm), //immediate value
     .alu_src(ALUSrc), //control signal
@@ -88,7 +88,7 @@ aluop_mux ALUOpB(
 ); 
 
 //perform arithmetic and logical operation
-alu ALU (
+t04_alu ALU (
     .opcode(opcode), //control signals
     .alu_op(func3), 
     .func7(func7), 
@@ -104,7 +104,7 @@ alu ALU (
 assign alu_result = alu_result_wire;
 
 //determine register write source
-reg_write_mux reg_write_control (
+t04_reg_write_mux reg_write_control (
     .immData(imm), //immediate value
     .ALUData(alu_result_wire), //ALU result value
     .MemData(MemData), //memory value
@@ -114,7 +114,7 @@ reg_write_mux reg_write_control (
     );
 
 //read to and write from registers
-register_file regs (
+t04_register_file regs (
     .read_addr_1(rs1), //read addresses
     .read_addr_2(rs2), 
     .write_addr(rd), //write address
@@ -127,7 +127,7 @@ register_file regs (
     .reg_file(reg_window) //testbenching array
     );
 
-memory_handler mem (
+t04_memory_handler mem (
     .addr(alu_result_wire), //alu result, used as address
     .read_data_2(regB), 
     .data_from_mem(data_from_mem), 

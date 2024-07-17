@@ -15,7 +15,7 @@ module top(
 );
 
 
-very_top topbottom(
+t04_very_top topbottom(
     .clk(hz100), .nRst(~reset), .button(pb[0]),
 
     .Rx(pb[1]),
