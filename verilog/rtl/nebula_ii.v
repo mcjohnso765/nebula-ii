@@ -62,15 +62,30 @@ module nebula_ii (
     wire [31:0] wbs_dat_i_m;
     wire [3:0]  wbs_sel_i_m;
 
-    wire        wbs_ack_i_samp, wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
-    wire [31:0] wbs_dat_i_samp, wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
 
-    wire        wbs_cyc_o_samp, wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_sram;
-    wire        wbs_stb_o_samp, wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_sram;
-    wire        wbs_we_o_samp, wbs_we_o_gpio, wbs_we_o_la, wbs_we_o_sram;
-    wire [31:0] wbs_adr_o_samp, wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
-    wire [31:0] wbs_dat_o_samp, wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
-    wire [3:0]  wbs_sel_o_samp, wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
+    wire [NUM_TEAMS:0]  wbs_ack_i_projects;
+    wire                wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
+    
+    wire [31:0]         wbs_dat_i_projects [NUM_TEAMS:0];
+    wire [31:0]         wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
+
+    wire [NUM_TEAMS:0]  wbs_cyc_o_projects;
+    wire                wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_sram;
+
+    wire [NUM_TEAMS:0]  wbs_stb_o_projects;
+    wire                wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_sram;
+    
+    wire [NUM_TEAMS:0]  wbs_we_o_projects;
+    wire                wbs_we_o_gpio, wbs_we_o_la, wbs_we_o_sram;
+    
+    reg [31:0]         wbs_adr_o_projects [NUM_TEAMS:0];
+    wire [31:0]         wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
+    
+    reg [31:0]         wbs_dat_o_projects [NUM_TEAMS:0];
+    wire [31:0]         wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
+    
+    reg [3:0]          wbs_sel_o_projects [NUM_TEAMS:0];
+    wire [3:0]          wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
 
     // Sample Project Instance
     sample_team_proj_Wrapper sample_team_proj_Wrapper (
@@ -81,14 +96,14 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_o_samp),
-        .wbs_cyc_i(wbs_cyc_o_samp),
-        .wbs_we_i(wbs_we_o_samp),
-        .wbs_sel_i(wbs_sel_o_samp),
-        .wbs_dat_i(wbs_dat_o_samp),
-        .wbs_adr_i(wbs_adr_o_samp),
-        .wbs_ack_o(wbs_ack_i_samp),
-        .wbs_dat_o(wbs_dat_i_samp),
+        .wbs_stb_i(wbs_stb_o_projects[0]),
+        .wbs_cyc_i(wbs_cyc_o_projects[0]),
+        .wbs_we_i(wbs_we_o_projects[0]),
+        .wbs_sel_i(wbs_sel_o_projects[0]),
+        .wbs_dat_i(wbs_dat_o_projects[0]),
+        .wbs_adr_i(wbs_adr_o_projects[0]),
+        .wbs_ack_o(wbs_ack_i_projects[0]),
+        .wbs_dat_o(wbs_dat_i_projects[0]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -110,14 +125,14 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_o_samp),
-        .wbs_cyc_i(wbs_cyc_o_samp),
-        .wbs_we_i(wbs_we_o_samp),
-        .wbs_sel_i(wbs_sel_o_samp),
-        .wbs_dat_i(wbs_dat_o_samp),
-        .wbs_adr_i(wbs_adr_o_samp),
-        .wbs_ack_o(wbs_ack_i_samp),
-        .wbs_dat_o(wbs_dat_i_samp),
+        .wbs_stb_i(wbs_stb_o_projects[1]),
+        .wbs_cyc_i(wbs_cyc_o_projects[1]),
+        .wbs_we_i(wbs_we_o_projects[1]),
+        .wbs_sel_i(wbs_sel_o_projects[1]),
+        .wbs_dat_i(wbs_dat_o_projects[1]),
+        .wbs_adr_i(wbs_adr_o_projects[1]),
+        .wbs_ack_o(wbs_ack_i_projects[1]),
+        .wbs_dat_o(wbs_dat_i_projects[1]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -139,14 +154,14 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_o_samp),
-        .wbs_cyc_i(wbs_cyc_o_samp),
-        .wbs_we_i(wbs_we_o_samp),
-        .wbs_sel_i(wbs_sel_o_samp),
-        .wbs_dat_i(wbs_dat_o_samp),
-        .wbs_adr_i(wbs_adr_o_samp),
-        .wbs_ack_o(wbs_ack_i_samp),
-        .wbs_dat_o(wbs_dat_i_samp),
+        .wbs_stb_i(wbs_stb_o_projects[4]),
+        .wbs_cyc_i(wbs_cyc_o_projects[4]),
+        .wbs_we_i(wbs_we_o_projects[4]),
+        .wbs_sel_i(wbs_sel_o_projects[4]),
+        .wbs_dat_i(wbs_dat_o_projects[4]),
+        .wbs_adr_i(wbs_adr_o_projects[4]),
+        .wbs_ack_o(wbs_ack_i_projects[4]),
+        .wbs_dat_o(wbs_dat_i_projects[4]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -168,14 +183,14 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_o_samp),
-        .wbs_cyc_i(wbs_cyc_o_samp),
-        .wbs_we_i(wbs_we_o_samp),
-        .wbs_sel_i(wbs_sel_o_samp),
-        .wbs_dat_i(wbs_dat_o_samp),
-        .wbs_adr_i(wbs_adr_o_samp),
-        .wbs_ack_o(wbs_ack_i_samp),
-        .wbs_dat_o(wbs_dat_i_samp),
+        .wbs_stb_i(wbs_stb_o_projects[5]),
+        .wbs_cyc_i(wbs_cyc_o_projects[5]),
+        .wbs_we_i(wbs_we_o_projects[5]),
+        .wbs_sel_i(wbs_sel_o_projects[5]),
+        .wbs_dat_i(wbs_dat_o_projects[5]),
+        .wbs_adr_i(wbs_adr_o_projects[5]),
+        .wbs_ack_o(wbs_ack_i_projects[5]),
+        .wbs_dat_o(wbs_dat_i_projects[5]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -197,14 +212,14 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_o_samp),
-        .wbs_cyc_i(wbs_cyc_o_samp),
-        .wbs_we_i(wbs_we_o_samp),
-        .wbs_sel_i(wbs_sel_o_samp),
-        .wbs_dat_i(wbs_dat_o_samp),
-        .wbs_adr_i(wbs_adr_o_samp),
-        .wbs_ack_o(wbs_ack_i_samp),
-        .wbs_dat_o(wbs_dat_i_samp),
+        .wbs_stb_i(wbs_stb_o_projects[6]),
+        .wbs_cyc_i(wbs_cyc_o_projects[6]),
+        .wbs_we_i(wbs_we_o_projects[6]),
+        .wbs_sel_i(wbs_sel_o_projects[6]),
+        .wbs_dat_i(wbs_dat_o_projects[6]),
+        .wbs_adr_i(wbs_adr_o_projects[6]),
+        .wbs_ack_o(wbs_ack_i_projects[6]),
+        .wbs_dat_o(wbs_dat_i_projects[6]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -226,14 +241,14 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_o_samp),
-        .wbs_cyc_i(wbs_cyc_o_samp),
-        .wbs_we_i(wbs_we_o_samp),
-        .wbs_sel_i(wbs_sel_o_samp),
-        .wbs_dat_i(wbs_dat_o_samp),
-        .wbs_adr_i(wbs_adr_o_samp),
-        .wbs_ack_o(wbs_ack_i_samp),
-        .wbs_dat_o(wbs_dat_i_samp),
+        .wbs_stb_i(wbs_stb_o_projects[7]),
+        .wbs_cyc_i(wbs_cyc_o_projects[7]),
+        .wbs_we_i(wbs_we_o_projects[7]),
+        .wbs_sel_i(wbs_sel_o_projects[7]),
+        .wbs_dat_i(wbs_dat_o_projects[7]),
+        .wbs_adr_i(wbs_adr_o_projects[7]),
+        .wbs_ack_o(wbs_ack_i_projects[7]),
+        .wbs_dat_o(wbs_dat_i_projects[7]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -255,14 +270,14 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_o_samp),
-        .wbs_cyc_i(wbs_cyc_o_samp),
-        .wbs_we_i(wbs_we_o_samp),
-        .wbs_sel_i(wbs_sel_o_samp),
-        .wbs_dat_i(wbs_dat_o_samp),
-        .wbs_adr_i(wbs_adr_o_samp),
-        .wbs_ack_o(wbs_ack_i_samp),
-        .wbs_dat_o(wbs_dat_i_samp),
+        .wbs_stb_i(wbs_stb_o_projects[9]),
+        .wbs_cyc_i(wbs_cyc_o_projects[9]),
+        .wbs_we_i(wbs_we_o_projects[9]),
+        .wbs_sel_i(wbs_sel_o_projects[9]),
+        .wbs_dat_i(wbs_dat_o_projects[9]),
+        .wbs_adr_i(wbs_adr_o_projects[9]),
+        .wbs_ack_o(wbs_ack_i_projects[9]),
+        .wbs_dat_o(wbs_dat_i_projects[9]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -284,14 +299,14 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_o_samp),
-        .wbs_cyc_i(wbs_cyc_o_samp),
-        .wbs_we_i(wbs_we_o_samp),
-        .wbs_sel_i(wbs_sel_o_samp),
-        .wbs_dat_i(wbs_dat_o_samp),
-        .wbs_adr_i(wbs_adr_o_samp),
-        .wbs_ack_o(wbs_ack_i_samp),
-        .wbs_dat_o(wbs_dat_i_samp),
+        .wbs_stb_i(wbs_stb_o_projects[10]),
+        .wbs_cyc_i(wbs_cyc_o_projects[10]),
+        .wbs_we_i(wbs_we_o_projects[10]),
+        .wbs_sel_i(wbs_sel_o_projects[10]),
+        .wbs_dat_i(wbs_dat_o_projects[10]),
+        .wbs_adr_i(wbs_adr_o_projects[10]),
+        .wbs_ack_o(wbs_ack_i_projects[10]),
+        .wbs_dat_o(wbs_dat_i_projects[10]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -381,6 +396,25 @@ module nebula_ii (
         .la_data_out(la_data_out)
     );
 
+    // Flattened wbs_dat_i_projects
+    reg [32*(NUM_TEAMS+1)-1:0] wbs_dat_i_projects_flat;
+
+    wire [32*(NUM_TEAMS+1)-1:0] wbs_adr_o_projects_flat;
+    wire [32*(NUM_TEAMS+1)-1:0] wbs_dat_o_projects_flat;
+    wire [4*(NUM_TEAMS+1)-1:0] wbs_sel_o_projects_flat;
+
+    // Flattening of wbs_dat_i_projects
+    integer i3;
+    always @* begin
+        for (i3 = 0; i3 <= NUM_TEAMS; i3 = i3 + 1) begin
+            wbs_dat_i_projects_flat[i3*32 +: 32] = wbs_dat_i_projects[i3];//[38i:38(i+1)-1]
+
+            wbs_adr_o_projects[i3] = wbs_adr_o_projects_flat[i3*32 +: 32];//[38i:38(i+1)-1]
+            wbs_dat_o_projects[i3] = wbs_dat_o_projects_flat[i3*32 +: 32];//[38i:38(i+1)-1]
+            wbs_sel_o_projects[i3] = wbs_sel_o_projects_flat[i3*4 +: 4];//[38i:38(i+1)-1]
+        end
+    end
+
     // Wishbone Arbitrator
     // everywhere with squigly brackets is where more manager signals can be concatinated!!!
     wishbone_arbitrator #(
@@ -433,8 +467,8 @@ module nebula_ii (
         .nRST(~wb_rst_i),
 
         //muxxing signals that go to manager
-        .wbs_ack_i_periph({wbs_ack_i_samp, wbs_ack_i_la, wbs_ack_i_gpio, wbs_ack_i_sram}),
-        .wbs_dat_i_periph({wbs_dat_i_samp, wbs_dat_i_la, wbs_dat_i_gpio, wbs_dat_i_sram}),
+        .wbs_ack_i_periph({wbs_ack_i_projects, wbs_ack_i_la, wbs_ack_i_gpio, wbs_ack_i_sram}),
+        .wbs_dat_i_periph({wbs_dat_i_projects_flat, wbs_dat_i_la, wbs_dat_i_gpio, wbs_dat_i_sram}),
 
         .wbs_ack_o_m(wbs_ack_o_m),
         .wbs_dat_o_m(wbs_dat_o_m),
@@ -447,12 +481,12 @@ module nebula_ii (
         .wbs_dat_i_m(wbs_dat_i_m),
         .wbs_sel_i_m(wbs_sel_i_m),
 
-        .wbs_cyc_o_periph({wbs_cyc_o_samp, wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_sram}),
-        .wbs_stb_o_periph({wbs_stb_o_samp, wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_sram}),
-        .wbs_we_o_periph({wbs_we_o_samp, wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_sram}),
-        .wbs_adr_o_periph({wbs_adr_o_samp, wbs_adr_o_la, wbs_adr_o_gpio, wbs_adr_o_sram}),
-        .wbs_dat_o_periph({wbs_dat_o_samp, wbs_dat_o_la, wbs_dat_o_gpio, wbs_dat_o_sram}),
-        .wbs_sel_o_periph({wbs_sel_o_samp, wbs_sel_o_la, wbs_sel_o_gpio, wbs_sel_o_sram})
+        .wbs_cyc_o_periph({wbs_cyc_o_projects, wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_sram}),
+        .wbs_stb_o_periph({wbs_stb_o_projects, wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_sram}),
+        .wbs_we_o_periph({wbs_we_o_projects, wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_sram}),
+        .wbs_adr_o_periph({wbs_adr_o_projects_flat, wbs_adr_o_la, wbs_adr_o_gpio, wbs_adr_o_sram}),
+        .wbs_dat_o_periph({wbs_dat_o_projects_flat, wbs_dat_o_la, wbs_dat_o_gpio, wbs_dat_o_sram}),
+        .wbs_sel_o_periph({wbs_sel_o_projects_flat, wbs_sel_o_la, wbs_sel_o_gpio, wbs_sel_o_sram})
     );
 
     // SRAM
