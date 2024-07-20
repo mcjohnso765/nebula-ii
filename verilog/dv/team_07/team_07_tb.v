@@ -175,7 +175,7 @@ module team_07_tb;
 	initial begin
 		tb_button = (6'd0);
 		// Wait for your design to be enabled
-		wait(uut.chip_core.mprj.mprj.team_07_Wrapper.team_07_WB.instance_to_wrap.\en == 1);
+		wait(uut.mprj.mprj.team_07_Wrapper.team_07_WB.instance_to_wrap.\en == 1);
 
 		// Add test cases here
 		button_press(6'd1);

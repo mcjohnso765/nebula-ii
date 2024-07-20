@@ -323,7 +323,7 @@ integer tb_test_num;
 
 initial begin 
 
-	wait(uut.chip_core.mprj.mprj.team_10_Wrapper.team_10_WB.instance_to_wrap.\en == 1);
+	wait(uut.mprj.mprj.team_10_Wrapper.team_10_WB.instance_to_wrap.\en == 1);
 	@(negedge clock);
 
 	//tb_input_row1= tb_input_row;

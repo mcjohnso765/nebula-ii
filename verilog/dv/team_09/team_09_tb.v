@@ -251,7 +251,7 @@ module team_09_tb;
         // Test Case 1: Snake Eats an Apple
         // ************************************************************************
 		
-    	wait(uut.chip_core.mprj.mprj.team_09_Wrapper.team_09_WB.instance_to_wrap.\en == 1);
+    	wait(uut.mprj.mprj.team_09_Wrapper.team_09_WB.instance_to_wrap.\en == 1);
 		left_button_press();
 		//#(CLK_PERIOD * 10000)
     	#(CLK_PERIOD * 40000000);

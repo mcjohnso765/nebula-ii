@@ -114,14 +114,14 @@ void main()
 	reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
 
 	// Configure GPIOs outputs to be selected by sample project
-	reg_gpio_PIN_0TO7 = 0x11111111;
-	reg_gpio_PIN_8TO15 = 0x11111111;
-	reg_gpio_PIN_16TO23 = 0x11111111;
-	reg_gpio_PIN_24TO31 = 0x11111111;
-	reg_gpio_PIN_32TO37 = 0x111111;
+	reg_gpio_PIN_0TO7 = 0x00000000;//team 1 would be all 1s, team 2 would be all 2s
+	reg_gpio_PIN_8TO15 = 0x00000000;
+	reg_gpio_PIN_16TO23 = 0x00000000;
+	reg_gpio_PIN_24TO31 = 0x00000000;
+	reg_gpio_PIN_32TO37 = 0x000000;
 
 	// Configure LA output to be selected by sample project
-	reg_la_sel = 0x1;
+	reg_la_sel = 0x0;
 
 	// Enable the sample project design
 	reg_sample_proj_EN = 0x1;
