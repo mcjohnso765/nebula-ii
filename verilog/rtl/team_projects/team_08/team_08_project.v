@@ -1,4 +1,4 @@
-module cactusMove (
+module t08_cactusMove (
 	clk,
 	nRst,
 	enable,
@@ -179,7 +179,7 @@ module cactusMove (
 	initial _sv2v_0 = 0;
 endmodule
 
-module pll (
+module t08_pll (
 	in_clk,
 	lcd_clk,
 	locked
@@ -1146,7 +1146,7 @@ module team_08_parallelDisplay (
 	wire wr_draw;
 	wire rd_draw;
 	wire [7:0] data_draw;
-	tft_init init_module(
+	t08_tft_init init_module(
 		.clk(clk),
 		.rst(rst),
 		.cs(cs_init),
@@ -1157,7 +1157,7 @@ module team_08_parallelDisplay (
 		.init_done(init_done),
 		.state()
 	);
-	draw_block drawBlock(
+	t08_draw_block drawBlock(
 		.clk(clk),
 		.rst(rst),
 		.init_done(init_done),
@@ -1371,7 +1371,7 @@ module team_08_parallelDisplay (
 		end
 	initial _sv2v_0 = 0;
 endmodule
-module draw_block (
+module t08_draw_block (
 	clk,
 	rst,
 	init_done,
@@ -1534,7 +1534,7 @@ module draw_block (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module tft_init (
+module t08_tft_init (
 	clk,
 	rst,
 	cs,
@@ -1683,14 +1683,14 @@ module team_08_random_generator (
 	wire slow_clk1;
 	wire slow_clk2;
 	wire [3:0] MCNT;
-	clock_div0 clock_div_inst0(
+	t08_clock_div0 clock_div_inst0(
 		.clk(clk),
 		.reset(rst_n),
 		.button_pressed(button_pressed),
 		.MCNT(MCNT1),
 		.clk1(slow_clk1)
 	);
-	clock_div0 clock_div_inst1(
+	t08_clock_div0 clock_div_inst1(
 		.clk(clk),
 		.reset(rst_n),
 		.button_pressed(button_pressed),
@@ -1762,7 +1762,7 @@ module team_08_random_generator (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module clock_div0 (
+module t08_clock_div0 (
 	clk,
 	reset,
 	button_pressed,
@@ -1968,7 +1968,7 @@ module team_08_score_counter (
 	reg [3:0] n_bcd_ones;
 	reg [3:0] n_bcd_tens;
 	reg [2:0] next_state;
-	clock_divider clock_div(
+	t08_clock_divider clock_div(
 		.clk(clk),
 		.nRst_i(reset),
 		.slow_clk(slow_clock)
@@ -2088,7 +2088,7 @@ module team_08_score_counter (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module clock_divider (
+module t08_clock_divider (
 	clk,
 	nRst_i,
 	slow_clk

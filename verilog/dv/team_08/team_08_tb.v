@@ -173,7 +173,7 @@ module team_08_tb;
 	// Signal dump and timeout check
 	initial begin
 		$dumpfile("team_08.vcd");
-		$dumpvars(0, team_08_tb.mprj_io, team_08_tb.uut.chip_core.mprj.mprj);
+		$dumpvars(0, team_08_tb.mprj_io, team_08_tb.uut.mprj.mprj);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (3000) begin
@@ -198,7 +198,7 @@ module team_08_tb;
 
 		
 		// Wait for enable signal to be high
-		wait(uut.chip_core.mprj.mprj.team_08_Wrapper.team_08_WB.instance_to_wrap.\en == 1);
+		wait(uut.mprj.mprj.team_08_Wrapper.team_08_WB.instance_to_wrap.\en == 1);
 
 		// ************************************************************************
        // Test Case 1: Reset button
