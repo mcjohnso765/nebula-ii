@@ -24,7 +24,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module imageGenerator (
+module t07_imageGenerator (
     input logic clk,                          // system clock
     input logic nrst,                         // active low reset
     input logic tft_sdo,                      // NOT USED 
@@ -76,7 +76,7 @@ module imageGenerator (
     // pll pll_inst(clk, tft_clk, clk_10khz);  // 4x faster clock
 
     // TFT Module
-	tft_ili9341 #(.INPUT_CLK_MHZ(12)) tft(tft_clk, tft_sdo, tft_sck, tft_sdi, tft_dc, tft_reset, tft_cs, currentPixel, fbClk, tftstate);
+	t07_tft_ili9341 #(.INPUT_CLK_MHZ(12)) tft(tft_clk, tft_sdo, tft_sck, tft_sdi, tft_dc, tft_reset, tft_cs, currentPixel, fbClk, tftstate);
 
 	// Framebuffer 
 	reg[16:0] framebufferIndex = 17'd0;

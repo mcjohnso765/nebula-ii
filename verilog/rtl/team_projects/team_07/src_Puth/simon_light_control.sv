@@ -33,7 +33,7 @@
 `define D5 4'd8
 `define I5 4'd9
 
-module simon_light_control(
+module t07_simon_light_control(
     input logic nrst,
     input logic clk,
     input logic s_strobe,

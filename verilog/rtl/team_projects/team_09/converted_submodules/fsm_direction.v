@@ -1,4 +1,4 @@
-module fsm_direction (
+module t09_fsm_direction (
 	direction_a,
 	clk,
 	nrst,

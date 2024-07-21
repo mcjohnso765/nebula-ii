@@ -1,5 +1,5 @@
 `default_nettype none
-module two_apple_mode (
+module t06_two_apple_mode (
 	good_collision,
 	system_clk,
 	nreset,
@@ -56,7 +56,7 @@ module two_apple_mode (
 	wire collisions_n;
 	reg collisions;
 	reg start_enable;
-	collisionLogic absxs(
+	t06_collisionLogic absxs(
 		.next_head({y_next, x_next}),
 		.body_x(snakeArrayX),
 		.body_y(snakeArrayY),

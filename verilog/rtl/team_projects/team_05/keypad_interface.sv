@@ -1,6 +1,6 @@
 typedef enum {IDLE, SCAN} key_state;
 
-module keypad_interface(
+module t05_keypad_interface(
     input logic [3:0] columns,
     output logic [3:0] rows,
     output logic [3:0] out

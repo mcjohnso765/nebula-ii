@@ -1,4 +1,4 @@
-module clk_enable (
+module t06_clk_enable (
 	clk,
 	nrst,
 	max_i,

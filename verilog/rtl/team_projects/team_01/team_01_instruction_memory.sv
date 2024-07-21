@@ -1,4 +1,4 @@
-module instruction_memory (
+module t01_instruction_memory (
     input   logic        clk, nRST, ihit, hold,
     input   logic [31:0] pc, FetchedInstr,
     output  logic [31:0] instruction, address_IM,

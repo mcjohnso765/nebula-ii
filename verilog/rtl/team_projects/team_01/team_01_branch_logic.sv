@@ -1,4 +1,4 @@
-module branch_logic (
+module t01_branch_logic (
     input   logic [2:0] Branch,
     input   logic Negative, Zero,
     output  logic Enable

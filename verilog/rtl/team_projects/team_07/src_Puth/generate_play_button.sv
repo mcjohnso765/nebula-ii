@@ -1,4 +1,4 @@
-module generate_play_button (
+module t07_generate_play_button (
   // This module intakes coordinates of the blocks containing the playButton and outputs the pixel the playButton is on
   input logic nrst,
   input logic clk,

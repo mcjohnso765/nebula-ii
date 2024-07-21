@@ -51,7 +51,7 @@ module team_05 (
 	wire [31:0] CPU_DAT_O;
 	wire BUSY_O;
 	assign SEL_I = 4'b1111;
-	wishbone_manager wishbone(
+	t05_wishbone_manager wishbone(
 		.nRST(nrst),
 		.CLK(clk),
 		.DAT_I(DAT_I),
@@ -197,7 +197,7 @@ module t05_complete_design (
 			mem_read = 1'sb0;
 		end
 	end
-	keypad_interface keypad0(
+	t05_keypad_interface keypad0(
 		.clk(clk),
 		.rst(rst),
 		.columns(keypad_in),
@@ -205,12 +205,12 @@ module t05_complete_design (
 		.key_out_bin(data_from_keypad),
 		.key_confirm(key_confirm)
 	);
-	bin_to_LCD bin2lcd(
+	t05_bin_to_LCD bin2lcd(
 		.binary_in(data_to_LCD),
 		.LCD_out(LCD_out)
 	);
 	wire [255:0] lcd_storage;
-	lcd_controller lcd_display(
+	t05_lcd_controller lcd_display(
 		.clk(clk),
 		.rst(rst),
 		.row_1(lcd_storage[255:128]),
@@ -220,7 +220,7 @@ module t05_complete_design (
 		.lcd_rs(lcd_rs_int),
 		.lcd_data(lcd_data_int)
 	);
-	memory_mapping map(
+	t05_memory_mapping map(
 		.mem_address(CPU_address),
 		.data_from_CPU(data_from_CPU),
 		.data_from_keypad(data_from_keypad),
@@ -252,7 +252,7 @@ module t05_complete_design (
 			lcd_interim <= lcd_interim;
 	initial _sv2v_0 = 0;
 endmodule
-module memory_mapping (
+module t05_memory_mapping (
 	mem_address,
 	data_from_CPU,
 	data_from_keypad,
@@ -1337,7 +1337,7 @@ module t05_register_file (
 			register[rd] <= write_data;
 	initial _sv2v_0 = 0;
 endmodule
-module wishbone_manager (
+module t05_wishbone_manager (
 	nRST,
 	CLK,
 	DAT_I,
@@ -1491,7 +1491,7 @@ module wishbone_manager (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module keypad_interface (
+module t05_keypad_interface (
 	clk,
 	rst,
 	columns,
@@ -1679,7 +1679,7 @@ module keypad_interface (
 				key_confirm <= 1'b0;
 			key_counter <= next_key_counter;
 		end
-	bcd2bin partyyyyy(
+	t05_bcd2bin partyyyyy(
 		.bcd3(key_out[15:12]),
 		.bcd2(key_out[11:8]),
 		.bcd1(key_out[7:4]),
@@ -1688,7 +1688,7 @@ module keypad_interface (
 	);
 	initial _sv2v_0 = 0;
 endmodule
-module lcd_controller (
+module t05_lcd_controller (
 	clk,
 	rst,
 	row_1,
@@ -1894,7 +1894,7 @@ module lcd_controller (
 			lcd_data <= lcd_data;
 	initial _sv2v_0 = 0;
 endmodule
-module bcd2bin (
+module t05_bcd2bin (
 	bcd3,
 	bcd2,
 	bcd1,
@@ -1917,7 +1917,7 @@ module bcd2bin (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module bin_to_LCD (
+module t05_bin_to_LCD (
 	binary_in,
 	LCD_out
 );

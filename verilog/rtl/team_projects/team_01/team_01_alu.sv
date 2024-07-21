@@ -1,4 +1,4 @@
-module alu (
+module t01_alu (
     input   logic [3:0]  AluOP,
     input   logic [31:0] Data1, Data2,
     output  logic        Zero, Negative, Overflow,

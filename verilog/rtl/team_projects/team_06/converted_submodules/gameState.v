@@ -1,5 +1,5 @@
 `default_nettype none
-module gameState (
+module t06_gameState (
 	button,
 	badCollision,
 	clk,

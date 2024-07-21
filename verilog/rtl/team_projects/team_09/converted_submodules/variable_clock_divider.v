@@ -1,5 +1,5 @@
 `default_nettype none
-module variable_clock_divider (
+module t09_variable_clock_divider (
 	clk,
 	nrst,
 	button,
@@ -17,19 +17,19 @@ module variable_clock_divider (
 	reg [22:0] count;
 	reg [22:0] next_count;
 	reg [22:0] MAX_COUNT;
-	synchronizer synch(
+	t09_synchronizer synch(
 		.button(button),
 		.clk(clk),
 		.nrst(nrst),
 		.signal(signal)
 	);
-	edge_detect detect(
+	t09_edge_detect detect(
 		.signal(signal),
 		.clk(clk),
 		.nrst(nrst),
 		.change_state(button_a)
 	);
-	fsm_mode fsm(
+	t09_fsm_mode fsm(
 		.signal(button_a),
 		.clk(clk),
 		.nrst(nrst),

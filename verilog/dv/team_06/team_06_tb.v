@@ -243,7 +243,7 @@ module team_06_tb;
 		#300;  // wait some time before ending
 */
 		// Go right until Dead Test
-		wait(uut.chip_core.mprj.mprj.team_06_Wrapper.team_06_Wrapper.team_06_WB.instance_to_wrap.\en == 1);
+		wait(uut.mprj.mprj.team_06_Wrapper.team_06_Wrapper.team_06_WB.instance_to_wrap.\en == 1);
 		button_push_start_pause;
 		#3000000;
 		button_push_right;

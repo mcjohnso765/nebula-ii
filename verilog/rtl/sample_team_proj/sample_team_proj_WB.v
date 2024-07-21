@@ -36,12 +36,12 @@ module sample_team_proj_WB (
 	output	wire	[34-1:0]	gpio_oeb
 );
 
-	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30010000;
-	localparam	PRESCALER_VAL_REG_OFFSET = `WB_AW'h30010004;
-	localparam	IM_REG_OFFSET = `WB_AW'h3001FF00;
-	localparam	MIS_REG_OFFSET = `WB_AW'h3001FF04;
-	localparam	RIS_REG_OFFSET = `WB_AW'h3001FF08;
-	localparam	IC_REG_OFFSET = `WB_AW'h3001FF0C;
+	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30000000;
+	localparam	PRESCALER_VAL_REG_OFFSET = `WB_AW'h30000004;
+	localparam	IM_REG_OFFSET = `WB_AW'h3000FF00;
+	localparam	MIS_REG_OFFSET = `WB_AW'h3000FF04;
+	localparam	RIS_REG_OFFSET = `WB_AW'h3000FF08;
+	localparam	IC_REG_OFFSET = `WB_AW'h3000FF0C;
 	wire		clk = clk_i;
 	wire		nrst = (~rst_i);
 

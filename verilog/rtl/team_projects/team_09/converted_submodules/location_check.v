@@ -1,4 +1,4 @@
-module location_check (
+module t09_location_check (
 	coordinate,
 	body,
 	curr_length,

@@ -4,7 +4,7 @@
         random the wire_num and wire_color, when the game starts (activate_rand)
     and send the output to other wire modules.
 */
-module wire_wire_gen (
+module t07_wire_wire_gen (
     input logic nrst,
     input logic clk,
     input logic activate_rand,
@@ -19,13 +19,13 @@ module wire_wire_gen (
     logic activate_rand_delay_1;
     logic activate_rand_delay_2;
     
-    random_gen_wire_num wire_num_gen ( 
+    t07_random_gen_wire_num wire_num_gen ( 
         .nrst(nrst),
         .clk(clk),
         .random_seed(12'd2239),
         .wire_num(rand_wire_num)
     );
-    random_gen_wire_color wire_color_gen (
+    t07_random_gen_wire_color wire_color_gen (
         .nrst(nrst), 
         .clk(clk), 
         .random_seed(18'd5869),

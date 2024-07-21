@@ -4,7 +4,7 @@
         Generate a random number (1-4), for stage 1-5 for simon game
     no consecutive sequences are the same
 */
-module random_gen_simon
+module t07_random_gen_simon
 (
     input logic nrst,
     input logic clk,

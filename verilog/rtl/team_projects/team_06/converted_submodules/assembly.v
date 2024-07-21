@@ -1,5 +1,5 @@
 `default_nettype none
-module assembly (
+module t06_assembly (
 	clk,
 	nrst,
 	enable,
@@ -45,7 +45,7 @@ module assembly (
 	wire wall;
 	wire gameover;
 	wire button_reset_in;
-	image_generator writer(
+	t06_image_generator writer(
 		.clk(clk),
 		.nrst(~nrst),
 		.snakeBody(body),
@@ -61,7 +61,7 @@ module assembly (
 		.x(x),
 		.y(y)
 	);
-	main_file CPU(
+	t06_main_file CPU(
 		.clk(clk),
 		.nrst(nrst),
 		.button_right_in(button_right_in),

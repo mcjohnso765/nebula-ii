@@ -1,4 +1,4 @@
-module obstaclegen2 (
+module t09_obstaclegen2 (
 	body,
 	clk,
 	nRst,

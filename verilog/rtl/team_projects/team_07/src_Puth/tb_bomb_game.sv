@@ -15,7 +15,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module tb_bomb_game ();
+module t07_tb_bomb_game ();
 
     typedef enum logic [2:0] {
         MENU = 3'd0, PLAY = 3'd1, LOST = 3'd2, WON = 3'd3
@@ -54,7 +54,7 @@ module tb_bomb_game ();
         tb_clk = 1'b1; #(CLK_PERIOD / 2);
     end
     
-    bomb_game DUT_bomb_game(
+    t07_bomb_game DUT_bomb_game(
         .nrst(tb_nrst),
         .clk(tb_clk),
         .button(tb_button),   // input: button

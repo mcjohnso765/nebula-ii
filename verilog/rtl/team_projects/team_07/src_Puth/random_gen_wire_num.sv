@@ -7,7 +7,7 @@
     This module was so incredibly hard to implement and debug because of metastable asyncrhonous reset
 
 */
-module random_gen_wire_num
+module t07_random_gen_wire_num
 (
     input logic clk,
     input logic nrst,

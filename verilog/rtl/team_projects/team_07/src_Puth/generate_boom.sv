@@ -1,4 +1,4 @@
-module generate_boom (
+module t07_generate_boom (
 // This module intakes coordinates of the blocks containing the boom and outputs the pixel the boom is on
 input logic clk, nrst,
 input logic [8:0] x,

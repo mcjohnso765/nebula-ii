@@ -15,7 +15,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module tb_fsm_game_control ();
+module t07_tb_fsm_game_control ();
 
     typedef enum logic [2:0] {
         MENU = 3'd0, PLAY = 3'd1, LOST = 3'd2, WON = 3'd3

@@ -1,4 +1,4 @@
-module ram (
+module t05_ram (
     input logic clk,
     input logic [11:0] address_data, address_instr,
     input logic [31:0] data_in,

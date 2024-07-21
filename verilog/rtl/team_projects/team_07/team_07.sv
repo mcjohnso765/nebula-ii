@@ -63,7 +63,7 @@ module team_07 (
     assign gpio_out[17] = audio;
     assign button = gpio_in[23:18];
 
-    bomb_game team_07(
+    t07_bomb_game team_07(
     .nrst(nrst && en),
     .clk(clk),
     .button(button),   // input: button

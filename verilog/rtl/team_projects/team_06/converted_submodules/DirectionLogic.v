@@ -1,4 +1,4 @@
-module DirectionLogic (
+module t06_DirectionLogic (
 	clk,
 	nrst,
 	pause_clk,

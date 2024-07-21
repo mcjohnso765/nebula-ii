@@ -1,4 +1,4 @@
-module memory_handler(
+module t04_memory_handler(
   input logic [31:0] addr, read_data_2, data_from_mem,
   input logic en_read, en_write,
   input logic [2:0] size,

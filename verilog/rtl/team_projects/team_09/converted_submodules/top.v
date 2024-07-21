@@ -1,5 +1,5 @@
 `default_nettype none
-module top (
+module t09_top (
 	hwclk,
 	reset,
 	pb,
@@ -76,7 +76,7 @@ module top (
 	wire [623:0] body;
 	wire [1:0] blinkToggle;
 	wire [1:0] junk;
-	image_generator img_gen(
+	t09_image_generator img_gen(
 		.snakeBody(snakeBody),
 		.snakeHead(snakeHead),
 		.apple(apple),
@@ -92,12 +92,12 @@ module top (
 		.x(x),
 		.y(y)
 	);
-	border_generator border_gen(
+	t09_border_generator border_gen(
 		.x(x),
 		.y(y),
 		.isBorder(border)
 	);
-	snake_body_controller #(.MAX_LENGTH(MAX_LENGTH)) control(
+	t09_snake_body_controller #(.MAX_LENGTH(MAX_LENGTH)) control(
 		.direction_pb({pb[10], pb[6], pb[5], pb[7]}),
 		.x(x),
 		.y(y),
@@ -110,14 +110,14 @@ module top (
 		.snakeHead(snakeHead),
 		.snakeBody(snakeBody)
 	);
-	obstacleMode obsmode(
+	t09_obstacleMode obsmode(
 		.sync_reset(sync),
 		.obstacle_pb(pb[8]),
 		.clk(hwclk),
 		.nrst(~reset),
 		.obstacleFlag(obstacleFlag)
 	);
-	obstacle_random obsrand1(
+	t09_obstacle_random obsrand1(
 		.clk(hwclk),
 		.nRst(~reset),
 		.randX(randX),
@@ -126,7 +126,7 @@ module top (
 		.randY2(randY2),
 		.obstacleFlag(obstacleFlag)
 	);
-	applegenerator2 #(.MAX_LENGTH(MAX_LENGTH)) ag2(
+	t09_applegenerator2 #(.MAX_LENGTH(MAX_LENGTH)) ag2(
 		.x(x),
 		.y(y),
 		.randX(randX),
@@ -138,7 +138,7 @@ module top (
 		.body(body),
 		.apple(apple)
 	);
-	obstaclegen2 #(.MAX_LENGTH(MAX_LENGTH)) obsg2(
+	t09_obstaclegen2 #(.MAX_LENGTH(MAX_LENGTH)) obsg2(
 		.curr_length(curr_length),
 		.obstacleCount(dispObs),
 		.clk(hwclk),
@@ -153,7 +153,7 @@ module top (
 		.obstacle(obstacle),
 		.obstacleFlag(obstacleFlag)
 	);
-	collision coll(
+	t09_collision coll(
 		.clk(hwclk),
 		.nRst(~reset),
 		.snakeHead(snakeHead),
@@ -163,7 +163,7 @@ module top (
 		.goodColl(goodColl),
 		.badColl(badColl)
 	);
-	score_posedge_detector score_detect(
+	t09_score_posedge_detector score_detect(
 		.clk(hwclk),
 		.nRst(~reset),
 		.goodColl_i(goodColl),
@@ -171,7 +171,7 @@ module top (
 		.goodColl(good_coll),
 		.badColl(bad_coll)
 	);
-	score_tracker3 track(
+	t09_score_tracker3 track(
 		.clk(hwclk),
 		.nRst(~reset),
 		.goodColl(good_coll),
@@ -183,7 +183,7 @@ module top (
 		.dispScore(dispScore),
 		.isGameComplete(isGameComplete)
 	);
-	toggle_screen toggle1(
+	t09_toggle_screen toggle1(
 		.displayOut(displayOut),
 		.blinkToggle(blinkToggle),
 		.clk(hwclk),
@@ -192,22 +192,22 @@ module top (
 		.bcd_tens(bcd_tens),
 		.bcd_hundreds(bcd_hundreds)
 	);
-	ssdec ssdec1(
+	t09_ssdec ssdec1(
 		.in(displayOut),
 		.enable(blinkToggle == 1),
 		.out(ss0[6:0])
 	);
-	ssdec ssdec2(
+	t09_ssdec ssdec2(
 		.in(displayOut),
 		.enable(blinkToggle == 2),
 		.out(ss1[6:0])
 	);
-	ssdec ssdec3(
+	t09_ssdec ssdec3(
 		.in(displayOut),
 		.enable(blinkToggle == 0),
 		.out(ss2[6:0])
 	);
-	sound_generator sound_gen(
+	t09_sound_generator sound_gen(
 		.clk(hwclk),
 		.rst(reset),
 		.goodColl_i(goodColl),

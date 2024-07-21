@@ -27,7 +27,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module simon_press_detector(
+module t07_simon_press_detector(
     input logic nrst,
     input logic clk,
     input logic strobe,

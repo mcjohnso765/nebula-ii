@@ -186,7 +186,7 @@
 
 // endmodule
 
-module program_counter (
+module t04_program_counter (
   input logic nRst, enable, clk,
   input logic [31:0] immJumpValue, regJumpValue,
   input logic doForceJump, doCondJump, condJumpValue, doRegJump, AUIlink,

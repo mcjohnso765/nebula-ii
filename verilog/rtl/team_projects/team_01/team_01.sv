@@ -82,7 +82,7 @@ module team_01 (
     
     //
 
-    team_01_cpu cpu(
+    t01_team_01_cpu cpu(
    .clk(clk), 
    .nRST(nrst),
    .en(en), 

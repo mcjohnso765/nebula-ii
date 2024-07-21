@@ -1,4 +1,4 @@
-module snake_body_controller (
+module t09_snake_body_controller (
 	direction_pb,
 	x,
 	y,
@@ -31,61 +31,61 @@ module snake_body_controller (
 	wire [3:0] direction_i;
 	wire [3:0] direction_a;
 	wire [7:0] head;
-	variable_clock_divider divider(
+	t09_variable_clock_divider divider(
 		.clk(clk),
 		.nrst(nrst),
 		.button(pb_mode),
 		.adjusted_clk(pulse)
 	);
-	synchronizer button1(
+	t09_synchronizer button1(
 		.button(direction_pb[0]),
 		.clk(clk),
 		.nrst(nrst),
 		.signal(direction_i[0])
 	);
-	synchronizer button2(
+	t09_synchronizer button2(
 		.button(direction_pb[1]),
 		.clk(clk),
 		.nrst(nrst),
 		.signal(direction_i[1])
 	);
-	synchronizer button3(
+	t09_synchronizer button3(
 		.button(direction_pb[2]),
 		.clk(clk),
 		.nrst(nrst),
 		.signal(direction_i[2])
 	);
-	synchronizer button4(
+	t09_synchronizer button4(
 		.button(direction_pb[3]),
 		.clk(clk),
 		.nrst(nrst),
 		.signal(direction_i[3])
 	);
-	edge_detect detect1(
+	t09_edge_detect detect1(
 		.signal(direction_i[0]),
 		.clk(clk),
 		.nrst(nrst),
 		.change_state(direction_a[0])
 	);
-	edge_detect detect2(
+	t09_edge_detect detect2(
 		.signal(direction_i[1]),
 		.clk(clk),
 		.nrst(nrst),
 		.change_state(direction_a[1])
 	);
-	edge_detect detect3(
+	t09_edge_detect detect3(
 		.signal(direction_i[2]),
 		.clk(clk),
 		.nrst(nrst),
 		.change_state(direction_a[2])
 	);
-	edge_detect detect4(
+	t09_edge_detect detect4(
 		.signal(direction_i[3]),
 		.clk(clk),
 		.nrst(nrst),
 		.change_state(direction_a[3])
 	);
-	fsm_direction fsm(
+	t09_fsm_direction fsm(
 		.direction_a(direction_a),
 		.clk(clk),
 		.nrst(nrst),
@@ -93,7 +93,7 @@ module snake_body_controller (
 		.sync(sync),
 		.direction(direction)
 	);
-	update_body #(.MAX_LENGTH(MAX_LENGTH)) body_update(
+	t09_update_body #(.MAX_LENGTH(MAX_LENGTH)) body_update(
 		.clk(clk),
 		.nrst(nrst),
 		.pulse(pulse),
@@ -103,7 +103,7 @@ module snake_body_controller (
 		.body(temp_body),
 		.head(head)
 	);
-	location_check #(.MAX_LENGTH(MAX_LENGTH)) check(
+	t09_location_check #(.MAX_LENGTH(MAX_LENGTH)) check(
 		.coordinate({x, y}),
 		.body(temp_body),
 		.curr_length(curr_length),

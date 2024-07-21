@@ -1,4 +1,4 @@
-module generate_circle (
+module t07_generate_circle (
     // This module intakes coordinates of the blocks containing the circle and outputs the pixel the circle is on
     input  logic       clk, nrst,
     input  logic [8:0] x,           // not needded since SCo and SPo is hardcoded

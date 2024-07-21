@@ -1,4 +1,4 @@
-module edge_detector(
+module t05_edge_detector(
     input logic button_sync, clk, nrst,
     output logic posedge_button
 );

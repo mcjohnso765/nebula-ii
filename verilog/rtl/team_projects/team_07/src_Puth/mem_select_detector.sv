@@ -25,7 +25,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module mem_select_detector(
+module t07_mem_select_detector(
     input logic nrst,
     input logic clk,
     input logic [2:0] playing_state_in, 

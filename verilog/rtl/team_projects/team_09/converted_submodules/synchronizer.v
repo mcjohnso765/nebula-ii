@@ -1,4 +1,4 @@
-module synchronizer (
+module t09_synchronizer (
 	button,
 	clk,
 	nrst,

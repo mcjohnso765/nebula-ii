@@ -1,4 +1,4 @@
-module score_posedge_detector (
+module t09_score_posedge_detector (
 	clk,
 	nRst,
 	goodColl_i,

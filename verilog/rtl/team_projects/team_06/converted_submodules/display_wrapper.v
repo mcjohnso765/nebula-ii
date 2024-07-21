@@ -1,5 +1,5 @@
 `default_nettype none
-module display_wrapper (
+module t06_display_wrapper (
 	score,
 	clk,
 	nreset,
@@ -25,7 +25,7 @@ module display_wrapper (
 	output wire [7:0] out4;
 	wire [127:0] row_top;
 	wire [127:0] row_bot;
-	display dis(
+	t06_display dis(
 		.gameState(game_state),
 		.gameMode(game_mode),
 		.appleLuck(apple_luck),
@@ -34,7 +34,7 @@ module display_wrapper (
 		.row_top(row_top),
 		.row_bot(row_bot)
 	);
-	lcd1602 L1(
+	t06_lcd1602 L1(
 		.clk(clk),
 		.rst(nreset),
 		.row_1(row_top),

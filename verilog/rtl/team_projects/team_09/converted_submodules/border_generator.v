@@ -1,4 +1,4 @@
-module border_generator (
+module t09_border_generator (
 	x,
 	y,
 	isBorder

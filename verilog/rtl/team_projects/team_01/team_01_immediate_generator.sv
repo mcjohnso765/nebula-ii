@@ -1,4 +1,4 @@
-module immediate_generator (
+module t01_immediate_generator (
     input   logic [31:0] Instr,
     output  logic [31:0] Imm
 );

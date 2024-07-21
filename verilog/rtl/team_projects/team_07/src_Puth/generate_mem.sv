@@ -8,7 +8,7 @@
     - stagePixel: pixel for the stage light
     - buttonHighlightPixel: pixel fot the selected button highlight
 */
-module generate_mem(
+module t07_generate_mem(
     input logic nrst,
     input logic clk,
     input logic [8:0] x,

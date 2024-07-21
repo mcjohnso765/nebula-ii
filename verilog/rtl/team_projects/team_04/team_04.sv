@@ -74,7 +74,7 @@ module team_04 (
     assign ADR_I = middle_mem_adr + mem_adr_start;
 
 
-    tippy_top final_design (
+    t04_tippy_top final_design (
         .clk(clk),
         .nRst(nrst),
         .button(),

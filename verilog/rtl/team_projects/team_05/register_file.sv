@@ -1,6 +1,6 @@
 `default_nettype none
 
-module register_file (
+module t05_register_file (
     input logic [31:0] reg_write, 
     input logic [4:0] rd, rs1, rs2, 
     input logic clk, rst, write,

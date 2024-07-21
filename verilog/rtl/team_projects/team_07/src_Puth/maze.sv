@@ -3,7 +3,7 @@
     Description:
         integrate the maze game
 */
-module maze (
+module t07_maze (
     input logic nrst,
     input logic clk,
     input logic strobe,
@@ -23,7 +23,7 @@ module maze (
     logic [2:0] start_pos_y;
     logic enable_move;
 
-    maze_pos_gen maze_pos_gen_0(
+    t07_maze_pos_gen maze_pos_gen_0(
         .nrst(nrst),
         .clk(clk),
         .activate_rand(activate_rand),
@@ -33,7 +33,7 @@ module maze (
         .dest_x(dest_x),
         .dest_y(dest_y)
     );
-    maze_wall_detector wall_detector0 (
+    t07_maze_wall_detector wall_detector0 (
         .nrst(nrst),
         .clk(clk),
         .playing_state_in(playing_state_in),
@@ -46,7 +46,7 @@ module maze (
         .enable_move(enable_move),
         .error(error)
     );
-    maze_mazer_locator mazer_locator0 (
+    t07_maze_mazer_locator mazer_locator0 (
         .nrst(nrst),
         .clk(clk),
         .button(button),
@@ -58,7 +58,7 @@ module maze (
         .pos_x(pos_x),
         .pos_y(pos_y)
     );
-    maze_clear_detector maze_clear_detector0 (
+    t07_maze_clear_detector maze_clear_detector0 (
         .pos_x(pos_x),
         .pos_y(pos_y),
         .dest_x(dest_x),

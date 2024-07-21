@@ -1,4 +1,4 @@
-module timer_counter (
+module t07_timer_counter (
     input logic nrst,               // System negedge reset
     input logic clk,                // System clk
     input logic s_strobe,           // Secounds Strobe 1Hz

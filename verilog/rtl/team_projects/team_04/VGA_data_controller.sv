@@ -3,7 +3,7 @@
 //     Integrate with VGA to see if we need to make the push count 63 instead of 62
 
 
-module VGA_data_controller (
+module t04_VGA_data_controller (
     input logic clk, nrst,
     input logic [31:0] VGA_request_address, data_from_SRAM,
     input logic [9:0] h_count,

@@ -1,5 +1,5 @@
 //decode instruction into register addresses and Opcode
-module decode (
+module t04_decode (
     input logic [31:0] instruction, //32 bit instruction signal, from Program Memory
     output logic [4:0] rs1, rs2, rd, //5 bit register addresses, to registers 
     output logic [6:0] opcode, //7 bit Opcode, to Control Unit

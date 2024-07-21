@@ -1,5 +1,5 @@
 `default_nettype none
-module freq_selector_10M (
+module t09_freq_selector_10M (
 	goodColl_i,
 	badColl_i,
 	direction_i,

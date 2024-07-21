@@ -9,7 +9,7 @@
 */
 // For now make random_gen can be set to output set_x and set_y
 
-module random_gen_maze_ms
+module t07_random_gen_maze_ms
 (
     input logic clk,
     input logic nrst,

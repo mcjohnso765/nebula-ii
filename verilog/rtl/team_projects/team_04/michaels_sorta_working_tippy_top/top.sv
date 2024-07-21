@@ -18,7 +18,7 @@ module top(
 logic [31:0] data_to_ram, mem_addr, data_from_ram;
 logic mem_read, mem_write;
 
-tippy_top tt (
+t04_tippy_top tt (
     .clk(hz100),
     .nRst(~reset), 
     .button(),
@@ -39,7 +39,7 @@ tippy_top tt (
 );
 
 
-ram ranch (
+t04_ram ranch (
     .clk(hz100),
     .rst(~reset),
 

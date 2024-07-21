@@ -4,7 +4,7 @@
         random the memory game displayNum and labelNum for each stage and position , when the game starts (activate_rand)
     and send the output to other mem_game modules.
 */
-module mem_num_gen (
+module t07_mem_num_gen (
     input logic nrst,
     input logic clk,
     input logic activate_rand,
@@ -16,7 +16,7 @@ module mem_num_gen (
     logic [9:0] nxt_display_num_bus;
     logic [39:0] nxt_label_num_bus;
 
-    random_gen_mem_num mem_num_gen ( 
+    t07_random_gen_mem_num mem_num_gen ( 
         .nrst(nrst),
         .clk(clk),
         .random_seed(12'd2239),

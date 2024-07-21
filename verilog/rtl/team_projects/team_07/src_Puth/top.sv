@@ -25,7 +25,7 @@ module top
   // pll mypll (.in_clk(hwclk), .lcd_clk(right[0]), .locked());
   // assign left[7] = hwclk;
 
-  bomb_game DUT_bomb_game (
+  t07_bomb_game DUT_bomb_game (
     .clk(hwclk),
     .nrst(~pb[19]),
     .button({pb[6], pb[0], pb[4], pb[1], pb[5], pb[18]}),

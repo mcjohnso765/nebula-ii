@@ -1,4 +1,4 @@
-module control_unit(
+module t05_control_unit(
     input logic [31:0] instruction,
     output logic [6:0] opcode, funct7,
     output logic [2:0] funct3,

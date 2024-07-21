@@ -4,7 +4,7 @@
         take in four bits data input and generate eight bits data output
     to the seven segment display.
 */
-module timer_ssdec_decoder(
+module t07_timer_ssdec_decoder(
     input logic [3:0] in,
     output logic [7:0] out
 );

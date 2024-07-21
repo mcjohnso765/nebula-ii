@@ -1,4 +1,4 @@
-module score_tracker3 (
+module t09_score_tracker3 (
 	clk,
 	nRst,
 	goodColl,

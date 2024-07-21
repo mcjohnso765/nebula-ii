@@ -1,4 +1,4 @@
-module sync (
+module t06_sync (
 	in,
 	clk,
 	nrst,

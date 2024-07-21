@@ -1,4 +1,4 @@
-module audio_sm (
+module t07_audio_sm (
 input logic clk,
 input logic nrst,
 input logic s_strobe,

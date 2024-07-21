@@ -1,4 +1,4 @@
-module keypad (
+module t01_keypad (
     input   logic       clk, nRST,
     input   logic [3:0] rows,
     output  logic [3:0] cols,

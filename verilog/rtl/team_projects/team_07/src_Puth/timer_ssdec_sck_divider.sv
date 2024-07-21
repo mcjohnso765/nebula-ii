@@ -3,7 +3,7 @@
     Description:
         divide the internal clock 12 MHz to 200kHz for ssdec SPI
 */
-module timer_ssdec_sck_divider(
+module t07_timer_ssdec_sck_divider(
     input logic clk,
     input logic nrst,
     input logic clear, 

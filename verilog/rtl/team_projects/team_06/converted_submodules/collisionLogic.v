@@ -1,5 +1,5 @@
 `default_nettype none
-module collisionLogic (
+module t06_collisionLogic (
 	next_head,
 	body_x,
 	body_y,

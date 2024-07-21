@@ -1,4 +1,4 @@
-module control_unit (
+module t01_control_unit (
 input logic [6:0] opcode,
 input logic [2:0] funct3,
 input logic bit30,

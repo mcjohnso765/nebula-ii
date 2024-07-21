@@ -1,5 +1,5 @@
 /** Simple frame-buffer based driver for the ILI9341 TFT module */
-module tft_ili9341(
+module t07_tft_ili9341(
 		input clk,
 		input tft_sdo, output wire tft_sck, output wire tft_sdi, 
 		output wire tft_dc, output reg tft_reset, output wire tft_cs,
@@ -19,7 +19,7 @@ module tft_ili9341(
 	reg frameBufferLowNibble = 1'b1;
 	assign framebufferClk = !frameBufferLowNibble;
 	
-	tft_ili9341_spi spi(
+	t07_tft_ili9341_spi spi(
 		.spiClk(clk), 
 		.data(spiData), .dataAvailable(spiDataSet),
 		.tft_sck(tft_sck), .tft_sdi(tft_sdi), .tft_dc(tft_dc), .tft_cs(tft_cs),

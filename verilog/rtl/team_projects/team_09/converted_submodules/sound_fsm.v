@@ -1,5 +1,5 @@
 `default_nettype none
-module sound_fsm (
+module t09_sound_fsm (
 	clk,
 	nRst,
 	goodColl,

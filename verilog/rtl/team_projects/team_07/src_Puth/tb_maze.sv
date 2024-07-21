@@ -14,7 +14,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module tb_maze();
+module t07_tb_maze();
 
     // Timing
     localparam CLK_PERIOD        = 83.3;    // 12 MHz clock (for FPGA)
@@ -48,7 +48,7 @@ module tb_maze();
     end
 
     // instantiate maze_game and assign the ports
-    maze maze_game_DUT (
+    t07_maze maze_game_DUT (
         .nrst(tb_nrst),
         .clk(tb_clk),
         .strobe(tb_strobe),

@@ -1,5 +1,5 @@
 `default_nettype none
-module synchronizer (
+module t06_synchronizer (
 	button,
 	clk,
 	nrst,

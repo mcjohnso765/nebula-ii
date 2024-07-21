@@ -1,4 +1,4 @@
-module obstacle_random (
+module t09_obstacle_random (
 	clk,
 	nRst,
 	obstacleFlag,

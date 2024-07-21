@@ -2,7 +2,7 @@
 
 `default_nettype none
 
-module team_01_cpu (
+module t01_team_01_cpu (
   // input logic[31:0] instruction,
   input logic clk, nRST, en,
   // input logic [31:0]store,
@@ -81,7 +81,7 @@ logic [31:0] next_pc;
 logic pc_enable;
 
 // ALU : DONE
-alu ALU0 (.AluOP(AluOP),
+t01_alu ALU0 (.AluOP(AluOP),
           .Data1(AUIPC ? pc : ReadData1),
           .Data2(AluSRC ? Immediate : ReadData2),
           .Zero(Zero),
@@ -91,14 +91,14 @@ alu ALU0 (.AluOP(AluOP),
 );
 
 // BRANCH LOGIC : DONE 
-branch_logic BL0 (.Branch(Branch),
+t01_branch_logic BL0 (.Branch(Branch),
                   .Negative(Negative),
                   .Zero(Zero),
                   .Enable(branch_enable)
 );
 
 // CONTROL UNIT : DONE
-control_unit CU0 (.opcode(instruction[6:0]), 
+t01_control_unit CU0 (.opcode(instruction[6:0]), 
                   .funct3(instruction[14:12]),
                   .bit30(instruction[30]),
                   .datawidth(DataWidth),
@@ -114,7 +114,7 @@ control_unit CU0 (.opcode(instruction[6:0]),
 );
 
 // COUNTER (for clock) : DONE
-counter c0(.clk(clk), 
+t01_counter c0(.clk(clk), 
            .nrst(nRST), 
            .enable(1'b1), 
            .clear(1'b0), 
@@ -125,7 +125,7 @@ counter c0(.clk(clk),
 
 
 // Data Memory
-data_memory DM0 (.clk(clk),
+t01_data_memory DM0 (.clk(clk),
                  .nRST(nRST),
                  .address(AluResult),
                  .writedata(ReadData2),
@@ -144,7 +144,7 @@ data_memory DM0 (.clk(clk),
 );
 
 // FSM : DONE 
-fsm f0(.clk(clk),
+t01_fsm f0(.clk(clk),
        .nRST(nRST),
        .en(en),
        .data(data_received),
@@ -167,12 +167,12 @@ fsm f0(.clk(clk),
 );
 
 // IMMEDIATE GENERATOR : DONE
-immediate_generator IG0 (.Instr(instruction),
+t01_immediate_generator IG0 (.Instr(instruction),
                          .Imm(Immediate)
 );
 
 // INSTRUCTION MEMORY
-instruction_memory IM0 (.clk(clk),
+t01_instruction_memory IM0 (.clk(clk),
                         .nRST(nRST),
                         .ihit(ihit),
                         .hold(MemRead && !dm_enable),
@@ -184,7 +184,7 @@ instruction_memory IM0 (.clk(clk),
 );
 
 // KEYPAD : DONE
-keypad K0 (.clk(clk),
+t01_keypad K0 (.clk(clk),
            .nRST(nRST),
            .rows(rows),
            .cols(cols),
@@ -194,7 +194,7 @@ keypad K0 (.clk(clk),
 );
 
 // LCD : DONE
-lcd1602 LCD0 (.clk(clk), 
+t01_lcd1602 LCD0 (.clk(clk), 
               .rst(nRST), 
               .row_1(unsorted), 
               .row_2(shift_reg), 
@@ -205,20 +205,20 @@ lcd1602 LCD0 (.clk(clk),
 ); 
 
 // MUXES 
-mux M1 (.in1(MemToReg_Out), 
+t01_mux M1 (.in1(MemToReg_Out), 
         .in2(pc + 32'd4), 
         .select(|Jump), 
         .out(WriteData)
 );
 
-mux M2 (.in1(AluResult), 
+t01_mux M2 (.in1(AluResult), 
         .in2(DataToReg), 
         .select(MemToReg), 
         .out(MemToReg_Out)
 );
 
 // PROGRAM COUNTER : DONE
-program_counter PC0 (.clk(clk),
+t01_program_counter PC0 (.clk(clk),
                      .nRST(nRST),
                      .enable(pc_enable),
                      .new_pc(next_pc),
@@ -226,7 +226,7 @@ program_counter PC0 (.clk(clk),
 );
 
 // REGISTER FILE : DONE
-register_file RF0 (.clk(clk), 
+t01_register_file RF0 (.clk(clk), 
                    .nRST(nRST), 
                    .RegWrite(register_en), 
                    .ReadReg1(instruction[19:15]), 
@@ -238,7 +238,7 @@ register_file RF0 (.clk(clk),
 );
 
 // REQUEST UNIT : DONE
-request_unit RU0 (.clk(clk),
+t01_request_unit RU0 (.clk(clk),
                   .nRST(nRST),
                   .InstrRead(assembly_en),
                   .DataRead(DataRead),
@@ -260,7 +260,7 @@ request_unit RU0 (.clk(clk),
 );
 
 // SHIFT REGISTER 1 (for LCD row 1) : DONE
-shift_reg SR0 (.clk(clk), 
+t01_shift_reg SR0 (.clk(clk), 
                .nRST(nRST), 
                .char_in(DataToWrite[7:0]), 
                .shift_register(unsorted), 
@@ -268,7 +268,7 @@ shift_reg SR0 (.clk(clk),
 );
 
 // SHIFT REGISTER 2 (for LCD row 2) : DONE
-shift_reg SR1 (.clk(clk), 
+t01_shift_reg SR1 (.clk(clk), 
                .nRST(nRST), 
                .char_in(lcd_display_data[7:0]), 
                .shift_register(shift_reg), 

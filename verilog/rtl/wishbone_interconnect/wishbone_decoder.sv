@@ -26,8 +26,8 @@ module wishbone_decoder #(
     input logic nRST,
 
     //muxxing signals that go to manager
-    input logic [NUM_TEAMS + 2:0]       wbs_ack_i_periph, 
-    input logic [NUM_TEAMS + 2:0][31:0] wbs_dat_i_periph, 
+    input logic [NUM_TEAMS + 3:0]       wbs_ack_i_periph, 
+    input logic [NUM_TEAMS + 3:0][31:0] wbs_dat_i_periph, 
 
     output logic                        wbs_ack_o_m,
     output logic                 [31:0] wbs_dat_o_m,
@@ -40,16 +40,16 @@ module wishbone_decoder #(
     input logic              [31:0] wbs_dat_i_m,
     input logic              [3:0]  wbs_sel_i_m,      
 
-    output logic [NUM_TEAMS + 2:0]      wbs_cyc_o_periph,
-    output logic [NUM_TEAMS + 2:0]      wbs_stb_o_periph, 
-    output logic [NUM_TEAMS + 2:0]      wbs_we_o_periph, 
-    output logic [NUM_TEAMS + 2:0][31:0]wbs_adr_o_periph, 
-    output logic [NUM_TEAMS + 2:0][31:0]wbs_dat_o_periph,
-    output logic [NUM_TEAMS + 2:0][3:0] wbs_sel_o_periph 
+    output logic [NUM_TEAMS + 3:0]      wbs_cyc_o_periph,
+    output logic [NUM_TEAMS + 3:0]      wbs_stb_o_periph, 
+    output logic [NUM_TEAMS + 3:0]      wbs_we_o_periph, 
+    output logic [NUM_TEAMS + 3:0][31:0]wbs_adr_o_periph, 
+    output logic [NUM_TEAMS + 3:0][31:0]wbs_dat_o_periph,
+    output logic [NUM_TEAMS + 3:0][3:0] wbs_sel_o_periph 
 );
 
-logic [NUM_TEAMS + 3:0] curr_state;
-logic [NUM_TEAMS + 3:0] next_state;
+logic [NUM_TEAMS + 4:0] curr_state;
+logic [NUM_TEAMS + 4:0] next_state;
 
 logic ack_reg, next_ack_reg;
 logic [31:0] dat_reg, next_dat_reg;
@@ -90,7 +90,7 @@ always @(*) begin
     // wbs_ack_o_m = '0;
     // wbs_dat_o_m = '0;
 
-    for(state_idx = 0; state_idx <= (NUM_TEAMS + 3); state_idx++) begin
+    for(state_idx = 0; state_idx <= (NUM_TEAMS + 4); state_idx++) begin
         if(curr_state == '1) begin //SRAM special state
             next_state = 1 << 1;
 
@@ -144,15 +144,15 @@ always @(*) begin
                         // next_ack_reg        = 1'b1;
                     end
                     32'h30??????: begin //user project address space
-                        next_state = 1 << (3 + wbs_adr_i_m[19:16]);
+                        next_state = 1 << (4 + wbs_adr_i_m[19:16]); //0x30-X----
                         
-                        wbs_cyc_o_periph[2 + wbs_adr_i_m[19:16]] = wbs_cyc_i_m;
-                        wbs_stb_o_periph[2 + wbs_adr_i_m[19:16]] = wbs_stb_i_m;
-                        wbs_we_o_periph[2 + wbs_adr_i_m[19:16]]  = wbs_we_i_m;
-                        wbs_adr_o_periph[2 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_adr_i_m;
-                        wbs_dat_o_periph[2 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_dat_i_m;
-                        wbs_sel_o_periph[2 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_sel_i_m;
-                        next_dat_reg        = wbs_dat_i_periph[2 + {28'd0, wbs_adr_i_m[19:16]}];
+                        wbs_cyc_o_periph[3 + wbs_adr_i_m[19:16]] = wbs_cyc_i_m;
+                        wbs_stb_o_periph[3 + wbs_adr_i_m[19:16]] = wbs_stb_i_m;
+                        wbs_we_o_periph[3 + wbs_adr_i_m[19:16]]  = wbs_we_i_m;
+                        wbs_adr_o_periph[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_adr_i_m;
+                        wbs_dat_o_periph[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_dat_i_m;
+                        wbs_sel_o_periph[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_sel_i_m;
+                        next_dat_reg        = wbs_dat_i_periph[3 + {28'd0, wbs_adr_i_m[19:16]}];
                         next_ack_reg        = 1'b1;
                     end
                     default: begin

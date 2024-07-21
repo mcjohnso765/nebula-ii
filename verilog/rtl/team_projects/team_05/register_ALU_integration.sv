@@ -1,4 +1,4 @@
-module register_ALU_integration(
+module t05_register_ALU_integration(
     // inputs
     //registers
     input logic [31:0] write_data,
@@ -19,7 +19,7 @@ module register_ALU_integration(
 );
 
     logic [31:0] reg1, reg2;
-    register_file regfile ( 
+    t05_register_file regfile ( 
         .reg_write(write_data),
         .rd(rd),
         .rs1(rs1),
@@ -32,7 +32,7 @@ module register_ALU_integration(
         .reg2(reg2)
         );
 
-    ALU alu_grab(
+    t05_ALU alu_grab(
         .ALU_source(ALU_source),
         .opcode(opcode),
         .funct3(funct3),
@@ -52,7 +52,7 @@ module register_ALU_integration(
 
 endmodule
 
-module ALU(
+module t05_ALU(
     input logic ALU_source,
     input logic [6:0] opcode,
     input logic [2:0] funct3,
@@ -141,7 +141,7 @@ always_comb begin
     end
 endmodule
 
-module register_file (
+module t05_register_file (
     input logic [31:0] reg_write, 
     input logic [4:0] rd, rs1, rs2, 
     input logic clk, rst, write,

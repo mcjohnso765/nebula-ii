@@ -23,7 +23,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module fsm_playing(
+module t07_fsm_playing(
     input logic nrst,
     input logic clk,
     input logic strobe,

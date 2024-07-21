@@ -8,6 +8,6 @@
         - pressing the button within the table 2 * 2
         - pressing the button try to move out of the border
 */
-module tb_fsm_playing_mod_locator ();
+module t07_tb_fsm_playing_mod_locator ();
     
 endmodule

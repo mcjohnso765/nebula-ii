@@ -5,7 +5,7 @@
     The random number is trigger when the button strobe is detected. 
     This module was so incredibly hard to implement and debug because of metastable asyncrhonous reset
 */
-module random_gen_wire_color
+module t07_random_gen_wire_color
 (
     input logic clk,
     input logic nrst,

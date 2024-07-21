@@ -1,4 +1,4 @@
-module sound_posedge_detector (
+module t09_sound_posedge_detector (
 	clk,
 	nRst,
 	goodColl_i,

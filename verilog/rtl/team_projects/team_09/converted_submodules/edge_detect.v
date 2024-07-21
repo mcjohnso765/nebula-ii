@@ -1,4 +1,4 @@
-module edge_detect (
+module t09_edge_detect (
 	signal,
 	clk,
 	nrst,

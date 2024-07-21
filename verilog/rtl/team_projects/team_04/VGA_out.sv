@@ -4,7 +4,7 @@
 
 
 
-module VGA_out(
+module t04_VGA_out(
     input logic [31:0] SRAM_data_in, // These are 32 bits that the VGA receives from memory that gets sent as pixel_data
     input logic SRAM_busy,          // SRAM busy flag, acts as an enable to send pixel_data
     input logic clk, nrst,

@@ -1,4 +1,4 @@
-module dac_counter (
+module t09_dac_counter (
 	clk,
 	nRst,
 	at_max,

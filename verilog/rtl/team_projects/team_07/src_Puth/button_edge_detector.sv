@@ -4,7 +4,7 @@
     debounce the buttons input (UP, DOWN, LEFT, RIGHT, SELECT, BACK), 
   and output the debounced signal of each button and the OR strobe of all the buttons
 */
-module button_edge_detector (
+module t07_button_edge_detector (
     input logic clk,
     input logic nrst,
     input logic up, down, left, right, select, back,
@@ -16,12 +16,12 @@ module button_edge_detector (
   logic edge_up, edge_down, edge_left, edge_right, edge_select, edge_back; // signal of button press on the current clock cycle
   logic debounce_up, debounce_down, debounce_left, debounce_right, debounce_select, debounce_back;
   
-  Button buttonUp(nrst, clk, up, debounce_up);
-  Button buttonDown(nrst, clk, down, debounce_down);
-  Button buttonLeft(nrst, clk, left, debounce_left);
-  Button buttonRight(nrst, clk, right, debounce_right);
-  Button buttonSelect(nrst, clk, select, debounce_select);
-  Button buttonBack(nrst, clk, back, debounce_back);
+  t07_Button buttonUp(nrst, clk, up, debounce_up);
+  t07_Button buttonDown(nrst, clk, down, debounce_down);
+  t07_Button buttonLeft(nrst, clk, left, debounce_left);
+  t07_Button buttonRight(nrst, clk, right, debounce_right);
+  t07_Button buttonSelect(nrst, clk, select, debounce_select);
+  t07_Button buttonBack(nrst, clk, back, debounce_back);
 
   always_ff @(posedge clk, negedge nrst) begin
     if (~nrst) begin
@@ -72,7 +72,7 @@ module button_edge_detector (
 endmodule
 
 
-module Button (
+module t07_Button (
   input   nrst,
 	input         clk,     // clock input from FPGA (12MHz)
 	input         noisy,   // noisy button input

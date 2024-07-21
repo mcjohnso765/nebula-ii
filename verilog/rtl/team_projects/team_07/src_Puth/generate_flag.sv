@@ -1,4 +1,4 @@
-module generate_flag (
+module t07_generate_flag (
   // This module intakes coordinates of the blocks containing the flag and outputs the pixel the flag is on
   input  logic       clk, nrst,
   input  logic [8:0] x,

@@ -46,7 +46,7 @@ module top (
 	input wire txready;
 	input wire rxready;
 	wire reseta;
-	assembly game(
+	t06_assembly game(
 		.clk(hz100),
 		.nrst(reset),
 		.enable(1'b1),

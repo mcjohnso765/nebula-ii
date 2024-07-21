@@ -1,4 +1,4 @@
-module generate_player (
+module t07_generate_player (
   // This module intakes coordinates of the blocks containing the player and outputs the pixel the player is on
   input logic nrst,
   input logic clk,

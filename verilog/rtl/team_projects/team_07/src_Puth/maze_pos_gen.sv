@@ -9,7 +9,7 @@
 `define LOST 3'b010
 `define WON 3'b011
 
-module maze_pos_gen(
+module t07_maze_pos_gen(
     input logic nrst,
     input logic clk,
     input logic activate_rand,
@@ -25,21 +25,21 @@ module maze_pos_gen(
     logic [2:0] rand_dest_y;
     logic [2:0] rand_map_select;
     
-    random_gen_maze_pos start_pos_gen ( 
+    t07_random_gen_maze_pos start_pos_gen ( 
         .nrst(nrst),
         .clk(clk),
         .random_seed(12'd4069),
         .rand_x(rand_start_pos_x),
         .rand_y(rand_start_pos_y)
     );
-    random_gen_maze_pos dest_pos_gen (
+    t07_random_gen_maze_pos dest_pos_gen (
         .nrst(nrst), 
         .clk(clk), 
         .random_seed(12'd3011),
         .rand_x(rand_dest_x), 
         .rand_y(rand_dest_y)
     );
-    random_gen_maze_ms map_select_gen (
+    t07_random_gen_maze_ms map_select_gen (
         .nrst(nrst),
         .clk(clk),
         .random_seed(12'd2393),

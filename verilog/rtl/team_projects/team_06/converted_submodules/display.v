@@ -1,5 +1,5 @@
 `default_nettype none
-module display (
+module t06_display (
 	gameState,
 	gameMode,
 	appleLuck,

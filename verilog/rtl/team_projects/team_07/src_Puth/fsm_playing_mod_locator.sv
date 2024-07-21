@@ -20,7 +20,7 @@
 `define LOST 3'b010
 `define WON 3'b011
 
-module fsm_playing_mod_locator
+module t07_fsm_playing_mod_locator
 (
     input logic nrst,
     input logic clk,

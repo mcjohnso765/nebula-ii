@@ -20,7 +20,7 @@
 `define BACK 6'b100000
 `define NO_PRESS 6'b000000
 
-module maze_mazer_locator(
+module t07_maze_mazer_locator(
     input logic nrst,
     input logic clk,
     input logic [5:0] button,

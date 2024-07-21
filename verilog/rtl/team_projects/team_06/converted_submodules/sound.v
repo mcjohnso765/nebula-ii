@@ -1,4 +1,4 @@
-module sound (
+module t06_sound (
 	note,
 	max_in,
 	ratio_lookup

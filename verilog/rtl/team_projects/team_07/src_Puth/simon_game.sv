@@ -3,7 +3,7 @@
     Description:
         integrate the simon game module
 */
-module simon_game(
+module t07_simon_game(
     input logic nrst,
     input logic clk,
     input logic strobe,
@@ -22,14 +22,14 @@ module simon_game(
     logic [9:0] simon_sequence_bus;    // 5 stages, 2-bit value vary from 1-4
     logic [3:0] simon_state;
 
-    simon_sequence_gen simon_sequence_gen_0(
+    t07_simon_sequence_gen simon_sequence_gen_0(
         .nrst(nrst),
         .clk(clk),
         .activate_rand(activate_rand),
         .simon_sequence_bus(simon_sequence_bus)
     );
 
-    simon_light_control simon_light_control_0(
+    t07_simon_light_control simon_light_control_0(
         .nrst(nrst),
         .clk(clk),
         .s_strobe(s_strobe),
@@ -40,7 +40,7 @@ module simon_game(
         .simon_light_up_state(simon_light_up_state),
         .simon_light_up_manual(simon_light_up_manual)
     );
-    simon_press_detector simon_press_detector(
+    t07_simon_press_detector simon_press_detector(
         .nrst(nrst),
         .clk(clk),
         .strobe(strobe),

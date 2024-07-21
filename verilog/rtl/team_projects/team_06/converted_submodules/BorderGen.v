@@ -1,4 +1,4 @@
-module BorderGen (
+module t06_BorderGen (
 	clk,
 	nrst,
 	enable_in,

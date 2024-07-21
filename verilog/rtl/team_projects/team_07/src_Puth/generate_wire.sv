@@ -5,7 +5,7 @@
     then generate the signal indicating the wire with the corresponding color 
     and status (cut/uncut) and the highlight around the selected wire
 */
-module generate_wire (
+module t07_generate_wire (
     input logic nrst,
     input logic clk,
     input logic [8:0] x,
