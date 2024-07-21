@@ -51,6 +51,16 @@ module nebula_ii (
     // wire [2:0] designs_irq [NUM_TEAMS:0];
     assign irq = 3'b0; // Default of 0
 
+    //Project Manager Arbitrator Signals
+    wire [31:0] arbitrator_dat_i [NUM_TEAMS:0];
+    wire [31:0] arbitrator_adr_i [NUM_TEAMS:0];
+    reg [31:0] arbitrator_dat_o [NUM_TEAMS:0];
+    wire [3:0] arbitrator_sel_i [NUM_TEAMS:0];
+    wire [NUM_TEAMS:0] arbitrator_ack_o;
+    wire [NUM_TEAMS:0] arbitrator_we_i;
+    wire [NUM_TEAMS:0] arbitrator_stb_i;
+    wire [NUM_TEAMS:0] arbitrator_cyc_i;
+
     //to arbitrator
     wire        wbs_ack_o_m;
     wire [31:0] wbs_dat_o_m;
@@ -87,6 +97,72 @@ module nebula_ii (
     reg [3:0]          wbs_sel_o_projects [NUM_TEAMS:0];
     wire [3:0]          wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
 
+
+    //Team 2 Outputs
+    assign wbs_ack_i_projects[2]  = 1'b0;
+    assign wbs_dat_i_projects[2]  = 32'b0;
+    assign designs_la_data_out[2] = 128'b0;
+    assign designs_gpio_out[2]    = 38'b0;
+    assign designs_gpio_oeb[2]    = 38'h3FFFFFFFFF;
+    assign arbitrator_adr_i[2]    = 32'b0;
+    assign arbitrator_dat_i[2]    = 32'b0;
+    assign arbitrator_sel_i[2]    = 4'b0;
+    assign arbitrator_we_i[2]     = 1'b0;
+    assign arbitrator_stb_i[2]    = 1'b0;
+    assign arbitrator_cyc_i[2]    = 1'b0;
+
+    //Team 3 Outputs
+    assign wbs_ack_i_projects[3]  = 1'b0;
+    assign wbs_dat_i_projects[3]  = 32'b0;
+    assign designs_la_data_out[3] = 128'b0;
+    assign designs_gpio_out[3]    = 38'b0;
+    assign designs_gpio_oeb[3]    = 38'h3FFFFFFFFF;
+    assign arbitrator_adr_i[3]    = 32'b0;
+    assign arbitrator_dat_i[3]    = 32'b0;
+    assign arbitrator_sel_i[3]    = 4'b0;
+    assign arbitrator_we_i[3]     = 1'b0;
+    assign arbitrator_stb_i[3]    = 1'b0;
+    assign arbitrator_cyc_i[3]    = 1'b0;
+
+    //Team 8 Outputs
+    assign wbs_ack_i_projects[8]  = 1'b0;
+    assign wbs_dat_i_projects[8]  = 32'b0;
+    assign designs_la_data_out[8] = 128'b0;
+    assign designs_gpio_out[8]    = 38'b0;
+    assign designs_gpio_oeb[8]    = 38'h3FFFFFFFFF;
+    assign arbitrator_adr_i[8]    = 32'b0;
+    assign arbitrator_dat_i[8]    = 32'b0;
+    assign arbitrator_sel_i[8]    = 4'b0;
+    assign arbitrator_we_i[8]     = 1'b0;
+    assign arbitrator_stb_i[8]    = 1'b0;
+    assign arbitrator_cyc_i[8]    = 1'b0;
+
+    //Team 11 Outputs
+    assign wbs_ack_i_projects[11]  = 1'b0;
+    assign wbs_dat_i_projects[11]  = 32'b0;
+    assign designs_la_data_out[11] = 128'b0;
+    assign designs_gpio_out[11]    = 38'b0;
+    assign designs_gpio_oeb[11]    = 38'h3FFFFFFFFF;
+    assign arbitrator_adr_i[11]    = 32'b0;
+    assign arbitrator_dat_i[11]    = 32'b0;
+    assign arbitrator_sel_i[11]    = 4'b0;
+    assign arbitrator_we_i[11]     = 1'b0;
+    assign arbitrator_stb_i[11]    = 1'b0;
+    assign arbitrator_cyc_i[11]    = 1'b0;
+    
+    //Team 12 Outputs
+    assign wbs_ack_i_projects[12]  = 1'b0;
+    assign wbs_dat_i_projects[12]  = 32'b0;
+    assign designs_la_data_out[12] = 128'b0;
+    assign designs_gpio_out[12]    = 38'b0;
+    assign designs_gpio_oeb[12]    = 38'h3FFFFFFFFF;
+    assign arbitrator_adr_i[12]    = 32'b0;
+    assign arbitrator_dat_i[12]    = 32'b0;
+    assign arbitrator_sel_i[12]    = 4'b0;
+    assign arbitrator_we_i[12]     = 1'b0;
+    assign arbitrator_stb_i[12]    = 1'b0;
+    assign arbitrator_cyc_i[12]    = 1'b0;
+
     // Sample Project Instance
     sample_team_proj_Wrapper sample_team_proj_Wrapper (
     `ifdef USE_POWER_PINS
@@ -113,7 +189,16 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[0]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[0]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[0]), // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[0]),
+        .ACK_I(arbitrator_ack_o[0]),
+        .ADR_O(arbitrator_adr_i[0]),
+        .DAT_O(arbitrator_dat_i[0]),
+        .SEL_O(arbitrator_sel_i[0]),
+        .WE_O  (arbitrator_we_i[0]),
+        .STB_O(arbitrator_stb_i[0]),
+        .CYC_O(arbitrator_cyc_i[0])
     );
 
     // Team_01 Project Instance
@@ -142,7 +227,16 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[1]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[1]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[1]), // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[1]),
+        .ACK_I(arbitrator_ack_o[1]),
+        .ADR_O(arbitrator_adr_i[1]),
+        .DAT_O(arbitrator_dat_i[1]),
+        .SEL_O(arbitrator_sel_i[1]),
+        .WE_O  (arbitrator_we_i[1]),
+        .STB_O(arbitrator_stb_i[1]),
+        .CYC_O(arbitrator_cyc_i[1])
     );
 
     // Team_04 Project Instance
@@ -171,7 +265,16 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[4]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[4]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[4]), // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[4]),
+        .ACK_I(arbitrator_ack_o[4]),
+        .ADR_O(arbitrator_adr_i[4]),
+        .DAT_O(arbitrator_dat_i[4]),
+        .SEL_O(arbitrator_sel_i[4]),
+        .WE_O  (arbitrator_we_i[4]),
+        .STB_O(arbitrator_stb_i[4]),
+        .CYC_O(arbitrator_cyc_i[4])
     );
 
     // Team_05 Project Instance
@@ -200,7 +303,16 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[5]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[5]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[5]), // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[5]),
+        .ACK_I(arbitrator_ack_o[5]),
+        .ADR_O(arbitrator_adr_i[5]),
+        .DAT_O(arbitrator_dat_i[5]),
+        .SEL_O(arbitrator_sel_i[5]),
+        .WE_O  (arbitrator_we_i[5]),
+        .STB_O(arbitrator_stb_i[5]),
+        .CYC_O(arbitrator_cyc_i[5])
     );
     
     // Team_06 Project Instance
@@ -229,7 +341,16 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[6]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[6]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[6]), // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[6]),
+        .ACK_I(arbitrator_ack_o[6]),
+        .ADR_O(arbitrator_adr_i[6]),
+        .DAT_O(arbitrator_dat_i[6]),
+        .SEL_O(arbitrator_sel_i[6]),
+        .WE_O  (arbitrator_we_i[6]),
+        .STB_O(arbitrator_stb_i[6]),
+        .CYC_O(arbitrator_cyc_i[6])
     );
     
     // Team_07 Project Instance
@@ -258,7 +379,16 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[7]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[7]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[7]), // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[7]),
+        .ACK_I(arbitrator_ack_o[7]),
+        .ADR_O(arbitrator_adr_i[7]),
+        .DAT_O(arbitrator_dat_i[7]),
+        .SEL_O(arbitrator_sel_i[7]),
+        .WE_O  (arbitrator_we_i[7]),
+        .STB_O(arbitrator_stb_i[7]),
+        .CYC_O(arbitrator_cyc_i[7])
     );
 
     // Team_09 Project Instance
@@ -287,7 +417,16 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[9]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[9]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[9]), // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[9]),
+        .ACK_I(arbitrator_ack_o[9]),
+        .ADR_O(arbitrator_adr_i[9]),
+        .DAT_O(arbitrator_dat_i[9]),
+        .SEL_O(arbitrator_sel_i[9]),
+        .WE_O  (arbitrator_we_i[9]),
+        .STB_O(arbitrator_stb_i[9]),
+        .CYC_O(arbitrator_cyc_i[9])
     );
 
     // Team_10 Project Instance
@@ -316,7 +455,16 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[10]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[10]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[10]), // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[10]),
+        .ACK_I(arbitrator_ack_o[10]),
+        .ADR_O(arbitrator_adr_i[10]),
+        .DAT_O(arbitrator_dat_i[10]),
+        .SEL_O(arbitrator_sel_i[10]),
+        .WE_O  (arbitrator_we_i[10]),
+        .STB_O(arbitrator_stb_i[10]),
+        .CYC_O(arbitrator_cyc_i[10])
     );
     
 
@@ -415,10 +563,27 @@ module nebula_ii (
         end
     end
 
+    //Flattening of arbitrator signals
+    reg [32*(NUM_TEAMS+1)-1:0] arbitrator_dat_i_flat;
+    reg [32*(NUM_TEAMS+1)-1:0] arbitrator_adr_i_flat;
+    wire [32*(NUM_TEAMS+1)-1:0] arbitrator_dat_o_flat;
+    reg [4*(NUM_TEAMS+1)-1:0] arbitrator_sel_i_flat;
+    
+    integer i4;
+    always @* begin
+        for (i4 = 0; i4 <= NUM_TEAMS; i4 = i4 + 1) begin
+            arbitrator_dat_i_flat[i4*32 +: 32] = arbitrator_dat_i[i4];
+            arbitrator_adr_i_flat[i4*32 +: 32] = arbitrator_adr_i[i4];
+            arbitrator_sel_i_flat[i4* 4 +:  4] = arbitrator_sel_i[i4];
+
+            arbitrator_dat_o[i4] = arbitrator_dat_o_flat[i4*32 +: 32];
+        end
+    end
+
     // Wishbone Arbitrator
     // everywhere with squigly brackets is where more manager signals can be concatinated!!!
     wishbone_arbitrator #(
-        .NUM_MANAGERS(1)
+        .NUM_MANAGERS(NUM_TEAMS+2)//+2 for caravel core processor and sample project
     ) wb_arbitrator (
         
     `ifdef USE_POWER_PINS
@@ -430,16 +595,16 @@ module nebula_ii (
         .nRST(~wb_rst_i),
 
         //manager to arbitrator, input
-        .A_ADR_I({wbs_adr_i}),
-        .A_DAT_I({wbs_dat_i}),
-        .A_SEL_I({wbs_sel_i}),
-        .A_WE_I({wbs_we_i}),
-        .A_STB_I({wbs_stb_i}),
-        .A_CYC_I({wbs_cyc_i}),
+        .A_ADR_I({arbitrator_adr_i_flat, wbs_adr_i}),
+        .A_DAT_I({arbitrator_dat_i_flat, wbs_dat_i}),
+        .A_SEL_I({arbitrator_sel_i_flat, wbs_sel_i}),
+        .A_WE_I({arbitrator_we_i, wbs_we_i}),
+        .A_STB_I({arbitrator_stb_i, wbs_stb_i}),
+        .A_CYC_I({arbitrator_cyc_i, wbs_cyc_i}),
 
         //arbitrator to manager, output
-        .A_DAT_O({wbs_dat_o}),
-        .A_ACK_O({wbs_ack_o}),
+        .A_DAT_O({arbitrator_dat_o_flat, wbs_dat_o}),
+        .A_ACK_O({arbitrator_ack_o, wbs_ack_o}),
 
         //arbitrator to peripheral, input
         .DAT_I(wbs_dat_o_m),

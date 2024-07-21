@@ -144,15 +144,15 @@ always @(*) begin
                         // next_ack_reg        = 1'b1;
                     end
                     32'h30??????: begin //user project address space
-                        next_state = 1 << (3 + wbs_adr_i_m[19:16]);
+                        next_state = 1 << (4 + wbs_adr_i_m[19:16]); //0x30-X----
                         
-                        wbs_cyc_o_periph[2 + wbs_adr_i_m[19:16]] = wbs_cyc_i_m;
-                        wbs_stb_o_periph[2 + wbs_adr_i_m[19:16]] = wbs_stb_i_m;
-                        wbs_we_o_periph[2 + wbs_adr_i_m[19:16]]  = wbs_we_i_m;
-                        wbs_adr_o_periph[2 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_adr_i_m;
-                        wbs_dat_o_periph[2 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_dat_i_m;
-                        wbs_sel_o_periph[2 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_sel_i_m;
-                        next_dat_reg        = wbs_dat_i_periph[2 + {28'd0, wbs_adr_i_m[19:16]}];
+                        wbs_cyc_o_periph[3 + wbs_adr_i_m[19:16]] = wbs_cyc_i_m;
+                        wbs_stb_o_periph[3 + wbs_adr_i_m[19:16]] = wbs_stb_i_m;
+                        wbs_we_o_periph[3 + wbs_adr_i_m[19:16]]  = wbs_we_i_m;
+                        wbs_adr_o_periph[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_adr_i_m;
+                        wbs_dat_o_periph[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_dat_i_m;
+                        wbs_sel_o_periph[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_sel_i_m;
+                        next_dat_reg        = wbs_dat_i_periph[3 + {28'd0, wbs_adr_i_m[19:16]}];
                         next_ack_reg        = 1'b1;
                     end
                     default: begin
