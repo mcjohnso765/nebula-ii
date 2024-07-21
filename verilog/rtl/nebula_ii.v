@@ -51,6 +51,16 @@ module nebula_ii (
     // wire [2:0] designs_irq [NUM_TEAMS:0];
     assign irq = 3'b0; // Default of 0
 
+    //Project Manager Arbitrator Signals
+    wire [31:0] arbitrator_dat_i [NUM_TEAMS:0];
+    wire [31:0] arbitrator_adr_i [NUM_TEAMS:0];
+    reg [31:0] arbitrator_dat_o [NUM_TEAMS:0];
+    wire [3:0] arbitrator_sel_i [NUM_TEAMS:0];
+    wire [NUM_TEAMS:0] arbitrator_ack_o;
+    wire [NUM_TEAMS:0] arbitrator_we_i;
+    wire [NUM_TEAMS:0] arbitrator_stb_i;
+    wire [NUM_TEAMS:0] arbitrator_cyc_i;
+
     //to arbitrator
     wire        wbs_ack_o_m;
     wire [31:0] wbs_dat_o_m;
@@ -62,34 +72,99 @@ module nebula_ii (
     wire [31:0] wbs_dat_i_m;
     wire [3:0]  wbs_sel_i_m;
 
-    // Wishbone Slave signals for all projects
-    wire   [NUM_TEAMS:0]     wbs_ack_i_proj;
-    wire [NUM_TEAMS:0][31:0] wbs_dat_i_proj;
-    wire     [NUM_TEAMS:0]   wbs_cyc_o_proj;
-    wire    [NUM_TEAMS:0]    wbs_stb_o_proj;
-    wire    [NUM_TEAMS:0]    wbs_we_o_proj;
-    wire [NUM_TEAMS:0][31:0] wbs_adr_o_proj;
-    wire [NUM_TEAMS:0][31:0] wbs_dat_o_proj;
-    wire [NUM_TEAMS:0][3:0]  wbs_sel_o_proj;
-    
-    wire        wbs_ack_i_samp, wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
-    wire [31:0] wbs_dat_i_samp, wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
 
-    wire        wbs_cyc_o_samp, wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_sram;
-    wire        wbs_stb_o_samp, wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_sram;
-    wire        wbs_we_o_samp, wbs_we_o_gpio, wbs_we_o_la, wbs_we_o_sram;
-    wire [31:0] wbs_adr_o_samp, wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
-    wire [31:0] wbs_dat_o_samp, wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
-    wire [3:0]  wbs_sel_o_samp, wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
+    wire [NUM_TEAMS:0]  wbs_ack_i_projects;
+    wire                wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
     
-    // Assign default values to index 0 of output arrays
-    assign designs_la_data_out[0] = 'b0;
-    assign designs_gpio_out[0] = 'b0;
-    assign designs_gpio_oeb[0] = '1;
+    wire [31:0]         wbs_dat_i_projects [NUM_TEAMS:0];
+    wire [31:0]         wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
+
+    wire [NUM_TEAMS:0]  wbs_cyc_o_projects;
+    wire                wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_sram;
+
+    wire [NUM_TEAMS:0]  wbs_stb_o_projects;
+    wire                wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_sram;
+    
+    wire [NUM_TEAMS:0]  wbs_we_o_projects;
+    wire                wbs_we_o_gpio, wbs_we_o_la, wbs_we_o_sram;
+    
+    reg [31:0]         wbs_adr_o_projects [NUM_TEAMS:0];
+    wire [31:0]         wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
+    
+    reg [31:0]         wbs_dat_o_projects [NUM_TEAMS:0];
+    wire [31:0]         wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
+    
+    reg [3:0]          wbs_sel_o_projects [NUM_TEAMS:0];
+    wire [3:0]          wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
+
+
+    //Team 2 Outputs
+    assign wbs_ack_i_projects[2]  = 1'b0;
+    assign wbs_dat_i_projects[2]  = 32'b0;
+    assign designs_la_data_out[2] = 128'b0;
+    assign designs_gpio_out[2]    = 38'b0;
+    assign designs_gpio_oeb[2]    = 38'h3FFFFFFFFF;
+    assign arbitrator_adr_i[2]    = 32'b0;
+    assign arbitrator_dat_i[2]    = 32'b0;
+    assign arbitrator_sel_i[2]    = 4'b0;
+    assign arbitrator_we_i[2]     = 1'b0;
+    assign arbitrator_stb_i[2]    = 1'b0;
+    assign arbitrator_cyc_i[2]    = 1'b0;
+
+    //Team 3 Outputs
+    assign wbs_ack_i_projects[3]  = 1'b0;
+    assign wbs_dat_i_projects[3]  = 32'b0;
+    assign designs_la_data_out[3] = 128'b0;
+    assign designs_gpio_out[3]    = 38'b0;
+    assign designs_gpio_oeb[3]    = 38'h3FFFFFFFFF;
+    assign arbitrator_adr_i[3]    = 32'b0;
+    assign arbitrator_dat_i[3]    = 32'b0;
+    assign arbitrator_sel_i[3]    = 4'b0;
+    assign arbitrator_we_i[3]     = 1'b0;
+    assign arbitrator_stb_i[3]    = 1'b0;
+    assign arbitrator_cyc_i[3]    = 1'b0;
+
+    //Team 8 Outputs
+    assign wbs_ack_i_projects[8]  = 1'b0;
+    assign wbs_dat_i_projects[8]  = 32'b0;
+    assign designs_la_data_out[8] = 128'b0;
+    assign designs_gpio_out[8]    = 38'b0;
+    assign designs_gpio_oeb[8]    = 38'h3FFFFFFFFF;
+    assign arbitrator_adr_i[8]    = 32'b0;
+    assign arbitrator_dat_i[8]    = 32'b0;
+    assign arbitrator_sel_i[8]    = 4'b0;
+    assign arbitrator_we_i[8]     = 1'b0;
+    assign arbitrator_stb_i[8]    = 1'b0;
+    assign arbitrator_cyc_i[8]    = 1'b0;
+
+    //Team 11 Outputs
+    assign wbs_ack_i_projects[11]  = 1'b0;
+    assign wbs_dat_i_projects[11]  = 32'b0;
+    assign designs_la_data_out[11] = 128'b0;
+    assign designs_gpio_out[11]    = 38'b0;
+    assign designs_gpio_oeb[11]    = 38'h3FFFFFFFFF;
+    assign arbitrator_adr_i[11]    = 32'b0;
+    assign arbitrator_dat_i[11]    = 32'b0;
+    assign arbitrator_sel_i[11]    = 4'b0;
+    assign arbitrator_we_i[11]     = 1'b0;
+    assign arbitrator_stb_i[11]    = 1'b0;
+    assign arbitrator_cyc_i[11]    = 1'b0;
+    
+    //Team 12 Outputs
+    assign wbs_ack_i_projects[12]  = 1'b0;
+    assign wbs_dat_i_projects[12]  = 32'b0;
+    assign designs_la_data_out[12] = 128'b0;
+    assign designs_gpio_out[12]    = 38'b0;
+    assign designs_gpio_oeb[12]    = 38'h3FFFFFFFFF;
+    assign arbitrator_adr_i[12]    = 32'b0;
+    assign arbitrator_dat_i[12]    = 32'b0;
+    assign arbitrator_sel_i[12]    = 4'b0;
+    assign arbitrator_we_i[12]     = 1'b0;
+    assign arbitrator_stb_i[12]    = 1'b0;
+    assign arbitrator_cyc_i[12]    = 1'b0;
 
     // Sample Project Instance
-    // (replace this with your team design instance when testing)
-    team_08_Wrapper team_08_Wrapper (
+    sample_team_proj_Wrapper sample_team_proj_Wrapper (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
@@ -97,14 +172,52 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_o_proj[8]),
-        .wbs_cyc_i(wbs_cyc_o_proj[8]),
-        .wbs_we_i(wbs_we_o_proj[8]),
-        .wbs_sel_i(wbs_sel_o_proj[8]),
-        .wbs_dat_i(wbs_dat_o_proj[8]),
-        .wbs_adr_i(wbs_adr_o_proj[8]),
-        .wbs_ack_o(wbs_ack_i_proj[8]),
-        .wbs_dat_o(wbs_dat_i_proj[8]),
+        .wbs_stb_i(wbs_stb_o_projects[0]),
+        .wbs_cyc_i(wbs_cyc_o_projects[0]),
+        .wbs_we_i(wbs_we_o_projects[0]),
+        .wbs_sel_i(wbs_sel_o_projects[0]),
+        .wbs_dat_i(wbs_dat_o_projects[0]),
+        .wbs_adr_i(wbs_adr_o_projects[0]),
+        .wbs_ack_o(wbs_ack_i_projects[0]),
+        .wbs_dat_o(wbs_dat_i_projects[0]),
+
+        // Logic Analyzer
+        .la_data_in(la_data_in),
+        .la_data_out(designs_la_data_out[0]),
+        .la_oenb(la_oenb),
+
+        // GPIOs
+        .gpio_in(io_in), // Breakout Board Pins
+        .gpio_out(designs_gpio_out[0]), // Breakout Board Pins
+        .gpio_oeb(designs_gpio_oeb[0]), // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[0]),
+        .ACK_I(arbitrator_ack_o[0]),
+        .ADR_O(arbitrator_adr_i[0]),
+        .DAT_O(arbitrator_dat_i[0]),
+        .SEL_O(arbitrator_sel_i[0]),
+        .WE_O  (arbitrator_we_i[0]),
+        .STB_O(arbitrator_stb_i[0]),
+        .CYC_O(arbitrator_cyc_i[0])
+    );
+
+    // Team_01 Project Instance
+    team_01_Wrapper team_01_Wrapper (
+    `ifdef USE_POWER_PINS
+            .vccd1(vccd1),	// User area 1 1.8V power
+            .vssd1(vssd1),	// User area 1 digital ground
+    `endif
+        //Wishbone Slave and user clk, rst
+        .wb_clk_i(wb_clk_i),
+        .wb_rst_i(wb_rst_i),
+        .wbs_stb_i(wbs_stb_o_projects[1]),
+        .wbs_cyc_i(wbs_cyc_o_projects[1]),
+        .wbs_we_i(wbs_we_o_projects[1]),
+        .wbs_sel_i(wbs_sel_o_projects[1]),
+        .wbs_dat_i(wbs_dat_o_projects[1]),
+        .wbs_adr_i(wbs_adr_o_projects[1]),
+        .wbs_ack_o(wbs_ack_i_projects[1]),
+        .wbs_dat_o(wbs_dat_i_projects[1]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
@@ -113,8 +226,8 @@ module nebula_ii (
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
-        .gpio_out(designs_gpio_out[8]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[8]) // Active Low Output Enable
+        .gpio_out(designs_gpio_out[1]), // Breakout Board Pins
+        .gpio_oeb(designs_gpio_oeb[1]) // Active Low Output Enable
     );
 
     // Flattened GPIO outputs
@@ -193,10 +306,46 @@ module nebula_ii (
         .la_data_out(la_data_out)
     );
 
+    // Flattened wbs_dat_i_projects
+    reg [32*(NUM_TEAMS+1)-1:0] wbs_dat_i_projects_flat;
+
+    wire [32*(NUM_TEAMS+1)-1:0] wbs_adr_o_projects_flat;
+    wire [32*(NUM_TEAMS+1)-1:0] wbs_dat_o_projects_flat;
+    wire [4*(NUM_TEAMS+1)-1:0] wbs_sel_o_projects_flat;
+
+    // Flattening of wbs_dat_i_projects
+    integer i3;
+    always @* begin
+        for (i3 = 0; i3 <= NUM_TEAMS; i3 = i3 + 1) begin
+            wbs_dat_i_projects_flat[i3*32 +: 32] = wbs_dat_i_projects[i3];//[38i:38(i+1)-1]
+
+            wbs_adr_o_projects[i3] = wbs_adr_o_projects_flat[i3*32 +: 32];//[38i:38(i+1)-1]
+            wbs_dat_o_projects[i3] = wbs_dat_o_projects_flat[i3*32 +: 32];//[38i:38(i+1)-1]
+            wbs_sel_o_projects[i3] = wbs_sel_o_projects_flat[i3*4 +: 4];//[38i:38(i+1)-1]
+        end
+    end
+
+    //Flattening of arbitrator signals
+    reg [32*(NUM_TEAMS+1)-1:0] arbitrator_dat_i_flat;
+    reg [32*(NUM_TEAMS+1)-1:0] arbitrator_adr_i_flat;
+    wire [32*(NUM_TEAMS+1)-1:0] arbitrator_dat_o_flat;
+    reg [4*(NUM_TEAMS+1)-1:0] arbitrator_sel_i_flat;
+    
+    integer i4;
+    always @* begin
+        for (i4 = 0; i4 <= NUM_TEAMS; i4 = i4 + 1) begin
+            arbitrator_dat_i_flat[i4*32 +: 32] = arbitrator_dat_i[i4];
+            arbitrator_adr_i_flat[i4*32 +: 32] = arbitrator_adr_i[i4];
+            arbitrator_sel_i_flat[i4* 4 +:  4] = arbitrator_sel_i[i4];
+
+            arbitrator_dat_o[i4] = arbitrator_dat_o_flat[i4*32 +: 32];
+        end
+    end
+
     // Wishbone Arbitrator
     // everywhere with squigly brackets is where more manager signals can be concatinated!!!
     wishbone_arbitrator #(
-        .NUM_MANAGERS(1)
+        .NUM_MANAGERS(NUM_TEAMS+2)//+2 for caravel core processor and sample project
     ) wb_arbitrator (
         
     `ifdef USE_POWER_PINS
@@ -208,16 +357,16 @@ module nebula_ii (
         .nRST(~wb_rst_i),
 
         //manager to arbitrator, input
-        .A_ADR_I({wbs_adr_i}),
-        .A_DAT_I({wbs_dat_i}),
-        .A_SEL_I({wbs_sel_i}),
-        .A_WE_I({wbs_we_i}),
-        .A_STB_I({wbs_stb_i}),
-        .A_CYC_I({wbs_cyc_i}),
+        .A_ADR_I({arbitrator_adr_i_flat, wbs_adr_i}),
+        .A_DAT_I({arbitrator_dat_i_flat, wbs_dat_i}),
+        .A_SEL_I({arbitrator_sel_i_flat, wbs_sel_i}),
+        .A_WE_I({arbitrator_we_i, wbs_we_i}),
+        .A_STB_I({arbitrator_stb_i, wbs_stb_i}),
+        .A_CYC_I({arbitrator_cyc_i, wbs_cyc_i}),
 
         //arbitrator to manager, output
-        .A_DAT_O({wbs_dat_o}),
-        .A_ACK_O({wbs_ack_o}),
+        .A_DAT_O({arbitrator_dat_o_flat, wbs_dat_o}),
+        .A_ACK_O({arbitrator_ack_o, wbs_ack_o}),
 
         //arbitrator to peripheral, input
         .DAT_I(wbs_dat_o_m),
@@ -245,8 +394,8 @@ module nebula_ii (
         .nRST(~wb_rst_i),
 
         //muxxing signals that go to manager
-        .wbs_ack_i_periph({wbs_ack_i_proj[NUM_TEAMS:1], wbs_ack_i_la, wbs_ack_i_gpio, wbs_ack_i_sram}),
-        .wbs_dat_i_periph({wbs_dat_i_proj[NUM_TEAMS:1], wbs_dat_i_la, wbs_dat_i_gpio, wbs_dat_i_sram}),
+        .wbs_ack_i_periph({wbs_ack_i_projects, wbs_ack_i_la, wbs_ack_i_gpio, wbs_ack_i_sram}),
+        .wbs_dat_i_periph({wbs_dat_i_projects_flat, wbs_dat_i_la, wbs_dat_i_gpio, wbs_dat_i_sram}),
 
         .wbs_ack_o_m(wbs_ack_o_m),
         .wbs_dat_o_m(wbs_dat_o_m),
@@ -259,12 +408,12 @@ module nebula_ii (
         .wbs_dat_i_m(wbs_dat_i_m),
         .wbs_sel_i_m(wbs_sel_i_m),
 
-        .wbs_cyc_o_periph({wbs_cyc_o_proj[NUM_TEAMS:1], wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_sram}),
-        .wbs_stb_o_periph({wbs_stb_o_proj[NUM_TEAMS:1], wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_sram}),
-        .wbs_we_o_periph({wbs_we_o_proj[NUM_TEAMS:1], wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_sram}),
-        .wbs_adr_o_periph({wbs_adr_o_proj[NUM_TEAMS:1], wbs_adr_o_la, wbs_adr_o_gpio, wbs_adr_o_sram}),
-        .wbs_dat_o_periph({wbs_dat_o_proj[NUM_TEAMS:1], wbs_dat_o_la, wbs_dat_o_gpio, wbs_dat_o_sram}),
-        .wbs_sel_o_periph({wbs_sel_o_proj[NUM_TEAMS:1], wbs_sel_o_la, wbs_sel_o_gpio, wbs_sel_o_sram})
+        .wbs_cyc_o_periph({wbs_cyc_o_projects, wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_sram}),
+        .wbs_stb_o_periph({wbs_stb_o_projects, wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_sram}),
+        .wbs_we_o_periph({wbs_we_o_projects, wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_sram}),
+        .wbs_adr_o_periph({wbs_adr_o_projects_flat, wbs_adr_o_la, wbs_adr_o_gpio, wbs_adr_o_sram}),
+        .wbs_dat_o_periph({wbs_dat_o_projects_flat, wbs_dat_o_la, wbs_dat_o_gpio, wbs_dat_o_sram}),
+        .wbs_sel_o_periph({wbs_sel_o_projects_flat, wbs_sel_o_la, wbs_sel_o_gpio, wbs_sel_o_sram})
     );
 
     // SRAM

@@ -47,7 +47,17 @@ module team_06_Wrapper (
     output wire [37:0] gpio_oeb, // Active Low Output Enable
 
     // IRQ signal
-    output wire [2:0] irq
+    output wire [2:0] irq,
+
+    // Wishbone Master signals
+    output wire [31:0] ADR_O,
+    output wire [31:0] DAT_O,
+    output wire [3:0]  SEL_O,
+    output wire        WE_O,
+    output wire        STB_O,
+    output wire        CYC_O,
+    input  wire [31:0] DAT_I,
+    input wire         ACK_I
 );
     /*
     *--------------------------------------------------------------
@@ -66,6 +76,14 @@ module team_06_Wrapper (
     *--------------------------------------------------------------
     */
 
+    //Unused connection to nebula_ii wishbone arbitrator
+    assign ADR_O = 32'b0;
+    assign DAT_O = 32'b0;
+    assign SEL_O = 4'b0;
+    assign  WE_O = 1'b0;
+    assign STB_O = 1'b0;
+    assign CYC_O = 1'b0;
+
     //Assign to unused outputs
     assign irq = 3'b000;	// Unused
     assign gpio_oeb[4:1] = 4'b1111;//Set all to inputs
@@ -73,6 +91,10 @@ module team_06_Wrapper (
 
     // Instantiate Bus Wrapper module here
     team_06_WB team_06_WB (
+        `ifdef USE_POWER_PINS
+            .VPWR(vccd1),	// User area 1 1.8V power
+            .VGND(vssd1),	// User area 1 digital ground
+        `endif
         .ext_clk(wb_clk_i),
         .clk_i(wb_clk_i),
         .rst_i(wb_rst_i),
@@ -84,7 +106,6 @@ module team_06_Wrapper (
         .stb_i(wbs_stb_i),
         .ack_o(wbs_ack_o),
         .we_i(wbs_we_i),
-        .IRQ(),//1 bit
         .la_data_in(la_data_in),
         .la_data_out(la_data_out),
         .la_oenb(la_oenb),

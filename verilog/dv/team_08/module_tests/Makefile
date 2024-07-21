@@ -25,7 +25,7 @@ source_files:
 
 # Run source simulations with VCS and DVE
 .PHONY: sim-source-%
-sim-source-%:snakeGame_tb.sv source_files
+sim-source-%: %_tb.sv source_files
 	mkdir -p ./$(BUILD)
 	vcs -sverilog -lca -debug_access+all -Mdir=$(BUILD)/csrc -o $(BUILD)/simv -f files.f \
 	$(USER_PROJECT_VERILOG)/dv/tb_macros.vh $<

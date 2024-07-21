@@ -1,0 +1,29 @@
+start:
+    addi x1, x0, 11
+    sw x1, 2000(x0)
+    addi x1, x0, 12
+    sw x1, 2004(x0)
+    addi x1, x0, 13
+    sw x1, 2008(x0)
+    addi x1, x0, 14
+    sw x1, 2012(x0)
+    
+    addi x1, x0, 21
+    sw x1, 2016(x0)
+    addi x1, x0, 22
+    sw x1, 2020(x0)
+    addi x1, x0, 23
+    sw x1, 2024(x0)
+    addi x1, x0, 24
+    sw x1, 2028(x0)
+    
+    addi x1, x0, 31
+    sw x1, 2032(x0)
+    addi x1, x0, 32
+    sw x1, 2036(x0)
+    addi x1, x0, 33
+    sw x1, 2040(x0)
+    addi x1, x0, 34
+    sw x1, 2044(x0)
+    
+	jal x0, start
