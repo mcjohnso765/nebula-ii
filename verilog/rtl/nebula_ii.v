@@ -124,19 +124,6 @@ module nebula_ii (
     assign arbitrator_stb_i[3]    = 1'b0;
     assign arbitrator_cyc_i[3]    = 1'b0;
 
-    //Team 8 Outputs
-    assign wbs_ack_i_projects[8]  = 1'b0;
-    assign wbs_dat_i_projects[8]  = 32'b0;
-    assign designs_la_data_out[8] = 128'b0;
-    assign designs_gpio_out[8]    = 38'b0;
-    assign designs_gpio_oeb[8]    = 38'h3FFFFFFFFF;
-    assign arbitrator_adr_i[8]    = 32'b0;
-    assign arbitrator_dat_i[8]    = 32'b0;
-    assign arbitrator_sel_i[8]    = 4'b0;
-    assign arbitrator_we_i[8]     = 1'b0;
-    assign arbitrator_stb_i[8]    = 1'b0;
-    assign arbitrator_cyc_i[8]    = 1'b0;
-
     //Team 11 Outputs
     assign wbs_ack_i_projects[11]  = 1'b0;
     assign wbs_dat_i_projects[11]  = 32'b0;
@@ -389,6 +376,44 @@ module nebula_ii (
         .WE_O  (arbitrator_we_i[7]),
         .STB_O(arbitrator_stb_i[7]),
         .CYC_O(arbitrator_cyc_i[7])
+    );
+
+    // Team_08 Project Instance
+    team_08_Wrapper team_08_Wrapper (
+    `ifdef USE_POWER_PINS
+            .vccd1(vccd1),	// User area 1 1.8V power
+            .vssd1(vssd1),	// User area 1 digital ground
+    `endif
+        //Wishbone Slave and user clk, rst
+        .wb_clk_i(wb_clk_i),
+        .wb_rst_i(wb_rst_i),
+        .wbs_stb_i(wbs_stb_o_projects[8]),
+        .wbs_cyc_i(wbs_cyc_o_projects[8]),
+        .wbs_we_i(wbs_we_o_projects[8]),
+        .wbs_sel_i(wbs_sel_o_projects[8]),
+        .wbs_dat_i(wbs_dat_o_projects[8]),
+        .wbs_adr_i(wbs_adr_o_projects[8]),
+        .wbs_ack_o(wbs_ack_i_projects[8]),
+        .wbs_dat_o(wbs_dat_i_projects[8]),
+
+        // Logic Analyzer
+        .la_data_in(la_data_in),
+        .la_data_out(designs_la_data_out[8]),
+        .la_oenb(la_oenb),
+
+        // GPIOs
+        .gpio_in(io_in), // Breakout Board Pins
+        .gpio_out(designs_gpio_out[8]), // Breakout Board Pins
+        .gpio_oeb(designs_gpio_oeb[8]), // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[8]),
+        .ACK_I(arbitrator_ack_o[8]),
+        .ADR_O(arbitrator_adr_i[8]),
+        .DAT_O(arbitrator_dat_i[8]),
+        .SEL_O(arbitrator_sel_i[8]),
+        .WE_O  (arbitrator_we_i[8]),
+        .STB_O(arbitrator_stb_i[8]),
+        .CYC_O(arbitrator_cyc_i[8])
     );
 
     // Team_09 Project Instance

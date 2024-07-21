@@ -514,6 +514,10 @@ tbsim-source-%:
 	make sim-source-$(lastword $(subst -, ,$*))
 
 # FYI: Run 'make clean' to clean all temporary files produced by testbenches
+.PHONY: team-08-sv2v
+team-08-sv2v:
+	mkdir -p verilog/rtl/team_projects/team_08/sv2v
+	sv2v verilog/rtl/team_projects/team_08/team_src/*.*v -w verilog/rtl/team_projects/team_08/sv2v/project.v
 
 sv2v:
 	@echo "Making VSRC Directory"

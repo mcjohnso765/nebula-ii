@@ -1,8 +1,8 @@
 // $Id: $
 // File name:   team_08_Wrapper.sv
-// Created:     MM/DD/YYYY
-// Author:      <Full Name>
-// Description: <Module Description>
+// Created:     07/08/2024
+// Author:      <Creighton Bennett>
+// Description: <This is our module that we are using >
 
 module team_08_Wrapper (
 
@@ -11,8 +11,6 @@ module team_08_Wrapper (
     inout vssd1,	// User area 1 digital ground
 `endif
 
-    // Chip Select (Active Low)
-    input wire ncs,
 
     /*
     *--------------------------------------------------------------
@@ -83,7 +81,7 @@ module team_08_Wrapper (
     assign  WE_O = 1'b0;
     assign STB_O = 1'b0;
     assign CYC_O = 1'b0;
-
+   
     //Assign to unused outputs
     assign irq = 3'b000;	// Unused
     assign gpio_oeb[4:1] = 4'b1111;//Set all to inputs
