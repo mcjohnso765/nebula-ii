@@ -1,68 +1,81 @@
 # STARS 2024 Design Final Project
 
 ## TEAM NAME
-* Team Member 1 Name
-* Team Member 2 Name
-* Team Member 3 Name
-* Team Member 4 Name
-* Peer Mentor Name
+
+* Jason Klutho
+* Alex Weyer
+* Levi Thompson
+* John Brower
+* Hassan Al-alawi
 
 ## Project Type
-Short (2-3 sentences) project description
+
+The Team 12 STARS 2024 project is a polyphonic synthesiszer with 75 degress of polyphony and interfaced to a MIDI-UART port. The project can be interacted with by attaching a MIDI capable device to the chip or streaming a MIDI file over a USB to MIDI cable from any PC.
 
 ## Pin Layout
+
 Note that on the final chip, there are 38 gpio of which you have access to 4.
 The first number represents the GPIO on the physical board. The second number
 in brackets represents the number in your verilog code
 
-00[00] Input/Output: Pin_Function
-01[--] Input/Output: Pin_Function
-02[--] Input/Output: Pin_Function
-03[--] Input/Output: Pin_Function
-04[--] Input/Output: Pin_Function
-05[01] Input/Output: Pin_Function
-06[02] Input/Output: Pin_Function 
-07[03] Input/Output: Pin_Function 
-08[04] Input/Output: Pin_Function 
-09[05] Input/Output: Pin_Function 
-10[06] Input/Output: Pin_Function
-11[07] Input/Output: Pin_Function
-12[08] Input/Output: Pin_Function
-13[09] Input/Output: Pin_Function 
-14[10] Input/Output: Pin_Function 
-15[11] Input/Output: Pin_Function 
-16[12] Input/Output: Pin_Function 
-17[13] Input/Output: Pin_Function 
-18[14] Input/Output: Pin_Function 
-19[15] Input/Output: Pin_Function 
-20[16] Input/Output: Pin_Function 
-21[17] Input/Output: Pin_Function 
-22[18] Input/Output: Pin_Function 
-23[19] Input/Output: Pin_Function 
-24[20] Input/Output: Pin_Function 
-25[21] Input/Output: Pin_Function 
-26[22] Input/Output: Pin_Function 
-27[23] Input/Output: Pin_Function 
-28[24] Input/Output: Pin_Function 
-29[25] Input/Output: Pin_Function
-30[26] Input/Output: Pin_Function
-31[27] Input/Output: Pin_Function
-32[28] Input/Output: Pin_Function
-33[29] Input/Output: Pin_Function
-34[30] Input/Output: Pin_Function
-35[31] Input/Output: Pin_Function
-36[32] Input/Output: Pin_Function
-37[33] Input/Output: Pin_Function
-38[34] Input/Output: Pin_Function
+00[00] Input: MIDI-UART Serial-In
+01[--] Input/Output: SPI Flash
+02[--] Input/Output: SPI Flash
+03[--] Input/Output: SPI Flash
+04[--] Input/Output: SPI Flash
+05[01] Input: Clear Notes
+06[02] Input: Wave Mode Button
+07[03] Output: DAC_IN_0
+08[04] Output: DAC_IN_1
+09[05] Output: DAC_IN_2
+10[06] Output: DAC_IN_3
+11[07] Output: DAC_IN_4
+12[08] Output: DAC_IN_5
+13[09] Output: DAC_IN_6
+14[10] Output: DAC_IN_7
+15[11] Output: DAC_IN_8
+16[12] Output: DAC_IN_9
+17[13] Output: DAC_IN_10
+18[14] Output: DAC_IN_11
+19[15] Output: DAC_IN_12
+20[16] Output: DAC_IN_13
+21[17] Output: DAC_IN_14
+22[18] Output: DAC_IN_15
+23[19] Output: NA
+24[20] Output: NA
+25[21] Output: NA
+26[22] Output: NA
+27[23] Output: NA
+28[24] Output: NA
+29[25] Output: NA
+30[26] Output: NA
+31[27] Output: NA
+32[28] Output: NA
+33[29] Output: NA
+34[30] Output: NA
+35[31] Output: NA
+36[32] Output: NA
+37[33] Output: NA
+38[34] Output: NA
 
 ## Supporting Equipment
-List all the required equipment and upload a breadboard with the equipment set up (recommend using tinkercad circuits if possible)
+
+12-16 Input DAC/ 12-16 Input R2R DAC
+
+LM386N Op-Amp
+
+Audio Jack
+
+PC817 Octocoupler
+
+MIDI Connector
+
+![1721667175371](image/README/1721667175371.png)
 
 ## RTL Diagrams
-All the stuff from the proposal goes here, obviously updated from the time you did the proposal to the final layout
-Include more than just block diagrams, including sub-block diagrams, state-transition diagrams, flowcharts, and timing diagrams.  If you include an image, a short (0.5-1 sentence description) is required.
-You may also place other files within this folder.
+
+Refrence the drawio files in folder.
 
 ## Statement from Purdue
-Pending
 
+Pending
