@@ -2,10 +2,10 @@
 // When testing your design, please replace it with your design's instance
 
 module nebula_ii (
-// `ifdef USE_POWER_PINS
-//     inout vccd1,	// User area 1 1.8V supply
-//     inout vssd1,	// User area 1 digital ground
-// `endif
+`ifdef USE_POWER_PINS
+    inout vccd1,	// User area 1 1.8V supply
+    inout vssd1,	// User area 1 digital ground
+`endif
 
     // User clk, rst
     input wb_clk_i,
@@ -38,7 +38,6 @@ module nebula_ii (
     // Number of teams (only sample project for now)
     // Replace sample project with your design for testing
     localparam NUM_TEAMS = 12;
-    localparam NUM_MANAGERS = 1;
 
     // LA outputs from all designs
     wire [127:0] designs_la_data_out [NUM_TEAMS:0];
@@ -139,8 +138,8 @@ module nebula_ii (
     assign arbitrator_cyc_i[11]    = 1'b0;
     
 
-    // Team_12 Project Instance
-    team_12_Wrapper team_12_Wrapper (
+    // Sample Project Instance
+    sample_team_proj_Wrapper sample_team_proj_Wrapper (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
@@ -148,41 +147,33 @@ module nebula_ii (
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
-        .wbs_stb_i(wbs_stb_i_p),
-        .wbs_cyc_i(wbs_cyc_i_proj[12]),
-        .wbs_we_i(wbs_we_i_p),
-        .wbs_sel_i(wbs_sel_i_p),
-        .wbs_dat_i(wbs_dat_i_p),
-        .wbs_adr_i(wbs_adr_i_p),
-        .wbs_ack_o(wbs_ack_o_proj[12]),
-        .wbs_dat_o(wbs_dat_o_proj[12]),
-      .wbs_stb_i(wbs_stb_o_projects[12]),
-      .wbs_cyc_i(wbs_cyc_o_projects[12]),
-      .wbs_we_i(wbs_we_o_projects[12]),
-      .wbs_sel_i(wbs_sel_o_projects[12]),
-      .wbs_dat_i(wbs_dat_o_projects[12]),
-      .wbs_adr_i(wbs_adr_o_projects[12]),
-      .wbs_ack_o(wbs_ack_i_projects[12]),
-      .wbs_dat_o(wbs_dat_i_projects[12]),
+        .wbs_stb_i(wbs_stb_o_projects[0]),
+        .wbs_cyc_i(wbs_cyc_o_projects[0]),
+        .wbs_we_i(wbs_we_o_projects[0]),
+        .wbs_sel_i(wbs_sel_o_projects[0]),
+        .wbs_dat_i(wbs_dat_o_projects[0]),
+        .wbs_adr_i(wbs_adr_o_projects[0]),
+        .wbs_ack_o(wbs_ack_i_projects[0]),
+        .wbs_dat_o(wbs_dat_i_projects[0]),
 
         // Logic Analyzer
         .la_data_in(la_data_in),
-      .la_data_out(designs_la_data_out[12]),
+        .la_data_out(designs_la_data_out[0]),
         .la_oenb(la_oenb),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
-      .gpio_out(designs_gpio_out[12]), // Breakout Board Pins
-      .gpio_oeb(designs_gpio_oeb[12]), // Active Low Output Enable
+        .gpio_out(designs_gpio_out[0]), // Breakout Board Pins
+        .gpio_oeb(designs_gpio_oeb[0]), // Active Low Output Enable
 
-      .DAT_I(arbitrator_dat_o[12]),
-      .ACK_I(arbitrator_ack_o[12]),
-      .ADR_O(arbitrator_adr_i[12]),
-      .DAT_O(arbitrator_dat_i[12]),
-      .SEL_O(arbitrator_sel_i[12]),
-      .WE_O  (arbitrator_we_i[12]),
-      .STB_O(arbitrator_stb_i[12]),
-      .CYC_O(arbitrator_cyc_i[12])
+        .DAT_I(arbitrator_dat_o[0]),
+        .ACK_I(arbitrator_ack_o[0]),
+        .ADR_O(arbitrator_adr_i[0]),
+        .DAT_O(arbitrator_dat_i[0]),
+        .SEL_O(arbitrator_sel_i[0]),
+        .WE_O  (arbitrator_we_i[0]),
+        .STB_O(arbitrator_stb_i[0]),
+        .CYC_O(arbitrator_cyc_i[0])
     );
 
     // Team_01 Project Instance
@@ -205,13 +196,11 @@ module nebula_ii (
 
         // Logic Analyzer
         .la_data_in(la_data_in),
-        .la_data_out(designs_la_data_out[12]),
+        .la_data_out(designs_la_data_out[1]),
         .la_oenb(la_oenb),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
-        .gpio_out(designs_gpio_out[12]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[12]) // Active Low Output Enable
         .gpio_out(designs_gpio_out[1]), // Breakout Board Pins
         .gpio_oeb(designs_gpio_oeb[1]), // Active Low Output Enable
 
@@ -490,6 +479,44 @@ module nebula_ii (
         .STB_O(arbitrator_stb_i[10]),
         .CYC_O(arbitrator_cyc_i[10])
     );
+
+    // Team_12 Project Instance
+    team_12_Wrapper team_12_Wrapper (
+    `ifdef USE_POWER_PINS
+            .vccd1(vccd1),	// User area 1 1.8V power
+            .vssd1(vssd1),	// User area 1 digital ground
+    `endif
+        //Wishbone Slave and user clk, rst
+        .wb_clk_i(wb_clk_i),
+        .wb_rst_i(wb_rst_i),
+        .wbs_stb_i(wbs_stb_o_projects[12]),
+        .wbs_cyc_i(wbs_cyc_o_projects[12]),
+        .wbs_we_i(wbs_we_o_projects[12]),
+        .wbs_sel_i(wbs_sel_o_projects[12]),
+        .wbs_dat_i(wbs_dat_o_projects[12]),
+        .wbs_adr_i(wbs_adr_o_projects[12]),
+        .wbs_ack_o(wbs_ack_i_projects[12]),
+        .wbs_dat_o(wbs_dat_i_projects[12]),
+
+        // Logic Analyzer
+        .la_data_in(la_data_in),
+        .la_data_out(designs_la_data_out[12]),
+        .la_oenb(la_oenb),
+
+        // GPIOs
+        .gpio_in(io_in), // Breakout Board Pins
+        .gpio_out(designs_gpio_out[12]), // Breakout Board Pins
+        .gpio_oeb(designs_gpio_oeb[12]) // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[12]),
+        .ACK_I(arbitrator_ack_o[12]),
+        .ADR_O(arbitrator_adr_i[12]),
+        .DAT_O(arbitrator_dat_i[12]),
+        .SEL_O(arbitrator_sel_i[12]),
+        .WE_O  (arbitrator_we_i[12]),
+        .STB_O(arbitrator_stb_i[12]),
+        .CYC_O(arbitrator_cyc_i[12])
+    );
     
 
     // Flattened GPIO outputs
@@ -607,7 +634,6 @@ module nebula_ii (
     // Wishbone Arbitrator
     // everywhere with squigly brackets is where more manager signals can be concatinated!!!
     wishbone_arbitrator #(
-        .NUM_MANAGERS(NUM_MANAGERS)
         .NUM_MANAGERS(NUM_TEAMS+2)//+2 for caravel core processor and sample project
     ) wb_arbitrator (
         
