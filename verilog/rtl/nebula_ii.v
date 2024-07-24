@@ -506,7 +506,7 @@ module nebula_ii (
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[12]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[12]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[12]), // Active Low Output Enable
 
         .DAT_I(arbitrator_dat_o[12]),
         .ACK_I(arbitrator_ack_o[12]),

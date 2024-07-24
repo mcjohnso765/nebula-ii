@@ -88,10 +88,6 @@ module team_12_Wrapper (
 
     // Instantiate Bus Wrapper module here
     team_12_WB team_12_WB (
-    `ifdef USE_POWER_PINS
-        .vccd1(vccd1),	// User area 1 1.8V power
-        .vssd1(vssd1),	// User area 1 digital ground
-    `endif
         .ext_clk(wb_clk_i),
         .clk_i(wb_clk_i),
         .rst_i(wb_rst_i),
