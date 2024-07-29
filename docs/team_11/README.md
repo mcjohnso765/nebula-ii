@@ -1,14 +1,14 @@
 # STARS 2024 Design Final Project
 
-## TEAM NAME
-* Team Member 1 Name
-* Team Member 2 Name
-* Team Member 3 Name
-* Team Member 4 Name
-* Peer Mentor Name
+## Wireless Messaging Device
+* Team Member 1 Sogo Bakare
+* Team Member 2 Lakshme Chari
+* Team Member 3 Jose Sierra
+* Team Member 4 Jaidev Singh Parhar
+* Peer Mentor Tingyu Wu
 
 ## Project Type
-Short (2-3 sentences) project description
+STARS 2024 Team 11 Project is a wireless messaging device that features a two way communication protocal. The device is interacted via a 4 by 4 matrix keypad and an LCD display.
 
 ## Pin Layout
 Note that on the final chip, there are 38 gpio of which you have access to 4.
@@ -34,29 +34,29 @@ in brackets represents the number in your verilog code
 16[12] Input/Output: Pin_Function 
 17[13] Input/Output: Pin_Function 
 18[14] Input/Output: Pin_Function 
-19[15] Input/Output: Pin_Function 
-20[16] Input/Output: Pin_Function 
-21[17] Input/Output: Pin_Function 
-22[18] Input/Output: Pin_Function 
-23[19] Input/Output: Pin_Function 
-24[20] Input/Output: Pin_Function 
-25[21] Input/Output: Pin_Function 
-26[22] Input/Output: Pin_Function 
-27[23] Input/Output: Pin_Function 
-28[24] Input/Output: Pin_Function 
-29[25] Input/Output: Pin_Function
-30[26] Input/Output: Pin_Function
-31[27] Input/Output: Pin_Function
-32[28] Input/Output: Pin_Function
-33[29] Input/Output: Pin_Function
-34[30] Input/Output: Pin_Function
-35[31] Input/Output: Pin_Function
-36[32] Input/Output: Pin_Function
-37[33] Input/Output: Pin_Function
-38[34] Input/Output: Pin_Function
+19[15] Output: lcd data 
+20[16] Output: lcd data 
+21[17] Output: lcd data 
+22[18] Output: lcd data 
+23[19] Output: lcd data 
+24[20] Output: lcd data 
+25[21] Output: lcd data
+26[22] Output: lcd data 
+27[23] Output: lcd_rs 
+28[24] Output: lcd_rw 
+29[25] Output: lcd enable
+30[26] Output: message send control
+31[27] Output: Scancolumn for keypad
+32[28] Output: Scancolumn for keypad
+33[29] Output: Scancolumn for keypad
+34[30] Output: Scancolumn for keypad
+35[31] Input: Readrow for keypad
+36[32] Input: Readrow for keypad
+37[33] Input: Readrow for keypad
+38[34] Input: Readrow for keypad
 
 ## Supporting Equipment
-List all the required equipment and upload a breadboard with the equipment set up (recommend using tinkercad circuits if possible)
+The Equipment required are 4 by 4 matrix keypad, lcd1602 Display, Xbee module, 100 ohm resistors and LEDs.
 
 ## RTL Diagrams
 All the stuff from the proposal goes here, obviously updated from the time you did the proposal to the final layout
