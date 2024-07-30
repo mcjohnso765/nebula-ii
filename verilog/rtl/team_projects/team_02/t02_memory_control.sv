@@ -51,8 +51,8 @@ always_comb begin
         i_wait = busy_o;
     end
     else begin
-        Ren = 1;
-        Wen = 1; 
+        Ren = 0;
+        Wen = 0; 
     end
 
     if(i_wait) begin

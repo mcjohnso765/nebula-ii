@@ -438,8 +438,8 @@ module t02_memory_control (
 			i_wait = busy_o;
 		end
 		else begin
-			Ren = 1;
-			Wen = 1;
+			Ren = 0;
+			Wen = 0;
 		end
 		if (i_wait)
 			imemload = prev_imemload;
@@ -466,6 +466,155 @@ module t02_mux (
 			out = in1;
 		else
 			out = in2;
+	end
+	initial _sv2v_0 = 0;
+endmodule
+module t02_new_request_unit (
+	CLK,
+	nRST,
+	DataAddress,
+	InstrAddress,
+	DatatoWrite,
+	iready,
+	dready,
+	FetchedData,
+	FetchedInstr,
+	cuOP,
+	busy_o,
+	cpu_dat_o,
+	write_i,
+	read_i,
+	adr_i,
+	cpu_data_i,
+	sel_i
+);
+	reg _sv2v_0;
+	input wire CLK;
+	input wire nRST;
+	input wire [31:0] DataAddress;
+	input wire [31:0] InstrAddress;
+	input wire [31:0] DatatoWrite;
+	output reg iready;
+	output reg dready;
+	output reg [31:0] FetchedData;
+	output reg [31:0] FetchedInstr;
+	input wire [5:0] cuOP;
+	input wire busy_o;
+	input wire [31:0] cpu_dat_o;
+	output reg write_i;
+	output reg read_i;
+	output reg [31:0] adr_i;
+	output reg [31:0] cpu_data_i;
+	output wire [3:0] sel_i;
+	reg [2:0] state;
+	reg [2:0] next_state;
+	reg next_iready;
+	reg next_dready;
+	reg next_read_i;
+	reg next_write_i;
+	reg [31:0] next_FetchedData;
+	reg [31:0] next_FetchedInstr;
+	reg [31:0] next_adr_i;
+	reg [31:0] next_cpu_dat_i;
+	assign sel_i = 4'b1111;
+	always @(posedge CLK or negedge nRST)
+		if (!nRST) begin
+			state <= 3'd0;
+			adr_i <= 32'b00000000000000000000000000000000;
+			cpu_data_i <= 32'b00000000000000000000000000000000;
+			FetchedData <= 32'b00000000000000000000000000000000;
+			FetchedInstr <= 32'b00000000000000000000000000000000;
+			iready <= 1'b0;
+			dready <= 1'b0;
+			read_i <= 1'b0;
+			write_i <= 1'b0;
+		end
+		else begin
+			state <= next_state;
+			adr_i <= next_adr_i;
+			cpu_data_i <= next_cpu_dat_i;
+			FetchedData <= next_FetchedData;
+			FetchedInstr <= next_FetchedInstr;
+			iready <= next_iready;
+			dready <= next_dready;
+			read_i <= next_read_i;
+			write_i <= next_write_i;
+		end
+	always @(*) begin
+		if (_sv2v_0)
+			;
+		next_state = state;
+		next_read_i = 1'b0;
+		next_write_i = 1'b0;
+		next_adr_i = 32'b00000000000000000000000000000000;
+		next_cpu_dat_i = 32'b00000000000000000000000000000000;
+		next_iready = 1'b0;
+		next_dready = 1'b0;
+		next_FetchedData = 32'b00000000000000000000000000000000;
+		next_FetchedInstr = 32'b00000000000000000000000000000000;
+		case (state)
+			3'd0:
+				if ((((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14)) & !dready) begin
+					next_read_i = 1'b1;
+					next_write_i = 1'b0;
+					next_adr_i = DataAddress;
+					next_state = 3'd4;
+				end
+				else if ((((cuOP == 6'd15) | (cuOP == 6'd16)) | (cuOP == 6'd17)) & !dready) begin
+					next_read_i = 1'b0;
+					next_write_i = 1'b1;
+					next_adr_i = DataAddress;
+					next_cpu_dat_i = DatatoWrite;
+					next_state = 3'd6;
+				end
+				else begin
+					next_read_i = 1'b1;
+					next_write_i = 1'b0;
+					next_state = 3'd5;
+				end
+			3'd4: begin
+				next_adr_i = adr_i;
+				next_state = 3'd1;
+			end
+			3'd1: begin
+				next_adr_i = adr_i;
+				if (!busy_o) begin
+					next_adr_i = 32'b00000000000000000000000000000000;
+					next_dready = 1'b1;
+					next_FetchedData = cpu_dat_o;
+					next_state = 3'd0;
+				end
+			end
+			3'd5: begin
+				next_adr_i = InstrAddress;
+				next_state = 3'd2;
+			end
+			3'd2: begin
+				next_adr_i = adr_i;
+				if (!busy_o) begin
+					next_adr_i = 32'b00000000000000000000000000000000;
+					next_iready = 1'b1;
+					next_FetchedInstr = cpu_dat_o;
+					next_state = 3'd0;
+				end
+			end
+			3'd6: begin
+				next_adr_i = adr_i;
+				next_cpu_dat_i = cpu_data_i;
+				next_state = 3'd3;
+			end
+			3'd3: begin
+				next_adr_i = adr_i;
+				next_cpu_dat_i = cpu_data_i;
+				if (!busy_o) begin
+					next_adr_i = 32'b00000000000000000000000000000000;
+					next_cpu_dat_i = 32'b00000000000000000000000000000000;
+					next_dready = 1'b1;
+					next_state = 3'd0;
+				end
+			end
+			default: next_state = state;
+		endcase
 	end
 	initial _sv2v_0 = 0;
 endmodule
@@ -752,44 +901,53 @@ module t02_request_unit (
 	output wire [31:0] imemaddro;
 	output wire [31:0] imemloado;
 	output wire [31:0] dmmloado;
-	reg nxt_dmmRen;
-	reg nxt_dmmWen;
+	reg [1:0] current_state;
+	reg [1:0] next_state;
 	always @(posedge CLK or negedge nRST)
 		if (!nRST)
-			dmmRen <= 0;
-		else if (~busy_o)
-			dmmRen <= nxt_dmmRen;
-	always @(posedge CLK or negedge nRST)
-		if (!nRST)
-			dmmWen <= 0;
-		else if (~busy_o)
-			dmmWen <= nxt_dmmWen;
+			current_state <= 2'd0;
+		else
+			current_state <= next_state;
 	always @(*) begin
 		if (_sv2v_0)
 			;
-		imemRen = 1;
-		if (i_ready_i) begin
-			if (((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14)) begin
-				nxt_dmmRen = 1;
-				nxt_dmmWen = 0;
+		next_state = current_state;
+		case (current_state)
+			2'd0: begin
+				dmmRen = 0;
+				dmmWen = 0;
+				imemRen = 0;
+				if (~busy_o) begin
+					if (((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14))
+						next_state = 2'd2;
+					else if (((cuOP == 6'd15) | (cuOP == 6'd16)) | (cuOP == 6'd17))
+						next_state = 2'd3;
+					else
+						next_state = 2'd1;
+				end
 			end
-			else if (((cuOP == 6'd15) | (cuOP == 6'd16)) | (cuOP == 6'd17)) begin
-				nxt_dmmRen = 0;
-				nxt_dmmWen = 1;
+			2'd1: begin
+				dmmRen = 0;
+				dmmWen = 0;
+				imemRen = 1;
+				if (~busy_o && i_ready_i)
+					next_state = 2'd0;
 			end
-			else begin
-				nxt_dmmRen = 0;
-				nxt_dmmWen = 0;
+			2'd2: begin
+				dmmRen = 1;
+				dmmWen = 0;
+				imemRen = 0;
+				if (~busy_o && d_ready)
+					next_state = 2'd0;
 			end
-		end
-		else if (d_ready) begin
-			nxt_dmmRen = 0;
-			nxt_dmmWen = 0;
-		end
-		else begin
-			nxt_dmmRen = 0;
-			nxt_dmmWen = 0;
-		end
+			2'd3: begin
+				dmmRen = 0;
+				dmmWen = 1;
+				imemRen = 0;
+				if (~busy_o && d_ready)
+					next_state = 2'd0;
+			end
+		endcase
 	end
 	assign imemaddro = imemaddri;
 	assign dmmaddro = dmmaddri + 32'h33000000;
@@ -834,6 +992,7 @@ module t02_top (
 	ramstore,
 	Ren,
 	Wen,
+	sel_i,
 	ramload,
 	busy_o
 );
@@ -844,6 +1003,7 @@ module t02_top (
 	output wire [31:0] ramstore;
 	output wire Ren;
 	output wire Wen;
+	output wire [3:0] sel_i;
 	input wire [31:0] ramload;
 	input wire busy_o;
 	wire zero;
@@ -934,24 +1094,24 @@ module t02_top (
 		.immOut(immOut),
 		.CUOp(cuOP)
 	);
-	t02_request ru(
+	t02_new_request_unit ru(
 		.CLK(clk),
 		.nRST(nrst),
-		.imemload(instruction),
-		.imemaddr(pc),
-		.dmmaddr(aluOut),
-		.dmmstore(regData2),
-		.ramaddr(ramaddr),
-		.ramload(ramload),
-		.ramstore(ramstore),
+		.DataAddress(aluOut),
+		.InstrAddress(pc),
+		.DatatoWrite(regData2),
+		.iready(i_ready),
+		.dready(d_ready),
+		.FetchedData(memload),
+		.FetchedInstr(instruction),
 		.cuOP(cuOP),
-		.Wen(Wen),
 		.busy_o(busy_o),
-		.dmmload(memload),
-		.i_ready(i_ready),
-		.d_ready(d_ready),
-		.Ren(Ren),
-		.en(enable)
+		.cpu_dat_o(ramload),
+		.write_i(Wen),
+		.read_i(Ren),
+		.adr_i(ramaddr),
+		.cpu_data_i(ramstore),
+		.sel_i(sel_i)
 	);
 endmodule
 module t02_wishbone_manager (
@@ -1198,7 +1358,8 @@ module team_02 (
 		.Wen(Wen),
 		.ramload(ramload),
 		.busy_o(busy_o),
-		.enable(en)
+		.enable(en),
+		.sel_i(SEL_O)
 	);
 	t02_wishbone_manager wb(
 		.CLK(clk),

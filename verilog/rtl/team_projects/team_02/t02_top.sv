@@ -6,6 +6,7 @@ module t02_top (
 	input logic clk, nrst, enable,
   output logic [31:0] ramaddr, ramstore, 
   output logic Ren, Wen, 
+  output logic [3:0] sel_i,
   input logic [31:0] ramload, 
   input logic busy_o
   // output logic lcd_en, lcd_rw, lcd_rs,
@@ -42,9 +43,19 @@ t02_writeToReg write(.cuOP(cuOP), .memload(memload), .aluOut(aluOut), .imm(immOu
 
 t02_signExtender signex(.imm(imm), .immOut(immOut), .CUOp(cuOP));
 
-t02_request ru(.CLK(clk), .nRST(nrst), .imemload(instruction), .imemaddr(pc), .dmmaddr(aluOut), .dmmstore(regData2), .ramaddr(ramaddr), .ramload(ramload), .ramstore(ramstore), 
-.cuOP(cuOP), .Wen(Wen), .busy_o(busy_o), .dmmload(memload), .i_ready(i_ready), .d_ready(d_ready),.Ren(Ren), .en(enable));
+//t02_request ru(.CLK(clk), .nRST(nrst), .imemload(instruction), .imemaddr(pc), .dmmaddr(aluOut), .dmmstore(regData2), .ramaddr(ramaddr), .ramload(ramload), .ramstore(ramstore), 
+//.cuOP(cuOP), .Wen(Wen), .busy_o(busy_o), .dmmload(memload), .i_ready(i_ready), .d_ready(d_ready),.Ren(Ren), .en(enable));
 
+t02_new_request_unit ru(.CLK(clk), .nRST(nrst), .DataAddress(aluOut), .InstrAddress(pc), .DatatoWrite(regData2),
+.iready(i_ready), .dready(d_ready), 
+.FetchedData(memload), .FetchedInstr(instruction), 
+.cuOP(cuOP), .
+busy_o(busy_o), 
+.cpu_dat_o(ramload), 
+.write_i(Wen), .read_i(Ren),
+.adr_i(ramaddr), .cpu_data_i(ramstore),
+.sel_i(sel_i)
+);
 // t02_edgeDetector edg2(.clk(clk), .nRst_i(nrst), .button_i(~keyStrobe), .button_p(enData));
 // t02_keypad pad (.clk(clk), .rst(nrst), .receive_ready(keyStrobe), .data_received(halfData), .read_row(read_row), .scan_col(scan_col));
 // t02_lcd1602 lcd (.clk(clk), .rst(nrst), .row_1(row1), .row_2(row2), .lcd_en(lcd_en), .lcd_rw(lcd_rw), .lcd_rs(lcd_rs), .lcd_data(lcd_data));

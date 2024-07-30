@@ -49,7 +49,7 @@ module team_02 (
     */
     logic [31:0] ramstore, ramaddr, ramload;
     logic Ren, Wen, busy_o;
-    t02_top top (.clk(clk), .nrst(nrst), .ramaddr(ramaddr), .ramstore(ramstore), .Ren(Ren), .Wen(Wen), .ramload(ramload), .busy_o(busy_o), .enable(en));
+    t02_top top (.clk(clk), .nrst(nrst), .ramaddr(ramaddr), .ramstore(ramstore), .Ren(Ren), .Wen(Wen), .ramload(ramload), .busy_o(busy_o), .enable(en), .sel_i(SEL_O));
     // add start_addr 
     // make sure all signals are connected
     t02_wishbone_manager wb(.CLK(clk), .nRST(nrst), 
