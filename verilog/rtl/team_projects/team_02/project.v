@@ -557,13 +557,13 @@ module t02_new_request_unit (
 				if ((((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14)) & !dready) begin
 					next_read_i = 1'b1;
 					next_write_i = 1'b0;
-					next_adr_i = DataAddress;
+					next_adr_i = DataAddress + 32'h33000000;
 					next_state = 3'd4;
 				end
 				else if ((((cuOP == 6'd15) | (cuOP == 6'd16)) | (cuOP == 6'd17)) & !dready) begin
 					next_read_i = 1'b0;
 					next_write_i = 1'b1;
-					next_adr_i = DataAddress;
+					next_adr_i = DataAddress + 32'h33000000;
 					next_cpu_dat_i = DatatoWrite;
 					next_state = 3'd6;
 				end
@@ -901,53 +901,44 @@ module t02_request_unit (
 	output wire [31:0] imemaddro;
 	output wire [31:0] imemloado;
 	output wire [31:0] dmmloado;
-	reg [1:0] current_state;
-	reg [1:0] next_state;
+	reg nxt_dmmRen;
+	reg nxt_dmmWen;
 	always @(posedge CLK or negedge nRST)
 		if (!nRST)
-			current_state <= 2'd0;
-		else
-			current_state <= next_state;
+			dmmRen <= 0;
+		else if (~busy_o)
+			dmmRen <= nxt_dmmRen;
+	always @(posedge CLK or negedge nRST)
+		if (!nRST)
+			dmmWen <= 0;
+		else if (~busy_o)
+			dmmWen <= nxt_dmmWen;
 	always @(*) begin
 		if (_sv2v_0)
 			;
-		next_state = current_state;
-		case (current_state)
-			2'd0: begin
-				dmmRen = 0;
-				dmmWen = 0;
-				imemRen = 0;
-				if (~busy_o) begin
-					if (((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14))
-						next_state = 2'd2;
-					else if (((cuOP == 6'd15) | (cuOP == 6'd16)) | (cuOP == 6'd17))
-						next_state = 2'd3;
-					else
-						next_state = 2'd1;
-				end
+		imemRen = 1;
+		if (i_ready_i) begin
+			if (((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14)) begin
+				nxt_dmmRen = 1;
+				nxt_dmmWen = 0;
 			end
-			2'd1: begin
-				dmmRen = 0;
-				dmmWen = 0;
-				imemRen = 1;
-				if (~busy_o && i_ready_i)
-					next_state = 2'd0;
+			else if (((cuOP == 6'd15) | (cuOP == 6'd16)) | (cuOP == 6'd17)) begin
+				nxt_dmmRen = 0;
+				nxt_dmmWen = 1;
 			end
-			2'd2: begin
-				dmmRen = 1;
-				dmmWen = 0;
-				imemRen = 0;
-				if (~busy_o && d_ready)
-					next_state = 2'd0;
+			else begin
+				nxt_dmmRen = 0;
+				nxt_dmmWen = 0;
 			end
-			2'd3: begin
-				dmmRen = 0;
-				dmmWen = 1;
-				imemRen = 0;
-				if (~busy_o && d_ready)
-					next_state = 2'd0;
-			end
-		endcase
+		end
+		else if (d_ready) begin
+			nxt_dmmRen = 0;
+			nxt_dmmWen = 0;
+		end
+		else begin
+			nxt_dmmRen = 0;
+			nxt_dmmWen = 0;
+		end
 	end
 	assign imemaddro = imemaddri;
 	assign dmmaddro = dmmaddri + 32'h33000000;

@@ -159,13 +159,16 @@ void main()
     // *(&sram_space + 4) = 0x00a00413;
     //  *(&sram_space + 5) = 0xffffffff;
 
-    *(&sram_space ) = 0x06400093; //add 0
-    *(&sram_space + 1) = 0x06400113; //add 4
-    *(&sram_space + 2) = 0x06202223; //sw 8
-    *(&sram_space + 3) = 0x06402183; //lw C
-    *(&sram_space + 4) = 0x07801203; //
-    *(&sram_space + 5) = 0x06400283;
-    *(&sram_space + 6) = 0xffffffff;
+    *(&sram_space ) = 0x00f00113; //add 0
+    *(&sram_space + 1) = 0x01400193; //
+    *(&sram_space + 2) = 0x01e00213; 
+    *(&sram_space + 3) = 0x06202223; //sw
+    *(&sram_space + 4) = 0x06302423; 
+    *(&sram_space + 5) = 0x06402623;
+    *(&sram_space + 6) = 0x06402283; //lw
+    *(&sram_space + 7) = 0x06802283;
+    *(&sram_space + 8) = 0x06802303;
+    *(&sram_space + 9) = 0xffffffff;
 
 
 	// *(&sram_space + 4) = 0xff9ff1ef;

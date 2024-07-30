@@ -78,13 +78,13 @@ always_comb begin
              cuOP == CU_LHU)& !dready) begin  //DATAREAD
                 next_read_i = 1'b1;
                 next_write_i = 1'b0;
-                next_adr_i = DataAddress;
+                next_adr_i = DataAddress + 32'h33000000;
                 next_state = WAIT_READ_DATA;
              end else if ((cuOP == CU_SB| cuOP == CU_SH|
               cuOP== CU_SW)& !dready) begin //DATAWRITE
                 next_read_i = 1'b0;
                 next_write_i = 1'b1;
-                next_adr_i = DataAddress;
+                next_adr_i = DataAddress + 32'h33000000;
                 next_cpu_dat_i = DatatoWrite;
                 next_state = WAIT_WRITE_DATA;
               end else begin //InstructionREAD 
