@@ -1,4 +1,4 @@
-module keypad(
+module t02_keypad(
 	input clk,
 	input rst,  
 	output receive_ready,
@@ -24,7 +24,7 @@ module keypad(
 	end
   
 	// To avoid noise
-	button button_control(
+	t02_button button_control(
 		.clk(clk),
 		.noisy(keyValid),
 		.btn_ctrl(receive_ready)

@@ -1,5 +1,5 @@
 // Module for button debouncing
-module button(
+module t02_button(
 	input         clk,     // clock input from FPGA (12MHz)
 	input         noisy,   // noisy button input
 	output        btn_ctrl // debounced button output one cycle 

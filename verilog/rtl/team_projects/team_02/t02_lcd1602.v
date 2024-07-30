@@ -1,4 +1,4 @@
-module lcd1602 #(parameter clk_div = 24000)(
+module t02_lcd1602 #(parameter clk_div = 24000)(
     input logic clk,
     input logic rst,
     // Data to be displayed
