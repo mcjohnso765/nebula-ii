@@ -25,14 +25,20 @@ module team_02_tb;
 	reg CSB;
 	reg power1, power2;
 
+
 	wire gpio;
 	wire [37:0] mprj_io;
-	reg [33:0] expected_io;
+	reg [37:0] mprj_io_in;
 	wire [33:0] checkbits;
-
+	reg [7:0] lcdOut;
 	// Signals assignments
 	assign checkbits = {mprj_io[37:5], mprj_io[0]};
 	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
+	assign mprj_io[15:12] = mprj_io_in[15:12];
+
+
+	assign lcdOut = checkbits[10:3];
+
 	assign clock_in = clock;
 
 	// Clock generation
@@ -140,6 +146,7 @@ module team_02_tb;
 
 	// Signal dump and timeout check
 	initial begin
+		
 		$dumpfile("team_02.vcd");
 		$dumpvars(0, team_02_tb);
 
@@ -158,52 +165,229 @@ module team_02_tb;
 		$finish;
 	end
 
+	task press_button;
+		input wire [3:0] column, row;
+		#(mprj_io[22:19] == column);
+		mprj_io_in[18:15] = row;
+		@(negedge clock);
+		@(negedge clock);
+		@(negedge clock);
+		@(negedge clock);
+	endtask
+
+	task check_lcd;
+
+	input [23:0] expFirst, expSecond, expThird, expFourth;
+
+
+	currNum[7:0] = lcdOut;
+	@(negedge clock);
+	currNum[15:8] = lcdOut;
+	@(negedge clock);
+	currNum[23:16] = lcdOut;
+
+
+	for (i = 0; i < 65; i = i +1) begin
+		@(negedge clock);
+		currNum = {currNum[15:0], lcdOut};
+		if (currNum == expFirst | passFirst)
+			passFirst = 1;
+			if (currNum == expSecond | passSecond)
+			passSecond = 1;
+			if (currNum == expThird | passThird)
+			passThird = 1;
+			if (currNum == expFourth)
+			validated = 1;
+		end
+	
+	passFirst = 0;
+	passSecond = 0;
+	passThird = 0;
+	validated = 0;
+
+	endtask
+
+
+	//declarations
+	integer i;
+	reg [23:0] currNum;
+	wire passFirst, passSecond, passThird, validated; 
+	integer testNum;
+
 	// Main Testbench and Output check
 	initial begin
-		// wait(checkbits == 'b0);
-		// $display("Monitor: NEBULA II-Sample Project Started");
-		// $display("Correct GPIO output:");
+		//wait(uut.chip_core.mprj.mprj.wrapper.team_02_WB.instance_to_wrap.\en == 1);
 
-		// // First iteration of outputs
-		// for (integer i = 0; i <= 33; i++) begin
-		// 	if (i == 0) expected_io = 1;
-		// 	else expected_io = expected_io << 1;
-		// 	wait(checkbits == expected_io);
-		// 	$display("Correct GPIO output:");
-		// end
-		
-		// // End of first iteration
-		// wait(checkbits == 'b0);
-		// $display("Correct GPIO output:");
+//Enter 111 + 222 = 333
+	testNum = testNum + 1;
+	validated = 0;
+	//NUM1
+			press_button(4'h1, 4'h1); //enter 1
+			@(negedge clock);
+			press_button(4'h1, 4'h1);
+			@(negedge clock);
+			press_button(4'h1, 4'h1);
+			@(negedge clock);
+			press_button(4'h8, 4'h4); //confirm key
+			@(negedge clock);
 
-		// // Second iteration of outputs
-		// for (integer i = 0; i <= 33; i++) begin
-		// 	if (i == 0) expected_io = 1;
-		// 	else expected_io = expected_io << 1;
-		// 	wait(checkbits == expected_io);
-		// 	$display("Correct GPIO output:");
-		// end
+	//OPSEL
+			press_button(4'h1, 4'h8);//addition(A)
+			@(negedge clock);
+			press_button(4'h8, 4'h4);//confirm key
+			@(negedge clock);
 
-		// // End of second iteration
-		// wait(checkbits == 'b0);
-		// $display("Correct GPIO output:");
+	//NUM2
+			press_button(4'h1, 4'h2);
+			@(negedge clock);
+			press_button(4'h1, 4'h2);
+			@(negedge clock);
+			press_button(4'h1, 4'h2);
+			@(negedge clock);
+			press_button(4'h1, 4'h2);
+			@(negedge clock);
 
-		// #1126637;
-		// #1126187;
-		  #3000000;
-		//#1126762;
-		//    #1126887.5;
+	//RESULT
+			#(1000);
+			press_button(4'h1, 4'h1);
+			@(negedge clock);
+
+			#(25);
+	//CHECK OUTPUT
+			check_lcd(24'h313131, 24'h2BA0A0, 24'h323232, 24'h333333);
+			if (validated == 1)
+			$display ("Test %0d passed!", testNum);
+
+//Enter 321 - 123 = 198
+	testNum = testNum + 1;
+	validated = 0;
+	//NUM1
+			press_button(4'h1, 4'h3); //enter 1
+			@(negedge clock);
+			press_button(4'h1, 4'h2);
+			@(negedge clock);
+			press_button(4'h1, 4'h1);
+			@(negedge clock);
+			press_button(4'h8, 4'h4); //confirm key
+			@(negedge clock);
+
+	//OPSEL
+			press_button(4'h2, 4'h8);//subtraction(B)
+			@(negedge clock);
+			press_button(4'h8, 4'h4);//confirm key
+			@(negedge clock);
+
+	//NUM2
+			press_button(4'h1, 4'h1);
+			@(negedge clock);
+			press_button(4'h1, 4'h2);
+			@(negedge clock);
+			press_button(4'h1, 4'h3);
+			@(negedge clock);
+			press_button(4'h1, 4'h2);
+			@(negedge clock);
+
+	//RESULT
+			#(1000);
+			press_button(4'h1, 4'h1);
+			@(negedge clock);
+
+			#(25);
+	//CHECK OUTPUT
+			check_lcd(24'h333231, 24'h2DA0A0, 24'h313233, 24'h313938);
+			if (validated == 1)
+			$display ("Test %0d passed!", testNum);
+
+//Enter 24 * 18 = 432
+	testNum = testNum + 1;
+	validated = 0;
+	//NUM1
+			press_button(4'h8, 4'h2); //enter 0
+			@(negedge clock);
+			press_button(4'h1, 4'h2);
+			@(negedge clock);
+			press_button(4'h2, 4'h1);
+			@(negedge clock);
+			press_button(4'h8, 4'h4); //confirm key
+			@(negedge clock);
+
+	//OPSEL
+			press_button(4'h4, 4'h8);//multiplication(C)
+			@(negedge clock);
+			press_button(4'h8, 4'h4);//confirm key
+			@(negedge clock);
+
+	//NUM2
+			press_button(4'h8, 4'h2);
+			@(negedge clock);
+			press_button(4'h1, 4'h1);
+			@(negedge clock);
+			press_button(4'h4, 4'h2);
+			@(negedge clock);
+			press_button(4'h8, 4'h4);
+			@(negedge clock);
+
+	//RESULT
+			#(1000);
+			press_button(4'h1, 4'h1);
+			@(negedge clock);
+
+			#(25);
+	//CHECK OUTPUT
+			check_lcd(24'h303234, 24'h78A0A0, 24'h303138, 24'h343332);
+			if (validated == 1)
+			$display ("Test %0d passed!", testNum);
+
+//Enter 120 / 6 = 20
+	testNum = testNum + 1;
+	validated = 0;
+	//NUM1
+			press_button(4'h1, 4'h1); //enter 1
+			@(negedge clock);
+			press_button(4'h1, 4'h2);
+			@(negedge clock);
+			press_button(4'h8, 4'h2);
+			@(negedge clock);
+			press_button(4'h8, 4'h4); //confirm key
+			@(negedge clock);
+
+	//OPSEL
+			press_button(4'h8, 4'h8);//Division(D)
+			@(negedge clock);
+			press_button(4'h8, 4'h4);//confirm key
+			@(negedge clock);
+
+	//NUM2
+			press_button(4'h8, 4'h2);
+			@(negedge clock);
+			press_button(4'h8, 4'h2);
+			@(negedge clock);
+			press_button(4'h2, 4'h4);
+			@(negedge clock);
+			press_button(4'h8, 4'h4);//confirm key
+			@(negedge clock);
+
+	//RESULT
+			#(1000);
+			press_button(4'h1, 4'h1);
+			@(negedge clock);
+
+			#(25);
+	//CHECK OUTPUT
+			check_lcd(24'h313230, 24'hFDA0A0, 24'h303036, 24'h303230);
+			if (validated == 1)
+			$display ("Test %0d passed!", testNum);
+	
+
+
 		`ifdef GL
 	    	$display("Monitor: NEBULA II-Sample Project (GL) Passed");
 		`else
 		    $display("Monitor: NEBULA II-Sample Project (RTL) Passed");
 		`endif
 	    $finish;
-	end
 
-	// Print output after each GPIO goes high
-	always @(mprj_io) begin
-		#1 $display("{GPIO[37:5], GPIO[0]} = 34'h%h ", checkbits);
+
 	end
 
 	// Reset Operation
@@ -228,7 +412,7 @@ module team_02_tb;
 
 	// SPI flash signals
 	wire flash_csb;
-	wire flash_clk;
+	wire flash_clock;
 	wire flash_io0;
 	wire flash_io1;
 
@@ -261,7 +445,7 @@ module team_02_tb;
 		.gpio     (gpio),
 		.mprj_io  (mprj_io),
 		.flash_csb(flash_csb),
-		.flash_clk(flash_clk),
+		.flash_clock(flash_clock),
 		.flash_io0(flash_io0),
 		.flash_io1(flash_io1),
 		.resetb	  (RSTB)
@@ -272,7 +456,7 @@ module team_02_tb;
 		.FILENAME("team_02.hex")
 	) spiflash (
 		.csb(flash_csb),
-		.clk(flash_clk),
+		.clock(flash_clock),
 		.io0(flash_io0),
 		.io1(flash_io1),
 		.io2(),			// not used
@@ -281,7 +465,6 @@ module team_02_tb;
 
 endmodule
 `default_nettype wire
-
 
 
 
