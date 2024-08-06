@@ -29,7 +29,7 @@ module team_02_tb;
 	wire gpio;
 	wire [37:0] mprj_io;
 	reg [37:0] mprj_io_in;
-	wire [33:0] checkbits;
+	reg [33:0] checkbits;
 	reg [7:0] lcdOut;
 	// Signals assignments
 	assign checkbits = {mprj_io[37:5], mprj_io[0]};
@@ -166,7 +166,7 @@ module team_02_tb;
 	end
 
 	task press_button;
-		input wire [3:0] column, row;
+		input reg [3:0] column, row;
 		#(mprj_io[22:19] == column);
 		mprj_io_in[18:15] = row;
 		@(negedge clock);
@@ -211,19 +211,19 @@ module team_02_tb;
 	//declarations
 	integer i;
 	reg [23:0] currNum;
-	wire passFirst, passSecond, passThird, validated; 
+	reg passFirst, passSecond, passThird, validated; 
 	integer testNum;
 
 	// Main Testbench and Output check
 	initial begin
-		//wait(uut.chip_core.mprj.mprj.wrapper.team_02_WB.instance_to_wrap.\en == 1);
+		//wait(uut.mprj.mprj.team_02_Wrapper.team_02_WB.instance_to_wrap.\en == 1);
 
 //Enter 111 + 222 = 333
 	testNum = testNum + 1;
 	validated = 0;
 	//NUM1
 			press_button(4'h1, 4'h1); //enter 1
-			@(negedge clock);
+			@(negedge clock)
 			press_button(4'h1, 4'h1);
 			@(negedge clock);
 			press_button(4'h1, 4'h1);
@@ -377,17 +377,18 @@ module team_02_tb;
 			check_lcd(24'h313230, 24'hFDA0A0, 24'h303036, 24'h303230);
 			if (validated == 1)
 			$display ("Test %0d passed!", testNum);
-	
-
 
 		`ifdef GL
-	    	$display("Monitor: NEBULA II-Sample Project (GL) Passed");
+	    	$display("Monitor: NEBULA II-Calc Project (GL) Passed");
 		`else
-		    $display("Monitor: NEBULA II-Sample Project (RTL) Passed");
+		    $display("Monitor: NEBULA II-Calc Project (RTL) Passed");
 		`endif
 	    $finish;
 
+	end
 
+	always @(mprj_io) begin
+		#1 $display("{GPIO[37:5], GPIO[0]} = 34'h%h ", checkbits);
 	end
 
 	// Reset Operation
@@ -412,7 +413,7 @@ module team_02_tb;
 
 	// SPI flash signals
 	wire flash_csb;
-	wire flash_clock;
+	wire flash_clk;
 	wire flash_io0;
 	wire flash_io1;
 
@@ -445,7 +446,7 @@ module team_02_tb;
 		.gpio     (gpio),
 		.mprj_io  (mprj_io),
 		.flash_csb(flash_csb),
-		.flash_clock(flash_clock),
+		.flash_clk(flash_clk),
 		.flash_io0(flash_io0),
 		.flash_io1(flash_io1),
 		.resetb	  (RSTB)
@@ -456,7 +457,7 @@ module team_02_tb;
 		.FILENAME("team_02.hex")
 	) spiflash (
 		.csb(flash_csb),
-		.clock(flash_clock),
+		.clk(flash_clk),
 		.io0(flash_io0),
 		.io1(flash_io1),
 		.io2(),			// not used
