@@ -1,14 +1,14 @@
 ---
 info:
-  name: 
-  description: 
+  name: team_01
+  description: test1
   repo: STARS-Design-Track-2024/Project_Template.git
   owner: Purdue University
   license: APACHE 2.0
-  author: 
-  email: 
+  author: santiago
+  email: spineiro@purdue.edu
   version: v1.0.0
-  date: 
+  date: 07-08-2024
   category: digital
   tags:
     - team01
@@ -62,6 +62,53 @@ external_interface:
     width: 34
     direction: output
     description: Output enables to GPIO
+  - name: DAT_I
+    port: DAT_I
+    width: 32
+    direction: input
+    description: 
+
+  - name: ACK_I
+    port: ACK_I
+    width: 1
+    direction: input
+    description: 
+
+  - name: ADR_O
+    port: ADR_O
+    width: 32
+    direction: output
+    description: 
+
+  - name: DAT_O
+    port: DAT_O
+    width: 32
+    direction: output
+    description: 
+
+  - name: SEL_O
+    port: SEL_O
+    width: 4
+    direction: output
+    description: 
+
+  - name: WE_O
+    port: WE_O
+    width: 1
+    direction: output
+    description: 
+
+  - name: STB_O
+    port: STB_O
+    width: 1
+    direction: output
+    description: 
+
+  - name: CYC_O
+    port: CYC_O
+    width: 1
+    direction: output
+    description: 
 
 clock:
   name: clk

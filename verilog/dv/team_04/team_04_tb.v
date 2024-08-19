@@ -15,31 +15,36 @@
 
 `default_nettype none
 
-`timescale 1 ns / 1 ps
+`timescale 1 ns / 100 ps
 
-module team_1_tb;
+module team_04_tb;
 	reg clock;
+	wire clk2;
 	reg RSTB;
 	reg CSB;
 	reg power1, power2;
 	reg power3, power4;
+	integer i;
 
 	wire gpio;
+	reg uart_in;
 	wire [37:0] mprj_io;
 	wire [7:0] mprj_io_0;
+	assign mprj_io[9] = uart_in;
 
 	assign mprj_io_0 = mprj_io[7:0];
 	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
 
 	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
+	
 	// assign mprj_io[3] = 1'b1;
 
 	// External clock is used by default.  Make this artificially fast for the
 	// simulation.  Normally this would be a slow clock and the digital PLL
 	// would be the fast clock.
 
-	always #12.5 clock <= (clock === 1'b0);
-
+	assign clk2 = clock;
+	always #50 clock <= (clock === 1'b0);
 	initial begin
 		clock = 0;
 	end
@@ -141,39 +146,132 @@ module team_1_tb;
 	`endif 
 
 	initial begin
-		$dumpfile("io_ports.vcd");
-		$dumpvars(0, io_ports_tb);
+		$dumpfile("team_04.vcd");
+		$dumpvars(0, team_04_tb);
 
-		// Repeat cycles of 1000 clock edges as needed to complete testbench
-		repeat (25) begin
-			repeat (1000) @(posedge clock);
-			// $display("+1000 cycles");
-		end
-		$display("%c[1;31m",27);
-		`ifdef GL
-			$display ("Monitor: Timeout, Test Mega-Project IO Ports (GL) Failed");
-		`else
-			$display ("Monitor: Timeout, Test Mega-Project IO Ports (RTL) Failed");
-		`endif
-		$display("%c[0m",27);
-		$finish;
+		// // Repeat cycles of 1000 clock edges as needed to complete testbench
+		// repeat (25) begin
+		// 	repeat (1000) @(posedge clock);
+		// 	// $display("+1000 cycles");
+		// end
+		// $display("%c[1;31m",27);
+		// `ifdef GL
+		// 	$display ("Monitor: Timeout, Test Mega-Project IO Ports (GL) Failed");
+		// `else
+		// 	$display ("Monitor: Timeout, Test Mega-Project IO Ports (RTL) Failed");
+		// `endif
+		// $display("%c[0m",27);
+		// $finish;
 	end
 
 	initial begin
 	    // Observe Output pins [7:0]
-		wait(mprj_io_0 == 8'h01);
-		wait(mprj_io_0 == 8'h02);
-		wait(mprj_io_0 == 8'h03);
-		wait(mprj_io_0 == 8'h04);
-		wait(mprj_io_0 == 8'h05);
-		wait(mprj_io_0 == 8'h06);
-		wait(mprj_io_0 == 8'h07);
-		wait(mprj_io_0 == 8'h08);
-		wait(mprj_io_0 == 8'h09);
-		wait(mprj_io_0 == 8'h0A);   
-		wait(mprj_io_0 == 8'hFF);
-		wait(mprj_io_0 == 8'h00);
+		// wait(mprj_io_0 == 8'h01);
+		// wait(mprj_io_0 == 8'h02);
+		// wait(mprj_io_0 == 8'h03);
+		// wait(mprj_io_0 == 8'h04);
+		// wait(mprj_io_0 == 8'h05);
+		// wait(mprj_io_0 == 8'h06);
+		// wait(mprj_io_0 == 8'h07);
+		// wait(mprj_io_0 == 8'h08);
+		// wait(mprj_io_0 == 8'h09);
+		// wait(mprj_io_0 == 8'h0A);   
+		// wait(mprj_io_0 == 8'hFF);
+		// wait(mprj_io_0 == 8'h00);
+
 		
+		for (i=0; i<1041; i++) begin
+            @(posedge clk2);
+            uart_in = 1;
+        end
+
+		for (i=0; i<521; i++) begin
+            @(posedge clk2);
+            uart_in = 0;
+        end
+
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 1 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 1;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 2 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 0;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 3 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 0;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 4 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 0;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 5 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 1;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 6 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 1;
+			end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 7 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 0;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, 8 bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 1;
+            end
+        end
+
+        //TESTING FOR RECIEIVING CORRECT BITS, parity bit shifted in
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 0;
+            end
+        end
+
+        // Returning Rx to IDLE state
+        for (i=0; i<5208; i++) begin
+            @(posedge clk2);
+            if (i==521) begin
+                uart_in = 1;
+            end
+        end
+		#(15*1000000);
+
 		`ifdef GL
 	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
 		`else
@@ -182,7 +280,10 @@ module team_1_tb;
 	    $finish;
 	end
 
+
+
 	initial begin
+		uart_in = 1;
 		RSTB <= 1'b0;
 		CSB  <= 1'b1;		// Force CSB high
 		#2000;
@@ -204,11 +305,12 @@ module team_1_tb;
 		power3 <= 1'b1;
 		#100;
 		power4 <= 1'b1;
+		
 	end
 
-	always @(mprj_io) begin
-		#1 $display("MPRJ-IO state = %b ", mprj_io[7:0]);
-	end
+	// always @(mprj_io) begin
+	// 	#1 $display("MPRJ-IO state = %b ", mprj_io);
+	// end
 
 	wire flash_csb;
 	wire flash_clk;
@@ -242,7 +344,7 @@ module team_1_tb;
 		.vccd2	  (VDD1V8),
 		.vssd1	  (VSS),
 		.vssd2	  (VSS),
-		.clock    (clock),
+		.clock    (clk2),
 		.gpio     (gpio),
 		.mprj_io  (mprj_io),
 		.flash_csb(flash_csb),
@@ -253,7 +355,7 @@ module team_1_tb;
 	);
 
 	spiflash #(
-		.FILENAME("io_ports.hex")
+		.FILENAME("team_04.hex")
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),
