@@ -1,4 +1,4 @@
-module pc(
+module t03_pc(
     input logic en, i_request, 
     output logic [31:0] pc_out,
     output logic [31:0] pc_add_out,

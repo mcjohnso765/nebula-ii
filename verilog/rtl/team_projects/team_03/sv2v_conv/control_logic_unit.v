@@ -1,4 +1,4 @@
-module control_logic_unit (
+module t03_control_logic_unit (
 	i_type,
 	instruction,
 	alu_op,

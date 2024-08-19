@@ -1,4 +1,4 @@
-module IO_mod (
+module t03_IO_mod (
 	clk,
 	rst,
 	write_mem,

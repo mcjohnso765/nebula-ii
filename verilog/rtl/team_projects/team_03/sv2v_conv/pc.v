@@ -1,4 +1,4 @@
-module pc (
+module t03_pc (
 	en,
 	i_request,
 	pc_out,

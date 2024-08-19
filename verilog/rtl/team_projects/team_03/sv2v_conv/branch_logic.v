@@ -1,4 +1,4 @@
-module branch_logic (
+module t03_branch_logic (
 	branch_type,
 	ALU_neg_flag,
 	ALU_zero_flag,

@@ -1,4 +1,4 @@
-module ALU (
+module t03_ALU (
 	srda,
 	imm_gen,
 	srdb,

@@ -1,4 +1,4 @@
-module byte_imm_gen (
+module t03_byte_imm_gen (
 	b_out,
 	imm_gen_byte
 );

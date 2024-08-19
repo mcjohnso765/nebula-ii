@@ -1,4 +1,4 @@
-module byte_demux (
+module t03_byte_demux (
 	reg_b,
 	store_byte_en,
 	b_out

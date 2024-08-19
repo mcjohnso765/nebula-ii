@@ -1,4 +1,4 @@
-module instruction_check (
+module t03_instruction_check (
 	instruction,
 	i_request
 );

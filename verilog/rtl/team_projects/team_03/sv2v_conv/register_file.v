@@ -1,4 +1,4 @@
-module register_file (
+module t03_register_file (
 	clk,
 	rst,
 	en,

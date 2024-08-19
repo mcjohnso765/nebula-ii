@@ -1,6 +1,6 @@
 typedef enum logic [2:0] {BEQ = 1, BNE = 2, BLT = 3, BGE = 4, BLTU = 5, BGEU = 6, JMP = 7, NONE = 0} b_t;
 
-module branch_logic(
+module t03_branch_logic(
     input b_t branch_type,
     input logic ALU_neg_flag, ALU_zero_flag, ALU_overflow_flag,
     output logic b_out

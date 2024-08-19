@@ -39,7 +39,7 @@ module tb;
 	wire slt;
 	wire u;
 	reg i_hit = 1'b1;
-	decoder decoder(
+	t03_decoder decoder(
 		.inst(inst),
 		.rs1(regA),
 		.rs2(regB),
@@ -47,7 +47,7 @@ module tb;
 		.type_out(i_type),
 		.control_out(instruction)
 	);
-	control_logic_unit control_logic(
+	t03_control_logic_unit control_logic(
 		.i_type(i_type),
 		.instruction(instruction),
 		.alu_op(alu_op),
@@ -64,14 +64,14 @@ module tb;
 		.slt(slt),
 		.u(u)
 	);
-	branch_logic branch_logic(
+	t03_branch_logic branch_logic(
 		.branch_type(branch_type),
 		.ALU_neg_flag(N),
 		.ALU_overflow_flag(V),
 		.ALU_zero_flag(Z),
 		.b_out(branch_choice)
 	);
-	pc pc(
+	t03_pc pc(
 		.en(en),
 		.pc_out(program_counter),
 		.pc_add_out(program_counter_out),
@@ -84,7 +84,7 @@ module tb;
 		.clock(clock),
 		.reset(reset)
 	);
-	register_file register_file(
+	t03_register_file register_file(
 		.en(en),
 		.clk(clock),
 		.rst(reset),
@@ -96,7 +96,7 @@ module tb;
 		.regA_data(regA_data),
 		.regB_data(regB_data)
 	);
-	writeback writeback(
+	t03_writeback writeback(
 		.memory_value(data_read),
 		.ALU_value(result),
 		.pc_4_value(program_counter_out),
@@ -108,12 +108,12 @@ module tb;
 		.ALU_neg_flag(N),
 		.ALU_overflow_flag(V)
 	);
-	byte_demux byte_demux(
+	t03_byte_demux byte_demux(
 		.reg_b(regB_data),
 		.store_byte_en(store_byte),
 		.b_out(data_to_write)
 	);
-	ALU ALU(
+	t03_ALU ALU(
 		.srda(regA_data),
 		.fop(alu_op),
 		.result(result),
@@ -127,7 +127,7 @@ module tb;
 		.rdb_u(regB_data),
 		.u(u)
 	);
-	imm_generator imm_generator(
+	t03_imm_generator imm_generator(
 		.inst(inst),
 		.type_i(i_type),
 		.imm_gen(imm_gen)

@@ -1,4 +1,4 @@
-module register_file(
+module t03_register_file(
     input logic clk, rst, en, 
     input logic [4:0] regA_address, regB_address, rd_address,
     input logic register_write_en,

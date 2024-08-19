@@ -1,4 +1,4 @@
-module request_unit(
+module t03_request_unit(
     input logic en, clk, rst, memread, memwrite, 
     // CPU side signals
     input logic [31:0] data_to_write, 

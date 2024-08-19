@@ -1,4 +1,4 @@
-module ram (
+module t03_ram (
 	clk,
 	rst,
 	data_address,

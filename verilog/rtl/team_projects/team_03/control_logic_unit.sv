@@ -1,4 +1,4 @@
-module control_logic_unit(
+module t03_control_logic_unit(
     input logic [2:0] i_type,
     input logic [16:0] instruction,
     output logic [3:0] alu_op,

@@ -1,4 +1,4 @@
-module clock_controller (
+module t03_clock_controller (
 	halt,
 	cpu_clock,
 	clock,

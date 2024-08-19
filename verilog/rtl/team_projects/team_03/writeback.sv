@@ -1,4 +1,4 @@
-module writeback(
+module t03_writeback(
     input logic [31:0] memory_value,
     input logic [31:0] ALU_value,
     input logic [31:0] pc_4_value,

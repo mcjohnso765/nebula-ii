@@ -1,4 +1,4 @@
-module decoder (
+module t03_decoder (
 	inst,
 	rs1,
 	rs2,

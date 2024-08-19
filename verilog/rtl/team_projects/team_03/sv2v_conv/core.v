@@ -1,4 +1,4 @@
-module core (
+module t03_core (
 	clock,
 	reset,
 	en,
@@ -68,7 +68,7 @@ module core (
 	wire d_hit;
 	wire i_hit;
 	wire i_request;
-	request_unit ru(
+	t03_request_unit ru(
 		.i_request(i_request),
 		.en(en),
 		.clk(clock),
@@ -91,11 +91,11 @@ module core (
 		.d_hit(d_hit)
 	);
 	wire cpu_clock;
-	instruction_check ic(
+	t03_instruction_check ic(
 		.instruction(inst),
 		.i_request(i_request)
 	);
-	decoder decoder(
+	t03_decoder decoder(
 		.inst(inst),
 		.rs1(regA),
 		.rs2(regB),
@@ -103,7 +103,7 @@ module core (
 		.type_out(i_type),
 		.control_out(instruction)
 	);
-	control_logic_unit control_logic(
+	t03_control_logic_unit control_logic(
 		.i_type(i_type),
 		.instruction(instruction),
 		.alu_op(alu_op),
@@ -120,14 +120,14 @@ module core (
 		.slt(slt),
 		.u(u)
 	);
-	branch_logic branch_logic(
+	t03_branch_logic branch_logic(
 		.branch_type(branch_type),
 		.ALU_neg_flag(N),
 		.ALU_overflow_flag(V),
 		.ALU_zero_flag(Z),
 		.b_out(branch_choice)
 	);
-	pc pc(
+	t03_pc pc(
 		.i_request(i_request),
 		.en(en),
 		.pc_out(program_counter),
@@ -142,7 +142,7 @@ module core (
 		.reset(reset)
 	);
 	reg register_file_en;
-	register_file register_file(
+	t03_register_file register_file(
 		.en(en),
 		.clk(clock),
 		.rst(reset),
@@ -154,7 +154,7 @@ module core (
 		.regA_data(regA_data),
 		.regB_data(regB_data)
 	);
-	writeback writeback(
+	t03_writeback writeback(
 		.memory_value(data_read),
 		.ALU_value(result),
 		.pc_4_value(program_counter_out),
@@ -166,12 +166,12 @@ module core (
 		.ALU_neg_flag(N),
 		.ALU_overflow_flag(V)
 	);
-	byte_demux byte_demux(
+	t03_byte_demux byte_demux(
 		.reg_b(regB_data),
 		.store_byte_en(store_byte),
 		.b_out(data_to_write)
 	);
-	IO_mod_enable IO_mod(
+	t03_IO_mod_enable IO_mod(
 		.clk(clock),
 		.rst(reset),
 		.write_mem(write_mem),
@@ -184,7 +184,7 @@ module core (
 		.IO_enable(gpio_oeb[31:0]),
 		.IO_in(gpio_in[31:0])
 	);
-	ALU ALU(
+	t03_ALU ALU(
 		.srda(regA_data),
 		.fop(alu_op),
 		.result(result),
@@ -198,7 +198,7 @@ module core (
 		.rdb_u(regB_data),
 		.u(u)
 	);
-	imm_generator imm_generator(
+	t03_imm_generator imm_generator(
 		.inst(inst),
 		.type_i(i_type),
 		.imm_gen(imm_gen)

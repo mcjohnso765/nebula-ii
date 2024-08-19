@@ -1,4 +1,4 @@
-module ALU (
+module t03_ALU (
     input logic signed [31:0] srda, imm_gen, srdb,
     input logic unsigned [31:0] rda_u, rdb_u,
     input logic [3:0] fop,

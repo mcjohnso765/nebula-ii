@@ -1,4 +1,4 @@
-module imm_generator (
+module t03_imm_generator (
     input logic [31:0] inst,
     input logic [2:0] type_i,
     output logic [31:0] imm_gen

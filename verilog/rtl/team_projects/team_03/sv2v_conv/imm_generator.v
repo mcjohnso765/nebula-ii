@@ -1,4 +1,4 @@
-module imm_generator (
+module t03_imm_generator (
 	inst,
 	type_i,
 	imm_gen

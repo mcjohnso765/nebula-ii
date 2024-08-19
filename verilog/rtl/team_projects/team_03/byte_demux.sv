@@ -1,4 +1,4 @@
-module byte_demux (
+module t03_byte_demux (
     input logic [31:0] reg_b,
     input logic store_byte_en,
     output logic [31:0]  b_out

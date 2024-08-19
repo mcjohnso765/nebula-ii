@@ -1,4 +1,4 @@
-module decoder (
+module t03_decoder (
     input logic [31:0] inst,
     //output logic [31:0] imm_gen,
     output logic [4:0] rs1, rs2, rd,

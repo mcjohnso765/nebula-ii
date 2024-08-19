@@ -1,4 +1,4 @@
-module instruction_check(
+module t03_instruction_check(
     input logic [31:0] instruction,
     output logic i_request
 );
