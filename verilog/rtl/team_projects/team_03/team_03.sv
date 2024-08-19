@@ -53,7 +53,7 @@ module team_03 (
     logic [3:0] SEL_I;
 
 
-    core core(.clock(clk), .reset(!nrst), .en(en), .CPU_DAT_O(CPU_DAT_O), .BUSY_O(BUSY_O), .CPU_DAT_I(CPU_DAT_I), .ADR_I(ADR_I), .SEL_I(SEL_I), .WRITE_I(WRITE_I), .READ_I(READ_I), .gpio_in(gpio_in), .gpio_out(gpio_out), .gpio_oeb(gpio_oeb));
+    t03_core core(.clock(clk), .reset(!nrst), .en(en), .CPU_DAT_O(CPU_DAT_O), .BUSY_O(BUSY_O), .CPU_DAT_I(CPU_DAT_I), .ADR_I(ADR_I), .SEL_I(SEL_I), .WRITE_I(WRITE_I), .READ_I(READ_I), .gpio_in(gpio_in), .gpio_out(gpio_out), .gpio_oeb(gpio_oeb));
     
     wishbone_manager wb(.CLK(clk), .nRST(nrst), .DAT_I(DAT_I), .ACK_I(ACK_I), .CPU_DAT_I(CPU_DAT_I), .ADR_I(ADR_I), .SEL_I(SEL_I), .WRITE_I(WRITE_I), .READ_I(READ_I), .ADR_O(ADR_O), .DAT_O(DAT_O), .SEL_O(SEL_O), .WE_O(WE_O), .STB_O(STB_O), .CYC_O(CYC_O), .CPU_DAT_O(CPU_DAT_O), .BUSY_O(BUSY_O));
 

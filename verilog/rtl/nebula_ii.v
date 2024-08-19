@@ -109,34 +109,7 @@ module nebula_ii (
     assign arbitrator_sel_i[2]    = 4'b0;
     assign arbitrator_we_i[2]     = 1'b0;
     assign arbitrator_stb_i[2]    = 1'b0;
-    assign arbitrator_cyc_i[2]    = 1'b0;
-
-    //Team 3 Outputs
-    assign wbs_ack_i_projects[3]  = 1'b0;
-    assign wbs_dat_i_projects[3]  = 32'b0;
-    assign designs_la_data_out[3] = 128'b0;
-    assign designs_gpio_out[3]    = 38'b0;
-    assign designs_gpio_oeb[3]    = 38'h3FFFFFFFFF;
-    assign arbitrator_adr_i[3]    = 32'b0;
-    assign arbitrator_dat_i[3]    = 32'b0;
-    assign arbitrator_sel_i[3]    = 4'b0;
-    assign arbitrator_we_i[3]     = 1'b0;
-    assign arbitrator_stb_i[3]    = 1'b0;
-    assign arbitrator_cyc_i[3]    = 1'b0;
-
-    //Team 11 Outputs
-    assign wbs_ack_i_projects[11]  = 1'b0;
-    assign wbs_dat_i_projects[11]  = 32'b0;
-    assign designs_la_data_out[11] = 128'b0;
-    assign designs_gpio_out[11]    = 38'b0;
-    assign designs_gpio_oeb[11]    = 38'h3FFFFFFFFF;
-    assign arbitrator_adr_i[11]    = 32'b0;
-    assign arbitrator_dat_i[11]    = 32'b0;
-    assign arbitrator_sel_i[11]    = 4'b0;
-    assign arbitrator_we_i[11]     = 1'b0;
-    assign arbitrator_stb_i[11]    = 1'b0;
-    assign arbitrator_cyc_i[11]    = 1'b0;
-    
+    assign arbitrator_cyc_i[2]    = 1'b0;    
 
     // Sample Project Instance
     sample_team_proj_Wrapper sample_team_proj_Wrapper (
