@@ -50,7 +50,7 @@ module team_03_WB (
 
 	assign IRQ = 0;
 
-	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30020000;
+	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30030000;
 	wire clk = clk_i;
 	wire		nrst = (~rst_i);
 

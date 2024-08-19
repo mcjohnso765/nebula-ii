@@ -1,0 +1,22 @@
+module RX_baud_edge_detect (
+    input logic clk, nrst, signal_in,
+    output logic baud_edge
+  );
+
+    logic prev_sig;
+
+    always_ff @(posedge clk, negedge nrst) begin
+        if(!nrst)begin
+            prev_sig <= 1'b0;
+        end
+        else begin
+            prev_sig <= signal_in;
+            if(signal_in && ~prev_sig) begin
+                baud_edge = 1'b1;
+            end
+            else begin
+                baud_edge = 1'b0;
+            end
+        end
+    end
+endmodule

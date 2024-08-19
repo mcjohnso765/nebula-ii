@@ -17,7 +17,7 @@
 
 `timescale 1 ns / 1 ps
 
-module team_3_tb;
+module team_03_tb;
 	localparam CLK_PERIOD = 25;
 	// Signals declaration
 	reg clock;
@@ -258,11 +258,8 @@ module team_3_tb;
 
 	// Signal dump and timeout check
 	initial begin
-		$dumpfile("wb_test.vcd");
-		$dumpvars(0, wb_test_tb);
-	end
-
-	initial begin
+		$dumpfile("team_03.vcd");
+		$dumpvars(0, team_03_tb.mprj_io, team_03_tb.uut.chip_core.mprj);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (1000) begin
@@ -282,73 +279,24 @@ module team_3_tb;
 	// Main Testbench and Output check
 	initial begin
 
-    /*
-		wait(checkbits == 'b0);
-		$display("Monitor: NEBULA II-Sample Project Started");
-		$display("Correct GPIO output:");
+		// Wait for design to be enabled
+		wait(uut.chip_core.mprj.mprj.team_03_Wrapper.team_03_WB.instance_to_wrap.\en == 1);
+		#300000;
 
-		// First iteration of outputs
-		for (integer i = 0; i <= 33; i++) begin
-			if (i == 0) expected_io = 1;
-			else expected_io = expected_io << 1;
-			wait(checkbits == expected_io);
-			$display("Correct GPIO output:");
-		end
+		// button_push_start_pause;
+		// #3000050;
+		// button_push_right;
+		// #3000050;
 		
-		// End of first iteration
-		wait(checkbits == 'b0);
-		$display("Correct GPIO output:");
-
-		// Second iteration of outputs
-		for (integer i = 0; i <= 33; i++) begin
-			if (i == 0) expected_io = 1;
-			else expected_io = expected_io << 1;
-			wait(checkbits == expected_io);
-			$display("Correct GPIO output:");
-		end
-
-		// End of second iteration
-		wait(checkbits == 'b0);
-		$display("Correct GPIO output:");
-
-		#300;  // wait some time before ending
-*/
-		// Go right until Dead Test
-		button_push_start_pause;
-		#3000050;
-		button_push_right;
-		#3000050;
-		
-        #1300000;  // wait some time before ending
+        // #1300000;  // wait some time before ending
 
 		`ifdef GL
 	    	$display("Monitor: NEBULA II-Sample Project (GL) Passed");
 		`else
 		    $display("Monitor: NEBULA II-Sample Project (RTL) Passed");
 		`endif
-	    
-		// ************************************************************************
-        // Test Case 0: Power-on-Reset of the DUT
-        // ************************************************************************
-		RSTB <= 1'b0;
-		CSB  <= 1'b1;		// Force CSB high
-		#2000;
-		RSTB <= 1'b1;	    	// Release reset
-		#100000;
-		CSB = 1'b0;		// CSB can be released
-		#(CLK_PERIOD * 200000);
-		@(negedge clock);
-		//new_game_press();
-		#(CLK_PERIOD * 2000000);
-		// ************************************************************************
-        // Test Case 1: Snake Eats an Apple
-        // ************************************************************************
 		
-    	right_button_press();
-    	#(CLK_PERIOD * 50000000);
-    	// down_button_press();
-    	// #(CLK_PERIOD * 25000000);
-	    $finish;
+		$finish;
 	end
 
 	// Print output after each GPIO goes high
@@ -419,7 +367,7 @@ module team_3_tb;
 
 	// SPI flash instance
 	spiflash #(
-		.FILENAME("wb_test.hex")
+		.FILENAME("team_03.hex")
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),

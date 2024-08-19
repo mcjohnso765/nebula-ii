@@ -1,0 +1,22 @@
+module RX_edge_detect (
+    input logic clk, nrst, signal_in,
+    output logic falling_edge
+);
+
+    logic prev_sig;
+
+    always_ff @(posedge clk, negedge nrst) begin
+        if(!nrst)begin
+            prev_sig <= 1'b1;
+        end
+        else begin
+            prev_sig <= signal_in;
+            if(~signal_in && prev_sig) begin
+                falling_edge = 1'b1;
+            end
+            else begin
+                falling_edge = 1'b0;
+            end
+        end
+    end
+endmodule

@@ -68,10 +68,9 @@
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_request_unit.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_shift_reg.sv
 
-# Team 03 project
+# Team_03 project
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/sv2v_conv/IO_mod_enable.v
-
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/sv2v_conv/core.v
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/sv2v_conv/ALU.v
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/sv2v_conv/branch_logic.v
@@ -86,7 +85,6 @@
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/typedef.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/sv2v_conv/writeback.v
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/sv2v_conv/instruction_check.v
-
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03_Wrapper.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03_WB.v
 
@@ -283,7 +281,20 @@
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_uart_Rx.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_uart_Tx.sv
 
-# Team 12 Synth
+# Team_11 project
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_11/team_11_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_11/team_11_WB.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_11/team_11.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_11/buffer.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_11/controls.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_11/debouncer.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_11/decoder.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_11/keyclk_div.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_11/keypad_control.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_11/keypad.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_11/lcd1602.sv
+
+# Team_12 project
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/accumulator.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/exp_table.v
 -v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/midi_decoder.v

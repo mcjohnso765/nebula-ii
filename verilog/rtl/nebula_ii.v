@@ -109,34 +109,7 @@ module nebula_ii (
     assign arbitrator_sel_i[2]    = 4'b0;
     assign arbitrator_we_i[2]     = 1'b0;
     assign arbitrator_stb_i[2]    = 1'b0;
-    assign arbitrator_cyc_i[2]    = 1'b0;
-
-    //Team 3 Outputs
-    assign wbs_ack_i_projects[3]  = 1'b0;
-    assign wbs_dat_i_projects[3]  = 32'b0;
-    assign designs_la_data_out[3] = 128'b0;
-    assign designs_gpio_out[3]    = 38'b0;
-    assign designs_gpio_oeb[3]    = 38'h3FFFFFFFFF;
-    assign arbitrator_adr_i[3]    = 32'b0;
-    assign arbitrator_dat_i[3]    = 32'b0;
-    assign arbitrator_sel_i[3]    = 4'b0;
-    assign arbitrator_we_i[3]     = 1'b0;
-    assign arbitrator_stb_i[3]    = 1'b0;
-    assign arbitrator_cyc_i[3]    = 1'b0;
-
-    //Team 11 Outputs
-    assign wbs_ack_i_projects[11]  = 1'b0;
-    assign wbs_dat_i_projects[11]  = 32'b0;
-    assign designs_la_data_out[11] = 128'b0;
-    assign designs_gpio_out[11]    = 38'b0;
-    assign designs_gpio_oeb[11]    = 38'h3FFFFFFFFF;
-    assign arbitrator_adr_i[11]    = 32'b0;
-    assign arbitrator_dat_i[11]    = 32'b0;
-    assign arbitrator_sel_i[11]    = 4'b0;
-    assign arbitrator_we_i[11]     = 1'b0;
-    assign arbitrator_stb_i[11]    = 1'b0;
-    assign arbitrator_cyc_i[11]    = 1'b0;
-    
+    assign arbitrator_cyc_i[2]    = 1'b0;    
 
     // Sample Project Instance
     sample_team_proj_Wrapper sample_team_proj_Wrapper (
@@ -516,6 +489,31 @@ module nebula_ii (
         .WE_O  (arbitrator_we_i[10]),
         .STB_O(arbitrator_stb_i[10]),
         .CYC_O(arbitrator_cyc_i[10])
+    );
+
+    // Team_11 Project Instance
+    // (this one is different - much smaller design)
+    team_11_Wrapper team_11_Wrapper (
+    `ifdef USE_POWER_PINS
+            .vccd1(vccd1),	// User area 1 1.8V power
+            .vssd1(vssd1),	// User area 1 digital ground
+    `endif
+        //Wishbone Slave and user clk, rst
+        .wb_clk_i(wb_clk_i),
+        .wb_rst_i(wb_rst_i),
+        .wbs_stb_i(wbs_stb_o_projects[11]),
+        .wbs_cyc_i(wbs_cyc_o_projects[11]),
+        .wbs_we_i(wbs_we_o_projects[11]),
+        .wbs_sel_i(wbs_sel_o_projects[11]),
+        .wbs_dat_i(wbs_dat_o_projects[11]),
+        .wbs_adr_i(wbs_adr_o_projects[11]),
+        .wbs_ack_o(wbs_ack_i_projects[11]),
+        .wbs_dat_o(wbs_dat_i_projects[11]),
+
+        // GPIOs
+        .gpio_in(io_in), // Breakout Board Pins
+        .gpio_out(designs_gpio_out[11]), // Breakout Board Pins
+        .gpio_oeb(designs_gpio_oeb[11]) // Active Low Output Enable
     );
 
     // Team_12 Project Instance

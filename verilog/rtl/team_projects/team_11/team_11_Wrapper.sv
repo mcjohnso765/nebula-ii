@@ -4,16 +4,14 @@
 // Author:      <Full Name>
 // Description: <Module Description>
 
+
+
 module team_11_Wrapper (
 
 `ifdef USE_POWER_PINS
     inout vccd1,	// User area 1 1.8V supply
     inout vssd1,	// User area 1 digital ground
 `endif
-
-    // Chip Select (Active Low)
-    input wire ncs,
-
     /*
     *--------------------------------------------------------------
     * NOTE: You may not need to include all of these.
@@ -35,11 +33,6 @@ module team_11_Wrapper (
     input wire [31:0] wbs_adr_i,
     output wire wbs_ack_o,
     output wire [31:0] wbs_dat_o,
-
-    // Logic Analyzer - 2 pins used here
-    input wire [127:0] la_data_in,
-    output wire [127:0] la_data_out,
-    input wire [127:0] la_oenb,
 
     // GPIOs
     input  wire [37:0] gpio_in, // Breakout Board Pins
@@ -66,6 +59,7 @@ module team_11_Wrapper (
     *--------------------------------------------------------------
     */
 
+ 
     //Assign to unused outputs
     assign irq = 3'b000;	// Unused
     assign gpio_oeb[4:1] = 4'b1111;//Set all to inputs
@@ -73,11 +67,7 @@ module team_11_Wrapper (
 
     // Instantiate Bus Wrapper module here
     team_11_WB team_11_WB (
-    `ifdef USE_POWER_PINS
-        .vccd1(vccd1),	// User area 1 1.8V power
-        .vssd1(vssd1),	// User area 1 digital ground
-    `endif
-        .ext_clk(wb_clk_i),
+        .ext_clk(),
         .clk_i(wb_clk_i),
         .rst_i(wb_rst_i),
         .adr_i(wbs_adr_i),
@@ -89,9 +79,6 @@ module team_11_Wrapper (
         .ack_o(wbs_ack_o),
         .we_i(wbs_we_i),
         .IRQ(),//1 bit
-        .la_data_in(la_data_in),
-        .la_data_out(la_data_out),
-        .la_oenb(la_oenb),
         .gpio_in({gpio_in[37:5], gpio_in[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_out({gpio_out[37:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}) //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
