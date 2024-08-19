@@ -47,37 +47,6 @@
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/decoder_for_GPIO.sv
 -v $(USER_PROJECT_VERILOG)/rtl/sample_team_proj/src/flex_counter.sv
 
-
-# Team 12 Synth
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/accumulator.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/exp_table.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/midi_decoder.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/negedge_detector.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm_in.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm_out.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm_mid.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm_pipe.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/note_div_table.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/osc_sel.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/poly_ctrl.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/posedge_detector.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/sample_clock_div.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/sample_register.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/saw_counter.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/ser_to_par.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/start_arbitrator.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/sync.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/volume_multiplier.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/wave_selector.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/wave_shape_table.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/envelope_clk_div.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/envelope_gen.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/uart_clk_div.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/uart_in.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/team_12_WB.v
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/team_12_Wrapper.sv
--v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/team_12.sv
-
 # Team_01 project
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_Wrapper.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_WB.v
@@ -117,8 +86,6 @@
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/typedef.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/sv2v_conv/writeback.v
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/sv2v_conv/instruction_check.v
-
-
 
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03_Wrapper.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03_WB.v
@@ -315,6 +282,36 @@
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_msg_reg.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_uart_Rx.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_10/src/t10_uart_Tx.sv
+
+# Team 12 Synth
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/accumulator.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/exp_table.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/midi_decoder.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/negedge_detector.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm_in.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm_out.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm_mid.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/norm_pipe.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/note_div_table.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/osc_sel.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/poly_ctrl.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/posedge_detector.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/sample_clock_div.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/sample_register.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/saw_counter.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/ser_to_par.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/start_arbitrator.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/sync.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/volume_multiplier.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/wave_selector.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/wave_shape_table.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/envelope_clk_div.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/envelope_gen.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/uart_clk_div.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/submodules/uart_in.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/team_12_WB.v
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/team_12_Wrapper.sv
+-v  $(USER_PROJECT_VERILOG)/rtl/team_projects/team_12/team_12.sv
 
 # SRAM
 -v $(USER_PROJECT_VERILOG)/../ip/EF_SRAM_1024x32/hdl/SRAM_1024x32.v
