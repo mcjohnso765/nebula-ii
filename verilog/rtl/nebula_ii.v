@@ -12,14 +12,14 @@ module nebula_ii (
     input wb_rst_i,
 
     // Wishbone Slave ports (WB MI A)
-    input wbs_stb_i,
-    input wbs_cyc_i,
-    input wbs_we_i,
-    input [3:0] wbs_sel_i,
-    input [31:0] wbs_dat_i,
-    input [31:0] wbs_adr_i,
-    output wbs_ack_o,
-    output [31:0] wbs_dat_o,
+    input wbs_stb_i, wbm_stb_i_team_03,
+    input wbs_cyc_i, wbm_cyc_i_team_03,
+    input wbs_we_i, wbm_we_i_team_03,
+    input [3:0] wbs_sel_i, wbm_sel_i_team_03,
+    input [31:0] wbs_dat_i, wbm_dat_i_team_03, 
+    input [31:0] wbs_adr_i, wbm_adr_i_team_03,
+    output wbs_ack_o, 
+    output [31:0] wbs_dat_o, wbm_dat_o_team_03,
 
     // Logic Analyzer Signals
     input  [127:0] la_data_in,
@@ -62,16 +62,15 @@ module nebula_ii (
     wire [NUM_TEAMS:0] arbitrator_cyc_i;
 
     //to arbitrator
-    wire        wbs_ack_o_m;
+    wire        wbs_ack_o_m, wbm_ack_i_team_03;
     wire [31:0] wbs_dat_o_m;
     //from arbitrator
     wire        wbs_cyc_i_m;
     wire        wbs_stb_i_m;
     wire        wbs_we_i_m;
     wire [31:0] wbs_adr_i_m;
-    wire [31:0] wbs_dat_i_m;
+    wire [31:0] wbs_dat_i_m, wbm2_dat_i_team_03;
     wire [3:0]  wbs_sel_i_m;
-
 
     wire [NUM_TEAMS:0]  wbs_ack_i_projects;
     wire                wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
@@ -415,7 +414,7 @@ module nebula_ii (
         .STB_O(arbitrator_stb_i[8]),
         .CYC_O(arbitrator_cyc_i[8])
     );
-
+  
     // Team_09 Project Instance
     team_09_Wrapper team_09_Wrapper (
     `ifdef USE_POWER_PINS
@@ -491,7 +490,6 @@ module nebula_ii (
         .STB_O(arbitrator_stb_i[10]),
         .CYC_O(arbitrator_cyc_i[10])
     );
-    
 
     // Flattened GPIO outputs
     reg [38*(NUM_TEAMS+1)-1:0] designs_gpio_out_flat;
