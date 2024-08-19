@@ -20,13 +20,13 @@
 #include <stub.c>
 
 // List of Wishbone Slave Addresses
-// Sample Project
-#define reg_sample_proj_EN (*(volatile uint32_t*)0x30010000)
-#define reg_sample_proj_PRESCALER (*(volatile uint32_t*)0x30010004)
-#define reg_sample_proj_IM (*(volatile uint32_t*)0x3001FF00)
-#define reg_sample_proj_MIS (*(volatile uint32_t*)0x3001FF04)
-#define reg_sample_proj_RIS (*(volatile uint32_t*)0x3001FF08)
-#define reg_sample_proj_IC (*(volatile uint32_t*)0x3001FF0C)
+// Sample Project                                        0x300TXXXX //T must match team number, XXXX can be anything divisible by 4
+#define reg_sample_proj_EN (*(volatile uint32_t*)        0x30000000)
+#define reg_sample_proj_PRESCALER (*(volatile uint32_t*) 0x30000004)
+#define reg_sample_proj_IM (*(volatile uint32_t*)        0x3000FF00)
+#define reg_sample_proj_MIS (*(volatile uint32_t*)       0x3000FF04)
+#define reg_sample_proj_RIS (*(volatile uint32_t*)       0x3000FF08)
+#define reg_sample_proj_IC (*(volatile uint32_t*)        0x3000FF0C)
 
 // GPIO Control
 #define reg_gpio_PIN_0TO7 (*(volatile uint32_t*)0x32000000)
@@ -114,14 +114,14 @@ void main()
 	reg_la3_oenb = reg_la3_iena = 0x00000000;    // [127:96]
 
 	// Configure GPIOs outputs to be selected by sample project
-	reg_gpio_PIN_0TO7 = 0x11111111;
-	reg_gpio_PIN_8TO15 = 0x11111111;
-	reg_gpio_PIN_16TO23 = 0x11111111;
-	reg_gpio_PIN_24TO31 = 0x11111111;
-	reg_gpio_PIN_32TO37 = 0x111111;
+	reg_gpio_PIN_0TO7 = 0x00000000;//team 1 would be all 1s, team 2 would be all 2s
+	reg_gpio_PIN_8TO15 = 0x00000000;
+	reg_gpio_PIN_16TO23 = 0x00000000;
+	reg_gpio_PIN_24TO31 = 0x00000000;
+	reg_gpio_PIN_32TO37 = 0x000000;
 
 	// Configure LA output to be selected by sample project
-	reg_la_sel = 0x1;
+	reg_la_sel = 0x0;
 
 	// Enable the sample project design
 	reg_sample_proj_EN = 0x1;

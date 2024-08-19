@@ -1,0 +1,646 @@
+//idk fs what this is
+0010009b
+02009093
+fff08093
+17f00513
+4b000c93
+02c002ef
+00008113
+010002ef
+00000113
+008002ef
+fedff06f
+00000493
+0024a023
+00448493
+fea4cce3
+000280e7
+00000c13
+001c0c13
+ff9c4ee3
+000280e7
+000000ef
+
+
+// check button on/off
+0010051b
+02051513
+fff50513
+00000593
+18000613
+17f00693
+00000293
+00062703
+00a70463
+0140006f
+00a2a023
+00128293
+fec286e3
+ff5ff06f
+00000293
+00b2a023
+00128293
+fcc28ce3
+ff1ff06f
+
+//looping all ones:
+
+0010009b //addiw x1, x0, 1
+02009093 //slli x1, x1, 32
+fff08093 //addi x1, x1, -1
+00000133 //add x2, x0, x0
+17f00193 //addi x3, x0, 383
+00112023 //sw x1, 0(x2)
+00110113 //addi x2, x2, 1
+00310463 //beq x2, x3, 8
+ff5ff06f //jal x0, -12
+
+
+
+//testing branches
+00000193 //addi x3, x0, 0
+00300213 //addi x4, x0, 3
+00118193 //addi x3, x3, 1
+00418263 //beq x3, x4, 4
+00419263 //bne x3, x4, 4
+0041c263 //blt x3, x4, 4
+0041d263 //bge x3, x4, 4
+0041e263 //bltu x3, x4, 4
+0041f263 //bgeu x3, x4, 4
+fe5ff06f //jal x0, -28
+
+addi x3, x0, 0
+    addi x4, x0, 3
+    
+    loop:
+    
+    	addi x3, x3, 1
+        
+        beq x3, x4, bne
+        bne:
+        bne x3, x4, blt
+        blt:
+        blt x3, x4, bge
+        bge:
+        bge x3, x4, bltu
+        bltu:
+        bltu x3, x4, bgeu
+        bgeu:
+        bgeu x3, x4, jal
+        
+    jal:
+	jal x0, loop
+
+
+//math test i-types
+00700093
+01500113
+00808093
+0100a193
+00e0a193
+0140b193
+0160b193
+04814213
+04816213
+04817213
+00311293
+00215293
+40715293
+
+    addi x1, x0, 7
+    addi x2, x0, 21
+    
+    addi x1, x1, 8
+    
+    slti x3, x1, 16
+    slti x3, x1, 14
+    sltiu x3, x1, 20
+    sltiu x3, x1, 22
+    
+    xori x4, x2, 72    //1011101:93 , 1001000:72, 10101:21
+    ori x4, x2, 72
+    andi x4, x2, 72
+    
+    slli x5, x2, 3
+    srli x5, x2, 2
+    srai x5, x2, 7
+
+//math test r-types
+00700093
+01500113
+002081b3
+401101b3
+0010a1b3
+0020a1b3
+0010b1b3
+0020b1b3
+00314233
+00316233
+00317233
+003112b3
+003152b3
+403152b3
+
+
+addi x1, x0, 7
+addi x2, x0, 21
+
+add x3, x1, x2
+sub x3, x2, x1
+slt x3, x1, x1 
+slt x3, x1, x2
+sltu x3, x1, x1
+sltu x3, x1, x2
+
+xor x4, x2, x3    
+or x4, x2, x3
+and x4, x2, x3
+
+sll x5, x2, x3
+srl x5, x2, x3
+sra x5, x2, x3
+
+
+//load store test i-type 
+00500093
+00300113
+002081b3
+06420913
+00392523
+00a92283
+00390523
+00a90283
+00391523
+00a91283
+00010317
+fd830313
+00430313
+
+addi x1, x0, 5
+addi x2, x0, 3
+add x3, x1, x2
+addi x18, x4, 100
+sw x3, 10(x18)
+lw x5, 10(x18)
+sb x3, 10(x18)
+lb x5, 10(x18)
+sh x3, 10(x18)
+lh x5, 10(x18)
+
+//u-type (lui and auipc)
+
+addi x1, x0, 5
+addi x2, x0, 3
+lui x2, 74565
+auipc x1, 65537
+
+00500093
+00300113
+12345137
+10001097
+00010317
+ff030313
+00430313
+
+
+
+
+//example assembly when integrating uart
+addi x2, x0, 384
+addi x3, x0, 61  //input key a
+lw x1, 0(x2)
+beq x1, x3, _loop
+
+
+// move pixel up
+00000013
+00000093
+00000113
+0c200193
+18000213
+00100113
+0020a023
+07700293
+00022503
+00550463
+ff5ff06f
+0000a023
+ffc08093
+0020a023
+fe5ff06f
+
+//move pixel assembly
+nop
+addi x1, x0, 0         /* x1 = memory location */
+addi x2, x0, 0         /* x2 = bit select */
+addi x3, x0, 194       /* center memory location */
+addi x4, x0, 384       /* x4 = UART location */
+
+_center:
+addi x2, x0, 1
+sw x2, 0(x1)
+
+_check_button:
+addi x5, x0, 2
+lw a0, 0(x4)
+beq a0, x5, _move_up
+j _check_button
+
+_move_up:
+sw x0, 0(x1)           /* clear current pixel */
+addi x1, x1, -4        /* update memory location */
+sw x2, 0(x1)           /* fill screen */
+
+/* Add delay loop */
+    # 50 clock cycle delay
+    li x6, 100000                # Load the delay count
+delay_loop:
+    addi x6, x6, -1          # Decrement the counter
+    bnez x6, delay_loop      # Loop until the counter reaches zero
+
+j _check_button
+
+// move up and down
+#MAYBE THE DELAY LOOP SHOULD BE IN THE CHECK_BUTTON FUNCTION SO WE DONT HAVE TO MAKE 4 ITTERATIONS OF DELAY FOR EACH BUTTON
+
+.global _center
+.global _check_button
+.global _move_up
+.global _move_down
+.global _delay_loop  
+
+addi x1, x0, 0         /* x1 = memory location */
+addi x2, x0, 0         /* x2 = bit select */
+addi x3, x0, 194       /* center memory location */
+addi x4, x0, 384       /* x4 = UART location */
+
+_center:
+    addi x2, x0, 1
+    sw x2, 0(x1) 
+
+_check_button:
+    addi x5, x0, 2     /* Key code for 'up' button */
+    addi x7, x0, 6     /* Key code for 'down' button */
+    lw a0, 0(x4)
+    beq a0, x5, _move_up
+    beq a0, x7, _move_down
+    j _check_button
+
+_move_up:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, -4        /* update memory location (move up) */
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_move_down:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, 4         /* update memory location (move down) */
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_delay_loop:
+    li x6, 100000          /* Load the delay count */
+delay_loop:
+    addi x6, x6, -1        /* Decrement the counter */
+    bnez x6, delay_loop    /* Loop until the counter reaches zero */
+    j _check_button
+
+
+00000093
+00000113
+0c200193
+18000213
+00100113
+0020a023
+00200293
+00300393
+00022503
+00550663
+00750c63
+fedff06f
+0000a023
+ffc08093
+0020a023
+0140006f
+0000a023
+00408093
+0020a023
+0040006f
+00018337
+6a03031b
+fff30313
+fe031ee3
+fb9ff06f
+
+// move up down left right
+
+.global _center
+.global _check_button
+.global _move_up
+.global _move_down
+.global _move_left
+.global _move_right
+.global _delay_loop  
+
+addi x1, x0, 0         /* x1 = memory location */
+addi x2, x0, 0         /* x2 = bit select */
+addi x3, x0, 194       /* center memory location */
+addi x4, x0, 384       /* x4 = UART location */
+
+_center:
+    addi x2, x0, 1
+    sw x2, 0(x1) 
+
+_check_button:
+    addi x5, x0, 2     /* Key code for 'up' button */
+    addi x7, x0, 6     /* Key code for 'down' button */
+    addi x8, x0, 4    /* Key code for 'left' button */
+    addi x9, x0, 8    /* Key code for 'right' button */
+    lw a0, 0(x4)
+    beq a0, x5, _move_up
+    beq a0, x7, _move_down
+    beq a0, x8, _move_left
+    beq a0, x9, _move_right
+    j _delay_loop
+
+_move_up:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, -4        /* update memory location (move up) */
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_move_down:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, 4         /* update memory location (move down) */
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_move_left:
+    sw x0, 0(x1)           /* clear current pixel */
+    slli x2, x2, 1         /* shift pixel left */
+    bnez x2, _no_wrap_left /* if not zero, continue */
+    addi x1, x1, -1        /* move to previous memory location */
+    addi x2, x0, 1         /* set pixel to LSB */
+    sw x2, 0(x1)           /* set new pixel */
+    j _check_button
+_no_wrap_left:
+    sw x2, 0(x1)           /* set new pixel */
+    j _delay_loop
+
+_move_right:
+    sw x0, 0(x1)           /* clear current pixel */
+    srli x2, x2, 1         /* shift pixel right */
+    bnez x2, _no_wrap_right/* if not zero, continue */
+    addi x1, x1, 1         /* move to next memory location */
+    addi x2, x0, -1         /* set pixel to LSB */
+    sw x2, 0(x1)           /* set new pixel */
+    j _check_button
+_no_wrap_right:
+    sw x2, 0(x1)           /* set new pixel */
+    j _delay_loop
+
+_delay_loop:
+    li x6, 100000          /* Load the delay count */
+delay_loop:
+    addi x6, x6, -1        /* Decrement the counter */
+    bnez x6, delay_loop    /* Loop until the counter reaches zero */
+    j _check_button
+
+
+////////////////////////////
+
+00000093
+00000113
+0c200193
+18000213
+00100113
+0020a023
+00200293
+00600393
+00400413
+05000493
+00022503
+00550a63
+02750063
+02850663
+04950463
+fddff06f
+0000a023
+ffc08093
+0020a023
+05c0006f
+0000a023
+00408093
+0020a023
+04c0006f
+0000a023
+00111113
+00011863
+fff08093
+00100113
+fa5ff06f
+0020a023
+02c0006f
+0000a023
+00115113
+00010c63
+00108093
+0010011b
+01f11113
+0020a023
+00c0006f
+0020a023
+0040006f
+00018337
+6a03031b
+fff30313
+fe031ee3
+f61ff06f
+
+/////// move up down left (right)
+
+
+.global _center
+.global _check_button
+.global _move_up
+.global _move_down
+.global _move_left
+.global _move_right
+.global _delay_loop  
+
+addi x1, x0, 0         /* x1 = memory location */
+addi x2, x0, 0         /* x2 = bit select */
+addi x3, x0, 194       /* center memory location */
+addi x4, x0, 384       /* x4 = UART location */
+
+_center:
+    addi x2, x0, 1
+    sw x2, 0(x1) 
+
+_check_button:
+    addi x5, x0, 2     /* Key code for 'up' button */
+    addi x7, x0, 6     /* Key code for 'down' button */
+    addi x8, x0, 4     /* Key code for 'left' button */
+    addi x9, x0, 8     /* Key code for 'right' button */
+    lw a0, 0(x4)
+    beq a0, x5, _move_up
+    beq a0, x7, _move_down
+    beq a0, x8, _move_left
+    beq a0, x9, _move_right
+    j _check_button
+
+_move_up:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, -4        /* update memory location (move up) */
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_move_down:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, 4         /* update memory location (move down) */
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_move_left:
+    sw x0, 0(x1)           /* clear current pixel */
+    slli x2, x2, 1         /* shift pixel left */
+    bnez x2, _no_wrap_left /* if not zero, continue */
+    addi x1, x1, -1        /* move to previous memory location */
+    addi x2, x0, 1         /* set pixel to LSB */
+    j _check_button
+_no_wrap_left:
+    sw x2, 0(x1)           /* set new pixel */
+    j _delay_loop
+
+_move_right:
+    sw x0, 0(x1)           /* clear current pixel */
+    srli x2, x2, 1         /* shift pixel right */
+    bnez x2, _no_wrap_right /* if not zero, continue */
+    addi x1, x1, 1         /* move to next memory location */
+    li x2, 0x8000000      /* set pixel to MSB */
+    sw x2, 0(x1)
+    j _delay_loop
+_no_wrap_right:
+    sw x2, 0(x1)           /* set new pixel */
+    j _delay_loop
+
+_delay_loop:
+    li x6, 100000          /* Load the delay count */
+delay_loop:
+    addi x6, x6, -1        /* Decrement the counter */
+    bnez x6, delay_loop    /* Loop until the counter reaches zero */
+    j _check_button
+
+
+////////////////////////////////////////////////////
+
+///////////////// move three pixels at a time/////
+.global _center
+.global _check_button
+.global _move_up
+.global _move_down
+.global _move_left
+.global _move_right
+.global _delay_loop  
+
+addi x1, x0, 192         /* x1 = memory location;  center = 193 */
+addi x2, x0, 7         /* x2 = bit select */
+addi x3, x0, 383       /* max VGA location */
+addi x4, x0, 384       /* x4 = UART location */
+
+addi x10, x0, 3
+addi x11, x0, 1
+addi x12, x0, 7
+
+_center:
+    sw x2, 0(x1) 
+
+_check_button:
+    addi x5, x0, 2     /* Key code for 'up' button */
+    addi x7, x0, 6     /* Key code for 'down' button */
+    addi x8, x0, 4     /* Key code for 'left' button */
+    addi x9, x0, 8     /* Key code for 'right' button */
+    lw a0, 0(x4)
+    beq a0, x5, _move_up
+    beq a0, x7, _move_down
+    beq a0, x8, _move_left
+    beq a0, x9, _move_right
+    
+    j _check_button
+
+_move_up:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, -4        /* update memory location (move up)*/
+    blt x1, x0, _move_up_wrap
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+    
+_move_up_wrap:
+	addi x1, x1, 384
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_move_down:
+    sw x0, 0(x1)           /* clear current pixel */
+    addi x1, x1, 4         /* update memory location (move down) */
+    bge x1, x3, _move_down_wrap
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+    
+_move_down_wrap:
+	addi x1, x1, -384
+    sw x2, 0(x1)           /* fill screen */
+    j _delay_loop
+
+_move_left:
+    sw x0, 0(x1)           /* clear current pixel */
+    slli x2, x2, 1         /* shift pixel left */
+    bnez x2, _no_wrap_left /* if not zero, continue */
+    addi x1, x1, -1        /* move to previous memory location */
+    addi x2, x0, 1         /* set pixel to LSB */
+    j _check_button
+_no_wrap_left:
+    sw x2, 0(x1)           /* set new pixel */
+    j _delay_loop
+
+_move_right:
+    sw x0, 0(x1)           /* clear current pixel */
+
+    srli x2, x2, 1         /* shift pixel right */
+    beq x2, x0, _wrap_right
+    beq x2, x11, _two_bit_right /* BEQ = 0x1 */
+    beq x2, x10, _one_bit_right /* BEQ = 0x3 */
+    bnez x2, _no_wrap_right /* if not zero, continue */
+    
+_wrap_right:
+	addi x1, x1, 1         /* move to next memory location */
+    li x2, 0x70000000      /* set pixel to MSB */
+    sw x2, 0(x1)
+    j _delay_loop
+    
+_no_wrap_right:
+    sw x2, 0(x1)           /* set new pixel */
+    j _delay_loop
+    
+_one_bit_right:
+	li x2, 0x40000000      
+    sw x2, 1(x1)
+    li x2, 0x3
+    sw x2, 0(x1)
+	j _delay_loop
+    
+_two_bit_right:
+	li x2, 0x60000000      
+    sw x2, 1(x1)
+    li x2, 0x1      
+    sw x2, 0(x1)
+	j _delay_loop
+
+_delay_loop:
+    li x6, 100000          /* Load the delay count */
+delay_loop:
+    addi x6, x6, -1        /* Decrement the counter */
+    bnez x6, delay_loop    /* Loop until the counter reaches zero */
+    j _check_button
+
+

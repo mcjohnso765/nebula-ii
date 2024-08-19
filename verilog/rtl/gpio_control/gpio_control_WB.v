@@ -27,6 +27,7 @@
 `include			"wb_wrapper.vh"
 
 module gpio_control_WB (
+
 `ifdef USE_POWER_PINS
 	inout VPWR,
 	inout VGND,

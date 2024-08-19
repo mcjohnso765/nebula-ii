@@ -15,36 +15,66 @@
 
 `default_nettype none
 
-`timescale 1 ns / 1 ps
+`timescale 1 ns / 1 ns
 
-module team_1_tb;
+module team_08_tb;
+	localparam CLK_PERIOD = 100;
+	// Signals declaration
 	reg clock;
+	wire clock_in;
 	reg RSTB;
 	reg CSB;
 	reg power1, power2;
-	reg power3, power4;
 
 	wire gpio;
 	wire [37:0] mprj_io;
-	wire [7:0] mprj_io_0;
+	reg [37:0] mprj_io_in; 
+	reg [33:0] expected_io;
+	wire [33:0] checkbits;
 
-	assign mprj_io_0 = mprj_io[7:0];
-	// assign mprj_io_0 = {mprj_io[8:4],mprj_io[2:0]};
-
+	// Signals assignments
+	assign checkbits = {mprj_io[37:5], mprj_io[0]};
 	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
-	// assign mprj_io[3] = 1'b1;
+	assign clock_in = clock;
+	assign {mprj_io[6:5], mprj_io[0]} = {mprj_io_in[6:5], mprj_io_in[0]};
 
-	// External clock is used by default.  Make this artificially fast for the
-	// simulation.  Normally this would be a slow clock and the digital PLL
-	// would be the fast clock.
+	// Clock generation
+	always #50 clock <= (clock === 1'b0);
 
-	always #12.5 clock <= (clock === 1'b0);
+
+	task reset_button_press;
+	begin
+		@(negedge clock_in);
+		mprj_io_in[0] = 1'b1;
+		@(negedge clock_in);
+		mprj_io_in[0] = 1'b0;
+		@(posedge clock_in);
+	end
+	endtask
+
+	task jump_button_press;
+	begin
+		@(negedge clock_in);
+		mprj_io_in[5] = 1'b1;
+		@(posedge clock_in);
+	end
+	endtask
+
+	task display_button_press;
+	begin
+		@(negedge clock_in);
+		mprj_io_in[6] = 1'b1;
+		@(negedge clock_in);
+		mprj_io_in[6] = 1'b0;
+		@(posedge clock_in);
+	end
+	endtask
 
 	initial begin
 		clock = 0;
 	end
 
-
+	// STUDENTS: This block here is important, but don't worry about trying to understand it
 	`ifdef ENABLE_SDF
 		initial begin
 			$sdf_annotate("../../../sdf/user_proj_example.sdf", uut.mprj) ;
@@ -140,89 +170,97 @@ module team_1_tb;
 		end
 	`endif 
 
+	// Signal dump and timeout check
 	initial begin
-		$dumpfile("io_ports.vcd");
-		$dumpvars(0, io_ports_tb);
+		$dumpfile("team_08.vcd");
+		$dumpvars(0, team_08_tb.mprj_io, team_08_tb.uut.mprj.mprj);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
-		repeat (25) begin
-			repeat (1000) @(posedge clock);
+		repeat (3000) begin
+			repeat (10000) @(posedge clock);
 			// $display("+1000 cycles");
 		end
 		$display("%c[1;31m",27);
 		`ifdef GL
-			$display ("Monitor: Timeout, Test Mega-Project IO Ports (GL) Failed");
+			$display ("Monitor: Timeout, NEBULA II-Sample Project (GL) Failed");
 		`else
-			$display ("Monitor: Timeout, Test Mega-Project IO Ports (RTL) Failed");
+			$display ("Monitor: Timeout, NEBULA II-Sample Project (RTL) Failed");
 		`endif
 		$display("%c[0m",27);
 		$finish;
 	end
 
+	// Main Testbench and Output check
 	initial begin
-	    // Observe Output pins [7:0]
-		wait(mprj_io_0 == 8'h01);
-		wait(mprj_io_0 == 8'h02);
-		wait(mprj_io_0 == 8'h03);
-		wait(mprj_io_0 == 8'h04);
-		wait(mprj_io_0 == 8'h05);
-		wait(mprj_io_0 == 8'h06);
-		wait(mprj_io_0 == 8'h07);
-		wait(mprj_io_0 == 8'h08);
-		wait(mprj_io_0 == 8'h09);
-		wait(mprj_io_0 == 8'h0A);   
-		wait(mprj_io_0 == 8'hFF);
-		wait(mprj_io_0 == 8'h00);
+
+		// Initialize all inputs to 0
+		{mprj_io_in[6:5], mprj_io_in[0]} = '0;
+
 		
+		// Wait for enable signal to be high
+		wait(uut.mprj.mprj.team_08_Wrapper.team_08_WB.instance_to_wrap.\en == 1);
+
+		// ************************************************************************
+       // Test Case 1: Reset button
+       // ************************************************************************
+        reset_button_press();
+       #(CLK_PERIOD * 2000);
+
+		// ************************************************************************
+       // Test Case 2: Jump button
+       // ************************************************************************
+       jump_button_press();
+       #(CLK_PERIOD * 2000);
+	   jump_button_press();
+       #(CLK_PERIOD * 25000000);
+
+	    
 		`ifdef GL
-	    	$display("Monitor: Test 1 Mega-Project IO (GL) Passed");
+	    	$display("Monitor: NEBULA II-Team-08 (GL) Passed");
 		`else
-		    $display("Monitor: Test 1 Mega-Project IO (RTL) Passed");
+		    $display("Monitor: NEBULA II-Team-08 (RTL) Passed");
 		`endif
-	    $finish;
+
+		$finish;
 	end
 
+	// Print output after each GPIO goes high
+	always begin
+		#(10000 * CLK_PERIOD) $display("@%t ms, {GPIO[37:5], GPIO[0]} = 34'h%h ", $time, checkbits);
+	end
+
+	// Reset Operation
 	initial begin
 		RSTB <= 1'b0;
 		CSB  <= 1'b1;		// Force CSB high
 		#2000;
 		RSTB <= 1'b1;	    	// Release reset
-		#3_00_000;
+		#100000;
 		CSB = 1'b0;		// CSB can be released
 	end
 
-	initial begin		// Power-up sequence
+	// Power-up sequence
+	initial begin
 		power1 <= 1'b0;
 		power2 <= 1'b0;
-		power3 <= 1'b0;
-		power4 <= 1'b0;
-		#100;
+		#200;
 		power1 <= 1'b1;
-		#100;
+		#200;
 		power2 <= 1'b1;
-		#100;
-		power3 <= 1'b1;
-		#100;
-		power4 <= 1'b1;
 	end
 
-	always @(mprj_io) begin
-		#1 $display("MPRJ-IO state = %b ", mprj_io[7:0]);
-	end
-
+	// SPI flash signals
 	wire flash_csb;
 	wire flash_clk;
 	wire flash_io0;
 	wire flash_io1;
 
-	wire VDD3V3;
-	wire VDD1V8;
-	wire VSS;
-	
-	assign VDD3V3 = power1;
-	assign VDD1V8 = power2;
-	assign VSS = 1'b0;
+	// Assign power inputs
+	wire VDD3V3 = power1;
+	wire VDD1V8 = power2;
+	wire VSS = 1'b0;
 
+	// Caravel instance
 	caravel uut (
 		.vddio	  (VDD3V3),
 		.vddio_2  (VDD3V3),
@@ -242,7 +280,7 @@ module team_1_tb;
 		.vccd2	  (VDD1V8),
 		.vssd1	  (VSS),
 		.vssd2	  (VSS),
-		.clock    (clock),
+		.clock    (clock_in),
 		.gpio     (gpio),
 		.mprj_io  (mprj_io),
 		.flash_csb(flash_csb),
@@ -252,8 +290,9 @@ module team_1_tb;
 		.resetb	  (RSTB)
 	);
 
+	// SPI flash instance
 	spiflash #(
-		.FILENAME("io_ports.hex")
+		.FILENAME("team_08.hex")
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),
