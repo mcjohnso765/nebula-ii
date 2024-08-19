@@ -518,6 +518,31 @@ module nebula_ii (
         .CYC_O(arbitrator_cyc_i[10])
     );
 
+    // Team_11 Project Instance
+    // (this one is different - much smaller design)
+    team_11_Wrapper team_11_Wrapper (
+    `ifdef USE_POWER_PINS
+            .vccd1(vccd1),	// User area 1 1.8V power
+            .vssd1(vssd1),	// User area 1 digital ground
+    `endif
+        //Wishbone Slave and user clk, rst
+        .wb_clk_i(wb_clk_i),
+        .wb_rst_i(wb_rst_i),
+        .wbs_stb_i(wbs_stb_o_projects[11]),
+        .wbs_cyc_i(wbs_cyc_o_projects[11]),
+        .wbs_we_i(wbs_we_o_projects[11]),
+        .wbs_sel_i(wbs_sel_o_projects[11]),
+        .wbs_dat_i(wbs_dat_o_projects[11]),
+        .wbs_adr_i(wbs_adr_o_projects[11]),
+        .wbs_ack_o(wbs_ack_i_projects[11]),
+        .wbs_dat_o(wbs_dat_i_projects[11]),
+
+        // GPIOs
+        .gpio_in(io_in), // Breakout Board Pins
+        .gpio_out(designs_gpio_out[11]), // Breakout Board Pins
+        .gpio_oeb(designs_gpio_oeb[11]) // Active Low Output Enable
+    );
+
     // Team_12 Project Instance
     team_12_Wrapper team_12_Wrapper (
     `ifdef USE_POWER_PINS
