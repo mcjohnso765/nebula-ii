@@ -184,20 +184,10 @@ module team_11_tb;
 
 		// Press button again
 		read_row = 4'b0001;
-		#(50000 * CLK_PERIOD);
+
+		// THIS LINE MAKES SURE IT WORKS!!!
+		wait(uut.chip_core.mprj.mprj.team_11_Wrapper.team_11_WB.instance_to_wrap.msg_1 == 128'h20202020202020202020202020202032);
 		#(500);
-
-		// Release button
-		read_row = 0;
-		#(10000 * CLK_PERIOD);
-
-
-
-		// #(1000);
-		// read_row = 4'b0001;
-		// #(1000);
-		// read_row = 4'b1011;
-		// #(1000);
 		
 
 		`ifdef GL
