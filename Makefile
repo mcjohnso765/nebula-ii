@@ -20,6 +20,9 @@ PRECHECK_ROOT?=${HOME}/mpw_precheck
 export MCW_ROOT?=$(PWD)/mgmt_core_wrapper
 SIM?=RTL
 
+SRC		:= verilog/rtl/team_projects/team_04/team_04_vConvert
+VSRC		:= verilog/rtl/team_projects/team_04/source_v
+
 # Install lite version of caravel, (1): caravel-lite, (0): caravel
 CARAVEL_LITE?=1
 
@@ -511,9 +514,22 @@ tbsim-source-%:
 	make sim-source-$(lastword $(subst -, ,$*))
 
 # FYI: Run 'make clean' to clean all temporary files produced by testbenches
+<<<<<<< HEAD
 
 .PHONY: sv2v-team02
 sv2v-team02:
 	sv2v -w verilog/rtl/team_projects/team_02/project.v verilog/rtl/team_projects/team_02/*.sv
 
 
+=======
+.PHONY: team-08-sv2v
+team-08-sv2v:
+	mkdir -p verilog/rtl/team_projects/team_08/sv2v
+	sv2v verilog/rtl/team_projects/team_08/team_src/*.*v -w verilog/rtl/team_projects/team_08/sv2v/project.v
+
+sv2v:
+	@echo "Making VSRC Directory"
+	@mkdir -p $(VSRC)
+	@sv2v --write=$(VSRC)/tippy_top.v $(SRC)/*
+	@echo "Done Conversion"
+>>>>>>> 6058e83493b9e75aca01df9ec34fa6b7ad4ec78d

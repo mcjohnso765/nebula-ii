@@ -48,6 +48,7 @@ initial begin
     $dumpvars;
 end
 
+// request unit
 wishbone_manager manager(
     .CLK(tb_CLK),
     .nRST(tb_nRST),
@@ -187,6 +188,24 @@ la_control_Wrapper #(
     //la output
     .la_data_out(tb_la_data)
 );
+
+    // SRAM
+    SRAM_1024x32 sram (
+
+        .wb_clk_i(wb_clk_i),
+        .wb_rst_i(wb_rst_i),
+
+        // MGMT SoC Wishbone Slave
+
+        .wbs_stb_i(wbs_stb_o_sram),
+        .wbs_cyc_i(wbs_cyc_o_sram),
+        .wbs_we_i(wbs_we_o_sram),
+        .wbs_sel_i(wbs_sel_o_sram),
+        .wbs_dat_i(wbs_dat_o_sram),
+        .wbs_adr_i(wbs_adr_o_sram),
+        .wbs_ack_o(wbs_ack_i_sram),
+        .wbs_dat_o(wbs_dat_i_sram)
+    );
 
 task reset;
 begin

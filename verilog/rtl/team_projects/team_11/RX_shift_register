@@ -1,0 +1,39 @@
+module RX_shift_register (
+    input logic clk, nrst, Reg_Start, Din, receive_ready, baud_edge,
+    output logic [7:0]data_receive, 
+    output logic [8:0]show_internal
+  );
+    logic [8:0] internal_shift_register;
+    logic [8:0] shifted_data;
+
+    always_ff @(posedge clk, negedge nrst) begin
+        if (!nrst)
+            shifted_data <= 9'b0; 
+        else
+            shifted_data <= internal_shift_register;
+    end
+
+    always_comb begin
+        internal_shift_register = shifted_data;
+        if (receive_ready == 1) begin
+            data_receive = {shifted_data[8:1]};
+        end 
+        else begin
+            if (Reg_Start == 1'b1)begin
+                if(baud_edge == 1'b1)begin
+                    internal_shift_register = {internal_shift_register[7:0], Din}; 
+                    data_receive = 8'b0;
+                end
+                else begin
+                    internal_shift_register = internal_shift_register;
+                    data_receive = 8'b0;
+                end
+            end
+            else begin
+                internal_shift_register = 9'b0;   
+                data_receive = 8'b0;            
+            end
+        end
+    end
+    assign show_internal = internal_shift_register;
+endmodule

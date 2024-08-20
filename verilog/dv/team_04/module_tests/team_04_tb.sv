@@ -16,8 +16,6 @@
 
 module team_04_tb();
 
-    ///////////////////////////////////
-    // Write your test bench code here!
-    ///////////////////////////////////
+    logic tb_clk, nrst; //clock and reset signals
 
 endmodule

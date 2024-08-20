@@ -1,0 +1,102 @@
+module RX_FSM(
+    input logic clk, nrst, receive_ready, no_count, rx_din, falling_edge, new_clk,
+    output logic Success, Reg_Start, Count_Start, send
+  );
+
+    typedef enum logic[2:0] {IDLE, RECEIVING, STOP} turnstile_t;
+    turnstile_t current_state, next_state;
+
+    always_ff@(posedge clk, negedge nrst) begin
+	    if (!nrst)
+		    current_state <= IDLE;
+        else 
+		    current_state <= next_state;
+    end
+
+    always_comb begin
+	    case(current_state)
+		    IDLE: begin
+                send = 1'b0;
+                if(rx_din == 1'b0)begin
+                    if(falling_edge == 1'b1)begin
+                        next_state = current_state;
+                        Reg_Start = 1'b0;
+                        Count_Start = 1'b0;
+                    end
+                    else begin
+                        if(new_clk == 1'b1) begin
+                            Reg_Start = 1'b1;
+                            Count_Start = 1'b1;
+                            next_state = RECEIVING;
+                        end
+                        else begin
+                            next_state = current_state;
+                            Reg_Start = 1'b0;
+                            Count_Start = 1'b0;
+                        end
+                    end
+                end
+                else begin
+                    next_state = current_state;
+                    Reg_Start = 1'b0;
+                    Count_Start = 1'b0;
+                end
+            end
+		    RECEIVING: begin
+                Count_Start = 1'b1;
+                Reg_Start = 1'b1;
+                if(no_count == 1'b1)begin
+                    next_state = IDLE;
+                    Reg_Start = 1'b0;
+                    Count_Start = 1'b0;
+                    Success = 1'b0;
+                    send = 1'b0;
+                end
+                else begin
+                    if(new_clk == 1'b1)begin
+                        if(receive_ready == 1'b1)begin
+                            send = 1'b1;
+                            Success = 1'b1;
+                            next_state = STOP;
+                            Count_Start = 1'b0;
+                            Reg_Start = 1'b0;
+                        end
+                        else begin
+                            Count_Start = 1'b1;
+                            Reg_Start = 1'b1;
+                            send = 1'b0;
+                            next_state = current_state;
+                            Success = 1'b0;
+                        end
+                    end
+                    else begin
+                        next_state = current_state;
+                        Count_Start = 1'b0;
+                        Reg_Start = 1'b0;
+                        send = 1'b0;
+                        Success = 1'b0;
+                    end
+                end
+            end
+            STOP: begin
+                if(new_clk == 1'b1)begin
+                    send = 1'b0;
+                    Count_Start = 1'b0;
+                    Reg_Start = 1'b0;
+                    Success = 1'b0;
+                    next_state = IDLE;
+		        end
+                else begin
+                    next_state = current_state;
+                end
+            end
+            default: begin
+                Success = 1'b0;
+                Reg_Start = 1'b0;
+                Count_Start = 1'b0;
+                next_state = current_state;
+                send = 1'b0;
+            end
+        endcase
+    end
+endmodule

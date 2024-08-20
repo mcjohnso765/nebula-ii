@@ -1,14 +1,14 @@
 ---
 info:
-  name: 
-  description: 
+  name: team_11
+  description: team_11 wrapper
   repo: STARS-Design-Track-2024/Project_Template.git
   owner: Purdue University
   license: APACHE 2.0
-  author: 
-  email: 
+  author: Lakshme and Jose
+  email: jchari@purdue.edu
   version: v1.0.0
-  date: 
+  date: 07-12-2024
   category: digital
   tags:
     - team11
@@ -32,21 +32,6 @@ ports:
     description: Enables or disables team design
 
 external_interface:
-  - name: la_data_in
-    port: la_data_in
-    width: 128
-    direction: input
-    description: Inputs from the Logic Analyzer
-  - name: la_data_out
-    port: la_data_out
-    width: 128
-    direction: output
-    description: Outputs from the Logic Analyzer
-  - name: la_oenb
-    port: la_oenb
-    width: 128
-    direction: input
-    description: Output Enable from the Logic Analyzer
   - name: gpio_in
     port: gpio_in
     width: 34

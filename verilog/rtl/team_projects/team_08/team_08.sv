@@ -1,7 +1,7 @@
 // $Id: $
 // File name:   team_08.sv
-// Created:     MM/DD/YYYY
-// Author:      <Full Name>
+// Created:     07/04/2024
+// Author:      <Creighton Bennett>
 // Description: <Module Description>
 
 `default_nettype none
@@ -20,21 +20,24 @@ module team_08 (
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
     output wire [33:0] gpio_out, // Breakout Board Pins
-    output wire [33:0] gpio_oeb, // Active Low Output Enable
+    output wire [33:0] gpio_oeb // Active Low Output Enable
     
-    /*
-    * Add other I/O ports that you wish to interface with the
-    * Wishbone bus to the management core. For examples you can 
-    * add registers that can be written to with the Wishbone bus
-    */
 );
 
     // All outputs must have a value even if not used
     assign la_data_out = 128'b0;
-    assign gpio_out = 34'b0; //Inputs, but set low anyways
-    assign gpio_oeb = '1;//All 1's inputs
+    // assign gpio_out = 34'b0; //Inputs, but set low anyways
     /*
     * Place code and sub-module instantiations here.
     */
+    // Only two pins are inputs, the reset and jump button are the inputs 
+
+    assign gpio_oeb[2:0] = '1;
+    assign gpio_oeb[30:3] = '0;
+    assign gpio_oeb[33:31] = '1;
+
+    team_08_GPIOPins allocation(.in(gpio_in), .out(gpio_out), .clk(clk), .reset(en & nrst));
+
+
 
 endmodule
