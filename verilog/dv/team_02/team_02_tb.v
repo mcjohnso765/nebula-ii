@@ -19,7 +19,7 @@
 
 module team_02_tb;
 	// Signals declaration
-	reg clock;
+	reg clk;
 	wire clock_in;
 	reg RSTB;
 	reg CSB;
@@ -39,17 +39,14 @@ module team_02_tb;
 
 	assign lcdOut = checkbits[10:3];
 
-	assign clock_in = clock;
+	assign clock_in = clk;
 	assign mprj_io[15:12] = mprj_io_in[15:12];
 
-
-	assign lcdOut = checkbits[10:3];
-
 	// Clock generation
-	always #12.5 clock <= (clock === 1'b0);
+	always #12.5 clk <= (clk === 1'b0);
 
 	initial begin
-		clock = 0;
+		clk = 0;
 	end
 
 	// STUDENTS: This block here is important, but don't worry about trying to understand it
@@ -154,9 +151,9 @@ module team_02_tb;
 		$dumpfile("team_02.vcd");
 		$dumpvars(0, team_02_tb);
 
-		// Repeat cycles of 1000 clock edges as needed to complete testbench
+		// Repeat cycles of 1000 clk edges as needed to complete testbench
 		repeat (1000) begin
-			repeat (1000) @(posedge clock);
+			repeat (1000) @(posedge clk);
 			// $display("+1000 cycles");
 		end
 		$display("%c[1;31m",27);
@@ -178,10 +175,10 @@ module team_02_tb;
 		// end
 		#(mprj_io[22:19] == column);
 		mprj_io_in[18:15] = row;
-		@(negedge clock);
-		@(negedge clock);
-		@(negedge clock);
-		@(negedge clock);
+		@(negedge clk);
+		@(negedge clk);
+		@(negedge clk);
+		@(negedge clk);
 		// #(150);
 		// mprj_io_in[18:15] = 4'h0; 
 	endtask
@@ -193,14 +190,14 @@ module team_02_tb;
 
 
 	// currNum[7:0] = lcdOut;
-	// @(negedge clock);
+	// @(negedge clk);
 	// currNum[15:8] = lcdOut;
-	// @(negedge clock);
+	// @(negedge clk);
 	// currNum[23:16] = lcdOut;
 
 
 	// for (i = 0; i < 65; i = i +1) begin
-	// 	@(negedge clock);
+	// 	@(negedge clk);
 	// 	currNum = {currNum[15:0], lcdOut};
 	// 	if (currNum == expFirst | passFirst)
 	// 		passFirst = 1;
@@ -236,36 +233,36 @@ module team_02_tb;
 	validated = 0;
 	//NUM1
 			press_button(4'h1, 4'h1); //enter 111
-			@(negedge clock)
+			@(negedge clk)
 			press_button(4'h1, 4'h1);
-			@(negedge clock);
+			@(negedge clk);
 			press_button(4'h1, 4'h1);
-			@(negedge clock);
+			@(negedge clk);
 			press_button(4'h8, 4'h4); //confirm key
-			@(negedge clock);
+			@(negedge clk);
 
 	//OPSEL
 			press_button(4'h1, 4'h8);//addition(A)
-			@(negedge clock);
+			@(negedge clk);
 			// wait(lcdOut == 8'b00101011);
-			@(negedge clock);
+			@(negedge clk);
 			press_button(4'h8, 4'h4);//confirm key
-			@(negedge clock);
+			@(negedge clk);
 
 	//NUM2
 			press_button(4'h1, 4'h2);
-			@(negedge clock);
+			@(negedge clk);
 			press_button(4'h1, 4'h2);
-			@(negedge clock);
+			@(negedge clk);
 			press_button(4'h1, 4'h2);
-			@(negedge clock);
+			@(negedge clk);
 			press_button(4'h1, 4'h2);
-			@(negedge clock);
+			@(negedge clk);
 
 	//RESULT
 			#(1000);
 			press_button(4'h1, 4'h1);
-			@(negedge clock);
+			@(negedge clk);
 
 			#(25);
 	//CHECK OUTPUT
@@ -278,34 +275,34 @@ module team_02_tb;
 // 	validated = 0;
 // 	//NUM1
 // 			press_button(4'h1, 4'h3); //enter 1
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h1, 4'h2);
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h1, 4'h1);
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h8, 4'h4); //confirm key
-// 			@(negedge clock);
+// 			@(negedge clk);
 
 // 	//OPSEL
 // 			press_button(4'h2, 4'h8);//subtraction(B)
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h8, 4'h4);//confirm key
-// 			@(negedge clock);
+// 			@(negedge clk);
 
 // 	//NUM2
 // 			press_button(4'h1, 4'h1);
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h1, 4'h2);
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h1, 4'h3);
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h1, 4'h2);
-// 			@(negedge clock);
+// 			@(negedge clk);
 
 // 	//RESULT
 // 			#(1000);
 // 			press_button(4'h1, 4'h1);
-// 			@(negedge clock);
+// 			@(negedge clk);
 
 // 			#(25);
 // 	//CHECK OUTPUT
@@ -318,34 +315,34 @@ module team_02_tb;
 // 	validated = 0;
 // 	//NUM1
 // 			press_button(4'h8, 4'h2); //enter 0
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h1, 4'h2);
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h2, 4'h1);
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h8, 4'h4); //confirm key
-// 			@(negedge clock);
+// 			@(negedge clk);
 
 // 	//OPSEL
 // 			press_button(4'h4, 4'h8);//multiplication(C)
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h8, 4'h4);//confirm key
-// 			@(negedge clock);
+// 			@(negedge clk);
 
 // 	//NUM2
 // 			press_button(4'h8, 4'h2);
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h1, 4'h1);
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h4, 4'h2);
-// 			@(negedge clock);
+// 			@(negedge clk);
 // 			press_button(4'h8, 4'h4);
-// 			@(negedge clock);
+// 			@(negedge clk);
 
 // 	//RESULT
 // 			#(1000);
 // 			press_button(4'h1, 4'h1);
-// 			@(negedge clock);
+// 			@(negedge clk);
 
 	// 		#(25);
 	// CHECK OUTPUT
@@ -393,7 +390,7 @@ module team_02_tb;
 
 	// SPI flash signals
 	wire flash_csb;
-	wire flash_clock;
+	wire flash_clk;
 	wire flash_io0;
 	wire flash_io1;
 
@@ -426,7 +423,7 @@ module team_02_tb;
 		.gpio     (gpio),
 		.mprj_io  (mprj_io),
 		.flash_csb(flash_csb),
-		.flash_clock(flash_clock),
+		.flash_clk(flash_clk),
 		.flash_io0(flash_io0),
 		.flash_io1(flash_io1),
 		.resetb	  (RSTB)
@@ -437,7 +434,7 @@ module team_02_tb;
 		.FILENAME("team_02.hex")
 	) spiflash (
 		.csb(flash_csb),
-		.clock(flash_clock),
+		.clk(flash_clk),
 		.io0(flash_io0),
 		.io1(flash_io1),
 		.io2(),			// not used
