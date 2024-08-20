@@ -10,10 +10,6 @@ module team_02_Wrapper (
     inout vccd1,	// User area 1 1.8V supply
     inout vssd1,	// User area 1 digital ground
 `endif
-
-    // Chip Select (Active Low)
-    input wire ncs,
-
     /*
     *--------------------------------------------------------------
     * NOTE: You may not need to include all of these.
@@ -47,7 +43,30 @@ module team_02_Wrapper (
     output wire [37:0] gpio_oeb, // Active Low Output Enable
 
     // IRQ signal
-    output wire [2:0] irq
+    output wire [2:0] irq,
+
+    // Add master ports!!
+    //we already have slave
+
+    output wire [31:0] wbm_adr_o,
+    output wire [31:0] wbm_dat_o,
+    output wire [3:0] wbm_sel_o,
+    output wire wbm_we_o,
+    output wire wbm_stb_o,
+    output wire wbm_cyc_o,
+    input wire wbm_ack_i,
+    input wire [31:0] wbm_dat_i,
+
+		    // Wishbone Master signals
+    output wire [31:0] ADR_O,
+    output wire [31:0] DAT_O,
+    output wire [3:0]  SEL_O,
+    output wire        WE_O,
+    output wire        STB_O,
+    output wire        CYC_O,
+    input  wire [31:0] DAT_I,
+    input wire         ACK_I
+
 );
     /*
     *--------------------------------------------------------------
@@ -68,8 +87,17 @@ module team_02_Wrapper (
 
     //Assign to unused outputs
     assign irq = 3'b000;	// Unused
-    assign gpio_oeb[4:1] = 4'b1111;//Set all to inputs
-    assign gpio_out[4:1] = 4'b0;//Doesn't matter since inputs
+    assign {gpio_oeb[18:15]} = '1;//Set all to inputs
+    assign {gpio_out[18:15]} = '0;//Doesn't matter since inputs
+    // assign gpio
+		
+    //Unused connection to nebula_ii wishbone arbitrator
+    assign ADR_O = 32'b0;
+    assign DAT_O = 32'b0;
+    assign SEL_O = 4'b0;
+    assign  WE_O = 1'b0;
+    assign STB_O = 1'b0;
+    assign CYC_O = 1'b0;
 
     // Instantiate Bus Wrapper module here
     team_02_WB team_02_WB (
@@ -88,9 +116,26 @@ module team_02_Wrapper (
         .la_data_in(la_data_in),
         .la_data_out(la_data_out),
         .la_oenb(la_oenb),
+        // .gpio_in({gpio_in[37:5], gpio_in[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        // .gpio_out({gpio_out[37:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        // .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_in({gpio_in[37:5], gpio_in[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_out({gpio_out[37:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
-        .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}) //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+
+        // Add master ports
+        .ADR_O(wbm_adr_o),
+        .DAT_O(wbm_dat_o),
+        .SEL_O(wbm_sel_o),
+        .WE_O(wbm_we_o),
+        .STB_O(wbm_stb_o),
+        .CYC_O(wbm_cyc_o),
+        .ACK_I(wbm_ack_i),
+        .DAT_I(wbm_dat_i)
+
+        // costumized salve ports
+        //.en(en),
+        // .start_addr(start_addr)
     );
 
 endmodule
