@@ -13,7 +13,7 @@ module t02_control(
 		CU_LB, CU_LH, CU_LW, CU_LBU, CU_LHU, CU_SB, CU_SH, CU_SW, 
 		CU_ADDI, CU_SLTI, CU_SLTIU, CU_SLIU, CU_XORI, CU_ORI, CU_ANDI, CU_SLLI, CU_SRLI, CU_SRAI, 
 		CU_ADD, CU_SUB, CU_SLL, CU_SLT, CU_SLTU, CU_XOR, CU_SRL, CU_SRA, CU_OR, CU_AND,
-		CU_ERROR
+		CU_ERROR, CU_HALT
 	} cuOPType;	
 	typedef enum logic [6:0] {
 		RTYPE = 7'b0110011,
@@ -72,6 +72,12 @@ always_comb begin
 	memRead=0; 
 	aluSrc=0;
 	aluOP = '0; //
+	if (instruction == 32'hffffffff) begin
+		cuOP = CU_HALT;
+	end
+	else begin
+
+
 	casez (instruction[6:0])
 	(LUI): begin
 		cuOP = CU_LUI;
@@ -146,9 +152,9 @@ always_comb begin
 	end
 	(ITYPE): begin
 		reg_1 = instruction[19:15];
-		rd = instruction[11:7];
+		rd = instruction[11:7]; //TRACED
 		imm = {8'b0, instruction[31:20]};
-		regWrite = 1;
+		regWrite = 1; //TRACED
 		aluSrc = 1;
 		casez(instruction[14:12])
 		ADDI: begin
@@ -244,5 +250,6 @@ always_comb begin
 	end
 	default: cuOP = CU_ERROR;
 	endcase
+	end
 end
 endmodule

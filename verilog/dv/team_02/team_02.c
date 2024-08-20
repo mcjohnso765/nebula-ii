@@ -135,55 +135,37 @@ void main()
     // reg_team_02_operand_0 = 7;
     // reg_team_02_operand_1 = 8;
     // reg_team_02_operator_0 = 11;
+    
+    //here
+    // *(&sram_space ) = 0x3e800093;
+    // *(&sram_space + 1) = 0x7d008113;
+	// *(&sram_space + 2) = 0x0080006f;
+    // *(&sram_space + 3) = 0x00800393;
+    // *(&sram_space + 4) = 0x00a00413;
+    //  *(&sram_space + 5) = 0xffffffff;
 
-*(&sram_sapce) = 0x0dc02083
-*(&sram_sapce + 1) = 0x0f002103
-*(&sram_sapce + 2) = 0x10402183
-*(&sram_sapce + 3) = 0x00d00213
-*(&sram_sapce + 4) = 0x00c00293
-*(&sram_sapce + 5) = 0x00b00313
-*(&sram_sapce + 6) = 0x00a00393
-*(&sram_sapce + 7) = 0x00418a63
-*(&sram_sapce + 8) = 0x00518c63
-*(&sram_sapce + 9) = 0x00618e63
-*(&sram_sapce + 10) = 0x06718063
-*(&sram_sapce + 11) = 0x08c0006f
-*(&sram_sapce + 12) = 0x00208433
-*(&sram_sapce + 13) = 0x0800006f
-*(&sram_sapce + 14) = 0x40208433
-*(&sram_sapce + 15) = 0x0780006f
-*(&sram_sapce + 16) = 0x00000493
-*(&sram_sapce + 17) = 0x00000413
-*(&sram_sapce + 18) = 0x0020d463
-*(&sram_sapce + 19) = 0x0220c063
-*(&sram_sapce + 20) = 0x0024c463
-*(&sram_sapce + 21) = 0x0600006f
-*(&sram_sapce + 22) = 0x00148793
-*(&sram_sapce + 23) = 0x000784b3
-*(&sram_sapce + 24) = 0x00140833
-*(&sram_sapce + 25) = 0x00080433
-*(&sram_sapce + 26) = 0xfe9ff06f
-*(&sram_sapce + 27) = 0x0014c463
-*(&sram_sapce + 28) = 0x0440006f
-*(&sram_sapce + 29) = 0x00148793
-*(&sram_sapce + 30) = 0x000784b3
-*(&sram_sapce + 31) = 0x00240833
-*(&sram_sapce + 32) = 0x00080433
-*(&sram_sapce + 33) = 0xfe9ff06f
-*(&sram_sapce + 34) = 0x00000413
-*(&sram_sapce + 35) = 0x00008513
-*(&sram_sapce + 36) = 0x402505b3
-*(&sram_sapce + 37) = 0x02010063
-*(&sram_sapce + 38) = 0x0005d463
-*(&sram_sapce + 39) = 0x0180006f
-*(&sram_sapce + 40) = 0x402507b3
-*(&sram_sapce + 41) = 0x00078533
-*(&sram_sapce + 42) = 0x00140813
-*(&sram_sapce + 43) = 0x00080433
-*(&sram_sapce + 44) = 0xfe1ff06f
-*(&sram_sapce + 45) = 0x10802c23
-*(&sram_sapce + 46) = 0x00100a13
-*(&sram_sapce + 47) = 0x1b402223
+    *(&sram_space ) = 0x00f00113; //add 0
+    *(&sram_space + 1) = 0x01400193; //
+    *(&sram_space + 2) = 0x01e00213; 
+    *(&sram_space + 3) = 0x06202223; //sw
+    *(&sram_space + 4) = 0x06302423; 
+    *(&sram_space + 5) = 0x06402623;
+    *(&sram_space + 6) = 0x06402283; //lw
+    *(&sram_space + 7) = 0x06802283;
+    *(&sram_space + 8) = 0x06802303;
+    *(&sram_space + 9) = 0xffffffff;
+
+
+	// *(&sram_space + 4) = 0xff9ff1ef;
+
+
+    // *(&sram_space ) = 0x3e800093;
+    // *(&sram_space + 1) = 0x7d008113;
+    // *(&sram_space + 2) = 0x0080006f;
+    // *(&sram_space + 3) = 0x0080006f;
+    // *(&sram_space + 4) = 0x00800393;
+    // *(&sram_space + 5) = 0x00a00413;
+    //  *(&sram_space + 6) = 0xffffffff;
 
 	// Set start address
     reg_tem_02_start_address = 0x33000000;

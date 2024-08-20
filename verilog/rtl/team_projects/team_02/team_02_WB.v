@@ -49,11 +49,12 @@ module team_02_WB (
 	wire		clk = clk_i;
 	wire		nrst = (~rst_i);
 
+	assign IRQ = 0;
 
 	`WB_CTRL_SIGNALS
 
 	wire [1-1:0]	en;
-	wire [32-1:0]	start_addr;
+	//wire [32-1:0]	start_addr;
 
 	// Register Definitions
 	reg [0:0]	EN_VAL_REG;
@@ -63,14 +64,13 @@ module team_02_WB (
 	assign IRQ = 0;
 
 	reg [31:0]	START_ADDR_VAL_REG;
-	assign	start_addr = START_ADDR_VAL_REG;
+	//assign	start_addr = START_ADDR_VAL_REG;
 	`WB_REG(START_ADDR_VAL_REG, 0, 32)
 
 	team_02 instance_to_wrap (
 		.clk(clk),
 		.nrst(nrst),
 		.en(en),
-		.start_addr(start_addr),
 		.la_data_in(la_data_in),
 		.la_data_out(la_data_out),
 		.la_oenb(la_oenb),

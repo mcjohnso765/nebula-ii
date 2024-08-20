@@ -146,178 +146,181 @@ module t02_control (
 		memRead = 0;
 		aluSrc = 0;
 		aluOP = 1'sb0;
-		casez (instruction[6:0])
-			7'b0110111: begin
-				cuOP = 6'd0;
-				imm = instruction[31:12];
-				rd = instruction[11:7];
-				regWrite = 1;
-			end
-			7'b0010111: begin
-				cuOP = 6'd1;
-				imm = instruction[31:12];
-				rd = instruction[11:7];
-				regWrite = 1;
-			end
-			7'b1101111: begin
-				cuOP = 6'd2;
-				imm = instruction[31:12];
-				rd = instruction[11:7];
-				regWrite = 1;
-			end
-			7'b1100111: begin
-				cuOP = 6'd3;
-				imm = {8'b00000000, instruction[31:20]};
-				reg_1 = instruction[19:15];
-				rd = instruction[11:7];
-				regWrite = 1;
-			end
-			7'b1100011: begin
-				reg_1 = instruction[19:15];
-				reg_2 = instruction[24:20];
-				imm = {8'b00000000, instruction[31:25], instruction[11:7]};
-				aluOP = 4'd1;
-				casez (instruction[14:12])
-					3'b000: cuOP = 6'd4;
-					3'b001: cuOP = 6'd5;
-					3'b100: cuOP = 6'd6;
-					3'b101: cuOP = 6'd7;
-					3'b110: cuOP = 6'd8;
-					3'b111: cuOP = 6'd9;
-					default: cuOP = 6'd38;
-				endcase
-			end
-			7'b0000011: begin
-				reg_1 = instruction[19:15];
-				rd = instruction[11:7];
-				imm = {8'b00000000, instruction[31:20]};
-				regWrite = 1;
-				aluSrc = 1;
-				memRead = 1;
-				aluOP = 4'd0;
-				casez (instruction[14:12])
-					3'b000: cuOP = 6'd10;
-					3'b001: cuOP = 6'd11;
-					3'b010: cuOP = 6'd12;
-					3'b100: cuOP = 6'd13;
-					3'b101: cuOP = 6'd14;
-					default: cuOP = 6'd38;
-				endcase
-			end
-			7'b0100011: begin
-				reg_1 = instruction[19:15];
-				reg_2 = instruction[24:20];
-				imm = {8'b00000000, instruction[31:25], instruction[11:7]};
-				memWrite = 1;
-				aluSrc = 1;
-				aluOP = 4'd0;
-				casez (instruction[14:12])
-					3'b000: cuOP = 6'd15;
-					3'b001: cuOP = 6'd16;
-					3'b010: cuOP = 6'd17;
-					default: cuOP = 6'd38;
-				endcase
-			end
-			7'b0010011: begin
-				reg_1 = instruction[19:15];
-				rd = instruction[11:7];
-				imm = {8'b00000000, instruction[31:20]};
-				regWrite = 1;
-				aluSrc = 1;
-				casez (instruction[14:12])
-					3'b000: begin
-						aluOP = 4'd0;
-						cuOP = 6'd18;
-					end
-					3'b010: begin
-						aluOP = 4'd8;
-						cuOP = 6'd19;
-					end
-					3'b011: begin
-						aluOP = 4'd7;
-						cuOP = 6'd20;
-					end
-					3'b100: begin
-						aluOP = 4'd3;
-						cuOP = 6'd22;
-					end
-					3'b110: begin
-						aluOP = 4'd2;
-						cuOP = 6'd23;
-					end
-					3'b111: begin
-						aluOP = 4'd4;
-						cuOP = 6'd24;
-					end
-					3'b001: begin
-						aluOP = 4'd5;
-						cuOP = 6'd25;
-					end
-					3'b101:
-						if (|instruction[31:22]) begin
-							aluOP = 4'd9;
-							cuOP = 6'd26;
-						end
-						else begin
-							aluOP = 4'd6;
-							cuOP = 6'd27;
-						end
-					default: cuOP = 6'd38;
-				endcase
-			end
-			7'b0110011: begin
-				reg_1 = instruction[19:15];
-				reg_2 = instruction[24:20];
-				rd = instruction[11:7];
-				regWrite = 1;
-				casez (instruction[14:12])
-					3'b000:
-						if (!(|instruction[31:22])) begin
+		if (instruction == 32'hffffffff)
+			cuOP = 6'd39;
+		else
+			casez (instruction[6:0])
+				7'b0110111: begin
+					cuOP = 6'd0;
+					imm = instruction[31:12];
+					rd = instruction[11:7];
+					regWrite = 1;
+				end
+				7'b0010111: begin
+					cuOP = 6'd1;
+					imm = instruction[31:12];
+					rd = instruction[11:7];
+					regWrite = 1;
+				end
+				7'b1101111: begin
+					cuOP = 6'd2;
+					imm = instruction[31:12];
+					rd = instruction[11:7];
+					regWrite = 1;
+				end
+				7'b1100111: begin
+					cuOP = 6'd3;
+					imm = {8'b00000000, instruction[31:20]};
+					reg_1 = instruction[19:15];
+					rd = instruction[11:7];
+					regWrite = 1;
+				end
+				7'b1100011: begin
+					reg_1 = instruction[19:15];
+					reg_2 = instruction[24:20];
+					imm = {8'b00000000, instruction[31:25], instruction[11:7]};
+					aluOP = 4'd1;
+					casez (instruction[14:12])
+						3'b000: cuOP = 6'd4;
+						3'b001: cuOP = 6'd5;
+						3'b100: cuOP = 6'd6;
+						3'b101: cuOP = 6'd7;
+						3'b110: cuOP = 6'd8;
+						3'b111: cuOP = 6'd9;
+						default: cuOP = 6'd38;
+					endcase
+				end
+				7'b0000011: begin
+					reg_1 = instruction[19:15];
+					rd = instruction[11:7];
+					imm = {8'b00000000, instruction[31:20]};
+					regWrite = 1;
+					aluSrc = 1;
+					memRead = 1;
+					aluOP = 4'd0;
+					casez (instruction[14:12])
+						3'b000: cuOP = 6'd10;
+						3'b001: cuOP = 6'd11;
+						3'b010: cuOP = 6'd12;
+						3'b100: cuOP = 6'd13;
+						3'b101: cuOP = 6'd14;
+						default: cuOP = 6'd38;
+					endcase
+				end
+				7'b0100011: begin
+					reg_1 = instruction[19:15];
+					reg_2 = instruction[24:20];
+					imm = {8'b00000000, instruction[31:25], instruction[11:7]};
+					memWrite = 1;
+					aluSrc = 1;
+					aluOP = 4'd0;
+					casez (instruction[14:12])
+						3'b000: cuOP = 6'd15;
+						3'b001: cuOP = 6'd16;
+						3'b010: cuOP = 6'd17;
+						default: cuOP = 6'd38;
+					endcase
+				end
+				7'b0010011: begin
+					reg_1 = instruction[19:15];
+					rd = instruction[11:7];
+					imm = {8'b00000000, instruction[31:20]};
+					regWrite = 1;
+					aluSrc = 1;
+					casez (instruction[14:12])
+						3'b000: begin
 							aluOP = 4'd0;
-							cuOP = 6'd28;
+							cuOP = 6'd18;
 						end
-						else begin
-							aluOP = 4'd1;
-							cuOP = 6'd29;
+						3'b010: begin
+							aluOP = 4'd8;
+							cuOP = 6'd19;
 						end
-					3'b010: begin
-						aluOP = 4'd8;
-						cuOP = 6'd31;
-					end
-					3'b011: begin
-						aluOP = 4'd7;
-						cuOP = 6'd32;
-					end
-					3'b100: begin
-						aluOP = 4'd3;
-						cuOP = 6'd33;
-					end
-					3'b110: begin
-						aluOP = 4'd2;
-						cuOP = 6'd36;
-					end
-					3'b111: begin
-						aluOP = 4'd4;
-						cuOP = 6'd37;
-					end
-					3'b001: begin
-						aluOP = 4'd5;
-						cuOP = 6'd30;
-					end
-					3'b101:
-						if (|instruction[31:22]) begin
-							aluOP = 4'd9;
-							cuOP = 6'd34;
+						3'b011: begin
+							aluOP = 4'd7;
+							cuOP = 6'd20;
 						end
-						else begin
-							aluOP = 4'd6;
-							cuOP = 6'd35;
+						3'b100: begin
+							aluOP = 4'd3;
+							cuOP = 6'd22;
 						end
-					default: cuOP = 6'd38;
-				endcase
-			end
-			default: cuOP = 6'd38;
-		endcase
+						3'b110: begin
+							aluOP = 4'd2;
+							cuOP = 6'd23;
+						end
+						3'b111: begin
+							aluOP = 4'd4;
+							cuOP = 6'd24;
+						end
+						3'b001: begin
+							aluOP = 4'd5;
+							cuOP = 6'd25;
+						end
+						3'b101:
+							if (|instruction[31:22]) begin
+								aluOP = 4'd9;
+								cuOP = 6'd26;
+							end
+							else begin
+								aluOP = 4'd6;
+								cuOP = 6'd27;
+							end
+						default: cuOP = 6'd38;
+					endcase
+				end
+				7'b0110011: begin
+					reg_1 = instruction[19:15];
+					reg_2 = instruction[24:20];
+					rd = instruction[11:7];
+					regWrite = 1;
+					casez (instruction[14:12])
+						3'b000:
+							if (!(|instruction[31:22])) begin
+								aluOP = 4'd0;
+								cuOP = 6'd28;
+							end
+							else begin
+								aluOP = 4'd1;
+								cuOP = 6'd29;
+							end
+						3'b010: begin
+							aluOP = 4'd8;
+							cuOP = 6'd31;
+						end
+						3'b011: begin
+							aluOP = 4'd7;
+							cuOP = 6'd32;
+						end
+						3'b100: begin
+							aluOP = 4'd3;
+							cuOP = 6'd33;
+						end
+						3'b110: begin
+							aluOP = 4'd2;
+							cuOP = 6'd36;
+						end
+						3'b111: begin
+							aluOP = 4'd4;
+							cuOP = 6'd37;
+						end
+						3'b001: begin
+							aluOP = 4'd5;
+							cuOP = 6'd30;
+						end
+						3'b101:
+							if (|instruction[31:22]) begin
+								aluOP = 4'd9;
+								cuOP = 6'd34;
+							end
+							else begin
+								aluOP = 4'd6;
+								cuOP = 6'd35;
+							end
+						default: cuOP = 6'd38;
+					endcase
+				end
+				default: cuOP = 6'd38;
+			endcase
 	end
 	initial _sv2v_0 = 0;
 endmodule
@@ -355,6 +358,7 @@ module t02_memory_control (
 	nRST,
 	dmmRen,
 	dmmWen,
+	imemRen,
 	busy_o,
 	imemaddr,
 	dmmaddr,
@@ -374,6 +378,7 @@ module t02_memory_control (
 	input wire nRST;
 	input wire dmmRen;
 	input wire dmmWen;
+	input wire imemRen;
 	input wire busy_o;
 	input wire [31:0] imemaddr;
 	input wire [31:0] dmmaddr;
@@ -391,7 +396,6 @@ module t02_memory_control (
 	reg [31:0] prev_dmmstore;
 	reg [31:0] prev_imemload;
 	reg d_wait;
-	wire next_i_wait;
 	reg i_wait;
 	always @(posedge CLK or negedge nRST)
 		if (!nRST) begin
@@ -415,8 +419,6 @@ module t02_memory_control (
 		dmmload = 0;
 		i_wait = 1;
 		d_wait = 1;
-		if (i_wait)
-			imemload = prev_imemload;
 		if (dmmRen) begin
 			ramaddr = prev_dmmaddr;
 			Ren = dmmRen;
@@ -429,14 +431,20 @@ module t02_memory_control (
 			ramstore = prev_dmmstore;
 			d_wait = busy_o;
 		end
-		else begin
+		else if (imemRen) begin
 			ramaddr = imemaddr;
-			Ren = 1;
+			Ren = imemRen;
 			imemload = ramload;
 			i_wait = busy_o;
 		end
+		else begin
+			Ren = 0;
+			Wen = 0;
+		end
+		if (i_wait)
+			imemload = prev_imemload;
 	end
-	assign i_ready = ~i_wait;
+	assign i_ready = imemRen & ~i_wait;
 	assign d_ready = (dmmRen | dmmWen) & ~d_wait;
 	initial _sv2v_0 = 0;
 endmodule
@@ -461,12 +469,160 @@ module t02_mux (
 	end
 	initial _sv2v_0 = 0;
 endmodule
+module t02_new_request_unit (
+	CLK,
+	nRST,
+	DataAddress,
+	InstrAddress,
+	DatatoWrite,
+	iready,
+	dready,
+	FetchedData,
+	FetchedInstr,
+	cuOP,
+	busy_o,
+	cpu_dat_o,
+	write_i,
+	read_i,
+	adr_i,
+	cpu_data_i,
+	sel_i
+);
+	reg _sv2v_0;
+	input wire CLK;
+	input wire nRST;
+	input wire [31:0] DataAddress;
+	input wire [31:0] InstrAddress;
+	input wire [31:0] DatatoWrite;
+	output reg iready;
+	output reg dready;
+	output reg [31:0] FetchedData;
+	output reg [31:0] FetchedInstr;
+	input wire [5:0] cuOP;
+	input wire busy_o;
+	input wire [31:0] cpu_dat_o;
+	output reg write_i;
+	output reg read_i;
+	output reg [31:0] adr_i;
+	output reg [31:0] cpu_data_i;
+	output wire [3:0] sel_i;
+	reg [2:0] state;
+	reg [2:0] next_state;
+	reg next_iready;
+	reg next_dready;
+	reg next_read_i;
+	reg next_write_i;
+	reg [31:0] next_FetchedData;
+	reg [31:0] next_FetchedInstr;
+	reg [31:0] next_adr_i;
+	reg [31:0] next_cpu_dat_i;
+	assign sel_i = 4'b1111;
+	always @(posedge CLK or negedge nRST)
+		if (!nRST) begin
+			state <= 3'd0;
+			adr_i <= 32'b00000000000000000000000000000000;
+			cpu_data_i <= 32'b00000000000000000000000000000000;
+			FetchedData <= 32'b00000000000000000000000000000000;
+			FetchedInstr <= 32'b00000000000000000000000000000000;
+			iready <= 1'b0;
+			dready <= 1'b0;
+			read_i <= 1'b0;
+			write_i <= 1'b0;
+		end
+		else begin
+			state <= next_state;
+			adr_i <= next_adr_i;
+			cpu_data_i <= next_cpu_dat_i;
+			FetchedData <= next_FetchedData;
+			FetchedInstr <= next_FetchedInstr;
+			iready <= next_iready;
+			dready <= next_dready;
+			read_i <= next_read_i;
+			write_i <= next_write_i;
+		end
+	always @(*) begin
+		if (_sv2v_0)
+			;
+		next_state = state;
+		next_read_i = 1'b0;
+		next_write_i = 1'b0;
+		next_adr_i = 32'b00000000000000000000000000000000;
+		next_cpu_dat_i = 32'b00000000000000000000000000000000;
+		next_iready = 1'b0;
+		next_dready = 1'b0;
+		next_FetchedData = 32'b00000000000000000000000000000000;
+		next_FetchedInstr = 32'b00000000000000000000000000000000;
+		case (state)
+			3'd0:
+				if ((((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14)) & !dready) begin
+					next_read_i = 1'b1;
+					next_write_i = 1'b0;
+					next_adr_i = DataAddress + 32'h33000000;
+					next_state = 3'd4;
+				end
+				else if ((((cuOP == 6'd15) | (cuOP == 6'd16)) | (cuOP == 6'd17)) & !dready) begin
+					next_read_i = 1'b0;
+					next_write_i = 1'b1;
+					next_adr_i = DataAddress + 32'h33000000;
+					next_cpu_dat_i = DatatoWrite;
+					next_state = 3'd6;
+				end
+				else begin
+					next_read_i = 1'b1;
+					next_write_i = 1'b0;
+					next_state = 3'd5;
+				end
+			3'd4: begin
+				next_adr_i = adr_i;
+				next_state = 3'd1;
+			end
+			3'd1: begin
+				next_adr_i = adr_i;
+				if (!busy_o) begin
+					next_adr_i = 32'b00000000000000000000000000000000;
+					next_dready = 1'b1;
+					next_FetchedData = cpu_dat_o;
+					next_state = 3'd0;
+				end
+			end
+			3'd5: begin
+				next_adr_i = InstrAddress;
+				next_state = 3'd2;
+			end
+			3'd2: begin
+				next_adr_i = adr_i;
+				if (!busy_o) begin
+					next_adr_i = 32'b00000000000000000000000000000000;
+					next_iready = 1'b1;
+					next_FetchedInstr = cpu_dat_o;
+					next_state = 3'd0;
+				end
+			end
+			3'd6: begin
+				next_adr_i = adr_i;
+				next_cpu_dat_i = cpu_data_i;
+				next_state = 3'd3;
+			end
+			3'd3: begin
+				next_adr_i = adr_i;
+				next_cpu_dat_i = cpu_data_i;
+				if (!busy_o) begin
+					next_adr_i = 32'b00000000000000000000000000000000;
+					next_cpu_dat_i = 32'b00000000000000000000000000000000;
+					next_dready = 1'b1;
+					next_state = 3'd0;
+				end
+			end
+			default: next_state = state;
+		endcase
+	end
+	initial _sv2v_0 = 0;
+endmodule
 module t02_pc (
 	cuOP,
 	rs1Read,
 	signExtend,
 	PCaddr,
-	start_addr,
 	ALUneg,
 	Zero,
 	iready,
@@ -479,7 +635,6 @@ module t02_pc (
 	input wire [31:0] rs1Read;
 	input wire [31:0] signExtend;
 	output wire [31:0] PCaddr;
-	input wire [31:0] start_addr;
 	input wire ALUneg;
 	input wire Zero;
 	input wire iready;
@@ -490,15 +645,21 @@ module t02_pc (
 	reg [31:0] PC;
 	assign PCaddr = PC;
 	wire [31:0] inter_next_pc;
+	reg en_latched;
 	always @(posedge clk or negedge nRST)
 		if (~nRST)
-			PC <= start_addr - 32'd4;
+			en_latched <= 1'sb0;
+		else
+			en_latched <= enable;
+	always @(posedge clk or negedge nRST)
+		if (~nRST)
+			PC <= 32'h33000000;
 		else
 			PC <= next_pc;
 	always @(*) begin
 		if (_sv2v_0)
 			;
-		if (enable) begin
+		if (en_latched) begin
 			if (iready)
 				case (cuOP)
 					6'd3: next_pc = rs1Read + signExtend;
@@ -515,7 +676,7 @@ module t02_pc (
 				next_pc = PC;
 		end
 		else
-			next_pc = start_addr - 32'd4;
+			next_pc = 32'h33000000;
 	end
 	initial _sv2v_0 = 0;
 endmodule
@@ -523,6 +684,7 @@ module t02_register_file (
 	clk,
 	nRST,
 	reg_write,
+	en,
 	write_index,
 	read_index1,
 	read_index2,
@@ -534,6 +696,7 @@ module t02_register_file (
 	input wire clk;
 	input wire nRST;
 	input wire reg_write;
+	input wire en;
 	input wire [4:0] write_index;
 	input wire [4:0] read_index1;
 	input wire [4:0] read_index2;
@@ -552,11 +715,13 @@ module t02_register_file (
 						register[i][j] <= 1'b0;
 				end
 		end
-		else begin : sv2v_autoblock_3
+		else if (en & reg_write) begin : sv2v_autoblock_3
 			reg signed [31:0] i;
 			for (i = 1; i < 32; i = i + 1)
 				register[i] <= nxt_register[i];
 		end
+		else
+			register[write_index] <= register[0];
 	always @(*) begin
 		if (_sv2v_0)
 			;
@@ -567,6 +732,8 @@ module t02_register_file (
 		end
 		if (reg_write && (write_index != 5'b00000))
 			nxt_register[write_index] = write_data;
+		else
+			nxt_register[write_index] = 32'b00000000000000000000000000000000;
 	end
 	assign read_data1 = register[read_index1];
 	assign read_data2 = register[read_index2];
@@ -605,7 +772,7 @@ module t02_request (
 	output reg Wen;
 	output wire i_ready;
 	output wire d_ready;
-	output wire [31:0] imemload;
+	output reg [31:0] imemload;
 	output wire [31:0] dmmload;
 	output reg [31:0] ramaddr;
 	output reg [31:0] ramstore;
@@ -623,20 +790,25 @@ module t02_request (
 	wire Wen_;
 	wire [31:0] ramaddr_;
 	wire [31:0] ramstore_;
+	wire [31:0] imemload_;
 	always @(*) begin
 		if (_sv2v_0)
 			;
-		if (!en) begin
+		imemload = imemload_;
+		if (!en | (cuOP == 6'd39)) begin
 			Ren = 1'sb0;
 			Wen = 1'sb0;
 			ramaddr = 1'sb0;
 			ramstore = 1'sb0;
+			if (cuOP == 6'd39)
+				imemload = 32'hffffffff;
 		end
 		else begin
 			Ren = Ren_;
 			Wen = Wen_;
 			ramaddr = ramaddr_;
 			ramstore = ramstore_;
+			imemload = imemload_;
 		end
 	end
 	t02_request_unit r1(
@@ -655,15 +827,17 @@ module t02_request (
 		.imemaddro(imemaddr_co),
 		.dmmstoreo(dmmstore_co),
 		.dmmaddro(dmmaddr_co),
+		.busy_o(busy_o),
 		.dmmloadi(dmmload_co),
 		.imemloadi(imemload_co),
-		.imemloado(imemload),
+		.imemloado(imemload_),
 		.dmmloado(dmmload),
 		.d_ready_o(d_ready)
 	);
 	t02_memory_control m1(
 		.CLK(CLK),
 		.nRST(nRST),
+		.imemRen(imemRen),
 		.dmmRen(dmmRen),
 		.dmmWen(dmmWen),
 		.busy_o(busy_o),
@@ -687,6 +861,7 @@ module t02_request_unit (
 	nRST,
 	i_ready_i,
 	d_ready,
+	busy_o,
 	cuOP,
 	dmmstorei,
 	dmmaddri,
@@ -709,6 +884,7 @@ module t02_request_unit (
 	input wire nRST;
 	input wire i_ready_i;
 	input wire d_ready;
+	input wire busy_o;
 	input wire [5:0] cuOP;
 	input wire [31:0] dmmstorei;
 	input wire [31:0] dmmaddri;
@@ -717,29 +893,30 @@ module t02_request_unit (
 	input wire [31:0] dmmloadi;
 	output reg dmmWen;
 	output reg dmmRen;
-	output wire imemRen;
-	output reg i_ready_o;
-	output reg d_ready_o;
-	output reg [31:0] dmmstoreo;
-	output reg [31:0] dmmaddro;
-	output reg [31:0] imemaddro;
-	output reg [31:0] imemloado;
-	output reg [31:0] dmmloado;
+	output reg imemRen;
+	output wire i_ready_o;
+	output wire d_ready_o;
+	output wire [31:0] dmmstoreo;
+	output wire [31:0] dmmaddro;
+	output wire [31:0] imemaddro;
+	output wire [31:0] imemloado;
+	output wire [31:0] dmmloado;
 	reg nxt_dmmRen;
 	reg nxt_dmmWen;
-	assign imemRen = 1;
 	always @(posedge CLK or negedge nRST)
-		if (~nRST) begin
+		if (!nRST)
 			dmmRen <= 0;
-			dmmWen <= 0;
-		end
-		else begin
+		else if (~busy_o)
 			dmmRen <= nxt_dmmRen;
+	always @(posedge CLK or negedge nRST)
+		if (!nRST)
+			dmmWen <= 0;
+		else if (~busy_o)
 			dmmWen <= nxt_dmmWen;
-		end
 	always @(*) begin
 		if (_sv2v_0)
 			;
+		imemRen = 1;
 		if (i_ready_i) begin
 			if (((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14)) begin
 				nxt_dmmRen = 1;
@@ -763,25 +940,13 @@ module t02_request_unit (
 			nxt_dmmWen = 0;
 		end
 	end
-	always @(posedge CLK or negedge nRST)
-		if (!nRST) begin
-			imemaddro <= 0;
-			dmmaddro <= 0;
-			dmmstoreo <= 0;
-			imemloado <= 0;
-			dmmloado <= 0;
-			i_ready_o <= 0;
-			d_ready_o <= 0;
-		end
-		else begin
-			imemaddro <= imemaddri;
-			dmmaddro <= dmmaddri;
-			dmmstoreo <= dmmstorei;
-			imemloado <= imemloadi;
-			dmmloado <= dmmloadi;
-			i_ready_o <= i_ready_i;
-			d_ready_o <= d_ready;
-		end
+	assign imemaddro = imemaddri;
+	assign dmmaddro = dmmaddri + 32'h33000000;
+	assign dmmstoreo = dmmstorei;
+	assign imemloado = imemloadi;
+	assign dmmloado = dmmloadi;
+	assign i_ready_o = i_ready_i;
+	assign d_ready_o = d_ready;
 	initial _sv2v_0 = 0;
 endmodule
 module t02_signExtender (
@@ -818,8 +983,8 @@ module t02_top (
 	ramstore,
 	Ren,
 	Wen,
+	sel_i,
 	ramload,
-	start_addr,
 	busy_o
 );
 	input wire clk;
@@ -829,8 +994,8 @@ module t02_top (
 	output wire [31:0] ramstore;
 	output wire Ren;
 	output wire Wen;
+	output wire [3:0] sel_i;
 	input wire [31:0] ramload;
-	input wire [31:0] start_addr;
 	input wire busy_o;
 	wire zero;
 	wire negative;
@@ -878,7 +1043,8 @@ module t02_top (
 		.read_data1(regData1),
 		.read_data2(regData2),
 		.write_index(w_reg),
-		.write_data(writeData)
+		.write_data(writeData),
+		.en(enable)
 	);
 	t02_control controller(
 		.cuOP(cuOP),
@@ -903,8 +1069,7 @@ module t02_top (
 		.cuOP(cuOP),
 		.rs1Read(regData1),
 		.signExtend(immOut),
-		.enable(enable),
-		.start_addr(start_addr)
+		.enable(enable)
 	);
 	t02_writeToReg write(
 		.cuOP(cuOP),
@@ -920,24 +1085,24 @@ module t02_top (
 		.immOut(immOut),
 		.CUOp(cuOP)
 	);
-	t02_request ru(
+	t02_new_request_unit ru(
 		.CLK(clk),
 		.nRST(nrst),
-		.imemload(instruction),
-		.imemaddr(pc),
-		.dmmaddr(aluOut),
-		.dmmstore(regData2),
-		.ramaddr(ramaddr),
-		.ramload(ramload),
-		.ramstore(ramstore),
+		.DataAddress(aluOut),
+		.InstrAddress(pc),
+		.DatatoWrite(regData2),
+		.iready(i_ready),
+		.dready(d_ready),
+		.FetchedData(memload),
+		.FetchedInstr(instruction),
 		.cuOP(cuOP),
-		.Wen(Wen),
 		.busy_o(busy_o),
-		.dmmload(memload),
-		.i_ready(i_ready),
-		.d_ready(d_ready),
-		.Ren(Ren),
-		.en(enable)
+		.cpu_dat_o(ramload),
+		.write_i(Wen),
+		.read_i(Ren),
+		.adr_i(ramaddr),
+		.cpu_data_i(ramstore),
+		.sel_i(sel_i)
 	);
 endmodule
 module t02_wishbone_manager (
@@ -1134,7 +1299,6 @@ module team_02 (
 	clk,
 	nrst,
 	en,
-	start_addr,
 	la_data_in,
 	la_data_out,
 	la_oenb,
@@ -1153,7 +1317,6 @@ module team_02 (
 	input wire clk;
 	input wire nrst;
 	input wire en;
-	input wire [31:0] start_addr;
 	input wire [127:0] la_data_in;
 	output wire [127:0] la_data_out;
 	input wire [127:0] la_oenb;
@@ -1187,7 +1350,7 @@ module team_02 (
 		.ramload(ramload),
 		.busy_o(busy_o),
 		.enable(en),
-		.start_addr(start_addr)
+		.sel_i(SEL_O)
 	);
 	t02_wishbone_manager wb(
 		.CLK(clk),
@@ -1207,89 +1370,5 @@ module team_02 (
 		.CYC_O(CYC_O),
 		.DAT_I(DAT_I),
 		.ACK_I(ACK_I)
-	);
-endmodule
-module team_02_Wrapper (
-	wb_clk_i,
-	wb_rst_i,
-	wbs_stb_i,
-	wbs_cyc_i,
-	wbs_we_i,
-	wbs_sel_i,
-	wbs_dat_i,
-	wbs_adr_i,
-	wbs_ack_o,
-	wbs_dat_o,
-	la_data_in,
-	la_data_out,
-	la_oenb,
-	gpio_in,
-	gpio_out,
-	gpio_oeb,
-	irq,
-	wbm_adr_o,
-	wbm_dat_o,
-	wbm_sel_o,
-	wbm_we_o,
-	wbm_stb_o,
-	wbm_cyc_o,
-	wbm_ack_i,
-	wbm_dat_i
-);
-	input wire wb_clk_i;
-	input wire wb_rst_i;
-	input wire wbs_stb_i;
-	input wire wbs_cyc_i;
-	input wire wbs_we_i;
-	input wire [3:0] wbs_sel_i;
-	input wire [31:0] wbs_dat_i;
-	input wire [31:0] wbs_adr_i;
-	output wire wbs_ack_o;
-	output wire [31:0] wbs_dat_o;
-	input wire [127:0] la_data_in;
-	output wire [127:0] la_data_out;
-	input wire [127:0] la_oenb;
-	input wire [37:0] gpio_in;
-	output wire [37:0] gpio_out;
-	output wire [37:0] gpio_oeb;
-	output wire [2:0] irq;
-	output wire [31:0] wbm_adr_o;
-	output wire [31:0] wbm_dat_o;
-	output wire [3:0] wbm_sel_o;
-	output wire wbm_we_o;
-	output wire wbm_stb_o;
-	output wire wbm_cyc_o;
-	input wire wbm_ack_i;
-	input wire [31:0] wbm_dat_i;
-	assign irq = 3'b000;
-	assign {gpio_oeb[37:36], gpio_oeb[4:1]} = 1'sb1;
-	assign {gpio_out[37:36], gpio_out[4:1]} = 1'sb0;
-	team_02_WB team_02_WB(
-		.ext_clk(wb_clk_i),
-		.clk_i(wb_clk_i),
-		.rst_i(wb_rst_i),
-		.adr_i(wbs_adr_i),
-		.dat_i(wbs_dat_i),
-		.dat_o(wbs_dat_o),
-		.sel_i(wbs_sel_i),
-		.cyc_i(wbs_cyc_i),
-		.stb_i(wbs_stb_i),
-		.ack_o(wbs_ack_o),
-		.we_i(wbs_we_i),
-		.IRQ(),
-		.la_data_in(la_data_in),
-		.la_data_out(la_data_out),
-		.la_oenb(la_oenb),
-		.gpio_in({gpio_in[35:5], gpio_in[0]}),
-		.gpio_out({gpio_out[35:5], gpio_out[0]}),
-		.gpio_oeb({gpio_oeb[35:5], gpio_oeb[0]}),
-		.ADR_O(wbm_adr_o),
-		.DAT_O(wbm_dat_o),
-		.SEL_O(wbm_sel_o),
-		.WE_O(wbm_we_o),
-		.STB_O(wbm_stb_o),
-		.CYC_O(wbm_cyc_o),
-		.ACK_I(wbm_ack_i),
-		.DAT_I(wbm_dat_i)
 	);
 endmodule
