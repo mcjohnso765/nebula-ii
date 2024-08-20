@@ -55,7 +55,17 @@ module team_02_Wrapper (
     output wire wbm_stb_o,
     output wire wbm_cyc_o,
     input wire wbm_ack_i,
-    input wire [31:0] wbm_dat_i
+    input wire [31:0] wbm_dat_i,
+
+		    // Wishbone Master signals
+    output wire [31:0] ADR_O,
+    output wire [31:0] DAT_O,
+    output wire [3:0]  SEL_O,
+    output wire        WE_O,
+    output wire        STB_O,
+    output wire        CYC_O,
+    input  wire [31:0] DAT_I,
+    input wire         ACK_I
 
 );
     /*
@@ -80,6 +90,14 @@ module team_02_Wrapper (
     assign {gpio_oeb[18:15]} = '1;//Set all to inputs
     assign {gpio_out[18:15]} = '0;//Doesn't matter since inputs
     // assign gpio
+		
+    //Unused connection to nebula_ii wishbone arbitrator
+    assign ADR_O = 32'b0;
+    assign DAT_O = 32'b0;
+    assign SEL_O = 4'b0;
+    assign  WE_O = 1'b0;
+    assign STB_O = 1'b0;
+    assign CYC_O = 1'b0;
 
     // Instantiate Bus Wrapper module here
     team_02_WB team_02_WB (

@@ -1,0 +1,59 @@
+Compiling VVP ...
+ ... VVP file version 11.0 (stable)
+Compile cleanup...
+ ...    95780 functors (net_fun pool=5242880 bytes)
+              44057 logic
+                354 bufif
+                 64 resolv
+               6919 signals
+ ...    84149 filters (net_fil pool=10223616 bytes)
+ ...   169696 opcodes (4079616 bytes)
+ ...    37850 nets
+ ...    95780 vvp_nets (6291264 bytes)
+ ...        8 arrays (95 words)
+ ...       37 memories
+                 37 logic (16779486 words)
+                  0 real (0 words)
+ ...     3888 scopes
+ ... 1.06108 seconds, 353788.0/345264.0/5544.0 KBytes size/rss/shared
+Running ...
+ ...execute EndOfCompile callbacks
+ ...propagate initialization events
+ ...execute StartOfSim callbacks
+ ...run scheduler
+ERROR: /home/shay/a/xu1656/nebula-ii-team-02/verilog/rtl/team_projects/team_07/src_Puth/tft_ili9341.sv:33: $readmemh: Unable to open tft.mem for reading.
+ERROR: /home/shay/a/xu1656/nebula-ii-team-02/verilog/rtl/team_projects/team_08/team_08_project.v:2203: $readmemh: Unable to open tft.mem for reading.
+Reading team_02.hex
+team_02.hex loaded into memory
+Memory 5 bytes = 0x6f 0x00 0x00 0x0b 0x13
+FST info: dumpfile team_02.vcd opened for output.
+[Manager Monitor] WRITE_I=x, READ_I=x, ADR_I=xxxxxxxx, CPU_DAT_I=00000000, SEL_I=f, CPU_DAT_O=xxxxxxxx, BUSY_O=x
+===NOTE=== (efsram) : Undefined state in EF_SRAM_00128x032_008_18: vpwra= 1 vpwrp=1 TM=0 SM=0 WLOFF=0 in instance team_02_tb.uut.chip_core.mprj.mprj.sram.SRAM_0.EF_SRAM_1024x32_inst at time=                1000
+===INFO=== (efsram) : Writing X to whole memory:pwroff_mode=0 mem_x=1 undefined_mode=1 in instance team_02_tb.uut.chip_core.mprj.mprj.sram.SRAM_0.EF_SRAM_1024x32_inst at                 2000
+{GPIO[37:5], GPIO[0]} = 34'hzzzzzZXzz 
+{GPIO[37:5], GPIO[0]} = 34'hzzzzzZXzz 
+[Write monitor] time=400000, memWrite=0, address_in=00000000, data_in_CPU=00000000
+[Read monitor] time=400000, memRead=0, address_in=00000000, data_in_BUS=00000000
+[Manager Monitor] WRITE_I=0, READ_I=0, ADR_I=00000000, CPU_DAT_I=00000000, SEL_I=f, CPU_DAT_O=00000000, BUSY_O=0
+{GPIO[37:5], GPIO[0]} = 34'hzzzzzZXzz 
+{GPIO[37:5], GPIO[0]} = 34'hzzzzzZXzz 
+{GPIO[37:5], GPIO[0]} = 34'hzzzzzZXzz 
+[Read monitor] time=2088000, memRead=0, address_in=00000000, data_in_BUS=bad1bad1
+[Read monitor] time=2088000, memRead=0, address_in=33000000, data_in_BUS=bad1bad1
+[Write monitor] time=2088000, memWrite=0, address_in=33000000, data_in_CPU=00000000
+[Manager Monitor] WRITE_I=0, READ_I=0, ADR_I=00000000, CPU_DAT_I=00000000, SEL_I=f, CPU_DAT_O=bad1bad1, BUSY_O=0
+[Read monitor] time=2113000, memRead=1, address_in=33000000, data_in_BUS=bad1bad1
+{GPIO[37:5], GPIO[0]} = 34'hzzzzzZXzz 
+Monitor: NEBULA II-Calc Project (RTL) Passed
+ ...execute Postsim callbacks
+ ... 0.464694 seconds, 747008.0/738932.0/5940.0 KBytes size/rss/shared
+Event counts:
+        1941 time steps (pool=113)
+       35109 thread schedule events
+      409691 assign events
+             ...assign(vec4) pool=159154
+             ...assign(vec8) pool=2448
+             ...assign(real) pool=256
+             ...assign(word) pool=1152
+             ...assign(word/r) pool=204
+       69148 other events (pool=16384)
