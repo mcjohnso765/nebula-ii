@@ -10,7 +10,6 @@ module team_12_Wrapper (
     inout vccd1,	// User area 1 1.8V supply
     inout vssd1,	// User area 1 digital ground
 `endif
-
     /*
     *--------------------------------------------------------------
     * NOTE: You may not need to include all of these.
