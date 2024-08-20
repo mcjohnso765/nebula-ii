@@ -552,10 +552,24 @@ module nebula_ii (
         .wbs_ack_o(wbs_ack_i_projects[11]),
         .wbs_dat_o(wbs_dat_i_projects[11]),
 
+        // Logic Analyzer
+        .la_data_in(la_data_in),
+        .la_data_out(designs_la_data_out[11]),
+        .la_oenb(la_oenb),
+
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
         .gpio_out(designs_gpio_out[11]), // Breakout Board Pins
-        .gpio_oeb(designs_gpio_oeb[11]) // Active Low Output Enable
+        .gpio_oeb(designs_gpio_oeb[11]), // Active Low Output Enable
+
+        .DAT_I(arbitrator_dat_o[11]),
+        .ACK_I(arbitrator_ack_o[11]),
+        .ADR_O(arbitrator_adr_i[11]),
+        .DAT_O(arbitrator_dat_i[11]),
+        .SEL_O(arbitrator_sel_i[11]),
+        .WE_O  (arbitrator_we_i[11]),
+        .STB_O(arbitrator_stb_i[11]),
+        .CYC_O(arbitrator_cyc_i[11])
     );
 
     // Team_12 Project Instance
