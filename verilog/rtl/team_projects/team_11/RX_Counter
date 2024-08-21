@@ -1,0 +1,41 @@
+module RX_counter(
+    input logic clk, nrst, count_start, baud_edge,
+    input logic [3:0]max,  
+    output logic atmax
+  );
+    logic [3:0]nextcount, countout;
+
+    always_ff @(posedge clk, negedge nrst)
+    if (!nrst)begin
+        countout <= '0;
+        atmax <= 1'b0;
+    end
+    else begin
+        countout <= nextcount;
+        if(countout == max)begin
+            atmax <= 1'b1;
+        end
+        else begin
+            atmax <= 1'b0;
+        end
+    end
+    
+    always_comb begin
+        if(count_start == 1'b1)begin
+            if(baud_edge == 1'b1)begin
+                if (countout == max)begin
+                    nextcount = 4'b0;
+                end
+                else begin  
+                    nextcount = countout + 4'b0001;
+                end
+            end
+            else begin
+                nextcount = countout;
+            end
+        end
+        else begin
+            nextcount = 4'b0;
+        end
+    end
+endmodule

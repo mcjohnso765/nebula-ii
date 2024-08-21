@@ -70,7 +70,7 @@ end
 integer state_idx;   //idx to iterate through the states
 integer req_idx;     //idx to check requests
 
-always_comb begin
+always @* begin
     next_state = curr_state;
     ADR_O = '0;
     DAT_O = '0;

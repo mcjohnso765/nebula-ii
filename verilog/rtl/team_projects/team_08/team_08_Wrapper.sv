@@ -1,8 +1,8 @@
 // $Id: $
 // File name:   team_08_Wrapper.sv
-// Created:     MM/DD/YYYY
-// Author:      <Full Name>
-// Description: <Module Description>
+// Created:     07/08/2024
+// Author:      <Creighton Bennett>
+// Description: <This is our module that we are using >
 
 module team_08_Wrapper (
 
@@ -10,10 +10,6 @@ module team_08_Wrapper (
     inout vccd1,	// User area 1 1.8V supply
     inout vssd1,	// User area 1 digital ground
 `endif
-
-    // Chip Select (Active Low)
-    input wire ncs,
-
     /*
     *--------------------------------------------------------------
     * NOTE: You may not need to include all of these.
@@ -47,7 +43,17 @@ module team_08_Wrapper (
     output wire [37:0] gpio_oeb, // Active Low Output Enable
 
     // IRQ signal
-    output wire [2:0] irq
+    output wire [2:0] irq,
+
+    // Wishbone Master signals
+    output wire [31:0] ADR_O,
+    output wire [31:0] DAT_O,
+    output wire [3:0]  SEL_O,
+    output wire        WE_O,
+    output wire        STB_O,
+    output wire        CYC_O,
+    input  wire [31:0] DAT_I,
+    input wire         ACK_I
 );
     /*
     *--------------------------------------------------------------
@@ -66,6 +72,14 @@ module team_08_Wrapper (
     *--------------------------------------------------------------
     */
 
+    //Unused connection to nebula_ii wishbone arbitrator
+    assign ADR_O = 32'b0;
+    assign DAT_O = 32'b0;
+    assign SEL_O = 4'b0;
+    assign  WE_O = 1'b0;
+    assign STB_O = 1'b0;
+    assign CYC_O = 1'b0;
+   
     //Assign to unused outputs
     assign irq = 3'b000;	// Unused
     assign gpio_oeb[4:1] = 4'b1111;//Set all to inputs
