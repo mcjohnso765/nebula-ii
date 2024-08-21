@@ -27,10 +27,6 @@
 // `include			"wb_wrapper.vh"
 
 module team_03_WB (
-`ifdef USE_POWER_PINS
-	inout VPWR,
-	inout VGND,
-`endif
 	`WB_SLAVE_PORTS,
 	input	wire	[128-1:0]	la_data_in,
 	output	wire	[128-1:0]	la_data_out,

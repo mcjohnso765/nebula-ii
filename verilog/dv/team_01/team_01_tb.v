@@ -174,7 +174,7 @@ module team_01_tb;
 
 	// Main Test Bench Process
 	initial begin
-	    wait(uut.mprj.mprj.team_01_Wrapper.team_01_WB.instance_to_wrap.\en == 1);
+	    wait(uut.chip_core.mprj.mprj.team_01_Wrapper.team_01_WB.instance_to_wrap.\en == 1);
 		press_button(4'he, 4'h1);
 		mprj_io_in[15:12] = 4'b1111;
 		#(check_bits == {14'b0, 4'h1, 4'hf, 8'd0, 3'b011, 1'b0});

@@ -1,8 +1,5 @@
 // $Id: $
 // File name:   team_11.sv
-// Created:     MM/DD/YYYY
-// Author:      <Full Name>
-// Description: <Module Description>
 
 `default_nettype none
 
@@ -11,6 +8,11 @@ module team_11 (
     input logic clk, nrst,
     
     input logic en, //This signal is an enable signal for your chip. Your design should disable if this is low.
+
+    // Logic Analyzer - Grant access to all 128 LA
+    input wire [127:0] la_data_in,
+    output wire [127:0] la_data_out,
+    input wire [127:0] la_oenb,
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
@@ -24,6 +26,9 @@ module team_11 (
     */
 );
 
+    // Assign LA data out to 0
+    assign la_data_out = 128'b0;
+    
     // Assign outputs of input pins to 0
     assign gpio_out[33:30] = '0;
     assign gpio_out[13:0] = '0;

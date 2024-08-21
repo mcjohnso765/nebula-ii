@@ -10,10 +10,6 @@ module team_09_Wrapper (
     inout vccd1,	// User area 1 1.8V supply
     inout vssd1,	// User area 1 digital ground
 `endif
-
-    // Chip Select (Active Low)
-    input wire ncs,
-
     /*
     *--------------------------------------------------------------
     * NOTE: You may not need to include all of these.

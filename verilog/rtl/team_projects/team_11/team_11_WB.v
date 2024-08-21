@@ -28,6 +28,9 @@
 
 module team_11_WB (
 	`WB_SLAVE_PORTS,
+	input	wire	[128-1:0]	la_data_in,
+	output	wire	[128-1:0]	la_data_out,
+	input	wire	[128-1:0]	la_oenb,
 	input	wire	[34-1:0]	gpio_in,
 	output	wire	[34-1:0]	gpio_out,
 	output	wire	[34-1:0]	gpio_oeb
@@ -52,6 +55,9 @@ module team_11_WB (
 		.clk(clk),
 		.nrst(nrst),
 		.en(en),
+		.la_data_in(la_data_in),
+		.la_data_out(la_data_out),
+		.la_oenb(la_oenb),
 		.gpio_in(gpio_in),
 		.gpio_out(gpio_out),
 		.gpio_oeb(gpio_oeb)
