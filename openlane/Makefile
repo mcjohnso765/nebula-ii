@@ -131,9 +131,9 @@ endif
 
 # Add quotations to command if not running in nanoHUB
 openlane_cmd = \
-	openlane \
+	"openlane \
 	--run-tag $(OPENLANE_RUN_TAG) \
-	$*/config.json
+	$*/config.json"
 openlane_cmd_interactive = "flow.tcl -it -file $$(realpath ./$*/interactive.tcl)"
 
 
@@ -146,7 +146,8 @@ $(designs) : % : ./%/config.json
 	mkdir -p ./$*/runs/$(OPENLANE_RUN_TAG) 
 	rm -rf ./$*/runs/$*
 	ln -s $$(realpath ./$*/runs/$(OPENLANE_RUN_TAG)) ./$*/runs/$*
-	$(openlane_cmd)
+# $(openlane_cmd)
+	nix-shell --run $(openlane_cmd) --pure $(OPENLANE2_ROOT)/shell.nix
 #If not in nanoHUB, run this instead: nix-shell --run $(openlane_cmd) --pure $(OPENLANE2_ROOT)/shell.nix
 #https://github.com/efabless/caravel_user_project_ol2/blob/main/openlane/Makefile
 	@mkdir -p $(PROJECT_ROOT)/signoff/$*/

@@ -39,7 +39,8 @@ ifeq ($(ROOTLESS), 1)
 	USER_ARGS =
 endif
 # export OPENLANE_ROOT?=$(PWD)/dependencies/openlane_src
-export OPENLANE2_ROOT?=${HOME}/STARS2024/openlane2-2.0.7 # for nanoHUB
+# export OPENLANE2_ROOT?=${HOME}/STARS2024/openlane2-2.0.7# for nanoHUB
+export OPENLANE2_ROOT?=~/openlane2# for Aidan
 export BUS_WRAP_ROOT?=$(PWD)/dependencies/BusWrap
 export PDK_ROOT?=$(PWD)/dependencies/pdks
 # export PDK_ROOT?=/apps/share64/rocky8/openlane2/openlane2-stars2024-20240613/PDKS   # for nanoHUB

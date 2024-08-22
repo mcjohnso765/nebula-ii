@@ -32,6 +32,7 @@
     `define USE_PG_PIN
 `endif
 
+/// sta-blackbox
 module EF_SRAM_1024x32_wrapper (DO, ScanOutCC, AD, BEN, CLKin, DI, EN, R_WB, ScanInCC, ScanInDL, ScanInDR, SM, TM, WLBI, WLOFF,
 `ifdef USE_PG_PIN
 vgnd, vnb, vpb, vpwra,
