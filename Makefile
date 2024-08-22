@@ -127,7 +127,7 @@ simenv-cocotb:
 setup: check_dependencies install check-env install_mcw openlane pdk-with-volare setup-timing-scripts setup-cocotb precheck
 
 .PHONY: purdue-setup
-purdue-setup: check_dependencies install check-env install_mcw pdk-with-volare bus-wrap-setup
+purdue-setup: check_dependencies install check-env install_mcw pdk-with-volare bus-wrap-setup sram-setup
 
 # Openlane
 blocks=$(shell cd openlane && find * -maxdepth 0 -type d)
@@ -486,6 +486,13 @@ bus-wrap-initialize:
 bus-wrap-generate:
 	cd $(PWD)/verilog/rtl &&\
 	make generate
+
+.PHONY: sram-setup
+sram-setup:
+	pip install ipmgr &&\
+	export PATH="$(HOME)/.local/bin:$(PATH)" &&\
+	ipm ls-remote &&\
+	ipm install EF_SRAM_1024x32
 
 # Example target: tb-module-sample_proj-flex_counter
 # These testbenches must live within the dv/team_##/module_tests directory and will output there too
