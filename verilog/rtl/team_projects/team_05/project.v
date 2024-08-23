@@ -70,8 +70,6 @@ module team_05 (
 		.CPU_DAT_O(CPU_DAT_O),
 		.BUSY_O(BUSY_O)
 	);
-	always @(WRITE_I or READ_I or ADR_I or CPU_DAT_I or SEL_I or CPU_DAT_O or BUSY_O)
-		$monitor("[Manager Monitor] WRITE_I=%h, READ_I=%h, ADR_I=%h, CPU_DAT_I=%h, SEL_I=%h, CPU_DAT_O=%h, BUSY_O=%h", WRITE_I, READ_I, ADR_I, CPU_DAT_I, SEL_I, CPU_DAT_O, BUSY_O);
 	t05_complete_design total_design(
 		.data_in_BUS(CPU_DAT_O),
 		.bus_full(BUSY_O),
@@ -114,41 +112,15 @@ module t05_complete_design (
 	input wire clk;
 	input wire rst;
 	input wire [3:0] keypad_in;
-	output reg [31:0] data_out_BUS;
+	output wire [31:0] data_out_BUS;
 	output wire [31:0] address_out;
 	output reg data_write;
 	output reg mem_read;
-	output reg [3:0] keypad_out;
-	output reg [7:0] lcd_data;
-	output reg lcd_en;
-	output reg lcd_rw;
-	output reg lcd_rs;
-	wire [31:0] data_out_BUS_int;
-	wire [3:0] keypad_out_int;
-	wire [7:0] lcd_data_int;
-	wire lcd_en_int;
-	wire lcd_rs_int;
-	wire lcd_rw_int;
-	always @(*) begin
-		if (_sv2v_0)
-			;
-		if (!en) begin
-			data_out_BUS = 1'sb0;
-			keypad_out = 1'sb0;
-			lcd_data = 1'sb0;
-			lcd_en = 1'sb0;
-			lcd_rs = 1'sb0;
-			lcd_rw = 1'sb0;
-		end
-		else begin
-			data_out_BUS = data_out_BUS_int;
-			keypad_out = keypad_out_int;
-			lcd_data = lcd_data_int;
-			lcd_en = lcd_en_int;
-			lcd_rs = lcd_rs_int;
-			lcd_rw = lcd_rw_int;
-		end
-	end
+	output wire [3:0] keypad_out;
+	output wire [7:0] lcd_data;
+	output wire lcd_en;
+	output wire lcd_rw;
+	output wire lcd_rs;
 	wire [31:0] data_to_CPU;
 	wire [31:0] data_from_CPU;
 	wire [31:0] CPU_address;
@@ -201,7 +173,7 @@ module t05_complete_design (
 		.clk(clk),
 		.rst(rst),
 		.columns(keypad_in),
-		.rows(keypad_out_int),
+		.rows(keypad_out),
 		.key_out_bin(data_from_keypad),
 		.key_confirm(key_confirm)
 	);
@@ -215,10 +187,10 @@ module t05_complete_design (
 		.rst(rst),
 		.row_1(lcd_storage[255:128]),
 		.row_2(lcd_storage[127:0]),
-		.lcd_en(lcd_en_int),
-		.lcd_rw(lcd_rw_int),
-		.lcd_rs(lcd_rs_int),
-		.lcd_data(lcd_data_int)
+		.lcd_en(lcd_en),
+		.lcd_rw(lcd_rw),
+		.lcd_rs(lcd_rs),
+		.lcd_data(lcd_data)
 	);
 	t05_memory_mapping map(
 		.mem_address(CPU_address),
@@ -228,28 +200,36 @@ module t05_complete_design (
 		.output_address(address_out),
 		.data_to_CPU(data_to_CPU),
 		.data_to_LCD(data_to_LCD),
-		.data_to_memory(data_out_BUS_int),
+		.data_to_memory(data_out_BUS),
 		.lcd_word(lcd_word),
 		.mem_access(mem_access),
 		.key_data(comb_key_data)
 	);
-	reg [255:0] lcd_interim;
-	assign lcd_storage = {lcd_interim[224+:32], lcd_interim[192+:32], lcd_interim[160+:32], lcd_interim[128+:32], lcd_interim[96+:32], lcd_interim[64+:32], lcd_interim[32+:32], lcd_interim[0+:32]};
+	reg [31:0] lcd_interim [7:0];
+	assign lcd_storage = {lcd_interim[7], lcd_interim[6], lcd_interim[5], lcd_interim[4], lcd_interim[3], lcd_interim[2], lcd_interim[1], lcd_interim[0]};
 	always @(posedge clk or posedge rst)
 		if (rst) begin
-			lcd_interim[224+:32] <= 1'sb0;
-			lcd_interim[192+:32] <= 1'sb0;
-			lcd_interim[160+:32] <= 1'sb0;
-			lcd_interim[128+:32] <= 1'sb0;
-			lcd_interim[96+:32] <= 1'sb0;
-			lcd_interim[64+:32] <= 1'sb0;
-			lcd_interim[32+:32] <= 1'sb0;
-			lcd_interim[0+:32] <= 1'sb0;
+			lcd_interim[7] <= 1'sb0;
+			lcd_interim[6] <= 1'sb0;
+			lcd_interim[5] <= 1'sb0;
+			lcd_interim[4] <= 1'sb0;
+			lcd_interim[3] <= 1'sb0;
+			lcd_interim[2] <= 1'sb0;
+			lcd_interim[1] <= 1'sb0;
+			lcd_interim[0] <= 1'sb0;
 		end
 		else if (LCD_out != 32'hffffffff)
-			lcd_interim[lcd_word * 32+:32] <= LCD_out;
-		else
-			lcd_interim <= lcd_interim;
+			lcd_interim[lcd_word] <= LCD_out;
+		else begin
+			lcd_interim[7] <= lcd_interim[7];
+			lcd_interim[6] <= lcd_interim[6];
+			lcd_interim[5] <= lcd_interim[5];
+			lcd_interim[4] <= lcd_interim[4];
+			lcd_interim[3] <= lcd_interim[3];
+			lcd_interim[2] <= lcd_interim[2];
+			lcd_interim[1] <= lcd_interim[1];
+			lcd_interim[0] <= lcd_interim[0];
+		end
 	initial _sv2v_0 = 0;
 endmodule
 module t05_memory_mapping (
@@ -1013,18 +993,18 @@ module t05_instruction_memory (
 	end
 	always @(posedge clk or posedge rst)
 		if (rst) begin
+			instruction_adr_stored <= 32'b00000000000000000000000000000000;
 			instruction_o <= 32'b00000000000000000000000000000000;
 			instr_fetch <= 1'b0;
 			prev_d_good <= 0;
 			prev_fetch <= 0;
-			instruction_adr_stored <= 0;
 		end
 		else if (instr_wait) begin
+			instruction_adr_stored <= instruction_adr_o;
 			instruction_o <= instruction_o;
 			instr_fetch <= 1'b0;
 			prev_fetch <= instr_fetch;
 			prev_d_good <= data_good;
-			instruction_adr_stored <= instruction_adr_o;
 		end
 		else begin
 			instruction_o <= stored_instr;
@@ -1075,14 +1055,6 @@ module t05_memcontrol (
 	output reg [31:0] data_out_CPU;
 	output reg [31:0] data_out_BUS;
 	output reg [31:0] data_out_INSTR;
-	always @(memRead or address_in or data_in_BUS)
-		$display("[Read monitor] time=%0t, memRead=%h, address_in=%h, data_in_BUS=%h", $time, memRead, address_in, data_in_BUS);
-	always @(memWrite or address_in or data_in_CPU)
-		$display("[Write monitor] time=%0t, memWrite=%h, address_in=%h, data_in_CPU=%h", $time, memWrite, address_in, data_in_CPU);
-	always @(address_in)
-		if (address_in == 33000024)
-			#(1)
-				$stop;
 	reg [2:0] prev_state;
 	reg next_next_fetch;
 	reg next_instr;

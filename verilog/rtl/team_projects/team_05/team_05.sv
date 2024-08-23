@@ -64,7 +64,7 @@ module team_05 (
     logic [7:0] lcd_data;
     logic lcd_en, lcd_rs, lcd_rw;
 
-    wishbone_manager wishbone(
+    t05_wishbone_manager wishbone(
         .nRST(nrst),
         .CLK(clk),
         .DAT_I(DAT_I),
@@ -186,7 +186,7 @@ module t05_complete_design(
         .LCD_out(LCD_out)
     );
 
-    lcd_controller lcd_display(
+    t05_lcd_controller lcd_display(
         .clk(clk),
         .rst(rst),
         .row_1(lcd_storage[255:128]),
