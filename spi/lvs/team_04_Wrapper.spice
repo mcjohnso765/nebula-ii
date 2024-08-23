@@ -1174,7 +1174,7 @@ XFILLER_0_5_1408 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_11814_ net649 net242 vssd1 vssd1 vccd1 vccd1 _07296_ sky130_fd_sc_hd__and2_1
 XANTENNA__08783__S net889 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15582_ net1175 vssd1 vssd1 vccd1 vccd1 _01229_ sky130_fd_sc_hd__inv_2
-XFILLER_0_51_1312 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_51_1312 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_12794_ net222 net2496 net322 vssd1 vssd1 vccd1 vccd1 _02108_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_96_784 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_51_1334 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
@@ -1208,6 +1208,7 @@ X_10627_ team_04_WB.instance_to_wrap.final_design.uart.BAUD_counter\[25\] team_0
 XTAP_TAPCELL_ROW_133_4379 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_17183_ clknet_leaf_89_wb_clk_i _02795_ _01412_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.VGA_data_control.data_to_VGA\[26\]
 + sky130_fd_sc_hd__dfrtp_1
+XFILLER_0_52_832 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XTAP_TAPCELL_ROW_12_676 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_14395_ net1239 vssd1 vssd1 vccd1 vccd1 _00181_ sky130_fd_sc_hd__inv_2
 XFILLER_0_70_139 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -1254,6 +1255,7 @@ X_15918_ clknet_leaf_81_wb_clk_i _01595_ _00145_ vssd1 vssd1 vccd1 vccd1 net128 
 X_16898_ clknet_leaf_38_wb_clk_i _02567_ _01127_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[871\]
 + sky130_fd_sc_hd__dfrtp_1
 XANTENNA__11288__A2_N net360 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_137_1571 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_15849_ clknet_leaf_90_wb_clk_i _01526_ _00076_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.CPU_DAT_O\[3\]
 + sky130_fd_sc_hd__dfrtp_4
 XANTENNA_clkbuf_leaf_4_wb_clk_i_A clknet_4_0__leaf_wb_clk_i vssd1 vssd1 vccd1 vccd1
@@ -1694,7 +1696,6 @@ X_16735_ clknet_leaf_119_wb_clk_i _02404_ _00964_ vssd1 vssd1 vccd1 vccd1 team_0
 XFILLER_0_72_14 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_117_1238 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_92_1275 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
-XFILLER_0_134_1541 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_16666_ clknet_leaf_38_wb_clk_i _02335_ _00895_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[639\]
 + sky130_fd_sc_hd__dfrtp_1
 XFILLER_0_48_209 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -1938,7 +1939,7 @@ X_17003_ clknet_leaf_4_wb_clk_i _02672_ _01232_ vssd1 vssd1 vccd1 vccd1 team_04_
 + sky130_fd_sc_hd__dfrtp_1
 X_14215_ _03416_ _03364_ _03415_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.vga.h_next_count\[6\]
 + sky130_fd_sc_hd__and3b_1
-XANTENNA_5 net669 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_5 _07385_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_11427_ team_04_WB.MEM_SIZE_REG_REG\[11\] team_04_WB.MEM_SIZE_REG_REG\[10\] _06504_
 + vssd1 vssd1 vccd1 vccd1 _06916_ sky130_fd_sc_hd__and3_1
 XTAP_TAPCELL_ROW_39_1502 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -1978,7 +1979,6 @@ XFILLER_0_83_35 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 Xfanout1083 team_04_WB.instance_to_wrap.final_design.VGA_data_control.h_count\[3\]
 + vssd1 vssd1 vccd1 vccd1 net1083 sky130_fd_sc_hd__clkbuf_4
 XFILLER_0_101_1595 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_136_1614 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 Xfanout1094 team_04_WB.instance_to_wrap.final_design.reqhand.current_client\[2\] vssd1
 + vssd1 vccd1 vccd1 net1094 sky130_fd_sc_hd__clkbuf_2
 XFILLER_0_83_57 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -2559,7 +2559,6 @@ X_15581_ net1163 vssd1 vssd1 vccd1 vccd1 _01228_ sky130_fd_sc_hd__inv_2
 XANTENNA__12255__B2 net454 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_12793_ net216 net2725 net321 vssd1 vssd1 vccd1 vccd1 _02109_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_90_1373 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_51_1324 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 X_14532_ net1289 vssd1 vssd1 vccd1 vccd1 _00176_ sky130_fd_sc_hd__inv_2
 XFILLER_0_84_925 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 X_17320_ net1375 vssd1 vssd1 vccd1 vccd1 la_data_out[7] sky130_fd_sc_hd__buf_2
@@ -2651,7 +2650,6 @@ XANTENNA__08793__S0 net829 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15848_ clknet_leaf_91_wb_clk_i _01525_ _00075_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.CPU_DAT_O\[2\]
 + sky130_fd_sc_hd__dfrtp_4
 XTAP_TAPCELL_ROW_103_3450 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_137_1594 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XTAP_TAPCELL_ROW_103_3461 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_91_57 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_87_741 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -3307,8 +3305,8 @@ X_14214_ _03521_ _03413_ vssd1 vssd1 vccd1 vccd1 _03416_ sky130_fd_sc_hd__nor2_1
 XFILLER_0_62_791 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__12906__A2 net336 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_105_860 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_6 _07385_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_39_1503 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XANTENNA_6 net1 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15194_ net1120 vssd1 vssd1 vccd1 vccd1 _00841_ sky130_fd_sc_hd__inv_2
 XFILLER_0_123_167 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_26_1605 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
@@ -3950,7 +3948,6 @@ Xfanout663 _03633_ vssd1 vssd1 vccd1 vccd1 net663 sky130_fd_sc_hd__clkbuf_4
 XANTENNA__08156__B1 net759 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 Xfanout674 net675 vssd1 vssd1 vccd1 vccd1 net674 sky130_fd_sc_hd__clkbuf_8
 Xfanout685 _06187_ vssd1 vssd1 vccd1 vccd1 net685 sky130_fd_sc_hd__clkbuf_4
-XFILLER_0_137_1006 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_12930_ net242 net2702 net318 vssd1 vssd1 vccd1 vccd1 _01976_ sky130_fd_sc_hd__mux2_1
 Xfanout696 _05222_ vssd1 vssd1 vccd1 vccd1 net696 sky130_fd_sc_hd__clkbuf_2
 XFILLER_0_77_1152 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
@@ -3962,7 +3959,6 @@ X_12861_ _07561_ net338 net387 net2269 vssd1 vssd1 vccd1 vccd1 _02043_ sky130_fd
 XFILLER_0_73_1038 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_14600_ net1294 vssd1 vssd1 vccd1 vccd1 _00247_ sky130_fd_sc_hd__inv_2
 X_11812_ _03632_ _05827_ _07293_ vssd1 vssd1 vccd1 vccd1 _07294_ sky130_fd_sc_hd__o21a_1
-XFILLER_0_90_1341 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_15580_ net1223 vssd1 vssd1 vccd1 vccd1 _01227_ sky130_fd_sc_hd__inv_2
 X_12792_ net213 net2483 net322 vssd1 vssd1 vccd1 vccd1 _02110_ sky130_fd_sc_hd__mux2_1
 XANTENNA__12255__A2 net504 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -4032,8 +4028,8 @@ XFILLER_0_62_1432 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_12226_ _04782_ _05279_ _05406_ vssd1 vssd1 vccd1 vccd1 _07555_ sky130_fd_sc_hd__or3b_1
 XFILLER_0_103_991 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__10135__B _04948_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-X_12157_ net229 net2398 net511 vssd1 vssd1 vccd1 vccd1 _02593_ sky130_fd_sc_hd__mux2_1
 XANTENNA__13727__A team_04_WB.ADDR_START_VAL_REG\[10\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+X_12157_ net229 net2398 net511 vssd1 vssd1 vccd1 vccd1 _02593_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_23_1449 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_11108_ net562 _06594_ vssd1 vssd1 vccd1 vccd1 _06597_ sky130_fd_sc_hd__nor2_1
 XANTENNA__13446__B team_04_WB.MEM_SIZE_REG_REG\[29\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -4047,6 +4043,7 @@ X_16896_ clknet_leaf_59_wb_clk_i _02565_ _01125_ vssd1 vssd1 vccd1 vccd1 team_04
 + sky130_fd_sc_hd__dfrtp_1
 XANTENNA__12494__A2 net481 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__08242__S0 net819 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_137_1551 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_91_14 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__08793__S1 net744 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15847_ clknet_leaf_91_wb_clk_i _01524_ _00074_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.CPU_DAT_O\[1\]
@@ -4494,10 +4491,10 @@ XFILLER_0_92_1244 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_89_859 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_16664_ clknet_leaf_119_wb_clk_i _02333_ _00893_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[637\]
 + sky130_fd_sc_hd__dfrtp_1
+XFILLER_0_134_1532 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_13876_ _02941_ _03258_ vssd1 vssd1 vccd1 vccd1 _03259_ sky130_fd_sc_hd__or2_1
 X_17406__1461 vssd1 vssd1 vccd1 vccd1 _17406__1461/HI net1461 sky130_fd_sc_hd__conb_1
 XFILLER_0_69_561 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
-XFILLER_0_134_1565 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_15615_ net1233 vssd1 vssd1 vccd1 vccd1 _01262_ sky130_fd_sc_hd__inv_2
 X_12827_ _07525_ net348 net393 net2151 vssd1 vssd1 vccd1 vccd1 _02076_ sky130_fd_sc_hd__a22o_1
 XFILLER_0_5_1026 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -4734,7 +4731,7 @@ XFILLER_0_65_1622 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_11425_ _06633_ _06913_ net584 vssd1 vssd1 vccd1 vccd1 _06914_ sky130_fd_sc_hd__a21oi_2
 XFILLER_0_22_623 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_15193_ net1128 vssd1 vssd1 vccd1 vccd1 _00840_ sky130_fd_sc_hd__inv_2
-XANTENNA_7 net415 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_7 _07385_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_21_111 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XTAP_TAPCELL_ROW_39_1504 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_105_872 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
@@ -5393,6 +5390,7 @@ XANTENNA__09522__S net844 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_11811_ net683 _07292_ _07291_ vssd1 vssd1 vccd1 vccd1 _07293_ sky130_fd_sc_hd__a21oi_1
 XFILLER_0_55_1440 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_115_1327 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XFILLER_0_90_1331 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_1_360 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_69_946 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_12791_ net212 net2577 net322 vssd1 vssd1 vccd1 vccd1 _02111_ sky130_fd_sc_hd__mux2_1
@@ -5400,6 +5398,7 @@ XFILLER_0_96_754 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_84_905 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_14530_ net1289 vssd1 vssd1 vccd1 vccd1 _00174_ sky130_fd_sc_hd__inv_2
 XFILLER_0_96_765 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
+XFILLER_0_51_1315 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_68_456 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__12660__A0 net227 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_11742_ _06732_ _06818_ _06881_ _07230_ vssd1 vssd1 vccd1 vccd1 _07231_ sky130_fd_sc_hd__or4_1
@@ -6188,6 +6187,7 @@ XANTENNA__08670__A net716 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_129_1679 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_85_1071 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_123_169 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_8 _07385_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_39_1505 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_61_281 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_14143_ team_04_WB.instance_to_wrap.final_design.vga.h_current_state\[0\] _03363_
@@ -6420,7 +6420,6 @@ X_16500_ clknet_leaf_36_wb_clk_i _02169_ _00729_ vssd1 vssd1 vccd1 vccd1 team_04
 XFILLER_0_19_1455 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_10924_ _05379_ _06411_ _06410_ vssd1 vssd1 vccd1 vccd1 _06413_ sky130_fd_sc_hd__a21oi_1
 X_13712_ net991 _03102_ vssd1 vssd1 vccd1 vccd1 _03103_ sky130_fd_sc_hd__or2_1
-XFILLER_0_135_1661 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_14692_ net1194 vssd1 vssd1 vccd1 vccd1 _00339_ sky130_fd_sc_hd__inv_2
 XPHY_EDGE_ROW_113_Right_113 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XANTENNA__14026__A2 _07700_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -6871,9 +6870,11 @@ XTAP_TAPCELL_ROW_1_361 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_12790_ _07518_ _07666_ vssd1 vssd1 vccd1 vccd1 _07671_ sky130_fd_sc_hd__or2_1
 XANTENNA__14010__A _05248_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_55_1452 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
+XFILLER_0_90_1343 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_11741_ _06784_ _07229_ _07198_ _07227_ vssd1 vssd1 vccd1 vccd1 _07230_ sky130_fd_sc_hd__or4b_1
 XANTENNA__11463__A2 _06248_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_84_917 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
+XFILLER_0_51_1327 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_56_619 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_132_1653 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_84_939 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -6959,7 +6960,6 @@ X_15845_ clknet_leaf_89_wb_clk_i _01522_ _00072_ vssd1 vssd1 vccd1 vccd1 team_04
 XFILLER_0_91_38 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_38_1650 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__11439__C1 _06271_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_137_1575 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XTAP_TAPCELL_ROW_103_3453 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_87_722 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_8_1025 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
@@ -7430,6 +7430,7 @@ X_16593_ clknet_leaf_25_wb_clk_i _02262_ _00822_ vssd1 vssd1 vccd1 vccd1 team_04
 + sky130_fd_sc_hd__dfrtp_1
 XFILLER_0_9_1175 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_74_1691 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_134_1567 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_70_1533 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_96_371 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_15544_ net1190 vssd1 vssd1 vccd1 vccd1 _01191_ sky130_fd_sc_hd__inv_2
@@ -7666,6 +7667,7 @@ XFILLER_0_22_603 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_50_923 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_61_260 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_62_783 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
+XANTENNA_9 _07385_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12772__B1 net397 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_39_1506 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_85_1083 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -7887,7 +7889,6 @@ X_10923_ _06410_ _06411_ vssd1 vssd1 vccd1 vccd1 _06412_ sky130_fd_sc_hd__nand2b
 X_14691_ net1201 vssd1 vssd1 vccd1 vccd1 _00338_ sky130_fd_sc_hd__inv_2
 XFILLER_0_85_105 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XPHY_EDGE_ROW_19_Right_19 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
-XFILLER_0_135_1673 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XANTENNA__13063__S net302 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_16430_ clknet_leaf_107_wb_clk_i _02099_ _00659_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[403\]
 + sky130_fd_sc_hd__dfrtp_1
@@ -9308,6 +9309,7 @@ XANTENNA_clkbuf_leaf_95_wb_clk_i_A clknet_4_8__leaf_wb_clk_i vssd1 vssd1 vccd1 v
 X_11971_ net686 _07428_ _07430_ net615 vssd1 vssd1 vccd1 vccd1 _07431_ sky130_fd_sc_hd__a31o_1
 XFILLER_0_93_1342 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_93_1353 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
+XFILLER_0_98_456 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_13710_ _07806_ _03100_ vssd1 vssd1 vccd1 vccd1 _03101_ sky130_fd_sc_hd__xnor2_1
 X_10922_ _06408_ _06409_ _05404_ vssd1 vssd1 vccd1 vccd1 _06411_ sky130_fd_sc_hd__a21o_1
 X_14690_ net1222 vssd1 vssd1 vccd1 vccd1 _00337_ sky130_fd_sc_hd__inv_2
@@ -9737,7 +9739,6 @@ XTAP_TAPCELL_ROW_1_363 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_132_1611 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_96_746 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_95_223 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
-XFILLER_0_90_1345 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_55_1465 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_96_757 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 X_08659_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[693\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[661\]
@@ -9800,6 +9801,7 @@ X_16892_ clknet_leaf_113_wb_clk_i _02561_ _01121_ vssd1 vssd1 vccd1 vccd1 team_0
 XFILLER_0_21_1177 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_15843_ clknet_leaf_93_wb_clk_i _01520_ _00070_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.VGA_data_control.ready_data\[29\]
 + sky130_fd_sc_hd__dfrtp_1
+XFILLER_0_137_1544 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XTAP_TAPCELL_ROW_107_3580 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_91_1109 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XTAP_TAPCELL_ROW_107_3591 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -10250,8 +10252,8 @@ XFILLER_0_96_1395 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_13872_ net1858 net1066 _03255_ _03256_ vssd1 vssd1 vccd1 vccd1 _01617_ sky130_fd_sc_hd__a22o_1
 XFILLER_0_138_1672 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_15611_ net1178 vssd1 vssd1 vccd1 vccd1 _01258_ sky130_fd_sc_hd__inv_2
+XFILLER_0_134_1536 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_12823_ _07663_ net697 net647 vssd1 vssd1 vccd1 vccd1 _07672_ sky130_fd_sc_hd__or3b_1
-XFILLER_0_134_1547 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__12067__B2 net455 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_16591_ clknet_leaf_122_wb_clk_i _02260_ _00820_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[564\]
 + sky130_fd_sc_hd__dfrtp_1
@@ -10689,6 +10691,7 @@ XFILLER_0_118_1317 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_58_1441 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_11970_ _07398_ _07429_ vssd1 vssd1 vccd1 vccd1 _07430_ sky130_fd_sc_hd__nand2_1
 XANTENNA__13219__A0 net83 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_135_1631 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_10921_ _05404_ _06408_ _06409_ vssd1 vssd1 vccd1 vccd1 _06410_ sky130_fd_sc_hd__and3_1
 XFILLER_0_58_1485 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_10852_ _04193_ _06301_ vssd1 vssd1 vccd1 vccd1 _06341_ sky130_fd_sc_hd__xor2_1
@@ -11445,7 +11448,6 @@ X_15825_ clknet_leaf_95_wb_clk_i _01502_ _00052_ vssd1 vssd1 vccd1 vccd1 team_04
 XFILLER_0_35_23 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_17418__1473 vssd1 vssd1 vccd1 vccd1 _17418__1473/HI net1473 sky130_fd_sc_hd__conb_1
 XANTENNA__08908__S0 net817 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_99_393 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_15756_ net1247 vssd1 vssd1 vccd1 vccd1 _01403_ sky130_fd_sc_hd__inv_2
 XTAP_TAPCELL_ROW_83_2850 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_12968_ net601 _07321_ net465 net314 net1694 vssd1 vssd1 vccd1 vccd1 _01940_ sky130_fd_sc_hd__a32o_1
@@ -11614,13 +11616,12 @@ XFILLER_0_138_1651 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_13871_ _03211_ _03219_ _03254_ net1035 vssd1 vssd1 vccd1 vccd1 _03256_ sky130_fd_sc_hd__o31a_1
 X_15610_ net1116 vssd1 vssd1 vccd1 vccd1 _01257_ sky130_fd_sc_hd__inv_2
 X_12822_ _07445_ net2443 net323 vssd1 vssd1 vccd1 vccd1 _02080_ sky130_fd_sc_hd__mux2_1
-XFILLER_0_134_1526 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_134_1526 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XANTENNA__13264__A1 team_04_WB.ADDR_START_VAL_REG\[12\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12067__A2 net354 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_16590_ clknet_leaf_16_wb_clk_i _02259_ _00819_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[563\]
 + sky130_fd_sc_hd__dfrtp_1
 XFILLER_0_69_555 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
-XFILLER_0_134_1559 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XANTENNA__11391__B _06879_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15541_ net1141 vssd1 vssd1 vccd1 vccd1 _01188_ sky130_fd_sc_hd__inv_2
 X_12753_ _07478_ net336 net399 net2553 vssd1 vssd1 vccd1 vccd1 _02147_ sky130_fd_sc_hd__a22o_1
@@ -12049,12 +12050,11 @@ XFILLER_0_98_414 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_08889_ _04494_ _04499_ net766 vssd1 vssd1 vccd1 vccd1 _04500_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_118_1329 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_100_1591 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
-XFILLER_0_98_447 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_10920_ net549 net654 net537 vssd1 vssd1 vccd1 vccd1 _06409_ sky130_fd_sc_hd__a21o_1
 XFILLER_0_54_1306 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XANTENNA__13219__A1 team_04_WB.MEM_SIZE_REG_REG\[22\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_98_458 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_93_1366 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_135_1643 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_58_1497 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_79_661 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 X_10851_ net595 _06339_ vssd1 vssd1 vccd1 vccd1 _06340_ sky130_fd_sc_hd__xor2_1
@@ -13010,7 +13010,6 @@ XFILLER_0_35_1602 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_96_320 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XANTENNA__10569__A team_04_WB.instance_to_wrap.CPU_DAT_O\[10\] vssd1 vssd1 vccd1 vccd1
 + sky130_fd_sc_hd__diode_2
-XFILLER_0_134_1538 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_15540_ net1194 vssd1 vssd1 vccd1 vccd1 _01187_ sky130_fd_sc_hd__inv_2
 X_12752_ _07477_ net341 net400 net1795 vssd1 vssd1 vccd1 vccd1 _02148_ sky130_fd_sc_hd__a22o_1
 XANTENNA__12472__B1 net426 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -13418,6 +13417,7 @@ X_08888_ _04495_ _04496_ _04497_ _04498_ net778 net799 vssd1 vssd1 vccd1 vccd1 _
 XFILLER_0_97_1492 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_93_1345 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_93_1378 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XFILLER_0_135_1655 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_10850_ _04139_ _06302_ vssd1 vssd1 vccd1 vccd1 _06339_ sky130_fd_sc_hd__xnor2_2
 XFILLER_0_131_1508 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_71_1632 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -13449,6 +13449,7 @@ XANTENNA__16304__CLK clknet_leaf_3_wb_clk_i vssd1 vssd1 vccd1 vccd1 sky130_fd_sc
 X_12382_ net254 net2419 net493 vssd1 vssd1 vccd1 vccd1 _02473_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_133_951 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_22_404 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
+XANTENNA_90 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_50_713 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_35_798 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_50_724 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -13595,8 +13596,8 @@ Xhold1038 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[71\] vssd1 vs
 + vccd1 vccd1 net2570 sky130_fd_sc_hd__dlygate4sd3_1
 Xhold1049 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[256\] vssd1 vssd1
 + vccd1 vccd1 net2581 sky130_fd_sc_hd__dlygate4sd3_1
-XANTENNA__12121__A2 net353 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XPHY_EDGE_ROW_77_Left_216 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
+XANTENNA__12121__A2 net353 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_84_97 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_08673_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[117\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[85\]
 + net833 vssd1 vssd1 vccd1 vccd1 _04284_ sky130_fd_sc_hd__mux2_1
@@ -14387,6 +14388,7 @@ X_09809_ net726 _05419_ _03675_ vssd1 vssd1 vccd1 vccd1 _05420_ sky130_fd_sc_hd_
 XFILLER_0_119_1041 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_12820_ net224 net2543 net322 vssd1 vssd1 vccd1 vccd1 _02082_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_138_1686 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
+XFILLER_0_134_1539 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_119_1085 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_69_546 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_12751_ _07476_ net350 net401 net2499 vssd1 vssd1 vccd1 vccd1 _02149_ sky130_fd_sc_hd__a22o_1
@@ -14861,6 +14863,7 @@ XFILLER_0_71_1611 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__12427__B2 net522 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12819__S net322 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_71_1622 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
+XFILLER_0_135_1667 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_09508_ net720 _05118_ vssd1 vssd1 vccd1 vccd1 _05119_ sky130_fd_sc_hd__or2_1
 XANTENNA__09701__B net554 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_10780_ net570 net555 net552 net531 vssd1 vssd1 vccd1 vccd1 _06269_ sky130_fd_sc_hd__or4_4
@@ -14885,6 +14888,8 @@ XFILLER_0_62_552 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 X_12381_ net256 net2678 net494 vssd1 vssd1 vccd1 vccd1 _02474_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_90_872 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XANTENNA__10863__A net637 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_80 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_91 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_14120_ team_04_WB.MEM_SIZE_REG_REG\[19\] net982 net975 team_04_WB.ADDR_START_VAL_REG\[19\]
 + net999 vssd1 vssd1 vccd1 vccd1 net189 sky130_fd_sc_hd__o221a_1
 XFILLER_0_65_1437 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -15350,7 +15355,6 @@ XANTENNA__08757__S net955 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_77_1661 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__12097__A2 net352 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_107_3584 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_137_1548 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_17254__1313 vssd1 vssd1 vccd1 vccd1 _17254__1313/HI net1313 sky130_fd_sc_hd__conb_1
 XTAP_TAPCELL_ROW_107_3595 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA_input12_A DAT_I[19] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -15523,7 +15527,6 @@ XFILLER_0_115_1109 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__12400__B net606 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA_fanout833_A net836 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_55_1233 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
-XFILLER_0_136_1570 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_70_1709 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_08638_ net638 _04245_ vssd1 vssd1 vccd1 vccd1 _04249_ sky130_fd_sc_hd__xnor2_1
 XFILLER_0_55_1266 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
@@ -15605,7 +15608,6 @@ XANTENNA__13406__B team_04_WB.MEM_SIZE_REG_REG\[19\] vssd1 vssd1 vccd1 vccd1 sky
 X_12965_ _07631_ net465 net314 net1924 vssd1 vssd1 vccd1 vccd1 _01943_ sky130_fd_sc_hd__a22o_1
 XFILLER_0_59_205 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_38_1453 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
-XFILLER_0_99_396 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_87_536 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XTAP_TAPCELL_ROW_83_2842 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_14704_ net1187 vssd1 vssd1 vccd1 vccd1 _00351_ sky130_fd_sc_hd__inv_2
@@ -15997,10 +15999,10 @@ XFILLER_0_4_1001 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_26_1107 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_93_325 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_52_1258 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
+XFILLER_0_133_1573 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XANTENNA_fanout1273_A net1278 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA_fanout629_A _04892_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_26_1118 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_133_1584 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_08406_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[889\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[857\]
 + net857 vssd1 vssd1 vccd1 vccd1 _04017_ sky130_fd_sc_hd__mux2_1
 XTAP_TAPCELL_ROW_26_1129 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -16271,7 +16273,9 @@ X_11400_ _04724_ _04753_ net359 vssd1 vssd1 vccd1 vccd1 _06889_ sky130_fd_sc_hd_
 XFILLER_0_62_542 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_69_1552 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_12380_ net257 net2441 net495 vssd1 vssd1 vccd1 vccd1 _02475_ sky130_fd_sc_hd__mux2_1
+XANTENNA_70 net510 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__08614__A net716 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_81 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_23_929 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_34_255 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_16_970 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -16279,6 +16283,7 @@ XANTENNA__16970__CLK clknet_leaf_14_wb_clk_i vssd1 vssd1 vccd1 vccd1 sky130_fd_s
 X_11331_ _06514_ _06819_ vssd1 vssd1 vccd1 vccd1 _06820_ sky130_fd_sc_hd__nand2_1
 XFILLER_0_104_121 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_22_417 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
+XANTENNA_92 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_62_586 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_62_597 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_65_1449 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
@@ -16656,7 +16661,6 @@ XFILLER_0_21_3 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_96_707 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_08654_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[949\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[917\]
 + net901 vssd1 vssd1 vccd1 vccd1 _04265_ sky130_fd_sc_hd__mux2_1
-XFILLER_0_90_1317 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_1_346 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_68_409 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XTAP_TAPCELL_ROW_1_357 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -16966,7 +16970,6 @@ XTAP_TAPCELL_ROW_109_3636 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__15455__A net1233 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_70_2471 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XTAP_TAPCELL_ROW_109_3647 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_99_1161 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_16870_ clknet_leaf_115_wb_clk_i _02539_ _01099_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[843\]
 + sky130_fd_sc_hd__dfrtp_1
 XTAP_TAPCELL_ROW_109_3658 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -17171,8 +17174,8 @@ Xfanout299 net301 vssd1 vssd1 vccd1 vccd1 net299 sky130_fd_sc_hd__clkbuf_8
 XANTENNA_fanout943_A net948 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_07999_ team_04_WB.instance_to_wrap.CPU_DAT_O\[6\] net1074 net1022 net1019 vssd1
 + vssd1 vccd1 vccd1 _03610_ sky130_fd_sc_hd__and4_1
+XFILLER_0_138_1633 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XTAP_TAPCELL_ROW_104_3500 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_138_1644 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__09548__S1 net810 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_9_1105 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_09738_ net743 _05348_ vssd1 vssd1 vccd1 vccd1 _05349_ sky130_fd_sc_hd__nor2_1
@@ -17351,7 +17354,6 @@ XANTENNA_fanout1099_A team_04_WB.instance_to_wrap.final_design.reqhand.current_c
 + vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_38_209 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_45_1709 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_133_1552 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_66_529 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_17_1368 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XTAP_TAPCELL_ROW_26_1108 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -17562,11 +17564,11 @@ XANTENNA__08499__S1 net799 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08121_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[446\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[414\]
 + net856 vssd1 vssd1 vccd1 vccd1 _03732_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_86_1322 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+X_17319_ net1374 vssd1 vssd1 vccd1 vccd1 la_data_out[6] sky130_fd_sc_hd__buf_2
 XFILLER_0_7_169 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_28_297 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_43_223 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_44_746 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
-X_17319_ net1374 vssd1 vssd1 vccd1 vccd1 la_data_out[6] sky130_fd_sc_hd__buf_2
 XFILLER_0_22_83 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_86_1344 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_4_832 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
@@ -17606,11 +17608,9 @@ XANTENNA__15553__A net1114 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__11883__A1 net687 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__10686__A2 _06179_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_100_1595 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
-XFILLER_0_135_1603 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XANTENNA__16152__CLK clknet_leaf_119_wb_clk_i vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_79_621 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_58_1468 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
-XFILLER_0_135_1625 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_58_1479 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XANTENNA_fanout641_A _03834_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12388__S net496 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -17641,11 +17641,15 @@ XANTENNA__13520__B net276 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_7_670 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_09299_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[937\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[905\]
 + net838 vssd1 vssd1 vccd1 vccd1 _04910_ sky130_fd_sc_hd__mux2_1
+XANTENNA_60 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_69_1564 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_30_1398 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
+XANTENNA_71 net664 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_82 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_11330_ team_04_WB.MEM_SIZE_REG_REG\[23\] _06513_ team_04_WB.MEM_SIZE_REG_REG\[24\]
 + vssd1 vssd1 vccd1 vccd1 _06819_ sky130_fd_sc_hd__o21ai_1
 XFILLER_0_16_960 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XANTENNA_93 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__08106__S net931 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_107_1705 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_104_133 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
@@ -18022,7 +18026,6 @@ X_08653_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[1013\] team_04
 + net901 vssd1 vssd1 vccd1 vccd1 _04264_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_55_1416 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_1_347 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_90_1329 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_14_3 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_1_358 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__11136__A net702 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -18096,6 +18099,7 @@ XANTENNA__13279__A0 team_04_WB.instance_to_wrap.final_design.CPU_instr_adr\[1\] 
 + vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_09969_ _04556_ _04559_ vssd1 vssd1 vccd1 vccd1 _05580_ sky130_fd_sc_hd__nor2_1
 XFILLER_0_95_1229 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
+XFILLER_0_99_513 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__12430__A net649 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_12980_ net605 _07397_ net467 net313 net1663 vssd1 vssd1 vccd1 vccd1 _01928_ sky130_fd_sc_hd__a32o_1
 XTAP_TAPCELL_ROW_107_3575 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -18355,7 +18359,6 @@ XTAP_TAPCELL_ROW_109_3637 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XTAP_TAPCELL_ROW_70_2472 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XTAP_TAPCELL_ROW_109_3648 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XTAP_TAPCELL_ROW_109_3659 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_99_1173 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 Xfanout960 net961 vssd1 vssd1 vccd1 vccd1 net960 sky130_fd_sc_hd__buf_2
 XFILLER_0_102_1273 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_15820_ clknet_leaf_84_wb_clk_i _01497_ _00047_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.VGA_data_control.ready_data\[6\]
@@ -18557,7 +18560,6 @@ X_09806_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[97\] team_04_W
 + net880 vssd1 vssd1 vccd1 vccd1 _05417_ sky130_fd_sc_hd__mux2_1
 Xfanout278 net280 vssd1 vssd1 vccd1 vccd1 net278 sky130_fd_sc_hd__clkbuf_4
 XFILLER_0_5_93 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_138_1623 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_07998_ _03601_ _03603_ _03605_ _03606_ vssd1 vssd1 vccd1 vccd1 _03609_ sky130_fd_sc_hd__and4_1
 Xfanout289 _06206_ vssd1 vssd1 vccd1 vccd1 net289 sky130_fd_sc_hd__clkbuf_4
 XTAP_TAPCELL_ROW_104_3501 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -18730,6 +18732,7 @@ XFILLER_0_97_1677 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 Xinput1 ACK_I vssd1 vssd1 vccd1 vccd1 net1 sky130_fd_sc_hd__clkbuf_4
 XANTENNA__12439__B2 net523 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12939__S net318 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_36_71 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_09522_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[740\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[708\]
 + net844 vssd1 vssd1 vccd1 vccd1 _05133_ sky130_fd_sc_hd__mux2_1
 XANTENNA__13100__A2 net376 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -18746,10 +18749,10 @@ XFILLER_0_56_1385 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_47_700 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA_fanout252_A net253 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_137_908 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
-XFILLER_0_133_1564 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_08404_ _04011_ _04012_ _04013_ _04014_ net822 net732 vssd1 vssd1 vccd1 vccd1 _04015_
 + sky130_fd_sc_hd__mux4_1
 XTAP_TAPCELL_ROW_26_1109 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+XFILLER_0_133_1586 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_09384_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[935\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[903\]
 + net936 vssd1 vssd1 vccd1 vccd1 _04995_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_4_1025 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
@@ -18984,7 +18987,6 @@ XANTENNA__11883__A2 _06879_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__10978__A _04440_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_19_1409 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA_fanout467_A net469 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_135_1637 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_79_655 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_78_121 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_09505_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[356\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[324\]
@@ -19009,12 +19011,17 @@ X_08318_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[122\] team_04_
 + net959 vssd1 vssd1 vccd1 vccd1 _03929_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_62_533 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_118_985 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
+XANTENNA_50 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_09298_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[1001\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[969\]
 + net838 vssd1 vssd1 vccd1 vccd1 _04909_ sky130_fd_sc_hd__mux2_1
+XANTENNA_61 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_23_909 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_72 net669 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_83 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_127_1110 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_08249_ _03842_ _03848_ _03859_ net712 vssd1 vssd1 vccd1 vccd1 _03860_ sky130_fd_sc_hd__a22o_4
 XFILLER_0_127_1121 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
+XANTENNA_94 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_11260_ _05310_ _06247_ _06571_ vssd1 vssd1 vccd1 vccd1 _06749_ sky130_fd_sc_hd__or3b_1
 XFILLER_0_42_290 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_43_1705 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
@@ -19384,6 +19391,7 @@ X_08652_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[821\] team_04_
 XTAP_TAPCELL_ROW_1_348 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_55_1428 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__09227__A1_N net760 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_90_1319 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_1_359 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__11136__B _06624_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08583_ net594 _04193_ vssd1 vssd1 vccd1 vccd1 _04194_ sky130_fd_sc_hd__xnor2_2
@@ -19576,10 +19584,10 @@ X_16517_ clknet_leaf_33_wb_clk_i _02186_ _00746_ vssd1 vssd1 vccd1 vccd1 team_04
 XFILLER_0_58_477 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_131_1651 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_89_1513 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XANTENNA__13993__A2 net1063 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_74_937 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_13729_ team_04_WB.ADDR_START_VAL_REG\[10\] _03117_ vssd1 vssd1 vccd1 vccd1 _03120_
 + sky130_fd_sc_hd__nor2_1
+XANTENNA__13993__A2 net1063 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_74_937 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XANTENNA__12068__A net218 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_45_105 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XTAP_TAPCELL_ROW_136_4462 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -19654,11 +19662,13 @@ X_08635_ _04245_ vssd1 vssd1 vccd1 vccd1 _04246_ sky130_fd_sc_hd__inv_2
 XANTENNA__09840__A _04669_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__11692__B1 net460 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12677__S net472 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_136_1573 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA_fanout1191_A net1192 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_102_3440 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA_fanout547_A net548 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_90_1149 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA_fanout1289_A net1295 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_136_1595 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_08566_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[118\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[86\]
 + net854 vssd1 vssd1 vccd1 vccd1 _04177_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_49_433 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -19727,6 +19737,7 @@ XFILLER_0_25_1095 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_40_1549 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_70_2473 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XTAP_TAPCELL_ROW_109_3649 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+XFILLER_0_99_1163 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__09226__S net768 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 Xfanout950 net953 vssd1 vssd1 vccd1 vccd1 net950 sky130_fd_sc_hd__clkbuf_4
 Xfanout961 net966 vssd1 vssd1 vccd1 vccd1 net961 sky130_fd_sc_hd__buf_2
@@ -20105,6 +20116,7 @@ X_09452_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[422\] team_04_
 XFILLER_0_91_1255 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__13734__A2_N net1037 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_56_1397 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_133_1554 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_08403_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[57\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[25\]
 + net857 vssd1 vssd1 vccd1 vccd1 _04014_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_17_1359 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -20319,7 +20331,6 @@ XANTENNA__09832__B _04725_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_93_1328 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XANTENNA_fanout362_A _06249_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_91_1030 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
-XFILLER_0_135_1649 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_78_133 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_09504_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[420\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[388\]
 + net874 vssd1 vssd1 vccd1 vccd1 _05115_ sky130_fd_sc_hd__mux2_1
@@ -20349,9 +20360,15 @@ XFILLER_0_129_290 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_117_430 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_08317_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[186\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[154\]
 + net959 vssd1 vssd1 vccd1 vccd1 _03928_ sky130_fd_sc_hd__mux2_1
+XANTENNA_40 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_09297_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[809\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[777\]
 + net838 vssd1 vssd1 vccd1 vccd1 _04908_ sky130_fd_sc_hd__mux2_1
+XANTENNA_51 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_62 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08248_ _03853_ _03858_ net719 vssd1 vssd1 vccd1 vccd1 _03859_ sky130_fd_sc_hd__mux2_1
+XANTENNA_73 net1 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_84 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_95 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA_fanout996_A net997 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__15297__A net1114 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08179_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[252\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[220\]
@@ -20713,6 +20730,7 @@ XFILLER_0_94_1412 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XTAP_TAPCELL_ROW_52_1898 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 Xfanout1180 net1191 vssd1 vssd1 vccd1 vccd1 net1180 sky130_fd_sc_hd__clkbuf_4
 XANTENNA__16587__CLK clknet_leaf_3_wb_clk_i vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_136_1700 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 Xfanout1191 net1192 vssd1 vssd1 vccd1 vccd1 net1191 sky130_fd_sc_hd__buf_2
 X_08651_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[885\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[853\]
 + net901 vssd1 vssd1 vccd1 vccd1 _04262_ sky130_fd_sc_hd__mux2_1
@@ -20900,8 +20918,8 @@ XFILLER_0_19_1593 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_16516_ clknet_leaf_7_wb_clk_i _02185_ _00745_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[489\]
 + sky130_fd_sc_hd__dfrtp_1
 XFILLER_0_89_1503 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
-XFILLER_0_14_53 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_13728_ _03118_ vssd1 vssd1 vccd1 vccd1 _03119_ sky130_fd_sc_hd__inv_2
+XFILLER_0_14_53 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__12650__B1 net408 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_131_1663 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__12068__B net672 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -21040,6 +21058,7 @@ XANTENNA__11380__A0 net636 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_109_3639 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 Xfanout940 net967 vssd1 vssd1 vccd1 vccd1 net940 sky130_fd_sc_hd__buf_2
 XANTENNA__13535__A1_N net1092 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_99_1175 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 Xfanout951 net952 vssd1 vssd1 vccd1 vccd1 net951 sky130_fd_sc_hd__clkbuf_4
 Xfanout962 net966 vssd1 vssd1 vccd1 vccd1 net962 sky130_fd_sc_hd__clkbuf_4
 Xfanout973 _07708_ vssd1 vssd1 vccd1 vccd1 net973 sky130_fd_sc_hd__clkbuf_2
@@ -21256,7 +21275,6 @@ XTAP_TAPCELL_ROW_104_3503 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_09735_ net1003 net1002 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[256\]
 + vssd1 vssd1 vccd1 vccd1 _05346_ sky130_fd_sc_hd__a21oi_1
 XFILLER_0_39_1711 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
-XFILLER_0_138_1658 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__09858__B2 _03621_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_74_1613 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__12862__B1 net389 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -21714,18 +21732,25 @@ XFILLER_0_19_267 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XANTENNA__12596__A2 net476 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_35_727 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_74_373 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
+XANTENNA_30 net101 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__16343__CLK clknet_leaf_43_wb_clk_i vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_117_442 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_09296_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[873\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[841\]
 + net838 vssd1 vssd1 vccd1 vccd1 _04907_ sky130_fd_sc_hd__mux2_1
+XANTENNA_41 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XPHY_EDGE_ROW_25_Left_164 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XPHY_EDGE_ROW_90_Right_90 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
+XANTENNA_52 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_63 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_105_615 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_7_673 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_08247_ _03854_ _03855_ _03856_ _03857_ net819 net738 vssd1 vssd1 vccd1 vccd1 _03858_
 + sky130_fd_sc_hd__mux4_1
 XANTENNA__15578__A net1119 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_74 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_85 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_132_434 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_96 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12348__A2 net500 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_31_922 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_132_456 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
@@ -22186,7 +22211,7 @@ XFILLER_0_25_1289 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_42_1570 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 X_08917_ net658 _04526_ _04527_ vssd1 vssd1 vccd1 vccd1 _04528_ sky130_fd_sc_hd__o21ai_4
 X_09897_ _03865_ _05507_ net641 _03862_ vssd1 vssd1 vccd1 vccd1 _05508_ sky130_fd_sc_hd__o2bb2a_1
-XFILLER_0_99_505 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_99_505 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XANTENNA_fanout854_A net861 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__08786__S0 net829 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08848_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[1009\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[977\]
@@ -22277,10 +22302,10 @@ XFILLER_0_114_1339 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__12349__B net666 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__11989__B1 net452 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_15_1425 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
-X_16515_ clknet_leaf_11_wb_clk_i _02184_ _00744_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[488\]
-+ sky130_fd_sc_hd__dfrtp_1
 X_13727_ team_04_WB.ADDR_START_VAL_REG\[10\] _03117_ vssd1 vssd1 vccd1 vccd1 _03118_
 + sky130_fd_sc_hd__and2_1
+X_16515_ clknet_leaf_11_wb_clk_i _02184_ _00744_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[488\]
++ sky130_fd_sc_hd__dfrtp_1
 X_10939_ _04920_ _06287_ net654 vssd1 vssd1 vccd1 vccd1 _06428_ sky130_fd_sc_hd__o21a_1
 XFILLER_0_6_1250 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_14_65 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -22355,7 +22380,6 @@ XFILLER_0_119_1239 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_08633_ net746 _03656_ _03726_ net660 vssd1 vssd1 vccd1 vccd1 _04244_ sky130_fd_sc_hd__a211oi_2
 XFILLER_0_96_508 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XTAP_TAPCELL_ROW_102_3420 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_136_1564 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XANTENNA_fanout268_A _07234_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_102_3431 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_90_1129 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -22568,7 +22592,6 @@ XFILLER_0_54_1271 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__14575__A net1290 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_14759_ net1170 vssd1 vssd1 vccd1 vccd1 _00406_ sky130_fd_sc_hd__inv_2
 XTAP_TAPCELL_ROW_47_1765 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_89_1301 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_50_1124 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_28_1164 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_30_1709 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
@@ -22626,7 +22649,6 @@ XFILLER_0_119_1003 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 Xclkbuf_leaf_31_wb_clk_i clknet_4_5__leaf_wb_clk_i vssd1 vssd1 vccd1 vccd1 clknet_leaf_31_wb_clk_i
 + sky130_fd_sc_hd__clkbuf_8
 XTAP_TAPCELL_ROW_104_3504 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_138_1637 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__08748__A _04328_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_09665_ net761 _05275_ _05264_ _05258_ vssd1 vssd1 vccd1 vccd1 _05276_ sky130_fd_sc_hd__o2bb2a_2
 XFILLER_0_59_1171 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
@@ -22795,7 +22817,6 @@ XANTENNA__09952__A net593 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_32_1308 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_16978_ clknet_leaf_0_wb_clk_i _02647_ _01207_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[951\]
 + sky130_fd_sc_hd__dfrtp_1
-XFILLER_0_36_41 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_17264__1323 vssd1 vssd1 vccd1 vccd1 _17264__1323/HI net1323 sky130_fd_sc_hd__conb_1
 XANTENNA__09163__S net943 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 Xinput4 DAT_I[11] vssd1 vssd1 vccd1 vccd1 net4 sky130_fd_sc_hd__clkbuf_1
@@ -22816,6 +22837,7 @@ XFILLER_0_118_1091 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_59_552 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 X_09381_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[871\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[839\]
 + net936 vssd1 vssd1 vccd1 vccd1 _04992_ sky130_fd_sc_hd__mux2_1
+XFILLER_0_133_1567 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_19_405 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_34_1653 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_99_3330 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -23059,20 +23081,28 @@ X_08315_ net771 _03925_ vssd1 vssd1 vccd1 vccd1 _03926_ sky130_fd_sc_hd__or2_1
 XFILLER_0_118_944 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XANTENNA__09541__S0 net793 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_69_1513 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
+XANTENNA_20 net51 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_09295_ net723 _04905_ net709 vssd1 vssd1 vccd1 vccd1 _04906_ sky130_fd_sc_hd__o21a_1
 XFILLER_0_74_363 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_90_823 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XANTENNA_fanout515_A net516 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_30_1358 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_47_588 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XANTENNA_31 net101 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_75_897 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_90_834 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_62_525 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XANTENNA_42 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_111_1684 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_16_931 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA_fanout1257_A net1263 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08246_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[701\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[669\]
 + net842 vssd1 vssd1 vccd1 vccd1 _03857_ sky130_fd_sc_hd__mux2_1
+XANTENNA_53 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_64 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_75 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_86 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_97 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08177_ _03784_ _03785_ _03786_ _03787_ net830 net744 vssd1 vssd1 vccd1 vccd1 _03788_
 + sky130_fd_sc_hd__mux4_1
 XANTENNA__13488__A1_N net1092 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -23705,6 +23735,7 @@ X_08701_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[51\] team_04_W
 XFILLER_0_94_1211 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_09681_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[418\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[386\]
 + net878 vssd1 vssd1 vccd1 vccd1 _05292_ sky130_fd_sc_hd__mux2_1
+XFILLER_0_55_40 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_94_1233 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_20_1176 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_08632_ _04225_ _04231_ _04242_ net712 vssd1 vssd1 vccd1 vccd1 _04243_ sky130_fd_sc_hd__a22o_4
@@ -23946,8 +23977,8 @@ XTAP_TAPCELL_ROW_47_1766 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_59_789 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_128_121 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_129_655 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
-XTAP_TAPCELL_ROW_28_1165 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_13709_ _07769_ _07813_ vssd1 vssd1 vccd1 vccd1 _03100_ sky130_fd_sc_hd__xor2_1
+XTAP_TAPCELL_ROW_28_1165 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XTAP_TAPCELL_ROW_28_1176 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_129_666 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XTAP_TAPCELL_ROW_28_1187 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -24185,7 +24216,6 @@ XFILLER_0_39_1009 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 Xinput5 DAT_I[12] vssd1 vssd1 vccd1 vccd1 net5 sky130_fd_sc_hd__clkbuf_1
 XFILLER_0_21_1293 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_15928_ clknet_leaf_73_wb_clk_i _01605_ _00155_ vssd1 vssd1 vccd1 vccd1 net107 sky130_fd_sc_hd__dfrtp_1
-XFILLER_0_36_53 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__12844__A2 net341 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_49_1806 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_79_829 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
@@ -24439,19 +24469,28 @@ XANTENNA__09541__S1 net798 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12450__B1 net428 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_09294_ _04901_ _04902_ _04903_ _04904_ net818 net729 vssd1 vssd1 vccd1 vccd1 _04905_
 + sky130_fd_sc_hd__mux4_1
+XANTENNA_10 _07385_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_21 net51 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_35_729 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_16_910 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
+XANTENNA_32 net101 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_43 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08245_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[765\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[733\]
 + net843 vssd1 vssd1 vccd1 vccd1 _03856_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_90_846 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
+XANTENNA_54 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_111_1696 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_6_141 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA_fanout410_A net411 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_65 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_69_1569 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_76 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_105_628 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
+XANTENNA_87 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08176_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[444\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[412\]
 + net890 vssd1 vssd1 vccd1 vccd1 _03787_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_82_1703 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XANTENNA_98 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__11556__A2 net545 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_30_412 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_70_581 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
@@ -24475,7 +24514,7 @@ XANTENNA__11908__A net701 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_101_889 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 Xoutput194 net194 vssd1 vssd1 vccd1 vccd1 wbs_dat_o[23] sky130_fd_sc_hd__buf_2
 XFILLER_0_41_1455 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
-XFILLER_0_100_388 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
+XFILLER_0_100_388 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XANTENNA__11627__B _07115_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__09812__S net874 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_138_1276 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -25058,6 +25097,7 @@ XANTENNA__12874__B1 net389 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__10910__A net584 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_119_1219 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__07976__S0 net785 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_55_52 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_08631_ _04236_ _04241_ net716 vssd1 vssd1 vccd1 vccd1 _04242_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_59_1365 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_20_1199 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
@@ -25070,7 +25110,6 @@ X_08562_ _04169_ _04170_ _04171_ _04172_ net823 net731 vssd1 vssd1 vccd1 vccd1 _
 XFILLER_0_132_1408 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XTAP_TAPCELL_ROW_102_3444 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_37_1652 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_136_1599 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_08493_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[951\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[919\]
 + net900 vssd1 vssd1 vccd1 vccd1 _04104_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_33_1527 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -25446,6 +25485,7 @@ XANTENNA__11510__B1 _06257_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15660_ net1277 vssd1 vssd1 vccd1 vccd1 _01307_ sky130_fd_sc_hd__inv_2
 XFILLER_0_99_167 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_9_1623 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XANTENNA_100 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_12872_ _07572_ net328 net388 net2427 vssd1 vssd1 vccd1 vccd1 _02032_ sky130_fd_sc_hd__a22o_1
 XANTENNA__14055__A2 net1058 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_14611_ net1154 vssd1 vssd1 vccd1 vccd1 _00258_ sky130_fd_sc_hd__inv_2
@@ -25534,7 +25574,6 @@ XANTENNA_wire241_A _07301_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15927_ clknet_leaf_73_wb_clk_i _01604_ _00154_ vssd1 vssd1 vccd1 vccd1 net106 sky130_fd_sc_hd__dfrtp_1
 Xinput6 DAT_I[13] vssd1 vssd1 vccd1 vccd1 net6 sky130_fd_sc_hd__clkbuf_1
 XFILLER_0_56_1302 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_36_65 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_49_1807 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XTAP_TAPCELL_ROW_49_1818 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_15798__17 clknet_leaf_74_wb_clk_i vssd1 vssd1 vccd1 vccd1 net1517 sky130_fd_sc_hd__inv_2
@@ -25549,7 +25588,6 @@ XANTENNA__13254__A0 net83 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_14809_ net1127 vssd1 vssd1 vccd1 vccd1 _00456_ sky130_fd_sc_hd__inv_2
 XANTENNA__11291__A net289 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_73_1693 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_133_1569 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_08330_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[762\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[730\]
 + net959 vssd1 vssd1 vccd1 vccd1 _03941_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_52_53 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -25735,6 +25773,7 @@ X_17175_ clknet_leaf_92_wb_clk_i _02787_ _01404_ vssd1 vssd1 vccd1 vccd1 team_04
 + sky130_fd_sc_hd__dfrtp_1
 X_14387_ net1614 vssd1 vssd1 vccd1 vccd1 _01703_ sky130_fd_sc_hd__clkbuf_1
 XANTENNA__12146__S net509 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_52_763 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_11599_ _06749_ _07087_ net582 vssd1 vssd1 vccd1 vccd1 _07088_ sky130_fd_sc_hd__a21o_1
 X_16126_ clknet_leaf_49_wb_clk_i _01795_ _00355_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[99\]
 + sky130_fd_sc_hd__dfrtp_1
@@ -25802,19 +25841,28 @@ XFILLER_0_47_557 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XANTENNA__12450__A1 net522 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_09293_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[41\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[9\]
 + net837 vssd1 vssd1 vccd1 vccd1 _04904_ sky130_fd_sc_hd__mux2_1
+XANTENNA_11 _07385_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_35_719 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
+XANTENNA_22 net51 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA_fanout236_A net238 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_74_365 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
+XANTENNA_33 net101 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08244_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[573\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[541\]
 + net842 vssd1 vssd1 vccd1 vccd1 _03855_ sky130_fd_sc_hd__mux2_1
+XANTENNA_44 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_118_979 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_34_229 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
+XANTENNA_55 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_66 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_133_927 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_6_153 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_27_281 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XANTENNA_77 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__11005__A2 _05463_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08175_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[508\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[476\]
 + net890 vssd1 vssd1 vccd1 vccd1 _03786_ sky130_fd_sc_hd__mux2_1
+XANTENNA_88 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_99 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_127_1126 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA_fanout403_A net405 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12202__B2 net449 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -25922,6 +25970,7 @@ XANTENNA__09220__S1 net803 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__11519__A1_N _07007_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_92_1365 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_12907_ _07609_ net345 net385 net2727 vssd1 vssd1 vccd1 vccd1 _01998_ sky130_fd_sc_hd__a22o_1
+XFILLER_0_53_1316 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_13887_ net1702 net1068 net1035 _03267_ vssd1 vssd1 vccd1 vccd1 _01613_ sky130_fd_sc_hd__a22o_1
 X_16675_ clknet_leaf_12_wb_clk_i _02344_ _00904_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[648\]
 + sky130_fd_sc_hd__dfrtp_1
@@ -26820,6 +26869,7 @@ Xfanout796 net798 vssd1 vssd1 vccd1 vccd1 net796 sky130_fd_sc_hd__clkbuf_4
 X_12940_ _07356_ net2623 net317 vssd1 vssd1 vccd1 vccd1 _01967_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_77_1263 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_12871_ _07571_ net346 net389 net2713 vssd1 vssd1 vccd1 vccd1 _02033_ sky130_fd_sc_hd__a22o_1
+XANTENNA_101 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__11662__A net702 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_14610_ net1157 vssd1 vssd1 vccd1 vccd1 _00257_ sky130_fd_sc_hd__inv_2
 X_11822_ net2324 net525 net434 _07302_ vssd1 vssd1 vccd1 vccd1 _02711_ sky130_fd_sc_hd__a22o_1
@@ -26903,7 +26953,6 @@ X_15926_ clknet_leaf_73_wb_clk_i _01603_ _00153_ vssd1 vssd1 vccd1 vccd1 net105 
 XFILLER_0_127_57 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 Xinput7 DAT_I[14] vssd1 vssd1 vccd1 vccd1 net7 sky130_fd_sc_hd__buf_1
 XFILLER_0_56_1314 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
-XFILLER_0_36_77 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XTAP_TAPCELL_ROW_49_1808 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__09983__A_N net629 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15857_ clknet_leaf_92_wb_clk_i _01534_ _00084_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.CPU_DAT_O\[11\]
@@ -26914,6 +26963,7 @@ XFILLER_0_87_820 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_14808_ net1185 vssd1 vssd1 vccd1 vccd1 _00455_ sky130_fd_sc_hd__inv_2
 XANTENNA__13254__A1 team_04_WB.ADDR_START_VAL_REG\[22\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__08357__S net891 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_133_1559 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XANTENNA__09553__S0 net793 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_54_1071 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_14739_ net1149 vssd1 vssd1 vccd1 vccd1 _00386_ sky130_fd_sc_hd__inv_2
@@ -27147,14 +27197,21 @@ X_09292_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[105\] team_04_
 XANTENNA__12450__A2 net611 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_30_1328 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_34_1497 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XANTENNA_12 _07385_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_75_889 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
+XANTENNA_23 net51 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_111_1665 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_08243_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[637\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[605\]
 + net842 vssd1 vssd1 vccd1 vccd1 _03854_ sky130_fd_sc_hd__mux2_1
+XANTENNA_34 net101 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_6_121 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_45 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12738__B1 net400 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_56 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA_fanout229_A _07438_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_67 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_132_405 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_78 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08174_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[316\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[284\]
 + net890 vssd1 vssd1 vccd1 vccd1 _03785_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_103_81 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -27163,6 +27220,7 @@ XFILLER_0_43_742 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA_clkbuf_leaf_13_wb_clk_i_A clknet_4_1__leaf_wb_clk_i vssd1 vssd1 vccd1 vccd1
 + sky130_fd_sc_hd__diode_2
 XANTENNA__12202__A2 net507 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_89 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_127_1138 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__11410__B1 _06898_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_70_572 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
@@ -27799,8 +27857,8 @@ X_08560_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[374\] team_04_
 XANTENNA__12626__A2 net490 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_102_3424 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XTAP_TAPCELL_ROW_102_3435 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_7_1007 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_76_1692 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_7_1007 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XTAP_TAPCELL_ROW_102_3446 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__13823__B2 team_04_WB.instance_to_wrap.final_design.CPU_instr_adr\[24\] vssd1
 + vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -28095,7 +28153,6 @@ XPHY_EDGE_ROW_105_Left_244 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_17276__1334 vssd1 vssd1 vccd1 vccd1 _17276__1334/HI net1334 sky130_fd_sc_hd__conb_1
 XANTENNA__10307__B1 net621 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12847__A2 net328 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_138_1619 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_39_1705 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_66_97 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_119_1007 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -28144,9 +28201,9 @@ XTAP_TAPCELL_ROW_76_2633 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_5_561 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_61_979 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XTAP_TAPCELL_ROW_76_2644 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+XTAP_TAPCELL_ROW_76_2655 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_09026_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[750\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[718\]
 + net884 vssd1 vssd1 vccd1 vccd1 _04637_ sky130_fd_sc_hd__mux2_1
-XTAP_TAPCELL_ROW_76_2655 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_103_536 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XTAP_TAPCELL_ROW_57_2054 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_66_1179 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
@@ -28200,6 +28257,7 @@ XANTENNA__11510__A2 _06253_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_12870_ _07570_ net347 net390 net1900 vssd1 vssd1 vccd1 vccd1 _02034_ sky130_fd_sc_hd__a22o_1
 XFILLER_0_99_169 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_9_1625 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_102 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__11662__B _07150_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_11821_ net648 net239 vssd1 vssd1 vccd1 vccd1 _07302_ sky130_fd_sc_hd__and2_1
 XFILLER_0_55_1551 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -28280,7 +28338,6 @@ X_16974_ clknet_leaf_17_wb_clk_i _02643_ _01203_ vssd1 vssd1 vccd1 vccd1 team_04
 + sky130_fd_sc_hd__dfrtp_1
 X_12097_ net2206 net352 _07503_ net446 vssd1 vssd1 vccd1 vccd1 _02637_ sky130_fd_sc_hd__a22o_1
 XFILLER_0_127_14 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_36_12 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_95_1320 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_11048_ _06536_ _06532_ _06530_ vssd1 vssd1 vccd1 vccd1 _06537_ sky130_fd_sc_hd__or3b_1
 X_15925_ clknet_leaf_73_wb_clk_i _01602_ _00152_ vssd1 vssd1 vccd1 vccd1 net104 sky130_fd_sc_hd__dfrtp_1
@@ -28483,7 +28540,6 @@ XFILLER_0_84_1043 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_40_905 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_16124_ clknet_leaf_107_wb_clk_i _01793_ _00353_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[97\]
 + sky130_fd_sc_hd__dfrtp_1
-XFILLER_0_52_765 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_13336_ _07756_ _07760_ _07761_ vssd1 vssd1 vccd1 vccd1 _07762_ sky130_fd_sc_hd__o21ba_1
 XFILLER_0_134_491 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_10548_ team_04_WB.instance_to_wrap.CPU_DAT_O\[17\] net1088 net1047 vssd1 vssd1 vccd1
@@ -28536,17 +28592,24 @@ XFILLER_0_19_217 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_111_1611 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_09291_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[169\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[137\]
 + net840 vssd1 vssd1 vccd1 vccd1 _04902_ sky130_fd_sc_hd__mux2_1
+XANTENNA_13 _07385_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__09199__S net720 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08242_ _03849_ _03850_ _03851_ _03852_ net819 net738 vssd1 vssd1 vccd1 vccd1 _03853_
 + sky130_fd_sc_hd__mux4_1
+XANTENNA_24 net51 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_34_209 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_69_1528 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_35 net101 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_46 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_6_133 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 Xclkbuf_leaf_59_wb_clk_i clknet_4_12__leaf_wb_clk_i vssd1 vssd1 vccd1 vccd1 clknet_leaf_59_wb_clk_i
 + sky130_fd_sc_hd__clkbuf_8
 XFILLER_0_105_609 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
+XANTENNA_57 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_68 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08173_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[380\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[348\]
 + net890 vssd1 vssd1 vccd1 vccd1 _03784_ sky130_fd_sc_hd__mux2_1
+XANTENNA_79 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_132_417 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_103_93 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_67_1230 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
@@ -28692,7 +28755,6 @@ X_16673_ clknet_leaf_55_wb_clk_i _02342_ _00902_ vssd1 vssd1 vccd1 vccd1 team_04
 XFILLER_0_57_1465 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_13885_ net1035 _03262_ _03266_ net1068 net117 vssd1 vssd1 vccd1 vccd1 _01614_ sky130_fd_sc_hd__a32o_1
 XANTENNA__12011__B net678 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_53_1318 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_18_1449 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_124_26 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_119_1190 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -29436,7 +29498,6 @@ XANTENNA__10739__B net642 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_47_1748 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_10917_ net625 _06405_ vssd1 vssd1 vccd1 vccd1 _06406_ sky130_fd_sc_hd__or2_1
 X_13705_ _03005_ _03015_ _03095_ vssd1 vssd1 vccd1 vccd1 _03096_ sky130_fd_sc_hd__a21boi_1
-XFILLER_0_135_1591 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__13018__B1 net310 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_47_1759 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_14685_ net1164 vssd1 vssd1 vccd1 vccd1 _00332_ sky130_fd_sc_hd__inv_2
@@ -29507,7 +29568,6 @@ XTAP_TAPCELL_ROW_108_3623 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_103_1579 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_24_1091 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_66_65 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_138_1609 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_09660_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[546\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[514\]
 + net913 vssd1 vssd1 vccd1 vccd1 _05271_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_98_1181 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -29615,6 +29675,7 @@ X_08809_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[113\] team_04_
 X_09789_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[737\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[705\]
 + net945 vssd1 vssd1 vccd1 vccd1 _05400_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_77_1287 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XANTENNA_103 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_9_1637 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_11820_ net690 _07182_ _07300_ net615 vssd1 vssd1 vccd1 vccd1 _07301_ sky130_fd_sc_hd__a211oi_4
 XFILLER_0_96_833 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
@@ -29692,7 +29753,6 @@ XFILLER_0_78_1018 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_127_26 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_11047_ _06531_ _06534_ vssd1 vssd1 vccd1 vccd1 _06536_ sky130_fd_sc_hd__or2_1
 X_15924_ clknet_leaf_73_wb_clk_i _01601_ _00151_ vssd1 vssd1 vccd1 vccd1 net134 sky130_fd_sc_hd__dfrtp_1
-XFILLER_0_36_24 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XANTENNA__14510__A net1281 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 Xinput9 DAT_I[16] vssd1 vssd1 vccd1 vccd1 net9 sky130_fd_sc_hd__clkbuf_1
 XANTENNA__13239__A0 net91 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -29965,11 +30025,17 @@ X_08241_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[957\] team_04_
 + net842 vssd1 vssd1 vccd1 vccd1 _03852_ sky130_fd_sc_hd__mux2_1
 XANTENNA__13303__B team_04_WB.MEM_SIZE_REG_REG\[26\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_17439_ net1494 vssd1 vssd1 vccd1 vccd1 la_data_out[126] sky130_fd_sc_hd__buf_2
+XANTENNA_14 _07432_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_74_357 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
+XANTENNA_25 net51 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_36 net101 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_103_50 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_16_925 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
+XANTENNA_47 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12738__A2 net347 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08172_ net747 _03782_ _03726_ vssd1 vssd1 vccd1 vccd1 _03783_ sky130_fd_sc_hd__a21oi_4
+XANTENNA_58 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_69 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_7_679 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_27_284 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__11946__B1 net456 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -30354,7 +30420,6 @@ Xfanout1154 net1156 vssd1 vssd1 vccd1 vccd1 net1154 sky130_fd_sc_hd__buf_4
 Xfanout1165 net1192 vssd1 vssd1 vccd1 vccd1 net1165 sky130_fd_sc_hd__buf_4
 Xfanout1176 net1177 vssd1 vssd1 vccd1 vccd1 net1176 sky130_fd_sc_hd__buf_2
 XFILLER_0_98_1599 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_136_1707 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 Xfanout1187 net1190 vssd1 vssd1 vccd1 vccd1 net1187 sky130_fd_sc_hd__buf_4
 X_14985_ net1137 vssd1 vssd1 vccd1 vccd1 _00632_ sky130_fd_sc_hd__inv_2
 Xfanout1198 net1199 vssd1 vssd1 vccd1 vccd1 net1198 sky130_fd_sc_hd__buf_2
@@ -30628,7 +30693,6 @@ XFILLER_0_98_1341 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XANTENNA__12033__A _07380_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_101_1452 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XANTENNA__11531__A1 net589 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_55_12 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_94_1205 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_101_1474 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 Xhold1 team_04_WB.instance_to_wrap.BUSY_O vssd1 vssd1 vccd1 vccd1 net1533 sky130_fd_sc_hd__dlygate4sd3_1
@@ -31068,6 +31132,7 @@ XFILLER_0_9_1605 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_09788_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[545\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[513\]
 + net945 vssd1 vssd1 vccd1 vccd1 _05399_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_119_1554 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
+XANTENNA_104 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_115_1407 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_08739_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[819\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[787\]
 + net879 vssd1 vssd1 vccd1 vccd1 _04350_ sky130_fd_sc_hd__mux2_1
@@ -31435,14 +31500,19 @@ X_08240_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[1021\] team_04
 + net843 vssd1 vssd1 vccd1 vccd1 _03851_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_7_614 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_17438_ net1493 vssd1 vssd1 vccd1 vccd1 la_data_out[125] sky130_fd_sc_hd__buf_2
+XANTENNA_15 _07432_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_26 net63 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_37 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_111_1679 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_55_561 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_83_881 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_7_658 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XANTENNA_48 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08171_ team_04_WB.instance_to_wrap.final_design.reqhand.instruction\[28\] team_04_WB.instance_to_wrap.CPU_DAT_O\[28\]
 + net1006 vssd1 vssd1 vccd1 vccd1 _03782_ sky130_fd_sc_hd__mux2_4
 X_17369_ net1424 vssd1 vssd1 vccd1 vccd1 la_data_out[56] sky130_fd_sc_hd__buf_2
 XANTENNA__17279__A net598 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_59 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_55_583 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_3_1590 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XANTENNA__09496__S net912 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -31563,7 +31633,6 @@ X_16671_ clknet_leaf_117_wb_clk_i _02340_ _00900_ vssd1 vssd1 vccd1 vccd1 team_0
 + sky130_fd_sc_hd__dfrtp_1
 XANTENNA__10676__B2 team_04_WB.instance_to_wrap.CPU_DAT_O\[5\] vssd1 vssd1 vccd1 vccd1
 + sky130_fd_sc_hd__diode_2
-XFILLER_0_134_1602 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_13883_ net2721 net1068 _03264_ _03265_ vssd1 vssd1 vccd1 vccd1 _01615_ sky130_fd_sc_hd__a22o_1
 XFILLER_0_18_1429 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_15622_ net1103 vssd1 vssd1 vccd1 vccd1 _01269_ sky130_fd_sc_hd__inv_2
@@ -32068,7 +32137,6 @@ XFILLER_0_20_1149 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 Xhold2 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[28\] vssd1 vssd1 vccd1
 + vccd1 net1534 sky130_fd_sc_hd__dlygate4sd3_1
 X_10159_ _05674_ _05769_ vssd1 vssd1 vccd1 vccd1 _05770_ sky130_fd_sc_hd__and2_1
-XFILLER_0_55_24 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__16118__CLK clknet_leaf_40_wb_clk_i vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_89_501 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XTAP_TAPCELL_ROW_106_3541 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -32468,6 +32536,7 @@ XFILLER_0_38_1218 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_9_1617 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_08738_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[883\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[851\]
 + net887 vssd1 vssd1 vccd1 vccd1 _04349_ sky130_fd_sc_hd__mux2_1
+XANTENNA_105 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_137_4500 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_96_857 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_90_1456 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
@@ -32532,6 +32601,7 @@ XANTENNA__09173__A net899 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__11101__A1_N _06271_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15853_ clknet_leaf_91_wb_clk_i _01530_ _00080_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.CPU_DAT_O\[7\]
 + sky130_fd_sc_hd__dfrtp_4
+XFILLER_0_36_59 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_118_1010 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__12311__B net664 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_14804_ net1196 vssd1 vssd1 vccd1 vccd1 _00451_ sky130_fd_sc_hd__inv_2
@@ -32823,10 +32893,14 @@ XFILLER_0_86_197 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_111_1647 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_14649_ net1170 vssd1 vssd1 vccd1 vccd1 _00296_ sky130_fd_sc_hd__inv_2
 XPHY_EDGE_ROW_120_Right_120 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
+XANTENNA_16 _07432_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_7_637 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XANTENNA_27 net101 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__09777__S net947 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_38 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_08170_ net762 _03773_ _03779_ _03761_ _03767_ vssd1 vssd1 vccd1 vccd1 _03781_ sky130_fd_sc_hd__a32o_1
 X_17368_ net1423 vssd1 vssd1 vccd1 vccd1 la_data_out[55] sky130_fd_sc_hd__buf_2
+XANTENNA_49 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_83_893 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_15_415 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_67_1211 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
@@ -33455,7 +33529,6 @@ XFILLER_0_101_1465 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_94_1218 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 Xhold3 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[0\] vssd1 vssd1 vccd1
 + vccd1 net1535 sky130_fd_sc_hd__dlygate4sd3_1
-XFILLER_0_55_36 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_106_3542 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__11819__A1 net701 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_14966_ net1274 vssd1 vssd1 vccd1 vccd1 _00613_ sky130_fd_sc_hd__inv_2
@@ -33686,7 +33759,6 @@ XFILLER_0_58_1382 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_118_1258 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_98_365 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_93_1273 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_135_1550 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_13702_ _03045_ _03086_ _03092_ _03090_ vssd1 vssd1 vccd1 vccd1 _03093_ sky130_fd_sc_hd__o31a_1
 X_10914_ net580 _06402_ vssd1 vssd1 vccd1 vccd1 _06403_ sky130_fd_sc_hd__nor2_1
 XFILLER_0_19_1377 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -33882,6 +33954,7 @@ XANTENNA__16728__CLK clknet_leaf_121_wb_clk_i vssd1 vssd1 vccd1 vccd1 sky130_fd_
 XPHY_EDGE_ROW_134_Right_134 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_08737_ _04344_ _04345_ _04346_ _04347_ net820 net730 vssd1 vssd1 vccd1 vccd1 _04348_
 + sky130_fd_sc_hd__mux4_1
+XANTENNA_106 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA_fanout836_A net873 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_119_1589 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XANTENNA__07999__A team_04_WB.instance_to_wrap.CPU_DAT_O\[6\] vssd1 vssd1 vccd1 vccd1
@@ -33956,6 +34029,7 @@ XANTENNA__08363__A2 _03973_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15852_ clknet_leaf_90_wb_clk_i _01529_ _00079_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.CPU_DAT_O\[6\]
 + sky130_fd_sc_hd__dfrtp_4
 XFILLER_0_21_1289 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
+XFILLER_0_137_1623 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_14803_ net1152 vssd1 vssd1 vccd1 vccd1 _00450_ sky130_fd_sc_hd__inv_2
 XANTENNA__12447__B2 net522 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XPHY_EDGE_ROW_101_Right_101 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
@@ -34233,7 +34307,10 @@ XANTENNA_clkbuf_leaf_70_wb_clk_i_A clknet_4_15__leaf_wb_clk_i vssd1 vssd1 vccd1 
 + sky130_fd_sc_hd__diode_2
 XANTENNA__14042__B1 net1032 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_117_418 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_17 net51 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_111_1659 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
+XANTENNA_28 net101 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_39 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_17367_ net1422 vssd1 vssd1 vccd1 vccd1 la_data_out[54] sky130_fd_sc_hd__buf_2
 X_14579_ net1292 vssd1 vssd1 vccd1 vccd1 _00226_ sky130_fd_sc_hd__inv_2
 X_16318_ clknet_leaf_49_wb_clk_i _01987_ _00547_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[291\]
@@ -34490,7 +34567,6 @@ XANTENNA__16319__CLK clknet_leaf_112_wb_clk_i vssd1 vssd1 vccd1 vccd1 sky130_fd_
 X_08985_ _04592_ _04593_ _04594_ _04595_ net790 net797 vssd1 vssd1 vccd1 vccd1 _04596_
 + sky130_fd_sc_hd__mux4_1
 XANTENNA_fanout484_A net492 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_138_1003 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_23_1693 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_07936_ net1075 net1023 net1019 vssd1 vssd1 vccd1 vccd1 _03547_ sky130_fd_sc_hd__and3_1
 XANTENNA__08867__S net915 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -34829,7 +34905,6 @@ XFILLER_0_20_1129 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_24_1298 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XANTENNA__13269__A1 team_04_WB.ADDR_START_VAL_REG\[7\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 Xhold4 net173 vssd1 vssd1 vccd1 vccd1 net1536 sky130_fd_sc_hd__dlygate4sd3_1
-XFILLER_0_55_48 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XTAP_TAPCELL_ROW_106_3543 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 X_10088_ team_04_WB.instance_to_wrap.final_design.CPU_instr_adr\[15\] _04559_ vssd1
 + vssd1 vccd1 vccd1 _05699_ sky130_fd_sc_hd__nand2_1
@@ -35061,6 +35136,7 @@ XANTENNA__13671__A1 net986 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_54_1203 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_98_355 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XANTENNA__13671__B2 net987 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_135_1540 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_54_1225 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_13701_ _03091_ vssd1 vssd1 vccd1 vccd1 _03092_ sky130_fd_sc_hd__inv_2
 XFILLER_0_98_377 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -35071,7 +35147,7 @@ X_14681_ net1127 vssd1 vssd1 vccd1 vccd1 _00328_ sky130_fd_sc_hd__inv_2
 X_11893_ team_04_WB.instance_to_wrap.CPU_DAT_O\[13\] _07353_ _07239_ vssd1 vssd1 vccd1
 + vccd1 _07364_ sky130_fd_sc_hd__a21o_1
 XANTENNA__14358__A net1257 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_135_1573 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
+XFILLER_0_135_1573 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_19_1389 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 X_16420_ clknet_leaf_5_wb_clk_i _02089_ _00649_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[393\]
 + sky130_fd_sc_hd__dfrtp_1
@@ -35264,6 +35340,7 @@ X_08736_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[563\] team_04_
 XANTENNA__08204__S0 net780 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__08875__S net907 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__09857__B1 _05466_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_107 net102 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_90_1414 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_59_1692 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_68_506 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
@@ -35542,7 +35619,7 @@ XFILLER_0_122_603 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_51_225 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_134_463 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__11060__A _04328_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_52_759 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
+XFILLER_0_52_759 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_135_997 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_106_165 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_16050_ clknet_leaf_124_wb_clk_i _01719_ _00279_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[23\]
@@ -35617,7 +35694,9 @@ XFILLER_0_7_606 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_7_617 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__14042__B2 team_04_WB.instance_to_wrap.CPU_DAT_O\[21\] vssd1 vssd1 vccd1
 + vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_18 net51 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_17366_ net1421 vssd1 vssd1 vccd1 vccd1 la_data_out[53] sky130_fd_sc_hd__buf_2
+XANTENNA_29 net101 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_131_1097 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_14578_ net1294 vssd1 vssd1 vccd1 vccd1 _00225_ sky130_fd_sc_hd__inv_2
 XFILLER_0_16_918 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
@@ -36204,6 +36283,7 @@ XFILLER_0_101_992 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__11921__C1 net690 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_10156_ _05681_ _05765_ _05680_ vssd1 vssd1 vccd1 vccd1 _05767_ sky130_fd_sc_hd__a21boi_1
 XANTENNA__09017__S0 net828 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_55_16 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_59_1329 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 Xhold5 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[18\] vssd1 vssd1 vccd1
 + vccd1 net1537 sky130_fd_sc_hd__dlygate4sd3_1
@@ -36211,7 +36291,7 @@ XFILLER_0_98_1389 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_14964_ net1198 vssd1 vssd1 vccd1 vccd1 _00611_ sky130_fd_sc_hd__inv_2
 X_10087_ _05697_ vssd1 vssd1 vccd1 vccd1 _05698_ sky130_fd_sc_hd__inv_2
 XTAP_TAPCELL_ROW_106_3544 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_136_1519 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
+XFILLER_0_136_1519 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XTAP_TAPCELL_ROW_106_3555 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XTAP_TAPCELL_ROW_106_3566 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_96_1080 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -36645,6 +36725,7 @@ XANTENNA__08204__S1 net801 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__09857__A1 _04669_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_119_1558 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_55_1524 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_108 net415 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_94_1595 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_90_1426 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_08666_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[309\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[277\]
@@ -36727,9 +36808,7 @@ XANTENNA__12161__B net645 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_60_1296 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_15850_ clknet_leaf_90_wb_clk_i _01527_ _00077_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.CPU_DAT_O\[4\]
 + sky130_fd_sc_hd__dfrtp_4
-XFILLER_0_36_29 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__07970__S net928 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_137_1625 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_118_1002 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_99_621 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA_input20_A DAT_I[26] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -36800,10 +36879,10 @@ X_15146_ net1178 vssd1 vssd1 vccd1 vccd1 _00793_ sky130_fd_sc_hd__inv_2
 XFILLER_0_105_391 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__09926__A team_04_WB.instance_to_wrap.final_design.CPU_instr_adr\[20\] vssd1
 + vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_77_14 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_26_1125 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_12358_ net2198 net499 _07623_ net452 vssd1 vssd1 vccd1 vccd1 _02496_ sky130_fd_sc_hd__a22o_1
 XFILLER_0_51_996 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
-XFILLER_0_77_14 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_71_2503 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_121_862 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_22_197 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -36991,6 +37070,7 @@ X_16882_ clknet_leaf_124_wb_clk_i _02551_ _01111_ vssd1 vssd1 vccd1 vccd1 team_0
 XANTENNA__13078__A0 net256 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15833_ clknet_leaf_96_wb_clk_i _01510_ _00060_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.VGA_data_control.ready_data\[19\]
 + sky130_fd_sc_hd__dfrtp_1
+XFILLER_0_99_440 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_95_1189 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__12825__B1 net392 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15764_ net1246 vssd1 vssd1 vccd1 vccd1 _01411_ sky130_fd_sc_hd__inv_2
@@ -37011,6 +37091,7 @@ X_11858_ net653 net248 vssd1 vssd1 vccd1 vccd1 _07334_ sky130_fd_sc_hd__and2_1
 XFILLER_0_86_189 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XANTENNA__14042__A2 net1058 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_131_1065 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA_19 net51 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_17365_ net1420 vssd1 vssd1 vccd1 vccd1 la_data_out[52] sky130_fd_sc_hd__buf_2
 XFILLER_0_7_629 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 X_10809_ _04357_ _04412_ _06297_ vssd1 vssd1 vccd1 vccd1 _06298_ sky130_fd_sc_hd__and3_1
@@ -37046,8 +37127,8 @@ X_16178_ clknet_leaf_123_wb_clk_i _01847_ _00407_ vssd1 vssd1 vccd1 vccd1 team_0
 + sky130_fd_sc_hd__dfrtp_1
 XFILLER_0_80_1425 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_23_484 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XANTENNA__08655__S1 net799 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 Xoutput126 net126 vssd1 vssd1 vccd1 vccd1 ADR_O[30] sky130_fd_sc_hd__buf_2
+XANTENNA__08655__S1 net799 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 Xoutput137 net137 vssd1 vssd1 vccd1 vccd1 DAT_O[10] sky130_fd_sc_hd__buf_2
 Xoutput148 net148 vssd1 vssd1 vccd1 vccd1 DAT_O[20] sky130_fd_sc_hd__buf_2
 X_15129_ net1127 vssd1 vssd1 vccd1 vccd1 _00776_ sky130_fd_sc_hd__inv_2
@@ -37310,6 +37391,7 @@ X_09535_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[421\] team_04_
 XANTENNA__12265__B2 net446 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_79_977 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA_fanout1281_A net1283 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_52_1313 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_94_914 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XANTENNA_fanout637_A _04273_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_94_925 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -37610,6 +37692,7 @@ X_10155_ _05680_ _05681_ vssd1 vssd1 vccd1 vccd1 _05766_ sky130_fd_sc_hd__nand2_
 XFILLER_0_101_1446 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__09017__S1 net734 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_101_1457 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
+XFILLER_0_55_28 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_10086_ team_04_WB.instance_to_wrap.final_design.CPU_instr_adr\[15\] _04559_ vssd1
 + vssd1 vccd1 vccd1 _05697_ sky130_fd_sc_hd__or2_1
 X_14963_ net1157 vssd1 vssd1 vccd1 vccd1 _00610_ sky130_fd_sc_hd__inv_2
@@ -38154,9 +38237,9 @@ XFILLER_0_124_189 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XANTENNA__14109__B2 team_04_WB.ADDR_START_VAL_REG\[8\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_129_1198 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XANTENNA__13580__A2 net274 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA__13729__A team_04_WB.ADDR_START_VAL_REG\[10\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15145_ net1149 vssd1 vssd1 vccd1 vccd1 _00792_ sky130_fd_sc_hd__inv_2
 XFILLER_0_50_452 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XANTENNA__13729__A team_04_WB.ADDR_START_VAL_REG\[10\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_107_1430 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_12357_ _07443_ _07444_ net666 vssd1 vssd1 vccd1 vccd1 _07623_ sky130_fd_sc_hd__and3_1
 XFILLER_0_22_165 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -39231,7 +39314,6 @@ X_08879_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[880\] team_04_
 + net915 vssd1 vssd1 vccd1 vccd1 _04490_ sky130_fd_sc_hd__mux2_1
 X_10910_ net584 _06398_ vssd1 vssd1 vccd1 vccd1 _06399_ sky130_fd_sc_hd__xnor2_1
 XFILLER_0_58_1375 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
-XFILLER_0_135_1532 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__13408__A1 team_04_WB.MEM_SIZE_REG_REG\[19\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_11890_ net691 _07150_ _07361_ net615 vssd1 vssd1 vccd1 vccd1 _07362_ sky130_fd_sc_hd__a211oi_4
 XANTENNA__14001__A _05445_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -39303,7 +39385,7 @@ XANTENNA__08997__S1 net808 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_24_1065 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_108_3619 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_78_1707 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
-XFILLER_0_98_1144 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
+XFILLER_0_98_1144 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_10137_ _05745_ _05747_ _05717_ vssd1 vssd1 vccd1 vccd1 _05748_ sky130_fd_sc_hd__a21oi_1
 X_15994_ clknet_leaf_68_wb_clk_i _01670_ _00223_ vssd1 vssd1 vccd1 vccd1 team_04_WB.MEM_SIZE_REG_REG\[8\]
 + sky130_fd_sc_hd__dfrtp_4
@@ -39484,8 +39566,10 @@ X_11040_ net564 net542 _06527_ _06528_ vssd1 vssd1 vccd1 vccd1 _06529_ sky130_fd
 Xhold793 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[763\] vssd1 vssd1
 + vccd1 vccd1 net2325 sky130_fd_sc_hd__dlygate4sd3_1
 XFILLER_0_99_1486 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_137_1605 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_102_1597 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_12991_ _07642_ net467 net310 net2200 vssd1 vssd1 vccd1 vccd1 _01918_ sky130_fd_sc_hd__a22o_1
+XFILLER_0_137_1627 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_99_656 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_14730_ net1179 vssd1 vssd1 vccd1 vccd1 _00377_ sky130_fd_sc_hd__inv_2
 XFILLER_0_98_133 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
@@ -40027,6 +40111,7 @@ XANTENNA__11718__A _06932_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_07932_ net1095 net1091 vssd1 vssd1 vccd1 vccd1 _03544_ sky130_fd_sc_hd__nor2_1
 XANTENNA__09589__S1 net805 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12498__B1 net422 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_138_1007 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__09902__A2 net597 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_09602_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[739\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[707\]
 + net932 vssd1 vssd1 vccd1 vccd1 _05213_ sky130_fd_sc_hd__mux2_1
@@ -40038,7 +40123,6 @@ XFILLER_0_64_83 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA_fanout260_A _07356_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA_fanout358_A _06254_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_78_456 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_52_1315 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_133_1641 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_09464_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[934\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[902\]
 + net892 vssd1 vssd1 vccd1 vccd1 _05075_ sky130_fd_sc_hd__mux2_1
@@ -40108,7 +40192,6 @@ XANTENNA__14939__A net1179 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_13860_ net1035 _03247_ _03248_ net1067 net2380 vssd1 vssd1 vccd1 vccd1 _01621_ sky130_fd_sc_hd__a32o_1
 XFILLER_0_88_209 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_96_1297 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
-XFILLER_0_138_1574 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__13989__B1 _03329_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_12811_ _07380_ net2258 net323 vssd1 vssd1 vccd1 vccd1 _02091_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_134_1427 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -40576,9 +40659,9 @@ X_08878_ net775 _04488_ net757 vssd1 vssd1 vccd1 vccd1 _04489_ sky130_fd_sc_hd__
 XTAP_TAPCELL_ROW_101_3400 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XTAP_TAPCELL_ROW_101_3411 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__14001__B _03308_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_135_1555 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_10840_ _03974_ _06306_ vssd1 vssd1 vccd1 vccd1 _06329_ sky130_fd_sc_hd__xnor2_1
 XFILLER_0_93_1289 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
+XFILLER_0_135_1566 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__12616__B1 net411 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__13959__A3 net599 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__09810__S net880 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -41458,6 +41541,7 @@ XANTENNA__13989__B2 net266 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_13790_ _03180_ vssd1 vssd1 vccd1 vccd1 _03181_ sky130_fd_sc_hd__inv_2
 XANTENNA__08429__S net915 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_74_1541 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_138_1597 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XTAP_TAPCELL_ROW_2_372 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_96_221 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XTAP_TAPCELL_ROW_2_383 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -41678,8 +41762,8 @@ X_10083_ team_04_WB.instance_to_wrap.final_design.CPU_instr_adr\[17\] _04441_ vs
 XANTENNA__11134__A1 net584 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 Xhold9 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[6\] vssd1 vssd1 vccd1
 + vccd1 net1541 sky130_fd_sc_hd__dlygate4sd3_1
-XANTENNA__09878__A2 net635 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_76_1603 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XANTENNA__09878__A2 net635 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_13911_ _03281_ _03284_ net1965 net1067 vssd1 vssd1 vccd1 vccd1 _01606_ sky130_fd_sc_hd__a2bb2o_1
 X_14891_ net1218 vssd1 vssd1 vccd1 vccd1 _00538_ sky130_fd_sc_hd__inv_2
 XTAP_TAPCELL_ROW_106_3548 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -41893,8 +41977,6 @@ XFILLER_0_19_1317 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XTAP_TAPCELL_ROW_101_3401 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XTAP_TAPCELL_ROW_101_3412 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__16744__CLK clknet_leaf_22_wb_clk_i vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_135_1567 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
-XFILLER_0_135_1578 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XFILLER_0_17_1030 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_39_416 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_10770_ net642 _03695_ net356 vssd1 vssd1 vccd1 vccd1 _06259_ sky130_fd_sc_hd__or3_1
@@ -42334,7 +42416,6 @@ X_08645_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[245\] team_04_
 + net904 vssd1 vssd1 vccd1 vccd1 _04256_ sky130_fd_sc_hd__mux2_1
 XANTENNA_fanout450_A net453 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_55_1347 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_136_1662 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XFILLER_0_95_105 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XTAP_TAPCELL_ROW_29_1207 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA_fanout1192_A net1296 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -42399,6 +42480,7 @@ XFILLER_0_95_1105 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_95_1138 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_15760_ net1246 vssd1 vssd1 vccd1 vccd1 _01407_ sky130_fd_sc_hd__inv_2
 X_12972_ net601 _07350_ net465 net314 net1855 vssd1 vssd1 vccd1 vccd1 _01936_ sky130_fd_sc_hd__a32o_1
+XFILLER_0_99_444 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_137_1448 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XANTENNA__09551__S net965 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__10297__A1 net624 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -42861,7 +42943,6 @@ XANTENNA__11835__A net648 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__09750__C1 _03675_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_16844_ clknet_leaf_98_wb_clk_i _02513_ _01073_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[817\]
 + sky130_fd_sc_hd__dfrtp_1
-XFILLER_0_137_1031 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_16775_ clknet_leaf_9_wb_clk_i _02444_ _01004_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[748\]
 + sky130_fd_sc_hd__dfrtp_1
 X_13987_ net1639 net1063 _03328_ net264 vssd1 vssd1 vccd1 vccd1 _01574_ sky130_fd_sc_hd__a22o_1
@@ -43224,9 +43305,7 @@ XANTENNA__12864__A2 net330 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_97_1383 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_98_328 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA_fanout745_A _03648_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_135_1524 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XTAP_TAPCELL_ROW_101_3402 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_135_1535 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XTAP_TAPCELL_ROW_101_3413 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__12616__A2 net483 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_75_1681 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -43735,7 +43814,6 @@ XANTENNA__10551__B net1094 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__14023__B _05445_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__07934__B2 _03535_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__08021__B net746 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_99_412 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_12971_ net609 _07341_ net471 net315 net1712 vssd1 vssd1 vccd1 vccd1 _01937_ sky130_fd_sc_hd__a32o_1
 X_14710_ net1273 vssd1 vssd1 vccd1 vccd1 _00357_ sky130_fd_sc_hd__inv_2
 XANTENNA__11663__A team_04_WB.MEM_SIZE_REG_REG\[14\] vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -44841,6 +44919,7 @@ X_08927_ net768 _04537_ vssd1 vssd1 vccd1 vccd1 _04538_ sky130_fd_sc_hd__or2_1
 XFILLER_0_77_1711 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__12298__B2 net442 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA_fanout855_A net861 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XFILLER_0_137_1609 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_93_1001 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_58_1121 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_99_638 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
@@ -45031,7 +45110,6 @@ XFILLER_0_55_1338 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_13_3 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_89_671 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XTAP_TAPCELL_ROW_29_1209 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_136_1675 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_107_81 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_7_1114 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_08574_ _04181_ _04182_ _04183_ _04184_ net823 net739 vssd1 vssd1 vccd1 vccd1 _04185_
@@ -45100,7 +45178,6 @@ XFILLER_0_95_1129 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_12970_ net611 _07334_ net470 net315 net1809 vssd1 vssd1 vccd1 vccd1 _01938_ sky130_fd_sc_hd__a32o_1
 XANTENNA__08729__S net865 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12140__A0 net248 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_99_435 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_11921_ _03631_ _05947_ _05949_ net754 net690 vssd1 vssd1 vccd1 vccd1 _07388_ sky130_fd_sc_hd__a221o_1
 XFILLER_0_77_1585 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__11494__A2 net362 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -45892,7 +45969,6 @@ XANTENNA__13274__A1 team_04_WB.ADDR_START_VAL_REG\[2\] vssd1 vssd1 vccd1 vccd1 s
 XTAP_TAPCELL_ROW_101_3404 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__12077__A2 net351 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_101_3415 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XFILLER_0_135_1559 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__08376__S1 net804 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__11285__B1 _06271_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__09573__S0 net830 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -46307,7 +46383,7 @@ XFILLER_0_41_425 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_129_1661 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_101_3 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XANTENNA__11972__A1 net689 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XANTENNA_1 _06834_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_1 _03752_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_13_149 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_15268_ net1154 vssd1 vssd1 vccd1 vccd1 _00915_ sky130_fd_sc_hd__inv_2
 XFILLER_0_111_313 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
@@ -46351,7 +46427,7 @@ XFILLER_0_94_1399 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_117_1042 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 X_08573_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[950\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[918\]
 + net853 vssd1 vssd1 vccd1 vccd1 _04184_ sky130_fd_sc_hd__mux2_1
-XFILLER_0_136_1687 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_136_1676 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_107_93 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_72_1653 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_92_1090 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
@@ -46421,6 +46497,7 @@ Xclkbuf_leaf_114_wb_clk_i clknet_4_2__leaf_wb_clk_i vssd1 vssd1 vccd1 vccd1 clkn
 + sky130_fd_sc_hd__clkbuf_8
 X_09889_ _04385_ _04412_ vssd1 vssd1 vccd1 vccd1 _05500_ sky130_fd_sc_hd__nor2_1
 XFILLER_0_100_1090 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
+XFILLER_0_99_447 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_11920_ team_04_WB.instance_to_wrap.CPU_DAT_O\[9\] _07353_ _07239_ vssd1 vssd1 vccd1
 + vccd1 _07387_ sky130_fd_sc_hd__a21o_1
 XFILLER_0_115_1705 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
@@ -46917,6 +46994,7 @@ XFILLER_0_56_601 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_69_984 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_73_1099 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_14605_ net1258 vssd1 vssd1 vccd1 vccd1 _00252_ sky130_fd_sc_hd__inv_2
+XFILLER_0_51_1331 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_11817_ team_04_WB.instance_to_wrap.CPU_DAT_O\[23\] net271 net269 vssd1 vssd1 vccd1
 + vccd1 _07298_ sky130_fd_sc_hd__a21o_1
 XFILLER_0_56_623 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -46948,6 +47026,7 @@ XTAP_TAPCELL_ROW_133_4376 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_114_717 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_11679_ _06517_ _07167_ vssd1 vssd1 vccd1 vccd1 _07168_ sky130_fd_sc_hd__and2_1
 XTAP_TAPCELL_ROW_133_4387 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+XFILLER_0_52_840 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XFILLER_0_113_205 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_4_937 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XTAP_TAPCELL_ROW_42_1593 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -47676,8 +47755,8 @@ XFILLER_0_129_1673 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_112_815 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_15267_ net1200 vssd1 vssd1 vccd1 vccd1 _00914_ sky130_fd_sc_hd__inv_2
 X_17399__1454 vssd1 vssd1 vccd1 vccd1 _17399__1454/HI net1454 sky130_fd_sc_hd__conb_1
-XANTENNA_2 net63 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__10772__A net641 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_2 _03752_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_12479_ net2681 net428 _07652_ net521 vssd1 vssd1 vccd1 vccd1 _02404_ sky130_fd_sc_hd__a22o_1
 XFILLER_0_1_501 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 XTAP_TAPCELL_ROW_39_1510 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -47713,19 +47792,17 @@ X_08641_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[373\] team_04_
 + net901 vssd1 vssd1 vccd1 vccd1 _04252_ sky130_fd_sc_hd__mux2_1
 XANTENNA__16925__CLK clknet_leaf_112_wb_clk_i vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 Xfanout1091 net1094 vssd1 vssd1 vccd1 vccd1 net1091 sky130_fd_sc_hd__buf_2
-XFILLER_0_136_1622 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__12211__B net647 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_136_1644 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
+XFILLER_0_136_1644 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_117_1021 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_107_50 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
-XFILLER_0_136_1666 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_08572_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[1014\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[982\]
 + net853 vssd1 vssd1 vccd1 vccd1 _04183_ sky130_fd_sc_hd__mux2_1
 XFILLER_0_72_1621 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_136_1688 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_132_1519 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_117_1065 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XFILLER_0_76_312 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
-XFILLER_0_136_1699 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XTAP_TAPCELL_ROW_18_860 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__10947__A net630 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_18_871 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
@@ -48189,6 +48266,7 @@ XFILLER_0_55_871 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_73_167 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_85_1119 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_13_93 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_89_1299 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 XANTENNA__11379__B1 net461 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XFILLER_0_131_217 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 XFILLER_0_28_1515 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
@@ -48346,7 +48424,6 @@ XFILLER_0_24_510 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XANTENNA__10764__B _05464_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_16205_ clknet_leaf_49_wb_clk_i _01874_ _00434_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[178\]
 + sky130_fd_sc_hd__dfrtp_1
-XFILLER_0_52_830 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XTAP_TAPCELL_ROW_133_4388 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XFILLER_0_126_589 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_3
 X_13417_ _07745_ _07842_ vssd1 vssd1 vccd1 vccd1 _07843_ sky130_fd_sc_hd__nand2_1
@@ -49081,7 +49158,7 @@ XFILLER_0_35_980 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 XANTENNA__16107__CLK clknet_leaf_5_wb_clk_i vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_15266_ net1223 vssd1 vssd1 vccd1 vccd1 _00913_ sky130_fd_sc_hd__inv_2
 X_12478_ net603 net232 net677 vssd1 vssd1 vccd1 vccd1 _07652_ sky130_fd_sc_hd__and3_1
-XANTENNA_3 net510 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
+XANTENNA_3 _03752_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XTAP_TAPCELL_ROW_39_1500 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
 XANTENNA__13174__A2 net373 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_17005_ clknet_leaf_50_wb_clk_i _02674_ _01234_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[978\]
@@ -49123,7 +49200,6 @@ X_08640_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[437\] team_04_
 XFILLER_0_59_1455 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 Xfanout1092 net1093 vssd1 vssd1 vccd1 vccd1 net1092 sky130_fd_sc_hd__buf_2
 XFILLER_0_83_55 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
-XFILLER_0_136_1634 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_08571_ team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[822\] team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[790\]
 + net853 vssd1 vssd1 vccd1 vccd1 _04182_ sky130_fd_sc_hd__mux2_1
 XANTENNA__12437__B2 net521 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -49594,7 +49670,7 @@ XFILLER_0_50_1068 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 XFILLER_0_104_85 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
 X_16419_ clknet_leaf_23_wb_clk_i _02088_ _00648_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[392\]
 + sky130_fd_sc_hd__dfrtp_1
-XFILLER_0_89_1289 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12
+XFILLER_0_89_1289 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_6
 X_17399_ net1454 vssd1 vssd1 vccd1 vccd1 la_data_out[86] sky130_fd_sc_hd__buf_2
 XFILLER_0_55_894 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_2
 XANTENNA__12576__B1 net414 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
@@ -50486,10 +50562,10 @@ XFILLER_0_108_195 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_15265_ net1112 vssd1 vssd1 vccd1 vccd1 _00912_ sky130_fd_sc_hd__inv_2
 X_12477_ net2240 net429 _07651_ net522 vssd1 vssd1 vccd1 vccd1 _02405_ sky130_fd_sc_hd__a22o_1
 XFILLER_0_35_992 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
+XANTENNA_4 _06834_ vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_17004_ clknet_leaf_100_wb_clk_i _02673_ _01233_ vssd1 vssd1 vccd1 vccd1 team_04_WB.instance_to_wrap.final_design.cpu.reg_window\[977\]
 + sky130_fd_sc_hd__dfrtp_1
 XTAP_TAPCELL_ROW_39_1501 vssd1 vccd1 sky130_fd_sc_hd__tapvpwrvgnd_1
-XANTENNA_4 net664 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__12906__B1 net383 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 X_14216_ team_04_WB.instance_to_wrap.final_design.VGA_data_control.VGA_request_address\[1\]
 + _03416_ _03364_ vssd1 vssd1 vccd1 vccd1 _03417_ sky130_fd_sc_hd__o21ai_1
@@ -50690,7 +50766,6 @@ XFILLER_0_99_951 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__fill_1
 X_14834_ net1157 vssd1 vssd1 vccd1 vccd1 _00481_ sky130_fd_sc_hd__inv_2
 XANTENNA__12419__A2 net606 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
 XANTENNA__13616__A1 net987 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__diode_2
-XFILLER_0_98_450 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_8
 XFILLER_0_114_1207 vssd1 vssd1 vccd1 vccd1 sky130_fd_sc_hd__decap_4
 X_14765_ net1206 vssd1 vssd1 vccd1 vccd1 _00412_ sky130_fd_sc_hd__inv_2
 XFILLER_0_98_494 vccd1 vssd1 vccd1 vssd1 sky130_ef_sc_hd__decap_12

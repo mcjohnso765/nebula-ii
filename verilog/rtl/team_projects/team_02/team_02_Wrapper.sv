@@ -48,16 +48,7 @@ module team_02_Wrapper (
     // Add master ports!!
     //we already have slave
 
-    output wire [31:0] wbm_adr_o,
-    output wire [31:0] wbm_dat_o,
-    output wire [3:0] wbm_sel_o,
-    output wire wbm_we_o,
-    output wire wbm_stb_o,
-    output wire wbm_cyc_o,
-    input wire wbm_ack_i,
-    input wire [31:0] wbm_dat_i,
-
-		    // Wishbone Master signals
+    // Wishbone Master signals
     output wire [31:0] ADR_O,
     output wire [31:0] DAT_O,
     output wire [3:0]  SEL_O,
@@ -87,17 +78,14 @@ module team_02_Wrapper (
 
     //Assign to unused outputs
     assign irq = 3'b000;	// Unused
-    assign {gpio_oeb[18:15]} = '1;//Set all to inputs
-    assign {gpio_out[18:15]} = '0;//Doesn't matter since inputs
+    
+    assign gpio_oeb[4:1] = 4'b1111;//Set all to inputs
+    assign gpio_out[4:1] = 4'b0;//Doesn't matter since inputs
+
+    //This can't be here. It should be in the team_02.sv file
+    // assign {gpio_oeb[18:15]} = '1;//Set all to inputs
+    // assign {gpio_out[18:15]} = '0;//Doesn't matter since inputs
     // assign gpio
-		
-    //Unused connection to nebula_ii wishbone arbitrator
-    assign ADR_O = 32'b0;
-    assign DAT_O = 32'b0;
-    assign SEL_O = 4'b0;
-    assign  WE_O = 1'b0;
-    assign STB_O = 1'b0;
-    assign CYC_O = 1'b0;
 
     // Instantiate Bus Wrapper module here
     team_02_WB team_02_WB (
@@ -124,14 +112,14 @@ module team_02_Wrapper (
         .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
 
         // Add master ports
-        .ADR_O(wbm_adr_o),
-        .DAT_O(wbm_dat_o),
-        .SEL_O(wbm_sel_o),
-        .WE_O(wbm_we_o),
-        .STB_O(wbm_stb_o),
-        .CYC_O(wbm_cyc_o),
-        .ACK_I(wbm_ack_i),
-        .DAT_I(wbm_dat_i)
+        .ADR_O(ADR_O),
+        .DAT_O(DAT_O),
+        .SEL_O(SEL_O),
+        .WE_O(WE_O),
+        .STB_O(STB_O),
+        .CYC_O(CYC_O),
+        .ACK_I(ACK_I),
+        .DAT_I(DAT_I)
 
         // costumized salve ports
         //.en(en),
