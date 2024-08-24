@@ -36,7 +36,7 @@ module team_06 (
     //o is output 
     //1 is input
     assign gpio_oeb = (en) ? 34'b11_1111_0000_0000_0000_0000_0000_0011_1111 : 34'b11_1111_1111_1111_1111_1111_1111_1111_1111;
-        //{gpio_out[33:29], gpio_out[5:0]} = '0;
+    assign {gpio_out[33:29], gpio_out[5:0]} = '0;
     /*
     * Place code and sub-module instantiations here.
     */
