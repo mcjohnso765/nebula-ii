@@ -13,9 +13,9 @@ module team_07 (
     input logic en, //This signal is an enable signal for your chip. Your design should disable if this is low.
 
     // Logic Analyzer - Grant access to all 128 LA
-    input wire [127:0] la_data_in,
-    output wire [127:0] la_data_out,
-    input wire [127:0] la_oenb,
+    input wire [31:0] la_data_in,
+    output wire [31:0] la_data_out,
+    input wire [31:0] la_oenb,
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
@@ -30,7 +30,7 @@ module team_07 (
 );
 
     // All outputs must have a value even if not used
-    assign la_data_out = 128'b0;
+    assign la_data_out = 32'b0;
    // assign gpio_out = 34'b0; //Inputs, but set low anyways
     assign gpio_oeb = 34'h3FFFC003F;///34'b1111111111111111000000000000111111;//All 1's inputs
     assign gpio_out[33:18] = '0;

@@ -43,9 +43,9 @@ module sample_team_proj (
     output logic [0:0] done,  // Signal indicating last pin done
     
     // Logic Analyzer - Grant access to all 128 LA
-    input logic [127:0] la_data_in,
-    output logic [127:0] la_data_out,
-    input logic [127:0] la_oenb,
+    input logic [31:0] la_data_in,
+    output logic [31:0] la_data_out,
+    input logic [31:0] la_oenb,
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  logic [33:0] gpio_in, // Breakout Board Pins

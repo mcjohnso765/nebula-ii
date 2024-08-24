@@ -42,17 +42,17 @@ ports:
 external_interface:
   - name: la_data_in
     port: la_data_in
-    width: 128
+    width: 32
     direction: input
     description: Inputs from the Logic Analyzer
   - name: la_data_out
     port: la_data_out
-    width: 128
+    width: 32
     direction: output
     description: Outputs from the Logic Analyzer
   - name: la_oenb
     port: la_oenb
-    width: 128
+    width: 32
     direction: input
     description: Output Enable from the Logic Analyzer
   - name: gpio_in

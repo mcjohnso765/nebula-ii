@@ -35,12 +35,12 @@ ports:
 external_interface:
   - name: la_dat
     port: la_dat
-    width: 1664
+    width: 416
     direction: input
     description: Inputs to write to la_i from designs
   - name: muxxed_la_dat
     port: muxxed_la_dat
-    width: 128
+    width: 32
     direction: output
     description: Output to Management SoCs LA
 

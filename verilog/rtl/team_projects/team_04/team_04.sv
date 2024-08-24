@@ -12,9 +12,9 @@ module team_04 (
     input logic en, //This signal is an enable signal for your chip. Your design should disable if this is low.
 
     // Logic Analyzer - Grant access to all 128 LA
-    input wire [127:0] la_data_in,
-    output reg [127:0] la_data_out,
-    input wire [127:0] la_oenb,
+    input wire [31:0] la_data_in,
+    output reg [31:0] la_data_out,
+    input wire [31:0] la_oenb,
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
@@ -121,7 +121,7 @@ module team_04 (
     //enable handler
     always_comb begin 
          // All outputs must have a value even if not used
-    la_data_out = 128'b0;
+    la_data_out = 32'b0;
     gpio_out[33:5] = 29'b0; //Inputs, but set low anyways
     gpio_oeb[33:5] = 29'b1;//All 1's inputs
 
