@@ -90,6 +90,9 @@ end
 assign wbs_ack_o_m = ack_reg;
 assign wbs_dat_o_m = dat_reg;
 
+    integer i2;
+
+
 always @(*) begin
 // always @(curr_state, ack_reg, dat_reg, wbs_cyc_i_m, wbs_stb_i_m, wbs_we_i_m, wbs_adr_i_m, wbs_dat_i_m, wbs_sel_i_m, wbs_dat_i_periph, wbs_adr_i_m[19:6], wbs_dat_i_periph) begin
     //defaults
@@ -105,7 +108,6 @@ always @(*) begin
     // wbs_adr_o_periph_2D = '0;
     // wbs_dat_o_periph_2D = '0;
     // wbs_sel_o_periph_2D = '0;
-    integer i2;
     for (i2 = 0; i2 <= NUM_TEAMS; i2 = i2 + 1) begin
         wbs_adr_o_periph_2D[i2] = '0;
         wbs_dat_o_periph_2D[i2] = '0;

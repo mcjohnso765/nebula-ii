@@ -86,6 +86,7 @@ end
 
 integer state_idx;   //idx to iterate through the states
 integer req_idx;     //idx to check requests
+integer i2;
 
 always @* begin
     next_state = curr_state;
@@ -98,7 +99,6 @@ always @* begin
     A_ACK_O = '0;
     
     // Below loop basically does: A_DAT_O_2D = '0;
-    integer i2;
     for (i2 = 0; i2 < NUM_MANAGERS; i2 = i2 + 1) begin
             A_DAT_O_2D[i2] = '0;
     end
