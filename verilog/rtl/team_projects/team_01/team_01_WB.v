@@ -30,9 +30,9 @@ module team_01_WB (
 	//see .vh file to find out what this shit is
 	`WB_SLAVE_PORTS,
 	//la
-	input	wire	[128-1:0]	la_data_in,
-	output	wire	[128-1:0]	la_data_out,
-	input	wire	[128-1:0]	la_oenb,
+	input	wire	[32-1:0]	la_data_in,
+	output	wire	[32-1:0]	la_data_out,
+	input	wire	[32-1:0]	la_oenb,
 	
 	//gpio
 	input	wire	[34-1:0]	gpio_in,

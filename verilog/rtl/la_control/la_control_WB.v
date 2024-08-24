@@ -31,8 +31,8 @@ module la_control_WB #(
 )
 (
 	`WB_SLAVE_PORTS,
-	input	wire	[128*(NUM_TEAMS+1)-1:0] designs_la_data_out_flat,
-	output	wire	[128-1:0]	muxxed_la_dat
+	input	wire	[32*(NUM_TEAMS+1)-1:0] designs_la_data_out_flat,
+	output	wire	[32-1:0]	muxxed_la_dat
 );
 
 	localparam	LA_SEL_VAL_REG_OFFSET = `WB_AW'h31000000;

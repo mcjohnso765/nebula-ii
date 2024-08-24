@@ -13,9 +13,9 @@ module team_09 (
 	input wire clk;
 	input wire nrst;
 	input wire en;
-	input wire [127:0] la_data_in;
-	output wire [127:0] la_data_out;
-	input wire [127:0] la_oenb;
+	input wire [31:0] la_data_in;
+	output wire [31:0] la_data_out;
+	input wire [31:0] la_oenb;
 	input wire [33:0] gpio_in;
 	output wire [33:0] gpio_out;
 	output wire [33:0] gpio_oeb;

@@ -36,9 +36,9 @@ module team_05_Wrapper (
     output logic [31:0] wbs_dat_o,
 
     // Logic Analyzer - 2 pins used here
-    input logic [127:0] la_data_in,
-    output logic [127:0] la_data_out,
-    input logic [127:0] la_oenb,
+    input logic [31:0] la_data_in,
+    output logic [31:0] la_data_out,
+    input logic [31:0] la_oenb,
 
     // GPIOs
     input  logic [37:0] gpio_in, // Breakout Board Pins

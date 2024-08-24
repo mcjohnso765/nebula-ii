@@ -28,9 +28,9 @@
 
 module team_03_WB (
 	`WB_SLAVE_PORTS,
-	input	wire	[128-1:0]	la_data_in,
-	output	wire	[128-1:0]	la_data_out,
-	input	wire	[128-1:0]	la_oenb,
+	input	wire	[32-1:0]	la_data_in,
+	output	wire	[32-1:0]	la_data_out,
+	input	wire	[32-1:0]	la_oenb,
 	input	wire	[34-1:0]	gpio_in,
 	output	wire	[34-1:0]	gpio_out,
 	output	wire	[34-1:0]	gpio_oeb,

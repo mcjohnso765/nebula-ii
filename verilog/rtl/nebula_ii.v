@@ -43,7 +43,7 @@ module nebula_ii (
     localparam NUM_TEAMS = 12;
 
     // LA outputs from all designs
-    wire [127:0] designs_la_data_out [NUM_TEAMS:0];
+    wire [31:0] designs_la_data_out [NUM_TEAMS:0];
 
     // GPIO outputs from all designs
     wire [37:0] designs_gpio_out [NUM_TEAMS:0]; // Breakout Board Pins
@@ -119,9 +119,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[0]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[0]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -157,9 +157,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[1]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[1]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -195,9 +195,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[2]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[2]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -234,9 +234,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[3]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[3]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -272,9 +272,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[4]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[4]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -310,9 +310,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[5]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[5]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -348,9 +348,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[6]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[6]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -386,9 +386,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[7]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[7]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -424,9 +424,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[8]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[8]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -462,9 +462,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[9]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[9]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -500,9 +500,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[10]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[10]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -539,9 +539,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[11]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[11]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -577,9 +577,9 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_projects[12]),
 
         // Logic Analyzer
-        .la_data_in(la_data_in),
+        .la_data_in(la_data_in[31:0]),
         .la_data_out(designs_la_data_out[12]),
-        .la_oenb(la_oenb),
+        .la_oenb(la_oenb[31:0]),
 
         // GPIOs
         .gpio_in(io_in), // Breakout Board Pins
@@ -638,13 +638,13 @@ module nebula_ii (
     );
 
     // Flattened LA outputs
-    reg [128*(NUM_TEAMS+1)-1:0] designs_la_data_out_flat;
+    reg [32*(NUM_TEAMS+1)-1:0] designs_la_data_out_flat;
 
     // Flattening of LA outputs
     integer i2;
     always @* begin
         for (i2 = 0; i2 <= NUM_TEAMS; i2 = i2 + 1) begin
-            designs_la_data_out_flat[i2*128 +: 128] = designs_la_data_out[i2];//[38i:38(i+1)-1]
+            designs_la_data_out_flat[i2*32 +: 32] = designs_la_data_out[i2];//[38i:38(i+1)-1]
         end
     end
 
@@ -670,7 +670,7 @@ module nebula_ii (
         
         // LA
         .designs_la_data_out_flat(designs_la_data_out_flat),
-        .la_data_out(la_data_out)
+        .la_data_out(la_data_out[31:0])
     );
 
     // Flattened wbs_dat_i_projects

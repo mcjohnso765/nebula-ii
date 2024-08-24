@@ -22,9 +22,9 @@ module la_control_Wrapper #(
     output wire [31:0] wbs_dat_o,
     
     // GPIOs
-    input wire [128*(NUM_TEAMS+1)-1:0] designs_la_data_out_flat, // Breakout Board Pins
+    input wire [32*(NUM_TEAMS+1)-1:0] designs_la_data_out_flat, // Breakout Board Pins
 
-    output wire [127:0] la_data_out
+    output wire [31:0] la_data_out
 );
     la_control_WB #(
         .NUM_TEAMS(NUM_TEAMS)
