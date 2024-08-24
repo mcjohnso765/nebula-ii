@@ -12,15 +12,15 @@ module wishbone_arbitrator #(
     input logic nRST,
     
     //input WB from multiple managers
-    input logic [NUM_MANAGERS-1: 0][31:0] A_ADR_I,
-    input logic [NUM_MANAGERS-1: 0][31:0] A_DAT_I,
-    input logic [NUM_MANAGERS-1: 0][3:0]  A_SEL_I,
+    input logic [(32 * NUM_MANAGERS) - 1:0] A_ADR_I, //flat signal
+    input logic [(32 * NUM_MANAGERS) - 1:0] A_DAT_I, //flat signal
+    input logic [(4 * NUM_MANAGERS) - 1:0]  A_SEL_I, //flat signal
     input logic [NUM_MANAGERS-1: 0] A_WE_I,
     input logic [NUM_MANAGERS-1: 0] A_STB_I,
     input logic [NUM_MANAGERS-1: 0] A_CYC_I,
 
     //output WB to multiple managers
-    output logic [NUM_MANAGERS-1: 0][31:0] A_DAT_O,
+    output logic [(32 * NUM_MANAGERS) - 1:0] A_DAT_O, //flat signal
     output logic [NUM_MANAGERS-1: 0] A_ACK_O, 
 
     //input WB from single slave
@@ -35,6 +35,23 @@ module wishbone_arbitrator #(
     output logic STB_O,
     output logic CYC_O     
 );
+
+logic [31:0] A_ADR_I_2D [NUM_MANAGERS-1: 0];
+logic [31:0] A_DAT_I_2D [NUM_MANAGERS-1: 0];
+logic [3:0]  A_SEL_I_2D [NUM_MANAGERS-1: 0];
+logic [31:0] A_DAT_O_2D [NUM_MANAGERS-1: 0];
+
+// Flattening / Unflattening of port signals
+integer i;
+always @* begin
+    for (i = 0; i < NUM_MANAGERS; i = i + 1) begin
+        A_DAT_O[i*32 +: 32] = A_DAT_O_2D[i];//[38i:38(i+1)-1]
+
+        A_ADR_I_2D[i] = A_ADR_I[i*32 +: 32];//[38i:38(i+1)-1]
+        A_DAT_I_2D[i] = A_DAT_I[i*32 +: 32];//[38i:38(i+1)-1]
+        A_SEL_I_2D[i] = A_SEL_I[i*4 +: 4];//[38i:38(i+1)-1]
+    end
+end
 
 
 logic [NUM_MANAGERS: 0] curr_state;
@@ -69,6 +86,7 @@ end
 
 integer state_idx;   //idx to iterate through the states
 integer req_idx;     //idx to check requests
+integer i2;
 
 always @* begin
     next_state = curr_state;
@@ -78,8 +96,12 @@ always @* begin
     WE_O  = '0;
     STB_O = '0;
     CYC_O = '0;
-    A_DAT_O = '0;
     A_ACK_O = '0;
+    
+    // Below loop basically does: A_DAT_O_2D = '0;
+    for (i2 = 0; i2 < NUM_MANAGERS; i2 = i2 + 1) begin
+            A_DAT_O_2D[i2] = '0;
+    end
     
     for(state_idx = 0; state_idx <= NUM_MANAGERS; state_idx++) begin
         if(curr_state[state_idx]) begin //seeing if bit state_idx is on
@@ -93,9 +115,9 @@ always @* begin
                         next_state = 1 << (req_idx + 1);
 
                         //mealy setting the signals 
-                        ADR_O = A_ADR_I[req_idx];
-                        DAT_O = A_DAT_I[req_idx];
-                        SEL_O = A_SEL_I[req_idx];
+                        ADR_O = A_ADR_I_2D[req_idx];
+                        DAT_O = A_DAT_I_2D[req_idx];
+                        SEL_O = A_SEL_I_2D[req_idx];
                         WE_O  = A_WE_I[req_idx];
                         STB_O = A_STB_I[req_idx];
                         CYC_O = A_CYC_I[req_idx];
@@ -105,14 +127,14 @@ always @* begin
                 end
             end
             else begin
-                ADR_O = A_ADR_I[state_idx - 1];
-                DAT_O = A_DAT_I[state_idx - 1];
-                SEL_O = A_SEL_I[state_idx - 1];
+                ADR_O = A_ADR_I_2D[state_idx - 1];
+                DAT_O = A_DAT_I_2D[state_idx - 1];
+                SEL_O = A_SEL_I_2D[state_idx - 1];
                 WE_O  = A_WE_I[state_idx - 1];
                 STB_O = A_STB_I[state_idx - 1];
                 CYC_O = A_CYC_I[state_idx - 1];
 
-                A_DAT_O[state_idx - 1] = DAT_I;
+                A_DAT_O_2D[state_idx - 1] = DAT_I;
                 A_ACK_O[state_idx - 1] = ACK_I;
 
                 if(ACK_I) begin

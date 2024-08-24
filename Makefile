@@ -39,8 +39,8 @@ ifeq ($(ROOTLESS), 1)
 	USER_ARGS =
 endif
 # export OPENLANE_ROOT?=$(PWD)/dependencies/openlane_src
-export OPENLANE2_ROOT?=${HOME}/openlane2
-# export OPENLANE2_ROOT?=${HOME}/STARS2024/openlane2-2.0.7 # for nanoHUB
+# export OPENLANE2_ROOT?=${HOME}/STARS2024/openlane2-2.0.7# for nanoHUB
+export OPENLANE2_ROOT?=~/openlane2# for Aidan
 export BUS_WRAP_ROOT?=$(PWD)/dependencies/BusWrap
 export PDK_ROOT?=$(PWD)/dependencies/pdks
 # export PDK_ROOT?=/apps/share64/rocky8/openlane2/openlane2-stars2024-20240613/PDKS   # for nanoHUB
@@ -56,7 +56,7 @@ ifeq ($(PDK),sky130A)
 	SKYWATER_COMMIT=f70d8ca46961ff92719d8870a18a076370b85f6c
 	export OPEN_PDKS_COMMIT?=4d5af10bfee4dab799566aaf903bb22aee69bac9
 	export OPENLANE_TAG?=2023.07.19-1
-	MPW_TAG ?= mpw-9i
+	MPW_TAG ?= mpw-9a
 
 ifeq ($(CARAVEL_LITE),1)
 	CARAVEL_NAME := caravel-lite
@@ -74,7 +74,8 @@ ifeq ($(PDK),sky130B)
 	SKYWATER_COMMIT=f70d8ca46961ff92719d8870a18a076370b85f6c
 	export OPEN_PDKS_COMMIT?=78b7bc32ddb4b6f14f76883c2e2dc5b5de9d1cbc
 	export OPENLANE_TAG?=2023.07.19-1
-	MPW_TAG ?= mpw-9i
+	MPW_TAG ?= mpw-9a
+#New tag matches caravel install
 
 ifeq ($(CARAVEL_LITE),1)
 	CARAVEL_NAME := caravel-lite
@@ -127,9 +128,8 @@ simenv-cocotb:
 .PHONY: setup
 setup: check_dependencies install check-env install_mcw openlane pdk-with-volare setup-timing-scripts setup-cocotb precheck
 
-# Miguel Note (8/22/2024): bus-wrap-setup is no longer needed for now
 .PHONY: purdue-setup
-purdue-setup: check_dependencies install check-env install_mcw pdk-with-volare
+purdue-setup: check_dependencies install check-env install_mcw pdk-with-volare bus-wrap-setup sram-setup
 
 # Openlane
 blocks=$(shell cd openlane && find * -maxdepth 0 -type d)
@@ -143,6 +143,7 @@ dv-targets-rtl=$(dv_patterns:%=verify-%-rtl)
 purdue-dv-targets-rtl=$(dv_patterns:%=purdue-verify-%-rtl)
 cocotb-dv-targets-rtl=$(cocotb-dv_patterns:%=cocotb-verify-%-rtl)
 dv-targets-gl=$(dv_patterns:%=verify-%-gl)
+purdue-dv-targets-gl=$(dv_patterns:%=purdue-verify-%-gl)
 cocotb-dv-targets-gl=$(cocotb-dv_patterns:%=cocotb-verify-%-gl)
 dv-targets-gl-sdf=$(dv_patterns:%=verify-%-gl-sdf)
 
@@ -177,8 +178,8 @@ custom_run_verify =\
     export CORE_VERILOG_PATH=$(TARGET_PATH)/mgmt_core_wrapper/verilog &&\
     export CARAVEL_VERILOG_PATH=$(TARGET_PATH)/caravel/verilog &&\
     export MCW_ROOT=$(MCW_ROOT) &&\
-	export GCC_PREFIX=riscv64-unknown-elf &&\
-	export GCC_PATH=/package/riscv-gnu-toolchain/bin/ &&\
+	export GCC_PREFIX=riscv32-unknown-elf &&\
+	export GCC_PATH=/opt/riscv32/bin/ &&\
 	export USER_PROJECT_VERILOG=$(PWD)/verilog &&\
     cd verilog/dv/$* && export SIM=${SIM} && make
 
@@ -208,6 +209,10 @@ $(purdue-dv-targets-rtl): purdue-verify-%-rtl: zicsr-fix
 $(dv-targets-gl): SIM=GL
 $(dv-targets-gl): verify-%-gl: $(dv_base_dependencies)
 	$(docker_run_verify)
+
+$(purdue-dv-targets-gl): SIM=GL
+$(purdue-dv-targets-gl): purdue-verify-%-gl: zicsr-fix
+	$(custom_run_verify)
 
 $(dv-targets-gl-sdf): SIM=GL_SDF
 $(dv-targets-gl-sdf): verify-%-gl-sdf: $(dv_base_dependencies)
@@ -489,7 +494,6 @@ bus-wrap-generate:
 	cd $(PWD)/verilog/rtl &&\
 	make generate
 
-# Setup SRAM IP (don't need to run)
 .PHONY: sram-setup
 sram-setup:
 	pip install ipmgr &&\

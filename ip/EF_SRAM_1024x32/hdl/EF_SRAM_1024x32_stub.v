@@ -25,6 +25,7 @@
 //  If you have a separate agreement with Efabless pertaining to the use of this software
 //  then that agreement shall control.
 
+/// sta-blackbox
 module EF_SRAM_1024x32_macro (DO, ScanOutCC, AD, BEN, CLKin, DI, EN, R_WB, ScanInCC, ScanInDL, ScanInDR, SM, TM, WLBI, WLOFF, vgnd, vnb, vpb, vpwra, vpwrac, vpwrm, vpwrp, vpwrpc);
     output [31:0] DO;
     output ScanOutCC;

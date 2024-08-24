@@ -27,7 +27,7 @@ module wishbone_decoder #(
 
     //muxxing signals that go to manager
     input logic [NUM_TEAMS + 3:0]       wbs_ack_i_periph, 
-    input logic [NUM_TEAMS + 3:0][31:0] wbs_dat_i_periph, 
+    input logic [(32 * (NUM_TEAMS + 1)) - 1:0] wbs_dat_i_periph, //flat signal
 
     output logic                        wbs_ack_o_m,
     output logic                 [31:0] wbs_dat_o_m,
@@ -43,10 +43,27 @@ module wishbone_decoder #(
     output logic [NUM_TEAMS + 3:0]      wbs_cyc_o_periph,
     output logic [NUM_TEAMS + 3:0]      wbs_stb_o_periph, 
     output logic [NUM_TEAMS + 3:0]      wbs_we_o_periph, 
-    output logic [NUM_TEAMS + 3:0][31:0]wbs_adr_o_periph, 
-    output logic [NUM_TEAMS + 3:0][31:0]wbs_dat_o_periph,
-    output logic [NUM_TEAMS + 3:0][3:0] wbs_sel_o_periph 
+    output logic [(32 * (NUM_TEAMS + 1)) - 1:0] wbs_adr_o_periph, //flat signal
+    output logic [(32 * (NUM_TEAMS + 1)) - 1:0] wbs_dat_o_periph, //flat signal
+    output logic [(4 * (NUM_TEAMS + 1)) - 1:0] wbs_sel_o_periph  //flat signal
 );
+
+logic [31:0] wbs_adr_o_periph_2D [NUM_TEAMS: 0];
+logic [31:0] wbs_dat_o_periph_2D [NUM_TEAMS: 0];
+logic [3:0]  wbs_sel_o_periph_2D [NUM_TEAMS: 0];
+logic [31:0] wbs_dat_i_periph_2D [NUM_TEAMS: 0];
+
+// Flattening / Unflattening of port signals
+integer i;
+always @* begin
+    for (i = 0; i <= NUM_TEAMS; i = i + 1) begin
+        wbs_adr_o_periph[i*32 +: 32] = wbs_adr_o_periph_2D[i];
+        wbs_dat_o_periph[i*32 +: 32] = wbs_dat_o_periph_2D[i];
+        wbs_sel_o_periph[i*4 +: 4] = wbs_sel_o_periph_2D[i];
+
+        wbs_dat_i_periph_2D[i] = wbs_dat_i_periph[i*32 +: 32];
+    end
+end
 
 logic [NUM_TEAMS + 4:0] curr_state;
 logic [NUM_TEAMS + 4:0] next_state;
@@ -73,6 +90,9 @@ end
 assign wbs_ack_o_m = ack_reg;
 assign wbs_dat_o_m = dat_reg;
 
+    integer i2;
+
+
 always @(*) begin
 // always @(curr_state, ack_reg, dat_reg, wbs_cyc_i_m, wbs_stb_i_m, wbs_we_i_m, wbs_adr_i_m, wbs_dat_i_m, wbs_sel_i_m, wbs_dat_i_periph, wbs_adr_i_m[19:6], wbs_dat_i_periph) begin
     //defaults
@@ -83,9 +103,16 @@ always @(*) begin
     wbs_cyc_o_periph = '0;
     wbs_stb_o_periph = '0;
     wbs_we_o_periph  = '0;
-    wbs_adr_o_periph = '0;
-    wbs_dat_o_periph = '0;
-    wbs_sel_o_periph = '0;
+
+    // Below loop basically does: 
+    // wbs_adr_o_periph_2D = '0;
+    // wbs_dat_o_periph_2D = '0;
+    // wbs_sel_o_periph_2D = '0;
+    for (i2 = 0; i2 <= NUM_TEAMS; i2 = i2 + 1) begin
+        wbs_adr_o_periph_2D[i2] = '0;
+        wbs_dat_o_periph_2D[i2] = '0;
+        wbs_sel_o_periph_2D[i2] = '0;
+    end
 
     // wbs_ack_o_m = '0;
     // wbs_dat_o_m = '0;
@@ -97,10 +124,10 @@ always @(*) begin
             wbs_cyc_o_periph[0] = wbs_cyc_i_m;
             wbs_stb_o_periph[0] = wbs_stb_i_m;
             wbs_we_o_periph[0]  = wbs_we_i_m;
-            wbs_adr_o_periph[0] = wbs_adr_i_m;
-            wbs_dat_o_periph[0] = wbs_dat_i_m;
-            wbs_sel_o_periph[0] = wbs_sel_i_m;
-            next_dat_reg        = wbs_dat_i_periph[0]; 
+            wbs_adr_o_periph_2D[0] = wbs_adr_i_m;
+            wbs_dat_o_periph_2D[0] = wbs_dat_i_m;
+            wbs_sel_o_periph_2D[0] = wbs_sel_i_m;
+            next_dat_reg        = wbs_dat_i_periph_2D[0]; 
             next_ack_reg        = 1'b1;           
         end
         else if(curr_state[state_idx]) begin
@@ -113,10 +140,10 @@ always @(*) begin
                         wbs_cyc_o_periph[2] = wbs_cyc_i_m;
                         wbs_stb_o_periph[2] = wbs_stb_i_m;
                         wbs_we_o_periph[2]  = wbs_we_i_m;
-                        wbs_adr_o_periph[2] = wbs_adr_i_m;
-                        wbs_dat_o_periph[2] = wbs_dat_i_m;
-                        wbs_sel_o_periph[2] = wbs_sel_i_m;
-                        next_dat_reg        = wbs_dat_i_periph[2];
+                        wbs_adr_o_periph_2D[2] = wbs_adr_i_m;
+                        wbs_dat_o_periph_2D[2] = wbs_dat_i_m;
+                        wbs_sel_o_periph_2D[2] = wbs_sel_i_m;
+                        next_dat_reg        = wbs_dat_i_periph_2D[2];
                         next_ack_reg        = 1'b1;
                     end
                     32'h3200????: begin //GPIO address space
@@ -125,10 +152,10 @@ always @(*) begin
                         wbs_cyc_o_periph[1] = wbs_cyc_i_m;
                         wbs_stb_o_periph[1] = wbs_stb_i_m;
                         wbs_we_o_periph[1]  = wbs_we_i_m;
-                        wbs_adr_o_periph[1] = wbs_adr_i_m;
-                        wbs_dat_o_periph[1] = wbs_dat_i_m;
-                        wbs_sel_o_periph[1] = wbs_sel_i_m;
-                        next_dat_reg        = wbs_dat_i_periph[1];
+                        wbs_adr_o_periph_2D[1] = wbs_adr_i_m;
+                        wbs_dat_o_periph_2D[1] = wbs_dat_i_m;
+                        wbs_sel_o_periph_2D[1] = wbs_sel_i_m;
+                        next_dat_reg        = wbs_dat_i_periph_2D[1];
                         next_ack_reg        = 1'b1;
                     end
                     32'h3300????: begin //SRAM address space
@@ -137,10 +164,10 @@ always @(*) begin
                         wbs_cyc_o_periph[0] = wbs_cyc_i_m;
                         wbs_stb_o_periph[0] = wbs_stb_i_m;
                         wbs_we_o_periph[0]  = wbs_we_i_m;
-                        wbs_adr_o_periph[0] = wbs_adr_i_m;
-                        wbs_dat_o_periph[0] = wbs_dat_i_m;
-                        wbs_sel_o_periph[0] = wbs_sel_i_m;
-                        next_dat_reg        = wbs_dat_i_periph[0];
+                        wbs_adr_o_periph_2D[0] = wbs_adr_i_m;
+                        wbs_dat_o_periph_2D[0] = wbs_dat_i_m;
+                        wbs_sel_o_periph_2D[0] = wbs_sel_i_m;
+                        next_dat_reg        = wbs_dat_i_periph_2D[0];
                         // next_ack_reg        = 1'b1;
                     end
                     32'h30??????: begin //user project address space
@@ -149,10 +176,10 @@ always @(*) begin
                         wbs_cyc_o_periph[3 + wbs_adr_i_m[19:16]] = wbs_cyc_i_m;
                         wbs_stb_o_periph[3 + wbs_adr_i_m[19:16]] = wbs_stb_i_m;
                         wbs_we_o_periph[3 + wbs_adr_i_m[19:16]]  = wbs_we_i_m;
-                        wbs_adr_o_periph[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_adr_i_m;
-                        wbs_dat_o_periph[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_dat_i_m;
-                        wbs_sel_o_periph[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_sel_i_m;
-                        next_dat_reg        = wbs_dat_i_periph[3 + {28'd0, wbs_adr_i_m[19:16]}];
+                        wbs_adr_o_periph_2D[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_adr_i_m;
+                        wbs_dat_o_periph_2D[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_dat_i_m;
+                        wbs_sel_o_periph_2D[3 + {28'd0, wbs_adr_i_m[19:16]}] = wbs_sel_i_m;
+                        next_dat_reg        = wbs_dat_i_periph_2D[3 + {28'd0, wbs_adr_i_m[19:16]}];
                         next_ack_reg        = 1'b1;
                     end
                     default: begin
@@ -164,15 +191,15 @@ always @(*) begin
                 wbs_cyc_o_periph[state_idx - 1] = wbs_cyc_i_m;
                 wbs_stb_o_periph[state_idx - 1] = wbs_stb_i_m;
                 wbs_we_o_periph[state_idx - 1]  = wbs_we_i_m;
-                wbs_adr_o_periph[state_idx - 1] = wbs_adr_i_m;
-                wbs_dat_o_periph[state_idx - 1] = wbs_dat_i_m;
-                wbs_sel_o_periph[state_idx - 1] = wbs_sel_i_m;
+                wbs_adr_o_periph_2D[state_idx - 1] = wbs_adr_i_m;
+                wbs_dat_o_periph_2D[state_idx - 1] = wbs_dat_i_m;
+                wbs_sel_o_periph_2D[state_idx - 1] = wbs_sel_i_m;
 
                 // next_ack_reg = wbs_ack_i_periph[state_idx - 1];
 
                 // wbs_ack_o_m = wbs_ack_i_periph[state_idx - 1];
                 // wbs_ack_o_m = 1'b1;
-                // wbs_dat_o_m = wbs_dat_i_periph[state_idx - 1];
+                // wbs_dat_o_m = wbs_dat_i_periph_2D[state_idx - 1];
 
                 // if(wbs_ack_i_periph[state_idx - 1]) begin
                 next_state = 1;
