@@ -100,20 +100,6 @@ module nebula_ii (
     reg [3:0]          wbs_sel_o_projects [NUM_TEAMS:0];
     wire [3:0]          wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
 
-
-    //Team 2 Outputs
-    assign wbs_ack_i_projects[2]  = 1'b0;
-    assign wbs_dat_i_projects[2]  = 32'b0;
-    assign designs_la_data_out[2] = 128'b0;
-    assign designs_gpio_out[2]    = 38'b0;
-    assign designs_gpio_oeb[2]    = 38'h3FFFFFFFFF;
-    assign arbitrator_adr_i[2]    = 32'b0;
-    assign arbitrator_dat_i[2]    = 32'b0;
-    assign arbitrator_sel_i[2]    = 4'b0;
-    assign arbitrator_we_i[2]     = 1'b0;
-    assign arbitrator_stb_i[2]    = 1'b0;
-    assign arbitrator_cyc_i[2]    = 1'b0;    
-
     // Sample Project Instance
     sample_team_proj_Wrapper sample_team_proj_Wrapper (
     `ifdef USE_POWER_PINS
