@@ -40,7 +40,7 @@
         "dir::../../verilog/gl/team_10_Wrapper.v",
         "dir::../../verilog/gl/team_11_Wrapper.v",
         "dir::../../verilog/gl/team_12_Wrapper.v",
-        "dir::../../verilog/gl/SRAM_1024x32.v"
+        "dir::../../verilog/gl/SRAM_1024x32_wb_wrapper.v"
     ],
     "EXTRA_LEFS": [
         "dir::../../lef/sample_team_proj_Wrapper.lef",
@@ -56,7 +56,7 @@
         "dir::../../lef/team_10_Wrapper.lef",
         "dir::../../lef/team_11_Wrapper.lef",
         "dir::../../lef/team_12_Wrapper.lef",
-        "dir::../../lef/SRAM_1024x32.lef"
+        "dir::../../lef/SRAM_1024x32_wb_wrapper.lef"
     ],
     "EXTRA_GDS_FILES": [
         "dir::../../gds/sample_team_proj_Wrapper.gds",
@@ -72,7 +72,7 @@
         "dir::../../gds/team_10_Wrapper.gds",
         "dir::../../gds/team_11_Wrapper.gds",
         "dir::../../gds/team_12_Wrapper.gds",
-        "dir::../../gds/SRAM_1024x32.gds"
+        "dir::../../gds/SRAM_1024x32_wb_wrapper.gds"
     ],
     "EXTRA_LIBS": [
         "dir::../../lib/sample_team_proj_Wrapper.lib",
@@ -88,7 +88,7 @@
         "dir::../../lib/team_10_Wrapper.lib",
         "dir::../../lib/team_11_Wrapper.lib",
         "dir::../../lib/team_12_Wrapper.lib",
-        "dir::../../lib/SRAM_1024x32.lib"
+        "dir::../../lib/SRAM_1024x32_wb_wrapper.lib"
     ],
     "EXTRA_SPEFS": [
         "sample_team_proj_Wrapper", 
@@ -143,10 +143,10 @@
         "dir::../../spef/multicorner/team_12_Wrapper.min.spef", 
         "dir::../../spef/multicorner/team_12_Wrapper.nom.spef", 
         "dir::../../spef/multicorner/team_12_Wrapper.max.spef",
-        "SRAM_1024x32", 
-        "dir::../../spef/multicorner/SRAM_1024x32.min.spef", 
-        "dir::../../spef/multicorner/SRAM_1024x32.nom.spef", 
-        "dir::../../spef/multicorner/SRAM_1024x32.max.spef"
+        "SRAM_1024x32_wb_wrapper", 
+        "dir::../../spef/multicorner/SRAM_1024x32_wb_wrapper.min.spef", 
+        "dir::../../spef/multicorner/SRAM_1024x32_wb_wrapper.nom.spef", 
+        "dir::../../spef/multicorner/SRAM_1024x32_wb_wrapper.max.spef"
     ],
     "BASE_SDC_FILE": "dir::base_user_project_wrapper.sdc",
     "IO_SYNC": 0,

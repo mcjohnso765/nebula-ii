@@ -130,7 +130,6 @@ ifeq ($(OPENLANE2_ROOT),)
 endif
 
 # Add quotations to command if not running in nanoHUB
-# Remove quotations to command if running in nanoHUB
 openlane_cmd = \
 	"openlane \
 	--run-tag $(OPENLANE_RUN_TAG) \
@@ -147,9 +146,9 @@ $(designs) : % : ./%/config.json
 	mkdir -p ./$*/runs/$(OPENLANE_RUN_TAG) 
 	rm -rf ./$*/runs/$*
 	ln -s $$(realpath ./$*/runs/$(OPENLANE_RUN_TAG)) ./$*/runs/$*
+# $(openlane_cmd)
 	nix-shell --run $(openlane_cmd) --pure $(OPENLANE2_ROOT)/shell.nix
-#If not in nanoHUB, run this: nix-shell --run $(openlane_cmd) --pure $(OPENLANE2_ROOT)/shell.nix
-#If in nanoHUB, run this: $(openlane_cmd)
+#If not in nanoHUB, run this instead: nix-shell --run $(openlane_cmd) --pure $(OPENLANE2_ROOT)/shell.nix
 #https://github.com/efabless/caravel_user_project_ol2/blob/main/openlane/Makefile
 	@mkdir -p $(PROJECT_ROOT)/signoff/$*/
 	@cp $(PROJECT_ROOT)/openlane/$*/runs/$*/final/*.csv $(PROJECT_ROOT)/signoff/$*/
