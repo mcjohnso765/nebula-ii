@@ -544,3 +544,6 @@ sv2v:
 	@mkdir -p $(VSRC)
 	@sv2v --write=$(VSRC)/tippy_top.v $(SRC)/*
 	@echo "Done Conversion"
+
+congestion_gui:
+	nix-shell --run "openroad -exit -no_splash -gui -metrics $(PWD)/openlane/tmp.json" --pure $(OPENLANE2_ROOT)/shell.nix

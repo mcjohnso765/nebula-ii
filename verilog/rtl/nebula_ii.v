@@ -330,7 +330,7 @@ module nebula_ii (
     );
     
     // Team_06 Project Instance
-    team_01_Wrapper team_06_Wrapper (
+    team_06_Wrapper team_06_Wrapper (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground

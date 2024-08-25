@@ -174,6 +174,8 @@
     "GLB_RESIZER_DESIGN_OPTIMIZATIONS": 1,
     "GLB_RESIZER_TIMING_OPTIMIZATIONS": 1,
     "PL_RESIZER_BUFFER_INPUT_PORTS": 0,
+    "GPL_CELL_PADDING": 60,
+    "DPL_CELL_PADDING": 10,
     "FP_PDN_ENABLE_RAILS": 1,
     "GRT_REPAIR_ANTENNAS": 1,
     "RUN_FILL_INSERTION": 1,
@@ -205,6 +207,7 @@
     "FP_PDN_HWIDTH": 3.1,
     "FP_PDN_VSPACING": "expr::(5 * $FP_PDN_CORE_RING_VWIDTH)",
     "FP_PDN_HSPACING": "expr::(5 * $FP_PDN_CORE_RING_HWIDTH)",
+    "FP_CORE_UTIL": 0.2,
     "VDD_NETS": [
         "vccd1",
         "vccd2",
@@ -219,7 +222,7 @@
     ],
     "SYNTH_USE_PG_PINS_DEFINES": "USE_POWER_PINS",
     "pdk::sky130*": {
-        "PL_TARGET_DENSITY": 0.60,
+        "PL_TARGET_DENSITY": 0.25,
         "RT_MAX_LAYER": "met4",
         "DIE_AREA": "0 0 2920 3520",
         "FP_DEF_TEMPLATE": "dir::fixed_dont_change/user_project_wrapper.def"
