@@ -33,9 +33,9 @@ module team_06_Wrapper (
     output wire [31:0] wbs_dat_o,
 
     // Logic Analyzer - 2 pins used here
-    input wire [32:0] la_data_in,
-    output wire [32:0] la_data_out,
-    input wire [32:0] la_oenb,
+    input wire [31:0] la_data_in,
+    output wire [31:0] la_data_out,
+    input wire [31:0] la_oenb,
 
     // GPIOs
     input  wire [37:0] gpio_in, // Breakout Board Pins

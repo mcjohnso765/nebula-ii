@@ -547,3 +547,6 @@ sv2v:
 
 congestion_gui:
 	nix-shell --run "openroad -exit -no_splash -gui -metrics $(PWD)/openlane/tmp.json" --pure $(OPENLANE2_ROOT)/shell.nix
+
+lef_test:
+	nix-shell --run "magic -dnull -noconsole -rcfile /root/.volare/volare/sky130/versions/bdc9412b3e468c102d01b7cf6337be06ec6e9c9a/sky130A/libs.tech/magic/sky130A.magicrc /nix/store/m4202q1n7la2bph83v3h11q6mfrcazx4-python3-3.11.9-env/lib/python3.11/site-packages/openlane/scripts/magic/wrapper.tcl" --pure $(OPENLANE2_ROOT)/shell.nix
