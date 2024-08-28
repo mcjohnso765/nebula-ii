@@ -127,7 +127,7 @@ simenv-cocotb:
 setup: check_dependencies install check-env install_mcw openlane pdk-with-volare setup-timing-scripts setup-cocotb precheck
 
 .PHONY: purdue-setup
-purdue-setup: check_dependencies install check-env install_mcw pdk-with-volare bus-wrap-setup sram-setup
+purdue-setup: check_dependencies install check-env install_mcw pdk-with-volare bus-wrap-setup
 
 # Openlane
 blocks=$(shell cd openlane && find * -maxdepth 0 -type d)
