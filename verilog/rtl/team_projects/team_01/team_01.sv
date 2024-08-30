@@ -7,20 +7,25 @@
 `default_nettype none
 
 module team_01 (
+    `ifdef USE_POWER_PINS
+        inout vccd1,	// User area 1 1.8V supply
+        inout vssd1,	// User area 1 digital ground
+    `endif
+
     // HW
     input logic clk, nrst,
     
     input logic en, //This signal is an enable signal for your chip. Your design should disable if this is low.
 
     // Logic Analyzer - Grant access to all 128 LA
-    input wire [31:0] la_data_in,
-    output wire [31:0] la_data_out,
-    input wire [31:0] la_oenb,
+    // input wire [31:0] la_data_in,
+    // output wire [31:0] la_data_out,
+    // input wire [31:0] la_oenb,
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
     output wire [33:0] gpio_out, // Breakout Board Pins
-    output wire [33:0] gpio_oeb, // Active Low Output Enable
+    // output wire [33:0] gpio_oeb, // Active Low Output Enable
 
     //input from wishbone interconnect
     input logic [31:0] DAT_I,
@@ -44,7 +49,6 @@ module team_01 (
     
 
     // All outputs must have a value even if not used
-    assign la_data_out = 32'b0;
     // assign gpio_out = 34'b0; //Inputs, but set low anyways
     // assign gpio_oeb = '1;//All 1's inputs
 
@@ -102,17 +106,8 @@ module team_01 (
    .cols(gpio_out[19:16])
    );
 
-    assign gpio_oeb [1] = '0;
-    assign gpio_oeb [2] = '0;
-    assign gpio_oeb [3] = '0;
-    assign gpio_oeb [11:4] = '0;
-    assign gpio_oeb [15:12] = 4'b1111;
-    assign gpio_oeb [19:16] = '0;
-
-    assign gpio_oeb [33:20] = '1;
     assign gpio_out [33:20] = '0;
     assign gpio_out [15:12] = '0;
-    assign gpio_oeb[0] = 1;
     assign gpio_out[0] = 0;
 
 

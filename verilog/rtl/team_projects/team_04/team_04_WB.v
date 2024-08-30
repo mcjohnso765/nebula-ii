@@ -27,10 +27,14 @@
 // `include			"wb_wrapper.vh"
 
 module team_04_WB (
+	`ifdef USE_POWER_PINS
+		inout vccd1,	// User area 1 1.8V supply
+		inout vssd1,	// User area 1 digital ground
+	`endif
 	`WB_SLAVE_PORTS,
-	input	wire	[32-1:0]	la_data_in,
-	output	wire	[32-1:0]	la_data_out,
-	input	wire	[32-1:0]	la_oenb,
+	// input	wire	[32-1:0]	la_data_in,
+	// output	wire	[32-1:0]	la_data_out,
+	// input	wire	[32-1:0]	la_oenb,
 	input	wire	[34-1:0]	gpio_in,
 	output	wire	[34-1:0]	gpio_out,
 	output	wire	[34-1:0]	gpio_oeb,
@@ -41,14 +45,14 @@ module team_04_WB (
 	output	wire	[1-1:0]	STB_O,
 	output	wire	[1-1:0]	CYC_O,
 	input	wire	[32-1:0]	DAT_I,
-	input	wire	[1-1:0]	ACK_I
+	input	wire	[1-1:0]	ACK_I,
+	input   wire                nrst
 );
 
 	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30040000;
 	localparam	ADDR_START_VAL_REG_OFFSET = `WB_AW'h30040004;
 	localparam	MEM_SIZE_REG_REG_OFFSET = `WB_AW'h30040008;
 	wire		clk = clk_i;
-	wire		nrst = (~rst_i);
 
 
 	`WB_CTRL_SIGNALS
@@ -73,14 +77,18 @@ module team_04_WB (
 	`WB_REG(MEM_SIZE_REG_REG, 0, 32)
 
 	team_04 instance_to_wrap (
+		`ifdef USE_POWER_PINS
+                .vccd1(vccd1),	// User area 1 1.8V power
+                .vssd1(vssd1),	// User area 1 digital ground
+        `endif
 		.clk(clk),
 		.nrst(nrst),
 		.en(en),
 		.mem_adr_start(mem_adr_start),
 		.memory_size(memory_size),
-		.la_data_in(la_data_in),
-		.la_data_out(la_data_out),
-		.la_oenb(la_oenb),
+		// .la_data_in(la_data_in),
+		// .la_data_out(la_data_out),
+		// .la_oenb(la_oenb),
 		.gpio_in(gpio_in),
 		.gpio_out(gpio_out),
 		.gpio_oeb(gpio_oeb),

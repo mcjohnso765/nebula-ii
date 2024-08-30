@@ -33,7 +33,8 @@ module sample_team_proj_WB (
 	input	wire	[32-1:0]	la_oenb,
 	input	wire	[34-1:0]	gpio_in,
 	output	wire	[34-1:0]	gpio_out,
-	output	wire	[34-1:0]	gpio_oeb
+	output	wire	[34-1:0]	gpio_oeb,
+	input   wire                nrst
 );
 
 	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30000000;
@@ -43,7 +44,6 @@ module sample_team_proj_WB (
 	localparam	RIS_REG_OFFSET = `WB_AW'h3000FF08;
 	localparam	IC_REG_OFFSET = `WB_AW'h3000FF0C;
 	wire		clk = clk_i;
-	wire		nrst = (~rst_i);
 
 
 	`WB_CTRL_SIGNALS

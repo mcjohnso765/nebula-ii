@@ -7,20 +7,24 @@
 `default_nettype none
 
 module team_05 (
+    `ifdef USE_POWER_PINS
+        inout vccd1,	// User area 1 1.8V supply
+        inout vssd1,	// User area 1 digital ground
+    `endif
     // HW
     input logic clk, nrst,
     
     input logic en, //This signal is an enable signal for your chip. Your design should disable if this is low.
 
     // Logic Analyzer - Grant access to all 128 LA
-    input logic [31:0] la_data_in,
-    output logic  [31:0] la_data_out,
-    input logic [31:0] la_oenb,
+    // input logic [31:0] la_data_in,
+    // output logic  [31:0] la_data_out,
+    // input logic [31:0] la_oenb,
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  logic [33:0] gpio_in, // Breakout Board Pins
     output logic [33:0] gpio_out, // Breakout Board Pins
-    output logic [33:0] gpio_oeb, // Active Low Output Enable
+    // output logic [33:0] gpio_oeb, // Active Low Output Enable
     
     /*
     * Add other I/O ports that you wish to interface with the
@@ -41,13 +45,7 @@ module team_05 (
     output logic        CYC_O
 );
 
-    // All outputs must have a value even if not used
-    assign la_data_out = 32'b0;
     assign gpio_out = {gpio_in[33:30], 15'b0, keypad_out, lcd_data, lcd_en, lcd_rs, lcd_rw}; //Inputs, but set low anyways
-    assign gpio_oeb = '1;//All 1's inputs
-    /*
-    * Place code and sub-module instantiations here.
-    */
 
     logic [31:0] CPU_DAT_I;
     logic [31:0] ADR_I;

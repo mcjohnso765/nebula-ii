@@ -42,6 +42,9 @@ module nebula_ii (
     // Replace sample project with your design for testing
     localparam NUM_TEAMS = 12;
 
+    //Synchronous rst for all the teams
+    wire teams_nrst;
+
     // LA outputs from all designs
     wire [31:0] designs_la_data_out [NUM_TEAMS:0];
 
@@ -106,6 +109,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -144,6 +148,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -182,6 +187,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -221,6 +227,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -259,6 +266,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -297,6 +305,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -335,6 +344,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -373,6 +383,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -411,6 +422,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -449,6 +461,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -487,6 +500,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -526,6 +540,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -564,6 +579,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
+        .nrst(nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -804,6 +820,46 @@ module nebula_ii (
         .wbs_ack_o(wbs_ack_i_sram),
         .wbs_dat_o(wbs_dat_i_sram)
     );
+
+    async_reset_sync designs_sync_rst (
+    `ifdef USE_POWER_PINS
+        .vccd1(vccd1),	// User area 1 1.8V power
+        .vssd1(vssd1),	// User area 1 digital ground
+    `endif
+        .clk(wb_clk_i),
+        .asyncrst_n(~wb_rst_i),
+        .n_rst(teams_nrst)
+    );
+endmodule
+
+// Async assert, sync deassert nrst
+// https://electronics.stackexchange.com/questions/21696/reset-synchronous-vs-asynchronous
+// When this signal reaches any of the design FFs, they will all deassert the nrst after the second clock edge
+module async_reset_sync (
+
+`ifdef USE_POWER_PINS
+    inout vccd1,	// User area 1 1.8V supply
+    inout vssd1,	// User area 1 digital ground
+`endif
+
+    input clk,
+    input asyncrst_n,
+    output reg n_rst
+);
+    reg rff;
+    wire next_n_rst;
+    assign next_n_rst = rff;
+
+    always @ (posedge clk or negedge asyncrst_n) begin
+        if(!asyncrst_n) begin
+            n_rst <= 1'b0;
+            rff <= 1'b0;
+        end 
+        else begin
+            n_rst <= next_n_rst;
+            rff <= 1'b1;
+        end
+    end
 endmodule
 
 `default_nettype wire

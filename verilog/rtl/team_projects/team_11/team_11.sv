@@ -4,15 +4,19 @@
 `default_nettype none
 
 module team_11 (
+    `ifdef USE_POWER_PINS
+        inout vccd1,	// User area 1 1.8V supply
+        inout vssd1,	// User area 1 digital ground
+    `endif
     // HW
     input logic clk, nrst,
     
     input logic en, //This signal is an enable signal for your chip. Your design should disable if this is low.
 
     // Logic Analyzer - Grant access to all 128 LA
-    input wire [31:0] la_data_in,
-    output wire [31:0] la_data_out,
-    input wire [31:0] la_oenb,
+    // input wire [31:0] la_data_in,
+    // output wire [31:0] la_data_out,
+    // input wire [31:0] la_oenb,
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [33:0] gpio_in, // Breakout Board Pins
@@ -27,7 +31,6 @@ module team_11 (
 );
 
     // Assign LA data out to 0
-    assign la_data_out = 32'b0;
     
     // Assign outputs of input pins to 0
     assign gpio_out[33:30] = '0;

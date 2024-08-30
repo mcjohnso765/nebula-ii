@@ -1,0 +1,1113 @@
+VERSION 5.7 ;
+  NOWIREEXTENSIONATPIN ON ;
+  DIVIDERCHAR "/" ;
+  BUSBITCHARS "[]" ;
+MACRO team_10
+  CLASS BLOCK ;
+  FOREIGN team_10 ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 200.000 BY 550.000 ;
+  PIN clk
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.852000 ;
+    ANTENNADIFFAREA 0.434700 ;
+    PORT
+      LAYER met3 ;
+        RECT 0.000 462.440 4.000 463.040 ;
+    END
+  END clk
+  PIN en
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.196500 ;
+    ANTENNADIFFAREA 0.434700 ;
+    PORT
+      LAYER met2 ;
+        RECT 122.450 0.000 122.730 4.000 ;
+    END
+  END en
+  PIN gpio_in[0]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 0.090 0.000 0.370 4.000 ;
+    END
+  END gpio_in[0]
+  PIN gpio_in[10]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 3.310 0.000 3.590 4.000 ;
+    END
+  END gpio_in[10]
+  PIN gpio_in[11]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 6.530 0.000 6.810 4.000 ;
+    END
+  END gpio_in[11]
+  PIN gpio_in[12]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 9.750 0.000 10.030 4.000 ;
+    END
+  END gpio_in[12]
+  PIN gpio_in[13]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 12.970 0.000 13.250 4.000 ;
+    END
+  END gpio_in[13]
+  PIN gpio_in[14]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 16.190 0.000 16.470 4.000 ;
+    END
+  END gpio_in[14]
+  PIN gpio_in[15]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 19.410 0.000 19.690 4.000 ;
+    END
+  END gpio_in[15]
+  PIN gpio_in[16]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 22.630 0.000 22.910 4.000 ;
+    END
+  END gpio_in[16]
+  PIN gpio_in[17]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 25.850 0.000 26.130 4.000 ;
+    END
+  END gpio_in[17]
+  PIN gpio_in[18]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 29.070 0.000 29.350 4.000 ;
+    END
+  END gpio_in[18]
+  PIN gpio_in[19]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 32.290 0.000 32.570 4.000 ;
+    END
+  END gpio_in[19]
+  PIN gpio_in[1]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 35.510 0.000 35.790 4.000 ;
+    END
+  END gpio_in[1]
+  PIN gpio_in[20]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.159000 ;
+    ANTENNADIFFAREA 0.434700 ;
+    PORT
+      LAYER met2 ;
+        RECT 41.950 0.000 42.230 4.000 ;
+    END
+  END gpio_in[20]
+  PIN gpio_in[21]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.213000 ;
+    ANTENNADIFFAREA 0.434700 ;
+    PORT
+      LAYER met2 ;
+        RECT 103.130 546.000 103.410 550.000 ;
+    END
+  END gpio_in[21]
+  PIN gpio_in[22]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.213000 ;
+    ANTENNADIFFAREA 0.434700 ;
+    PORT
+      LAYER met2 ;
+        RECT 119.230 546.000 119.510 550.000 ;
+    END
+  END gpio_in[22]
+  PIN gpio_in[23]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.196500 ;
+    ANTENNADIFFAREA 0.434700 ;
+    PORT
+      LAYER met2 ;
+        RECT 96.690 546.000 96.970 550.000 ;
+    END
+  END gpio_in[23]
+  PIN gpio_in[24]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.213000 ;
+    ANTENNADIFFAREA 0.434700 ;
+    PORT
+      LAYER met2 ;
+        RECT 99.910 546.000 100.190 550.000 ;
+    END
+  END gpio_in[24]
+  PIN gpio_in[25]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 38.730 0.000 39.010 4.000 ;
+    END
+  END gpio_in[25]
+  PIN gpio_in[26]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 45.170 0.000 45.450 4.000 ;
+    END
+  END gpio_in[26]
+  PIN gpio_in[27]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 48.390 0.000 48.670 4.000 ;
+    END
+  END gpio_in[27]
+  PIN gpio_in[28]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 51.610 0.000 51.890 4.000 ;
+    END
+  END gpio_in[28]
+  PIN gpio_in[29]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 54.830 0.000 55.110 4.000 ;
+    END
+  END gpio_in[29]
+  PIN gpio_in[2]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 58.050 0.000 58.330 4.000 ;
+    END
+  END gpio_in[2]
+  PIN gpio_in[30]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 61.270 0.000 61.550 4.000 ;
+    END
+  END gpio_in[30]
+  PIN gpio_in[31]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 64.490 0.000 64.770 4.000 ;
+    END
+  END gpio_in[31]
+  PIN gpio_in[32]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 67.710 0.000 67.990 4.000 ;
+    END
+  END gpio_in[32]
+  PIN gpio_in[33]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.213000 ;
+    ANTENNADIFFAREA 0.434700 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 224.440 200.000 225.040 ;
+    END
+  END gpio_in[33]
+  PIN gpio_in[3]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 70.930 0.000 71.210 4.000 ;
+    END
+  END gpio_in[3]
+  PIN gpio_in[4]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 74.150 0.000 74.430 4.000 ;
+    END
+  END gpio_in[4]
+  PIN gpio_in[5]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 77.370 0.000 77.650 4.000 ;
+    END
+  END gpio_in[5]
+  PIN gpio_in[6]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 80.590 0.000 80.870 4.000 ;
+    END
+  END gpio_in[6]
+  PIN gpio_in[7]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 83.810 0.000 84.090 4.000 ;
+    END
+  END gpio_in[7]
+  PIN gpio_in[8]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 87.030 0.000 87.310 4.000 ;
+    END
+  END gpio_in[8]
+  PIN gpio_in[9]
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER met2 ;
+        RECT 90.250 0.000 90.530 4.000 ;
+    END
+  END gpio_in[9]
+  PIN gpio_oeb[0]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 217.640 200.000 218.240 ;
+    END
+  END gpio_oeb[0]
+  PIN gpio_oeb[10]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 190.070 0.000 190.350 4.000 ;
+    END
+  END gpio_oeb[10]
+  PIN gpio_oeb[11]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 157.870 0.000 158.150 4.000 ;
+    END
+  END gpio_oeb[11]
+  PIN gpio_oeb[12]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 177.190 0.000 177.470 4.000 ;
+    END
+  END gpio_oeb[12]
+  PIN gpio_oeb[13]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 151.430 0.000 151.710 4.000 ;
+    END
+  END gpio_oeb[13]
+  PIN gpio_oeb[14]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 187.040 200.000 187.640 ;
+    END
+  END gpio_oeb[14]
+  PIN gpio_oeb[15]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 190.440 200.000 191.040 ;
+    END
+  END gpio_oeb[15]
+  PIN gpio_oeb[16]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 125.670 0.000 125.950 4.000 ;
+    END
+  END gpio_oeb[16]
+  PIN gpio_oeb[17]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 148.210 0.000 148.490 4.000 ;
+    END
+  END gpio_oeb[17]
+  PIN gpio_oeb[18]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 161.090 0.000 161.370 4.000 ;
+    END
+  END gpio_oeb[18]
+  PIN gpio_oeb[19]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 144.990 0.000 145.270 4.000 ;
+    END
+  END gpio_oeb[19]
+  PIN gpio_oeb[1]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 193.840 200.000 194.440 ;
+    END
+  END gpio_oeb[1]
+  PIN gpio_oeb[20]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 207.440 200.000 208.040 ;
+    END
+  END gpio_oeb[20]
+  PIN gpio_oeb[21]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 214.240 200.000 214.840 ;
+    END
+  END gpio_oeb[21]
+  PIN gpio_oeb[22]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 197.240 200.000 197.840 ;
+    END
+  END gpio_oeb[22]
+  PIN gpio_oeb[23]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 180.240 200.000 180.840 ;
+    END
+  END gpio_oeb[23]
+  PIN gpio_oeb[24]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 210.840 200.000 211.440 ;
+    END
+  END gpio_oeb[24]
+  PIN gpio_oeb[25]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 141.770 0.000 142.050 4.000 ;
+    END
+  END gpio_oeb[25]
+  PIN gpio_oeb[26]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 180.410 0.000 180.690 4.000 ;
+    END
+  END gpio_oeb[26]
+  PIN gpio_oeb[27]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 132.110 0.000 132.390 4.000 ;
+    END
+  END gpio_oeb[27]
+  PIN gpio_oeb[28]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 173.970 0.000 174.250 4.000 ;
+    END
+  END gpio_oeb[28]
+  PIN gpio_oeb[29]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 167.530 0.000 167.810 4.000 ;
+    END
+  END gpio_oeb[29]
+  PIN gpio_oeb[2]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 176.840 200.000 177.440 ;
+    END
+  END gpio_oeb[2]
+  PIN gpio_oeb[30]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 138.550 0.000 138.830 4.000 ;
+    END
+  END gpio_oeb[30]
+  PIN gpio_oeb[31]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 183.630 0.000 183.910 4.000 ;
+    END
+  END gpio_oeb[31]
+  PIN gpio_oeb[32]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 154.650 0.000 154.930 4.000 ;
+    END
+  END gpio_oeb[32]
+  PIN gpio_oeb[33]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 183.640 200.000 184.240 ;
+    END
+  END gpio_oeb[33]
+  PIN gpio_oeb[3]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 173.440 200.000 174.040 ;
+    END
+  END gpio_oeb[3]
+  PIN gpio_oeb[4]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 204.040 200.000 204.640 ;
+    END
+  END gpio_oeb[4]
+  PIN gpio_oeb[5]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 170.040 200.000 170.640 ;
+    END
+  END gpio_oeb[5]
+  PIN gpio_oeb[6]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 170.750 0.000 171.030 4.000 ;
+    END
+  END gpio_oeb[6]
+  PIN gpio_oeb[7]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 164.310 0.000 164.590 4.000 ;
+    END
+  END gpio_oeb[7]
+  PIN gpio_oeb[8]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 186.850 0.000 187.130 4.000 ;
+    END
+  END gpio_oeb[8]
+  PIN gpio_oeb[9]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 128.890 0.000 129.170 4.000 ;
+    END
+  END gpio_oeb[9]
+  PIN gpio_out[0]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 170.750 546.000 171.030 550.000 ;
+    END
+  END gpio_out[0]
+  PIN gpio_out[10]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 299.240 200.000 299.840 ;
+    END
+  END gpio_out[10]
+  PIN gpio_out[11]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 285.640 200.000 286.240 ;
+    END
+  END gpio_out[11]
+  PIN gpio_out[12]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 306.040 200.000 306.640 ;
+    END
+  END gpio_out[12]
+  PIN gpio_out[13]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 241.440 200.000 242.040 ;
+    END
+  END gpio_out[13]
+  PIN gpio_out[14]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 161.090 546.000 161.370 550.000 ;
+    END
+  END gpio_out[14]
+  PIN gpio_out[15]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 128.890 546.000 129.170 550.000 ;
+    END
+  END gpio_out[15]
+  PIN gpio_out[16]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 377.440 200.000 378.040 ;
+    END
+  END gpio_out[16]
+  PIN gpio_out[17]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 0.000 166.640 4.000 167.240 ;
+    END
+  END gpio_out[17]
+  PIN gpio_out[18]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 0.000 156.440 4.000 157.040 ;
+    END
+  END gpio_out[18]
+  PIN gpio_out[19]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 148.210 546.000 148.490 550.000 ;
+    END
+  END gpio_out[19]
+  PIN gpio_out[1]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 151.430 546.000 151.710 550.000 ;
+    END
+  END gpio_out[1]
+  PIN gpio_out[20]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 154.650 546.000 154.930 550.000 ;
+    END
+  END gpio_out[20]
+  PIN gpio_out[21]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 144.990 546.000 145.270 550.000 ;
+    END
+  END gpio_out[21]
+  PIN gpio_out[22]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 157.870 546.000 158.150 550.000 ;
+    END
+  END gpio_out[22]
+  PIN gpio_out[23]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 141.770 546.000 142.050 550.000 ;
+    END
+  END gpio_out[23]
+  PIN gpio_out[24]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 125.670 546.000 125.950 550.000 ;
+    END
+  END gpio_out[24]
+  PIN gpio_out[25]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 380.840 200.000 381.440 ;
+    END
+  END gpio_out[25]
+  PIN gpio_out[26]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 200.640 200.000 201.240 ;
+    END
+  END gpio_out[26]
+  PIN gpio_out[27]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 135.330 546.000 135.610 550.000 ;
+    END
+  END gpio_out[27]
+  PIN gpio_out[28]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 135.330 0.000 135.610 4.000 ;
+    END
+  END gpio_out[28]
+  PIN gpio_out[29]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 116.010 546.000 116.290 550.000 ;
+    END
+  END gpio_out[29]
+  PIN gpio_out[2]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 132.110 546.000 132.390 550.000 ;
+    END
+  END gpio_out[2]
+  PIN gpio_out[30]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 109.570 546.000 109.850 550.000 ;
+    END
+  END gpio_out[30]
+  PIN gpio_out[31]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 112.790 546.000 113.070 550.000 ;
+    END
+  END gpio_out[31]
+  PIN gpio_out[32]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 106.350 546.000 106.630 550.000 ;
+    END
+  END gpio_out[32]
+  PIN gpio_out[33]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 164.310 546.000 164.590 550.000 ;
+    END
+  END gpio_out[33]
+  PIN gpio_out[3]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 138.550 546.000 138.830 550.000 ;
+    END
+  END gpio_out[3]
+  PIN gpio_out[4]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 122.450 546.000 122.730 550.000 ;
+    END
+  END gpio_out[4]
+  PIN gpio_out[5]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met2 ;
+        RECT 167.530 546.000 167.810 550.000 ;
+    END
+  END gpio_out[5]
+  PIN gpio_out[6]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 221.040 200.000 221.640 ;
+    END
+  END gpio_out[6]
+  PIN gpio_out[7]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 302.640 200.000 303.240 ;
+    END
+  END gpio_out[7]
+  PIN gpio_out[8]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 231.240 200.000 231.840 ;
+    END
+  END gpio_out[8]
+  PIN gpio_out[9]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 0.445500 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 234.640 200.000 235.240 ;
+    END
+  END gpio_out[9]
+  PIN nrst
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.196500 ;
+    ANTENNADIFFAREA 0.434700 ;
+    PORT
+      LAYER met3 ;
+        RECT 196.000 78.240 200.000 78.840 ;
+    END
+  END nrst
+  PIN vccd1
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met4 ;
+        RECT 21.040 10.640 22.640 538.800 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 174.640 10.640 176.240 538.800 ;
+    END
+  END vccd1
+  PIN vssd1
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER met4 ;
+        RECT 24.340 10.640 25.940 538.800 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 177.940 10.640 179.540 538.800 ;
+    END
+  END vssd1
+  OBS
+      LAYER nwell ;
+        RECT 5.330 10.795 194.310 538.645 ;
+      LAYER li1 ;
+        RECT 5.520 10.795 194.120 538.645 ;
+      LAYER met1 ;
+        RECT 4.210 10.640 194.420 538.800 ;
+      LAYER met2 ;
+        RECT 4.230 545.720 96.410 546.000 ;
+        RECT 97.250 545.720 99.630 546.000 ;
+        RECT 100.470 545.720 102.850 546.000 ;
+        RECT 103.690 545.720 106.070 546.000 ;
+        RECT 106.910 545.720 109.290 546.000 ;
+        RECT 110.130 545.720 112.510 546.000 ;
+        RECT 113.350 545.720 115.730 546.000 ;
+        RECT 116.570 545.720 118.950 546.000 ;
+        RECT 119.790 545.720 122.170 546.000 ;
+        RECT 123.010 545.720 125.390 546.000 ;
+        RECT 126.230 545.720 128.610 546.000 ;
+        RECT 129.450 545.720 131.830 546.000 ;
+        RECT 132.670 545.720 135.050 546.000 ;
+        RECT 135.890 545.720 138.270 546.000 ;
+        RECT 139.110 545.720 141.490 546.000 ;
+        RECT 142.330 545.720 144.710 546.000 ;
+        RECT 145.550 545.720 147.930 546.000 ;
+        RECT 148.770 545.720 151.150 546.000 ;
+        RECT 151.990 545.720 154.370 546.000 ;
+        RECT 155.210 545.720 157.590 546.000 ;
+        RECT 158.430 545.720 160.810 546.000 ;
+        RECT 161.650 545.720 164.030 546.000 ;
+        RECT 164.870 545.720 167.250 546.000 ;
+        RECT 168.090 545.720 170.470 546.000 ;
+        RECT 171.310 545.720 193.100 546.000 ;
+        RECT 4.230 4.280 193.100 545.720 ;
+        RECT 4.230 4.000 6.250 4.280 ;
+        RECT 7.090 4.000 9.470 4.280 ;
+        RECT 10.310 4.000 12.690 4.280 ;
+        RECT 13.530 4.000 15.910 4.280 ;
+        RECT 16.750 4.000 19.130 4.280 ;
+        RECT 19.970 4.000 22.350 4.280 ;
+        RECT 23.190 4.000 25.570 4.280 ;
+        RECT 26.410 4.000 28.790 4.280 ;
+        RECT 29.630 4.000 32.010 4.280 ;
+        RECT 32.850 4.000 35.230 4.280 ;
+        RECT 36.070 4.000 38.450 4.280 ;
+        RECT 39.290 4.000 41.670 4.280 ;
+        RECT 42.510 4.000 44.890 4.280 ;
+        RECT 45.730 4.000 48.110 4.280 ;
+        RECT 48.950 4.000 51.330 4.280 ;
+        RECT 52.170 4.000 54.550 4.280 ;
+        RECT 55.390 4.000 57.770 4.280 ;
+        RECT 58.610 4.000 60.990 4.280 ;
+        RECT 61.830 4.000 64.210 4.280 ;
+        RECT 65.050 4.000 67.430 4.280 ;
+        RECT 68.270 4.000 70.650 4.280 ;
+        RECT 71.490 4.000 73.870 4.280 ;
+        RECT 74.710 4.000 77.090 4.280 ;
+        RECT 77.930 4.000 80.310 4.280 ;
+        RECT 81.150 4.000 83.530 4.280 ;
+        RECT 84.370 4.000 86.750 4.280 ;
+        RECT 87.590 4.000 89.970 4.280 ;
+        RECT 90.810 4.000 122.170 4.280 ;
+        RECT 123.010 4.000 125.390 4.280 ;
+        RECT 126.230 4.000 128.610 4.280 ;
+        RECT 129.450 4.000 131.830 4.280 ;
+        RECT 132.670 4.000 135.050 4.280 ;
+        RECT 135.890 4.000 138.270 4.280 ;
+        RECT 139.110 4.000 141.490 4.280 ;
+        RECT 142.330 4.000 144.710 4.280 ;
+        RECT 145.550 4.000 147.930 4.280 ;
+        RECT 148.770 4.000 151.150 4.280 ;
+        RECT 151.990 4.000 154.370 4.280 ;
+        RECT 155.210 4.000 157.590 4.280 ;
+        RECT 158.430 4.000 160.810 4.280 ;
+        RECT 161.650 4.000 164.030 4.280 ;
+        RECT 164.870 4.000 167.250 4.280 ;
+        RECT 168.090 4.000 170.470 4.280 ;
+        RECT 171.310 4.000 173.690 4.280 ;
+        RECT 174.530 4.000 176.910 4.280 ;
+        RECT 177.750 4.000 180.130 4.280 ;
+        RECT 180.970 4.000 183.350 4.280 ;
+        RECT 184.190 4.000 186.570 4.280 ;
+        RECT 187.410 4.000 189.790 4.280 ;
+        RECT 190.630 4.000 193.100 4.280 ;
+      LAYER met3 ;
+        RECT 3.990 463.440 196.000 538.725 ;
+        RECT 4.400 462.040 196.000 463.440 ;
+        RECT 3.990 381.840 196.000 462.040 ;
+        RECT 3.990 380.440 195.600 381.840 ;
+        RECT 3.990 378.440 196.000 380.440 ;
+        RECT 3.990 377.040 195.600 378.440 ;
+        RECT 3.990 307.040 196.000 377.040 ;
+        RECT 3.990 305.640 195.600 307.040 ;
+        RECT 3.990 303.640 196.000 305.640 ;
+        RECT 3.990 302.240 195.600 303.640 ;
+        RECT 3.990 300.240 196.000 302.240 ;
+        RECT 3.990 298.840 195.600 300.240 ;
+        RECT 3.990 286.640 196.000 298.840 ;
+        RECT 3.990 285.240 195.600 286.640 ;
+        RECT 3.990 242.440 196.000 285.240 ;
+        RECT 3.990 241.040 195.600 242.440 ;
+        RECT 3.990 235.640 196.000 241.040 ;
+        RECT 3.990 234.240 195.600 235.640 ;
+        RECT 3.990 232.240 196.000 234.240 ;
+        RECT 3.990 230.840 195.600 232.240 ;
+        RECT 3.990 225.440 196.000 230.840 ;
+        RECT 3.990 224.040 195.600 225.440 ;
+        RECT 3.990 222.040 196.000 224.040 ;
+        RECT 3.990 220.640 195.600 222.040 ;
+        RECT 3.990 218.640 196.000 220.640 ;
+        RECT 3.990 217.240 195.600 218.640 ;
+        RECT 3.990 215.240 196.000 217.240 ;
+        RECT 3.990 213.840 195.600 215.240 ;
+        RECT 3.990 211.840 196.000 213.840 ;
+        RECT 3.990 210.440 195.600 211.840 ;
+        RECT 3.990 208.440 196.000 210.440 ;
+        RECT 3.990 207.040 195.600 208.440 ;
+        RECT 3.990 205.040 196.000 207.040 ;
+        RECT 3.990 203.640 195.600 205.040 ;
+        RECT 3.990 201.640 196.000 203.640 ;
+        RECT 3.990 200.240 195.600 201.640 ;
+        RECT 3.990 198.240 196.000 200.240 ;
+        RECT 3.990 196.840 195.600 198.240 ;
+        RECT 3.990 194.840 196.000 196.840 ;
+        RECT 3.990 193.440 195.600 194.840 ;
+        RECT 3.990 191.440 196.000 193.440 ;
+        RECT 3.990 190.040 195.600 191.440 ;
+        RECT 3.990 188.040 196.000 190.040 ;
+        RECT 3.990 186.640 195.600 188.040 ;
+        RECT 3.990 184.640 196.000 186.640 ;
+        RECT 3.990 183.240 195.600 184.640 ;
+        RECT 3.990 181.240 196.000 183.240 ;
+        RECT 3.990 179.840 195.600 181.240 ;
+        RECT 3.990 177.840 196.000 179.840 ;
+        RECT 3.990 176.440 195.600 177.840 ;
+        RECT 3.990 174.440 196.000 176.440 ;
+        RECT 3.990 173.040 195.600 174.440 ;
+        RECT 3.990 171.040 196.000 173.040 ;
+        RECT 3.990 169.640 195.600 171.040 ;
+        RECT 3.990 167.640 196.000 169.640 ;
+        RECT 4.400 166.240 196.000 167.640 ;
+        RECT 3.990 157.440 196.000 166.240 ;
+        RECT 4.400 156.040 196.000 157.440 ;
+        RECT 3.990 79.240 196.000 156.040 ;
+        RECT 3.990 77.840 195.600 79.240 ;
+        RECT 3.990 10.715 196.000 77.840 ;
+      LAYER met4 ;
+        RECT 45.375 165.415 174.240 476.505 ;
+        RECT 176.640 165.415 177.540 476.505 ;
+        RECT 179.940 165.415 184.625 476.505 ;
+  END
+END team_10
+END LIBRARY
+

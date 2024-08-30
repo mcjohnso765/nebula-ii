@@ -1,0 +1,87 @@
+{
+    "DESIGN_NAME": "team_06",
+    "DESIGN_IS_CORE": 0,
+    "VERILOG_FILES": [
+        "dir::../../verilog/rtl/wb_wrapper.vh",
+        "dir::../../verilog/rtl/team_projects/team_06/team_06.sv",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/main_file.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/BorderGen.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/body_control.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/DirectionLogic.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/syncEdge.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/apple_check_wall_mode.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/apple_gen_all.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/apple_luck_selector.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/apple_wrapper.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/assembly.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/body_wrapper.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/clock.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/collisionDetector.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/collisionLogic.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/collisionLogic_wall.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/gameMode.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/gameState.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/PWM.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/game_speed_selector.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/lcd1602.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/rand_wall_mode.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/random_num_gen.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/random_num_gen_wall_mode.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/two_apple_mode.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/wall_wrapper.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/fsm.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/sound.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/image_generator.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/clk_enable.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/counter.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/sync.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/edgeDetect.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/fsm_control.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/frame_tracker.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/pixel_updater.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/display_wrapper.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/display.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/update_controller.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/command_lut2.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/synchronizer.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/edge_detect.v",
+        "dir::../../verilog/rtl/team_projects/team_06/converted_submodules/clk_div.v"
+    ],
+    "CLOCK_PERIOD": 100,
+    "CLOCK_PORT": "clk",
+    "FP_CORE_UTIL": 9,
+    "PL_TARGET_DENSITY": 0.65,
+    "RUN_HEURISTIC_DIODE_INSERTION": true,
+    "GRT_ANTENNA_ITERS" : 30,
+    "GRT_ANTENNA_MARGIN" : 15,
+    "VDD_NETS": "vccd1",
+    "GND_NETS": "vssd1",
+    "FP_PDN_CORE_RING": 0,
+    "RT_MAX_LAYER": "met4",
+    "FP_SIZING": "absolute",
+    "DIE_AREA": "0 0 305 1000",
+    "pdk::sky130*": {
+        "scl::sky130_fd_sc_hd": {
+            "CLOCK_PERIOD": 100
+        },
+        "scl::sky130_fd_sc_hdll": {
+            "CLOCK_PERIOD": 10
+        },
+        "scl::sky130_fd_sc_hs": {
+            "CLOCK_PERIOD": 8
+        },
+        "scl::sky130_fd_sc_ls": {
+            "CLOCK_PERIOD": 10,
+            "SYNTH_MAX_FANOUT": 5
+        },
+        "scl::sky130_fd_sc_ms": {
+            "CLOCK_PERIOD": 10
+        }
+    },
+    "pdk::gf180mcu*": {
+        "CLOCK_PERIOD": 24.0,
+        "FP_CORE_UTIL": 30,
+        "SYNTH_MAX_FANOUT": 4,
+        "PL_TARGET_DENSITY": 0.5
+    }
+}
