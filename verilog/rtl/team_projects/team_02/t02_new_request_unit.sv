@@ -1,5 +1,6 @@
 module t02_new_request_unit (
     input logic CLK, nRST,
+    input logic enable,
     input logic [31:0] DataAddress, InstrAddress,
     input logic [31:0] DatatoWrite,
     output logic iready, dready,
@@ -137,5 +138,9 @@ always_comb begin
         end
         default: next_state = state;
     endcase
+
+    if(enable == 1'b0) begin
+        next_state = IDLE;
+    end
 end
 endmodule

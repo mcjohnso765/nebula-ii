@@ -109,8 +109,7 @@ endif
 %.vcd: %.vvp
 
 ifeq ($(SIM),RTL)
-	echo "BIP"
-	vvp -l out.log -v $<
+	vvp  $<
 	 mv $@ RTL-$@
 endif
 ifeq ($(SIM),GL)

@@ -59,10 +59,10 @@ t02_writeToReg write(.cuOP(cuOP), .memload(memload), .aluOut(aluOut), .imm(immOu
 t02_signExtender signex(.imm(imm), .immOut(immOut), .CUOp(cuOP));
 
 t02_new_request_unit ru(.CLK(clk), .nRST(nrst), .DataAddress(aluOut), .InstrAddress(pc), .DatatoWrite(regData2),
+.enable(enable),
 .iready(i_ready), .dready(d_ready), 
 .FetchedData(memload), .FetchedInstr(instruction), 
-.cuOP(cuOP), .
-busy_o(busy_o), 
+.cuOP(cuOP), .busy_o(busy_o), 
 .cpu_dat_o(ramload), 
 .write_i(Wen), .read_i(Ren),
 .adr_i(ramaddr), .cpu_data_i(ramstore),
