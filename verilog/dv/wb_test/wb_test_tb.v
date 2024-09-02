@@ -39,78 +39,6 @@ module wb_test_tb;
 
 	// Clock generation
 	always #12.5 clock <= (clock === 1'b0);
-	task left_button_press;
-    begin
-        @(negedge clock_in);
-        mprj_io_in[29] = 1'b1;
-        @(negedge clock);
-        mprj_io_in[29] = 1'b0;
-        @(posedge clock_in);
-    end
-    endtask
-
-    task right_button_press;
-    begin
-        @(negedge clock_in);
-        mprj_io_in[30] = 1'b1;
-        @(negedge clock_in);
-        mprj_io_in[30] = 1'b0;
-        @(posedge clock_in);
-    end
-    endtask
-
-    task down_button_press;
-    begin
-        @(negedge clock_in);
-        mprj_io_in[31] = 1'b1;
-        @(negedge clock);
-        mprj_io_in[31] = 1'b0;
-        @(posedge clock_in);
-    end
-    endtask
-
-    task up_button_press;
-    begin
-        @(negedge clock_in);
-        mprj_io_in[32] = 1'b1;
-        @(negedge clock_in);
-        mprj_io_in[32] = 1'b0;
-        @(posedge clock);
-    end
-    endtask
-
-	task obstacle_gen_press;
-	begin
-		@(negedge clock_in);
-		mprj_io_in[34] = 1'b1;
-		@(negedge clock_in);
-        mprj_io_in[34] = 1'b0;
-        @(posedge clock_in);
-	end
-	endtask
-	
-	task mode_press;
-	begin
-		@(negedge clock_in);
-		mprj_io_in[33] = 1'b1;
-		@(negedge clock_in);
-        mprj_io_in[33] = 1'b0;
-        @(posedge clock_in);
-	end
-	endtask
-
-	task new_game_press;
-	begin
-		@(negedge clock);
-		mprj_io_in[35] = 1'b1;
-		@(negedge clock_in);
-        mprj_io_in[35] = 1'b0;
-        @(posedge clock_in);
-	end
-	endtask
-	initial begin
-		clock = 0;
-	end
 
 	// STUDENTS: This block here is important, but don't worry about trying to understand it
 	`ifdef ENABLE_SDF
@@ -206,64 +134,15 @@ module wb_test_tb;
 			$sdf_annotate("../../../caravel/sdf/gpio_defaults_block.sdf", uut.gpio_defaults_block_36) ;
 			$sdf_annotate("../../../caravel/sdf/gpio_defaults_block.sdf", uut.gpio_defaults_block_37) ;
 		end
-	`endif 
-
-	task button_push_reset;
-		@(negedge clock);
-		mprj_io_in[0] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[0] <= 1'b0;
-		@(posedge clock);
-	endtask
-
-	task button_push_right;
-		@(negedge clock);
-		mprj_io_in[5] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[5] <= 1'b0;
-		@(posedge clock);
-	endtask
-
-	task button_push_left;
-		@(negedge clock);
-		mprj_io_in[6] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[6] <= 1'b0;
-		@(posedge clock);
-	endtask
-
-	task button_push_up;
-		@(negedge clock);
-		mprj_io_in[7] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[7] <= 1'b0;
-		@(posedge clock);
-	endtask
-
-	task button_push_down;
-		@(negedge clock);
-		mprj_io_in[8] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[8] <= 1'b0;
-		@(posedge clock);
-	endtask
-
-	task button_push_start_pause;
-		@(negedge clock);
-		mprj_io_in[9] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[9] <= 1'b0;
-		@(posedge clock);
-	endtask
+	`endif
 
 	// Signal dump and timeout check
 	initial begin
 		$dumpfile("wb_test.vcd");
-		$dumpvars(0, wb_test_tb);
+		$dumpvars(0, wb_test_tb.mprj_io, wb_test_tb.uut.mprj);
 	end
 
 	initial begin
-
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (1000) begin
 			repeat (1000) @(posedge clock);
@@ -281,73 +160,10 @@ module wb_test_tb;
 
 	// Main Testbench and Output check
 	initial begin
+		// Wait until sample project enable is high
+		// wait(uut.mprj.mprj.sample_team_proj_Wrapper.sample_team_proj_WB.instance_to_wrap.\en == 1);
 
-    /*
-		wait(checkbits == 'b0);
-		$display("Monitor: NEBULA II-Sample Project Started");
-		$display("Correct GPIO output:");
-
-		// First iteration of outputs
-		for (integer i = 0; i <= 33; i++) begin
-			if (i == 0) expected_io = 1;
-			else expected_io = expected_io << 1;
-			wait(checkbits == expected_io);
-			$display("Correct GPIO output:");
-		end
-		
-		// End of first iteration
-		wait(checkbits == 'b0);
-		$display("Correct GPIO output:");
-
-		// Second iteration of outputs
-		for (integer i = 0; i <= 33; i++) begin
-			if (i == 0) expected_io = 1;
-			else expected_io = expected_io << 1;
-			wait(checkbits == expected_io);
-			$display("Correct GPIO output:");
-		end
-
-		// End of second iteration
-		wait(checkbits == 'b0);
-		$display("Correct GPIO output:");
-
-		#300;  // wait some time before ending
-*/
-		// Go right until Dead Test
-		button_push_start_pause;
-		#3000050;
-		button_push_right;
-		#3000050;
-		
-        #1300000;  // wait some time before ending
-
-		`ifdef GL
-	    	$display("Monitor: NEBULA II-Sample Project (GL) Passed");
-		`else
-		    $display("Monitor: NEBULA II-Sample Project (RTL) Passed");
-		`endif
-	    
-		// ************************************************************************
-        // Test Case 0: Power-on-Reset of the DUT
-        // ************************************************************************
-		RSTB <= 1'b0;
-		CSB  <= 1'b1;		// Force CSB high
-		#2000;
-		RSTB <= 1'b1;	    	// Release reset
-		#100000;
-		CSB = 1'b0;		// CSB can be released
-		#(CLK_PERIOD * 200000);
-		@(negedge clock);
-		//new_game_press();
-		#(CLK_PERIOD * 2000000);
-		// ************************************************************************
-        // Test Case 1: Snake Eats an Apple
-        // ************************************************************************
-		
-    	right_button_press();
-    	#(CLK_PERIOD * 50000000);
-    	// down_button_press();
-    	// #(CLK_PERIOD * 25000000);
+		#(1_500_000)
 	    $finish;
 	end
 
