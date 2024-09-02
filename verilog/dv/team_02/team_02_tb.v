@@ -175,6 +175,7 @@ module team_02_tb;
 		// end
 		#(mprj_io[22:19] == column);
 		mprj_io_in[18:15] = row;
+
 		@(negedge clk);
 		@(negedge clk);
 		@(negedge clk);
@@ -225,7 +226,7 @@ module team_02_tb;
 
 	// Main Testbench and Output check
 	initial begin
-		//wait(uut.chip_core.mprj.mprj.wrapper.team_02_WB.instance_to_wrap.en == 1);
+		wait(uut.mprj.mprj.team_02_Wrapper.team_02_WB.instance_to_wrap.\en == 1);
 		//wait(checkbits == 'b0);
 
 //Enter 111 + 222 = 333
