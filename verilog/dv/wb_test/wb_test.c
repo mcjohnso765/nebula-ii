@@ -133,5 +133,4 @@ void main()
     
     // Enable sample project
     reg_sample_proj_EN = (*(&sram_space + 5) == 0x00350593);
-    // ^^It's not reading the correct data!!
 }

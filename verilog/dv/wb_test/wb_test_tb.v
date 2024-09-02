@@ -161,9 +161,10 @@ module wb_test_tb;
 	// Main Testbench and Output check
 	initial begin
 		// Wait until sample project enable is high
-		// wait(uut.mprj.mprj.sample_team_proj_Wrapper.sample_team_proj_WB.instance_to_wrap.\en == 1);
+		// This means that we were able to read/write to the FFRAM
+		wait(uut.mprj.mprj.sample_team_proj_Wrapper.sample_team_proj_WB.instance_to_wrap.\en == 1);
 
-		#(1_500_000)
+		#(500);
 	    $finish;
 	end
 
