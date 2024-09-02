@@ -27,7 +27,7 @@ module wishbone_decoder #(
 
     //muxxing signals that go to manager
     input logic [NUM_TEAMS + 3:0]       wbs_ack_i_periph, 
-    input logic [(32 * (NUM_TEAMS + 1)) - 1:0] wbs_dat_i_periph, //flat signal
+    input logic [(32 * (NUM_TEAMS + 4)) - 1:0] wbs_dat_i_periph, //flat signal
 
     output logic                        wbs_ack_o_m,
     output logic                 [31:0] wbs_dat_o_m,
@@ -43,20 +43,20 @@ module wishbone_decoder #(
     output logic [NUM_TEAMS + 3:0]      wbs_cyc_o_periph,
     output logic [NUM_TEAMS + 3:0]      wbs_stb_o_periph, 
     output logic [NUM_TEAMS + 3:0]      wbs_we_o_periph, 
-    output logic [(32 * (NUM_TEAMS + 1)) - 1:0] wbs_adr_o_periph, //flat signal
-    output logic [(32 * (NUM_TEAMS + 1)) - 1:0] wbs_dat_o_periph, //flat signal
-    output logic [(4 * (NUM_TEAMS + 1)) - 1:0] wbs_sel_o_periph  //flat signal
+    output logic [(32 * (NUM_TEAMS + 4)) - 1:0] wbs_adr_o_periph, //flat signal
+    output logic [(32 * (NUM_TEAMS + 4)) - 1:0] wbs_dat_o_periph, //flat signal
+    output logic [(4 * (NUM_TEAMS + 4)) - 1:0] wbs_sel_o_periph  //flat signal
 );
 
-logic [31:0] wbs_adr_o_periph_2D [NUM_TEAMS: 0];
-logic [31:0] wbs_dat_o_periph_2D [NUM_TEAMS: 0];
-logic [3:0]  wbs_sel_o_periph_2D [NUM_TEAMS: 0];
-logic [31:0] wbs_dat_i_periph_2D [NUM_TEAMS: 0];
+logic [31:0] wbs_adr_o_periph_2D [NUM_TEAMS+3: 0];
+logic [31:0] wbs_dat_o_periph_2D [NUM_TEAMS+3: 0];
+logic [3:0]  wbs_sel_o_periph_2D [NUM_TEAMS+3: 0];
+logic [31:0] wbs_dat_i_periph_2D [NUM_TEAMS+3: 0];
 
 // Flattening / Unflattening of port signals
 integer i;
 always @* begin
-    for (i = 0; i <= NUM_TEAMS; i = i + 1) begin
+    for (i = 0; i <= NUM_TEAMS+3; i = i + 1) begin
         wbs_adr_o_periph[i*32 +: 32] = wbs_adr_o_periph_2D[i];
         wbs_dat_o_periph[i*32 +: 32] = wbs_dat_o_periph_2D[i];
         wbs_sel_o_periph[i*4 +: 4] = wbs_sel_o_periph_2D[i];
@@ -108,7 +108,7 @@ always @(*) begin
     // wbs_adr_o_periph_2D = '0;
     // wbs_dat_o_periph_2D = '0;
     // wbs_sel_o_periph_2D = '0;
-    for (i2 = 0; i2 <= NUM_TEAMS; i2 = i2 + 1) begin
+    for (i2 = 0; i2 <= NUM_TEAMS+3; i2 = i2 + 1) begin
         wbs_adr_o_periph_2D[i2] = '0;
         wbs_dat_o_periph_2D[i2] = '0;
         wbs_sel_o_periph_2D[i2] = '0;

@@ -144,7 +144,7 @@ module team_11_tb;
 	// Signal dump and timeout check
 	initial begin
 		$dumpfile("team_11.vcd");
-		$dumpvars(0, team_11_tb.mprj_io, team_11_tb.uut.chip_core.mprj);
+		$dumpvars(0, team_11_tb.mprj_io, team_11_tb.uut.mprj);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (1000) begin
@@ -168,7 +168,7 @@ module team_11_tb;
 		read_row = 4'b0000;
 		
 		// Wait for design to be enabled
-		wait(uut.chip_core.mprj.mprj.team_11_Wrapper.team_11_WB.instance_to_wrap.\en == 1);
+		wait(uut.mprj.mprj.team_11_Wrapper.team_11_WB.instance_to_wrap.\en == 1);
 		
 		// Wait for a while
 		#(200000 * CLK_PERIOD);
@@ -186,7 +186,7 @@ module team_11_tb;
 		read_row = 4'b0001;
 
 		// THIS LINE MAKES SURE IT WORKS!!!
-		wait(uut.chip_core.mprj.mprj.team_11_Wrapper.team_11_WB.instance_to_wrap.msg_1 == 128'h20202020202020202020202020202032);
+		wait(uut.mprj.mprj.team_11_Wrapper.team_11_WB.instance_to_wrap.msg_1 == 128'h20202020202020202020202020202032);
 		#(500);
 		
 
