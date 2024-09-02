@@ -807,23 +807,25 @@ module t02_new_request_unit (
 		next_FetchedInstr = 32'b00000000000000000000000000000000;
 		case (state)
 			3'd0:
-				if ((((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14)) & !dready) begin
-					next_read_i = 1'b1;
-					next_write_i = 1'b0;
-					next_adr_i = DataAddress + 32'h33000000;
-					next_state = 3'd4;
-				end
-				else if ((((cuOP == 6'd15) | (cuOP == 6'd16)) | (cuOP == 6'd17)) & !dready) begin
-					next_read_i = 1'b0;
-					next_write_i = 1'b1;
-					next_adr_i = DataAddress + 32'h33000000;
-					next_cpu_dat_i = DatatoWrite;
-					next_state = 3'd6;
-				end
-				else begin
-					next_read_i = 1'b1;
-					next_write_i = 1'b0;
-					next_state = 3'd5;
+				if (enable != 1'b0) begin
+					if ((((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14)) & !dready) begin
+						next_read_i = 1'b1;
+						next_write_i = 1'b0;
+						next_adr_i = DataAddress + 32'h33000000;
+						next_state = 3'd4;
+					end
+					else if ((((cuOP == 6'd15) | (cuOP == 6'd16)) | (cuOP == 6'd17)) & !dready) begin
+						next_read_i = 1'b0;
+						next_write_i = 1'b1;
+						next_adr_i = DataAddress + 32'h33000000;
+						next_cpu_dat_i = DatatoWrite;
+						next_state = 3'd6;
+					end
+					else begin
+						next_read_i = 1'b1;
+						next_write_i = 1'b0;
+						next_state = 3'd5;
+					end
 				end
 			3'd4: begin
 				next_adr_i = adr_i;
