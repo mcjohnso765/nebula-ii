@@ -259,7 +259,7 @@ module team_03_tb;
 	// Signal dump and timeout check
 	initial begin
 		$dumpfile("team_03.vcd");
-		$dumpvars(0, team_03_tb.mprj_io, team_03_tb.uut.chip_core.mprj);
+		$dumpvars(0, team_03_tb.mprj_io, team_03_tb.uut.mprj);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (1000) begin
@@ -280,7 +280,7 @@ module team_03_tb;
 	initial begin
 
 		// Wait for design to be enabled
-		wait(uut.chip_core.mprj.mprj.team_03_Wrapper.team_03_WB.instance_to_wrap.\en == 1);
+		wait(uut.mprj.mprj.team_03_Wrapper.team_03_WB.instance_to_wrap.\en == 1);
 		#300000;
 
 		// button_push_start_pause;

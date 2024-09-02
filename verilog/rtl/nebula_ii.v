@@ -80,28 +80,28 @@ module nebula_ii (
 
 
     wire [NUM_TEAMS:0]  wbs_ack_i_projects;
-    wire                wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_sram;
+    wire                wbs_ack_i_gpio, wbs_ack_i_la, wbs_ack_i_ram;
     
     wire [31:0]         wbs_dat_i_projects [NUM_TEAMS:0];
-    wire [31:0]         wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_sram;
+    wire [31:0]         wbs_dat_i_gpio, wbs_dat_i_la, wbs_dat_i_ram;
 
     wire [NUM_TEAMS:0]  wbs_cyc_o_projects;
-    wire                wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_sram;
+    wire                wbs_cyc_o_gpio, wbs_cyc_o_la, wbs_cyc_o_ram;
 
     wire [NUM_TEAMS:0]  wbs_stb_o_projects;
-    wire                wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_sram;
+    wire                wbs_stb_o_gpio, wbs_stb_o_la, wbs_stb_o_ram;
     
     wire [NUM_TEAMS:0]  wbs_we_o_projects;
-    wire                wbs_we_o_gpio, wbs_we_o_la, wbs_we_o_sram;
+    wire                wbs_we_o_gpio, wbs_we_o_la, wbs_we_o_ram;
     
     reg [31:0]         wbs_adr_o_projects [NUM_TEAMS:0];
-    wire [31:0]         wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_sram;
+    wire [31:0]         wbs_adr_o_gpio, wbs_adr_o_la, wbs_adr_o_ram;
     
     reg [31:0]         wbs_dat_o_projects [NUM_TEAMS:0];
-    wire [31:0]         wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_sram;
+    wire [31:0]         wbs_dat_o_gpio, wbs_dat_o_la, wbs_dat_o_ram;
     
     reg [3:0]          wbs_sel_o_projects [NUM_TEAMS:0];
-    wire [3:0]          wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_sram;
+    wire [3:0]          wbs_sel_o_gpio, wbs_sel_o_la, wbs_sel_o_ram;
 
     // Sample Project Instance
     sample_team_proj_Wrapper sample_team_proj_Wrapper (
@@ -181,7 +181,7 @@ module nebula_ii (
         .CYC_O(arbitrator_cyc_i[1])
     );
 
-		// Team_02 Project Instance
+	// Team_02 Project Instance
     team_02_Wrapper team_02_Wrapper (
     `ifdef USE_POWER_PINS
             .vccd1(vccd1),	// User area 1 1.8V power
@@ -777,8 +777,8 @@ module nebula_ii (
         .nRST(~wb_rst_i),
 
         //muxxing signals that go to manager
-        .wbs_ack_i_periph({wbs_ack_i_projects, wbs_ack_i_la, wbs_ack_i_gpio, wbs_ack_i_sram}),
-        .wbs_dat_i_periph({wbs_dat_i_projects_flat, wbs_dat_i_la, wbs_dat_i_gpio, wbs_dat_i_sram}),
+        .wbs_ack_i_periph({wbs_ack_i_projects, wbs_ack_i_la, wbs_ack_i_gpio, wbs_ack_i_ram}),
+        .wbs_dat_i_periph({wbs_dat_i_projects_flat, wbs_dat_i_la, wbs_dat_i_gpio, wbs_dat_i_ram}),
 
         .wbs_ack_o_m(wbs_ack_o_m),
         .wbs_dat_o_m(wbs_dat_o_m),
@@ -791,19 +791,19 @@ module nebula_ii (
         .wbs_dat_i_m(wbs_dat_i_m),
         .wbs_sel_i_m(wbs_sel_i_m),
 
-        .wbs_cyc_o_periph({wbs_cyc_o_projects, wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_sram}),
-        .wbs_stb_o_periph({wbs_stb_o_projects, wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_sram}),
-        .wbs_we_o_periph({wbs_we_o_projects, wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_sram}),
-        .wbs_adr_o_periph({wbs_adr_o_projects_flat, wbs_adr_o_la, wbs_adr_o_gpio, wbs_adr_o_sram}),
-        .wbs_dat_o_periph({wbs_dat_o_projects_flat, wbs_dat_o_la, wbs_dat_o_gpio, wbs_dat_o_sram}),
-        .wbs_sel_o_periph({wbs_sel_o_projects_flat, wbs_sel_o_la, wbs_sel_o_gpio, wbs_sel_o_sram})
+        .wbs_cyc_o_periph({wbs_cyc_o_projects, wbs_cyc_o_la, wbs_cyc_o_gpio, wbs_cyc_o_ram}),
+        .wbs_stb_o_periph({wbs_stb_o_projects, wbs_stb_o_la, wbs_stb_o_gpio, wbs_stb_o_ram}),
+        .wbs_we_o_periph({wbs_we_o_projects, wbs_we_o_la, wbs_we_o_gpio, wbs_we_o_ram}),
+        .wbs_adr_o_periph({wbs_adr_o_projects_flat, wbs_adr_o_la, wbs_adr_o_gpio, wbs_adr_o_ram}),
+        .wbs_dat_o_periph({wbs_dat_o_projects_flat, wbs_dat_o_la, wbs_dat_o_gpio, wbs_dat_o_ram}),
+        .wbs_sel_o_periph({wbs_sel_o_projects_flat, wbs_sel_o_la, wbs_sel_o_gpio, wbs_sel_o_ram})
     );
 
-    // SRAM
-    SRAM_1024x32_wb_wrapper sram (
+    // FFRAM module
+    ffram_WB_Wrapper ffram (
     `ifdef USE_POWER_PINS
-        .VPWR(vccd1),	// User area 1 1.8V power
-        .VGND(vssd1),	// User area 1 digital ground
+        .vccd1(vccd1),	// User area 1 1.8V power
+        .vssd1(vssd1),	// User area 1 digital ground
     `endif
 
         .wb_clk_i(wb_clk_i),
@@ -811,14 +811,14 @@ module nebula_ii (
 
         // MGMT SoC Wishbone Slave
 
-        .wbs_stb_i(wbs_stb_o_sram),
-        .wbs_cyc_i(wbs_cyc_o_sram),
-        .wbs_we_i(wbs_we_o_sram),
-        .wbs_sel_i(wbs_sel_o_sram),
-        .wbs_dat_i(wbs_dat_o_sram),
-        .wbs_adr_i(wbs_adr_o_sram),
-        .wbs_ack_o(wbs_ack_i_sram),
-        .wbs_dat_o(wbs_dat_i_sram)
+        .wbs_stb_i(wbs_stb_o_ram),
+        .wbs_cyc_i(wbs_cyc_o_ram),
+        .wbs_we_i(wbs_we_o_ram),
+        .wbs_sel_i(wbs_sel_o_ram),
+        .wbs_dat_i(wbs_dat_o_ram),
+        .wbs_adr_i(wbs_adr_o_ram),
+        .wbs_ack_o(wbs_ack_i_ram),
+        .wbs_dat_o(wbs_dat_i_ram)
     );
 
     async_reset_sync designs_sync_rst (

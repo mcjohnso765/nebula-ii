@@ -1,5 +1,6 @@
 module t02_new_request_unit (
     input logic CLK, nRST,
+    input logic enable,
     input logic [31:0] DataAddress, InstrAddress,
     input logic [31:0] DatatoWrite,
     output logic iready, dready,
@@ -73,25 +74,27 @@ always_comb begin
     next_FetchedInstr = 32'b0;
     case(state)
         IDLE: begin
-            if ((cuOP == CU_LB| cuOP == CU_LH|
-             cuOP == CU_LW | cuOP == CU_LBU | 
-             cuOP == CU_LHU)& !dready) begin  //DATAREAD
-                next_read_i = 1'b1;
-                next_write_i = 1'b0;
-                next_adr_i = DataAddress + 32'h33000000;
-                next_state = WAIT_READ_DATA;
-             end else if ((cuOP == CU_SB| cuOP == CU_SH|
-              cuOP== CU_SW)& !dready) begin //DATAWRITE
-                next_read_i = 1'b0;
-                next_write_i = 1'b1;
-                next_adr_i = DataAddress + 32'h33000000;
-                next_cpu_dat_i = DatatoWrite;
-                next_state = WAIT_WRITE_DATA;
-              end else begin //InstructionREAD 
-                next_read_i = 1'b1;
-                next_write_i = 1'b0;
-                next_state = WAIT_READ_INSTR;
-              end
+            if(enable != '0) begin
+                if ((cuOP == CU_LB| cuOP == CU_LH|
+                cuOP == CU_LW | cuOP == CU_LBU | 
+                cuOP == CU_LHU)& !dready) begin  //DATAREAD
+                    next_read_i = 1'b1;
+                    next_write_i = 1'b0;
+                    next_adr_i = DataAddress + 32'h33000000;
+                    next_state = WAIT_READ_DATA;
+                end else if ((cuOP == CU_SB| cuOP == CU_SH|
+                cuOP== CU_SW)& !dready) begin //DATAWRITE
+                    next_read_i = 1'b0;
+                    next_write_i = 1'b1;
+                    next_adr_i = DataAddress + 32'h33000000;
+                    next_cpu_dat_i = DatatoWrite;
+                    next_state = WAIT_WRITE_DATA;
+                end else begin //InstructionREAD 
+                    next_read_i = 1'b1;
+                    next_write_i = 1'b0;
+                    next_state = WAIT_READ_INSTR;
+                end
+            end
 
         end  
         WAIT_READ_DATA: begin
@@ -137,5 +140,9 @@ always_comb begin
         end
         default: next_state = state;
     endcase
+
+    if(enable == 1'b0) begin
+        next_state = IDLE;
+    end
 end
 endmodule

@@ -324,7 +324,7 @@ module t02_control (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module edgeDetector (
+module t02_edgeDetector (
 	clk,
 	nRst_i,
 	button_i,
@@ -350,6 +350,257 @@ module edgeDetector (
 		if (_sv2v_0)
 			;
 		button_p = flip1 && ~flip2;
+	end
+	initial _sv2v_0 = 0;
+endmodule
+module t02_fpgaModule (
+	clk,
+	nrst,
+	keyStrobe,
+	enData,
+	instruction,
+	dataIn,
+	writeData,
+	buttons,
+	halfData,
+	address,
+	dataOut,
+	row1,
+	row2,
+	FPGAEnable,
+	writeFPGA,
+	CPUEnable,
+	nrstFPGA
+);
+	reg _sv2v_0;
+	input wire clk;
+	input wire nrst;
+	input wire keyStrobe;
+	input wire enData;
+	input wire [31:0] instruction;
+	input wire [31:0] dataIn;
+	input wire [31:0] writeData;
+	input wire [3:0] buttons;
+	input wire [15:0] halfData;
+	output reg [31:0] address;
+	output wire [31:0] dataOut;
+	output reg [127:0] row1;
+	output reg [127:0] row2;
+	output wire FPGAEnable;
+	output wire writeFPGA;
+	output wire CPUEnable;
+	output reg nrstFPGA;
+	reg [2:0] state;
+	reg [2:0] nextState;
+	reg currCPUEnable;
+	reg currFPGAEnable;
+	reg currFPGAWrite;
+	reg instructionTrue;
+	wire nextTrue;
+	wire [31:0] one;
+	wire [31:0] ten;
+	wire [31:0] hun;
+	wire [31:0] thou;
+	wire [31:0] tenthou;
+	wire [31:0] hunthou;
+	reg [7:0] hexop;
+	reg [7:0] nextHex;
+	wire [7:0] nextrt;
+	reg [11:0] data;
+	reg [11:0] nextData;
+	reg [11:0] dataInTemp;
+	reg [11:0] nextdataInTemp;
+	reg [127:0] nextRow1;
+	reg [127:0] nextRow2;
+	assign CPUEnable = currCPUEnable;
+	assign writeFPGA = currFPGAWrite;
+	assign FPGAEnable = currFPGAEnable;
+	always @(posedge clk or negedge nrst)
+		if (!nrst)
+			state <= 3'd0;
+		else if (instructionTrue)
+			state <= nextState;
+		else if (enData)
+			state <= nextState;
+		else if (state == 3'd4)
+			dataInTemp = nextdataInTemp;
+	always @(posedge clk or negedge nrst)
+		if (!nrst)
+			data <= 0;
+		else if (enData)
+			data <= nextData;
+	always @(posedge clk or negedge nrst)
+		if (!nrst) begin
+			row1 <= 128'ha0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0;
+			row2 <= 128'ha0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0;
+			hexop <= 0;
+		end
+		else begin
+			row1 <= nextRow1;
+			row2 <= nextRow2;
+			hexop <= nextHex;
+		end
+	always @(*) begin
+		if (_sv2v_0)
+			;
+		if (instruction == 32'hffffffff)
+			instructionTrue = 1;
+		else
+			instructionTrue = 0;
+		casez ({state, halfData[7:0] == 8'b00100011})
+			4'h1: nextState = 3'd1;
+			4'h3: nextState = 3'd2;
+			4'h5: nextState = 3'd3;
+			4'h6:
+				if (instructionTrue)
+					nextState = 3'd4;
+				else
+					nextState = 3'd3;
+			4'h9: nextState = 3'd0;
+			default: nextState = state;
+		endcase
+	end
+	bcd f2(
+		.in(data),
+		.out(dataOut)
+	);
+	bcdOut f11(
+		.in(dataIn),
+		.ones(one),
+		.tens(ten),
+		.hundred(hun),
+		.thousand(thou),
+		.tenthou(tenthou),
+		.hunthou(hunthou)
+	);
+	always @(*) begin
+		if (_sv2v_0)
+			;
+		currCPUEnable = 0;
+		currFPGAEnable = 1;
+		currFPGAWrite = 1;
+		nrstFPGA = 1;
+		nextHex = hexop;
+		nextRow1 = row1;
+		nextRow2 = row2;
+		nextdataInTemp = 0;
+		casez (state)
+			3'd0:
+				if (|buttons[3:0] && (((((halfData[7:0] != 8'b00100011) && (halfData[3:0] != 4'b1010)) && (halfData[3:0] != 4'b1011)) && (halfData[3:0] != 4'b1100)) && (halfData[3:0] != 4'b1101))) begin
+					nextData = {data[7:4], data[3:0], halfData[3:0]};
+					address = 32'd220;
+					nextRow1 = {4'b0011, data[11:8], 4'b0011, data[7:4], 4'b0011, data[3:0], row1[103:0]};
+				end
+				else if (|buttons[3:0] && (halfData[7:0] == 8'b00101010)) begin
+					nextData = dataInTemp;
+					address = 32'd220;
+					nextRow1 = {4'b0011, dataInTemp[11:8], 4'b0011, dataInTemp[7:4], 4'b0011, dataInTemp[3:0], row1[103:0]};
+				end
+				else begin
+					nextData = data;
+					address = 32'd320;
+				end
+			3'd1:
+				if ((|buttons[3:0] && ((halfData[7:0] != 8'b00100011) && (halfData[7:0] != 8'b00101010))) && ((((halfData[3:0] == 4'b1010) || (halfData[3:0] == 4'b1011)) || (halfData[3:0] == 4'b1100)) || (halfData[3:0] == 4'b1101))) begin
+					nextData = {8'b00000000, halfData[3:0]};
+					address = 32'd260;
+					casez (halfData[7:0])
+						8'h0d: nextHex = 8'b11111101;
+						8'h0c: nextHex = 8'b01111000;
+						8'h0b: nextHex = 8'b00101101;
+						8'h0a: nextHex = 8'b00101011;
+						default: nextHex = hexop;
+					endcase
+					nextRow1 = {row1[127:64], nextHex, row1[55:0]};
+				end
+				else begin
+					nextData = data;
+					address = 32'd320;
+				end
+			3'd2:
+				if (|buttons[3:0] && (((((halfData[7:0] != 8'b00100011) && (halfData[3:0] != 4'b1010)) && (halfData[3:0] != 4'b1011)) && (halfData[3:0] != 4'b1100)) && (halfData[3:0] != 4'b1101))) begin
+					nextData = {data[7:4], data[3:0], halfData[3:0]};
+					address = 32'd240;
+					nextRow1 = {row1[127:24], 4'b0011, data[11:8], 4'b0011, data[7:4], 4'b0011, data[3:0]};
+				end
+				else if (|buttons[3:0] && (halfData[7:0] == 8'b00101010)) begin
+					nextData = dataInTemp;
+					address = 32'd240;
+					nextRow1 = {row1[127:24], 4'b0011, dataInTemp[11:8], 4'b0011, dataInTemp[7:4], 4'b0011, dataInTemp[3:0]};
+				end
+				else begin
+					nextData = data;
+					address = 32'd320;
+				end
+			3'd3: begin
+				currCPUEnable = 1;
+				currFPGAEnable = 0;
+				currFPGAWrite = 0;
+				address = 32'd320;
+				nextData = data;
+			end
+			3'd4: begin
+				address = 32'd280;
+				nextData = dataIn[11:0];
+				currFPGAWrite = 0;
+				nrstFPGA = 0;
+				nextdataInTemp = {hun[3:0], ten[3:0], one[3:0]};
+				if (halfData[7:0] == 8'b00100011) begin
+					nextRow1 = 128'ha0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0;
+					nextRow2 = 128'ha0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0;
+				end
+				else begin
+					nextRow1 = row1;
+					nextRow2 = {row2[127:56], 12'b001111010011, hunthou[3:0], 4'b0011, tenthou[3:0], 4'b0011, thou[3:0], 4'b0011, hun[3:0], 4'b0011, ten[3:0], 4'b0011, one[3:0]};
+				end
+			end
+			default: begin
+				nextData = data;
+				address = 32'd320;
+			end
+		endcase
+	end
+	initial _sv2v_0 = 0;
+endmodule
+module bcd (
+	in,
+	out
+);
+	input wire [11:0] in;
+	output wire [31:0] out;
+	assign out = (in[11:8] * 100) + ((in[7:4] * 10) + {28'b0000000000000000000000000000, in[3:0]});
+endmodule
+module bcdOut (
+	in,
+	ones,
+	tens,
+	hundred,
+	thousand,
+	tenthou,
+	hunthou
+);
+	reg _sv2v_0;
+	input wire [31:0] in;
+	output reg [31:0] ones;
+	output reg [31:0] tens;
+	output reg [31:0] hundred;
+	output reg [31:0] thousand;
+	output reg [31:0] tenthou;
+	output reg [31:0] hunthou;
+	reg [31:0] temp;
+	always @(*) begin
+		if (_sv2v_0)
+			;
+		hunthou = in / 100000;
+		temp = in % 100000;
+		tenthou = temp / 10000;
+		temp = temp % 10000;
+		thousand = temp / 1000;
+		temp = temp % 1000;
+		hundred = temp / 100;
+		temp = temp % 100;
+		tens = temp / 10;
+		ones = temp % 10;
 	end
 	initial _sv2v_0 = 0;
 endmodule
@@ -472,6 +723,7 @@ endmodule
 module t02_new_request_unit (
 	CLK,
 	nRST,
+	enable,
 	DataAddress,
 	InstrAddress,
 	DatatoWrite,
@@ -491,6 +743,7 @@ module t02_new_request_unit (
 	reg _sv2v_0;
 	input wire CLK;
 	input wire nRST;
+	input wire enable;
 	input wire [31:0] DataAddress;
 	input wire [31:0] InstrAddress;
 	input wire [31:0] DatatoWrite;
@@ -554,23 +807,25 @@ module t02_new_request_unit (
 		next_FetchedInstr = 32'b00000000000000000000000000000000;
 		case (state)
 			3'd0:
-				if ((((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14)) & !dready) begin
-					next_read_i = 1'b1;
-					next_write_i = 1'b0;
-					next_adr_i = DataAddress + 32'h33000000;
-					next_state = 3'd4;
-				end
-				else if ((((cuOP == 6'd15) | (cuOP == 6'd16)) | (cuOP == 6'd17)) & !dready) begin
-					next_read_i = 1'b0;
-					next_write_i = 1'b1;
-					next_adr_i = DataAddress + 32'h33000000;
-					next_cpu_dat_i = DatatoWrite;
-					next_state = 3'd6;
-				end
-				else begin
-					next_read_i = 1'b1;
-					next_write_i = 1'b0;
-					next_state = 3'd5;
+				if (enable != 1'b0) begin
+					if ((((((cuOP == 6'd10) | (cuOP == 6'd11)) | (cuOP == 6'd12)) | (cuOP == 6'd13)) | (cuOP == 6'd14)) & !dready) begin
+						next_read_i = 1'b1;
+						next_write_i = 1'b0;
+						next_adr_i = DataAddress + 32'h33000000;
+						next_state = 3'd4;
+					end
+					else if ((((cuOP == 6'd15) | (cuOP == 6'd16)) | (cuOP == 6'd17)) & !dready) begin
+						next_read_i = 1'b0;
+						next_write_i = 1'b1;
+						next_adr_i = DataAddress + 32'h33000000;
+						next_cpu_dat_i = DatatoWrite;
+						next_state = 3'd6;
+					end
+					else begin
+						next_read_i = 1'b1;
+						next_write_i = 1'b0;
+						next_state = 3'd5;
+					end
 				end
 			3'd4: begin
 				next_adr_i = adr_i;
@@ -615,6 +870,8 @@ module t02_new_request_unit (
 			end
 			default: next_state = state;
 		endcase
+		if (enable == 1'b0)
+			next_state = 3'd0;
 	end
 	initial _sv2v_0 = 0;
 endmodule
@@ -677,6 +934,62 @@ module t02_pc (
 		end
 		else
 			next_pc = 32'h33000000;
+	end
+	initial _sv2v_0 = 0;
+endmodule
+module t02_ram (
+	clk,
+	nRst,
+	write_enable,
+	read_enable,
+	address_DM,
+	address_IM,
+	data_in,
+	data_out,
+	instr_out,
+	pc_enable
+);
+	reg _sv2v_0;
+	input wire clk;
+	input wire nRst;
+	input wire write_enable;
+	input wire read_enable;
+	input wire [5:0] address_DM;
+	input wire [5:0] address_IM;
+	input wire [31:0] data_in;
+	output reg [31:0] data_out;
+	output reg [31:0] instr_out;
+	output reg pc_enable;
+	reg [31:0] memory [63:0];
+	reg state;
+	reg next_state;
+	initial $readmemh("fill.mem", memory);
+	always @(posedge clk or negedge nRst)
+		if (!nRst)
+			state <= 1'd0;
+		else
+			state <= next_state;
+	always @(*) begin
+		if (_sv2v_0)
+			;
+		pc_enable = 1'b1;
+		next_state = state;
+		case (state)
+			1'd0:
+				if (read_enable | write_enable) begin
+					pc_enable = 1'b0;
+					next_state = 1'd1;
+				end
+			1'd1: next_state = 1'd0;
+			default:
+				;
+		endcase
+	end
+	always @(posedge clk) begin
+		if (write_enable)
+			memory[address_DM >> 2] <= data_in;
+		data_out <= memory[address_DM >> 2];
+		instr_out <= memory[address_IM >> 2];
 	end
 	initial _sv2v_0 = 0;
 endmodule
@@ -983,9 +1296,15 @@ module t02_top (
 	ramstore,
 	Ren,
 	Wen,
-	sel_i,
 	ramload,
-	busy_o
+	busy_o,
+	lcd_en,
+	lcd_rw,
+	lcd_rs,
+	lcd_data,
+	read_row,
+	scan_col,
+	sel_i
 );
 	input wire clk;
 	input wire nrst;
@@ -994,9 +1313,15 @@ module t02_top (
 	output wire [31:0] ramstore;
 	output wire Ren;
 	output wire Wen;
-	output wire [3:0] sel_i;
 	input wire [31:0] ramload;
 	input wire busy_o;
+	output wire lcd_en;
+	output wire lcd_rw;
+	output wire lcd_rs;
+	output wire [7:0] lcd_data;
+	input wire [3:0] read_row;
+	output wire [3:0] scan_col;
+	output wire [3:0] sel_i;
 	wire zero;
 	wire negative;
 	wire regWrite;
@@ -1020,6 +1345,59 @@ module t02_top (
 	wire [31:0] regData1;
 	wire [31:0] regData2;
 	wire [31:0] instruction;
+	wire [127:0] row1;
+	wire [127:0] row2;
+	wire [15:0] halfData;
+	wire [31:0] FPGAAdress;
+	wire [31:0] FPGADataOut;
+	wire FPGAEnable;
+	wire writeFPGA;
+	wire CPUEnable;
+	wire keyStrobe;
+	wire enData;
+	wire nrstFPGA;
+	wire write_enable;
+	t02_fpgaModule a1(
+		.clk(clk),
+		.nrst(nrst),
+		.instruction(instruction),
+		.dataIn(memload),
+		.buttons(read_row),
+		.FPGAEnable(FPGAEnable),
+		.writeFPGA(writeFPGA),
+		.CPUEnable(CPUEnable),
+		.address(FPGAAdress),
+		.dataOut(FPGADataOut),
+		.writeData(writeData),
+		.nrstFPGA(nrstFPGA),
+		.row1(row1),
+		.row2(row2),
+		.keyStrobe(keyStrobe),
+		.halfData(halfData),
+		.enData(enData)
+	);
+	wire [31:0] muxxedAddressOut;
+	wire [31:0] muxxedDataOut;
+	wire [31:0] intermedWriteEnable;
+	t02_mux enableWrite(
+		.in1({31'b0000000000000000000000000000000, writeFPGA}),
+		.in2({31'b0000000000000000000000000000000, memWrite}),
+		.en(FPGAEnable),
+		.out(intermedWriteEnable)
+	);
+	t02_mux enableFpgaData(
+		.in1(FPGADataOut),
+		.in2(regData2),
+		.en(FPGAEnable),
+		.out(muxxedDataOut)
+	);
+	t02_mux enableFpgaAddress(
+		.in1(FPGAAdress),
+		.in2(aluOut),
+		.en(FPGAEnable),
+		.out(muxxedAddressOut)
+	);
+	assign write_enable = intermedWriteEnable[0];
 	t02_mux aluMux(
 		.in1(immOut),
 		.in2(regData2),
@@ -1035,6 +1413,7 @@ module t02_top (
 		.negative(negative)
 	);
 	t02_register_file DUT(
+		.en(enable),
 		.clk(clk),
 		.nRST(nrst),
 		.reg_write(regWrite),
@@ -1043,8 +1422,7 @@ module t02_top (
 		.read_data1(regData1),
 		.read_data2(regData2),
 		.write_index(w_reg),
-		.write_data(writeData),
-		.en(enable)
+		.write_data(writeData)
 	);
 	t02_control controller(
 		.cuOP(cuOP),
@@ -1091,6 +1469,7 @@ module t02_top (
 		.DataAddress(aluOut),
 		.InstrAddress(pc),
 		.DatatoWrite(regData2),
+		.enable(enable),
 		.iready(i_ready),
 		.dready(d_ready),
 		.FetchedData(memload),
@@ -1103,6 +1482,30 @@ module t02_top (
 		.adr_i(ramaddr),
 		.cpu_data_i(ramstore),
 		.sel_i(sel_i)
+	);
+	t02_edgeDetector edg2(
+		.clk(clk),
+		.nRst_i(nrst),
+		.button_i(~keyStrobe),
+		.button_p(enData)
+	);
+	t02_keypad pad(
+		.clk(clk),
+		.rst(nrst),
+		.receive_ready(keyStrobe),
+		.data_received(halfData),
+		.read_row(read_row),
+		.scan_col(scan_col)
+	);
+	t02_lcd1602 lcd(
+		.clk(clk),
+		.rst(nrst),
+		.row_1(row1),
+		.row_2(row2),
+		.lcd_en(lcd_en),
+		.lcd_rw(lcd_rw),
+		.lcd_rs(lcd_rs),
+		.lcd_data(lcd_data)
 	);
 endmodule
 module t02_wishbone_manager (
@@ -1317,9 +1720,9 @@ module team_02 (
 	input wire clk;
 	input wire nrst;
 	input wire en;
-	input wire [127:0] la_data_in;
-	output wire [127:0] la_data_out;
-	input wire [127:0] la_oenb;
+	input wire [31:0] la_data_in;
+	output wire [31:0] la_data_out;
+	input wire [31:0] la_oenb;
 	input wire [31:0] gpio_in;
 	output wire [31:0] gpio_out;
 	output wire [31:0] gpio_oeb;
@@ -1331,9 +1734,8 @@ module team_02 (
 	output wire CYC_O;
 	input wire [31:0] DAT_I;
 	input wire ACK_I;
-	assign la_data_out = 128'b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
-	assign gpio_out = 32'b00000000000000000000000000000000;
-	assign gpio_oeb = 1'sb1;
+	wire [3:0] sel_i;
+	assign la_data_out = 32'b00000000000000000000000000000000;
 	wire [31:0] ramstore;
 	wire [31:0] ramaddr;
 	wire [31:0] ramload;
@@ -1350,14 +1752,20 @@ module team_02 (
 		.ramload(ramload),
 		.busy_o(busy_o),
 		.enable(en),
-		.sel_i(SEL_O)
+		.lcd_rs(gpio_out[0]),
+		.lcd_rw(gpio_out[5]),
+		.lcd_en(gpio_out[6]),
+		.sel_i(sel_i),
+		.lcd_data(gpio_out[14:7]),
+		.read_row(gpio_in[18:15]),
+		.scan_col(gpio_out[22:19])
 	);
 	t02_wishbone_manager wb(
 		.CLK(clk),
 		.nRST(nrst),
 		.CPU_DAT_I(ramstore),
 		.ADR_I(ramaddr),
-		.SEL_I(4'hf),
+		.SEL_I(sel_i),
 		.WRITE_I(Wen),
 		.READ_I(Ren),
 		.CPU_DAT_O(ramload),
@@ -1371,4 +1779,15 @@ module team_02 (
 		.DAT_I(DAT_I),
 		.ACK_I(ACK_I)
 	);
+	assign gpio_oeb[0] = 1'sb0;
+	assign gpio_oeb[4:1] = 1'sb1;
+	assign gpio_oeb[5] = 1'sb0;
+	assign gpio_oeb[6] = 1'sb0;
+	assign gpio_oeb[14:7] = 1'sb0;
+	assign gpio_oeb[18:15] = 4'b1111;
+	assign gpio_oeb[22:19] = 1'sb0;
+	assign gpio_oeb[31:23] = 1'sb1;
+	assign gpio_out[31:23] = 1'sb0;
+	assign gpio_out[18:15] = 1'sb0;
+	assign gpio_out[4:1] = 1'sb0;
 endmodule

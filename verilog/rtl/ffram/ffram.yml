@@ -1,0 +1,66 @@
+---
+info:
+  name: ffram
+  description: flip flop array of RAM
+  repo: STARS-Design-Track-2024/Project_Template.git
+  owner: Purdue University
+  license: APACHE 2.0
+  author: Matthew Erlichson
+  email: merlichs@purdue.edu
+  version: v1.0.0
+  date: 28-05-2024
+  category: digital
+  tags:
+    - ffram
+    - sram expensive
+  bus:
+    - wb
+  type: soft
+  status: verified
+  qualification: N/A
+  cell_count: N/A
+  width: 0.0
+  height: 0.0
+  technology: N/A
+  clock_freq_mhz: 10
+  digital_supply_voltage: n/a
+  analog_supply_voltage: n/a
+
+ports:
+  - name: d_in
+    width: 32
+    direction: input
+    description: data_in
+  - name: bit_en
+    width: 32
+    direction: input
+    description: bit enable, active high
+  - name: addr
+    width: 32
+    direction: input
+    description: input address
+  - name: en
+    width: 1
+    direction: input
+    description: enable for writing
+  - name: d_out
+    width: 32
+    direction: output
+    description: data out
+
+clock:
+  name: clk
+
+reset:
+  name: nrst
+  level: 0
+
+registers:
+  - name: mstate
+    size: 8192
+    mode: w
+    fifo: false
+    offset: 0
+    bit_access: false
+    write_port: d_in
+    description: the entire ffram

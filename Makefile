@@ -129,7 +129,7 @@ simenv-cocotb:
 setup: check_dependencies install check-env install_mcw openlane pdk-with-volare setup-timing-scripts setup-cocotb precheck
 
 .PHONY: purdue-setup
-purdue-setup: check_dependencies install check-env install_mcw pdk-with-volare bus-wrap-setup sram-setup
+purdue-setup: check_dependencies install check-env install_mcw pdk-with-volare bus-wrap-setup
 
 # Openlane
 blocks=$(shell cd openlane && find * -maxdepth 0 -type d)
@@ -178,10 +178,13 @@ custom_run_verify =\
     export CORE_VERILOG_PATH=$(TARGET_PATH)/mgmt_core_wrapper/verilog &&\
     export CARAVEL_VERILOG_PATH=$(TARGET_PATH)/caravel/verilog &&\
     export MCW_ROOT=$(MCW_ROOT) &&\
-	export GCC_PREFIX=riscv32-unknown-elf &&\
-	export GCC_PATH=/opt/riscv32/bin/ &&\
+	export GCC_PREFIX=riscv64-unknown-elf &&\
+	export GCC_PATH=/package/riscv-gnu-toolchain/bin/ &&\
 	export USER_PROJECT_VERILOG=$(PWD)/verilog &&\
     cd verilog/dv/$* && export SIM=${SIM} && make
+# If you're Aidan, use this:
+# export GCC_PREFIX=riscv32-unknown-elf &&\
+# export GCC_PATH=/opt/riscv32/bin/ &&\
 
 .PHONY: harden
 harden: $(blocks)
@@ -494,6 +497,7 @@ bus-wrap-generate:
 	cd $(PWD)/verilog/rtl &&\
 	make generate
 
+# SRAM IP Setup
 .PHONY: sram-setup
 sram-setup:
 	pip install ipmgr &&\
