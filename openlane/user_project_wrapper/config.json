@@ -63,7 +63,7 @@
         "mprj.team_10_Wrapper.team_10_WB.instance_to_wrap vccd1 vssd1 vccd1 vssd1",
         "mprj.team_11_Wrapper.team_11_WB.instance_to_wrap vccd1 vssd1 vccd1 vssd1",
         "mprj.team_12_Wrapper.team_12_WB.instance_to_wrap vccd1 vssd1 vccd1 vssd1",
-        "mprj.sram vccd1 vssd1 VPWR VGND"
+        "mprj.ffram vccd1 vssd1 vccd1 vssd1"
     ],
     "MACRO_PLACEMENT_CFG": "dir::macro.cfg",
     "MAGIC_DEF_LABELS": 0,
@@ -80,7 +80,7 @@
         "dir::../../verilog/gl/team_10.v",
         "dir::../../verilog/gl/team_11.v",
         "dir::../../verilog/gl/team_12.v",
-        "dir::../../verilog/gl/SRAM_1024x32_wb_wrapper.v"
+        "dir::../../verilog/gl/ffram.v"
     ],
     "EXTRA_LEFS": [
         "dir::../../lef/team_01.lef",
@@ -95,7 +95,7 @@
         "dir::../../lef/team_10.lef",
         "dir::../../lef/team_11.lef",
         "dir::../../lef/team_12.lef",
-        "dir::../../lef/SRAM_1024x32_wb_wrapper.lef"
+        "dir::../../lef/ffram.lef"
     ],
     "EXTRA_GDS_FILES": [
         "dir::../../gds/team_01.gds",
@@ -110,7 +110,7 @@
         "dir::../../gds/team_10.gds",
         "dir::../../gds/team_11.gds",
         "dir::../../gds/team_12.gds",
-        "dir::../../gds/SRAM_1024x32_wb_wrapper.gds"
+        "dir::../../gds/ffram.gds"
     ],
     "EXTRA_LIBS": [
         "dir::../../lib/team_01.lib",
@@ -125,7 +125,7 @@
         "dir::../../lib/team_10.lib",
         "dir::../../lib/team_11.lib",
         "dir::../../lib/team_12.lib",
-        "dir::../../lib/SRAM_1024x32_wb_wrapper.lib"
+        "dir::../../lib/ffram.lib"
     ],
     "EXTRA_SPEFS": [
         "team_01", 
@@ -176,10 +176,10 @@
         "dir::../../spef/multicorner/team_12.min.spef", 
         "dir::../../spef/multicorner/team_12.nom.spef", 
         "dir::../../spef/multicorner/team_12.max.spef",
-        "SRAM_1024x32_wb_wrapper", 
-        "dir::../../spef/multicorner/SRAM_1024x32_wb_wrapper.min.spef", 
-        "dir::../../spef/multicorner/SRAM_1024x32_wb_wrapper.nom.spef", 
-        "dir::../../spef/multicorner/SRAM_1024x32_wb_wrapper.max.spef"
+        "ffram", 
+        "dir::../../spef/multicorner/ffram.min.spef", 
+        "dir::../../spef/multicorner/ffram.nom.spef", 
+        "dir::../../spef/multicorner/ffram.max.spef"
     ],
     "BASE_SDC_FILE": "dir::base_user_project_wrapper.sdc",
     "IO_SYNC": 0,
@@ -189,14 +189,16 @@
     "FP_PDN_CHECK_NODES": 1,
     "SYNTH_ELABORATE_ONLY": 0,
     "SYNTH_CLOCK_UNCERTAINTY": 0.2,
-    "PL_RESIZER_HOLD_SLACK_MARGIN": 2.0,
-    "GLB_RESIZER_HOLD_SLACK_MARGIN": 2.0,
+    "PL_RESIZER_HOLD_SLACK_MARGIN": 1.0,
+    "GLB_RESIZER_HOLD_SLACK_MARGIN": 1.0,
     "PL_RANDOM_GLB_PLACEMENT": 1,
     "PL_RESIZER_DESIGN_OPTIMIZATIONS": 1,
     "PL_RESIZER_TIMING_OPTIMIZATIONS": 1,
+    "PL_OPENPHYSYN_OPTIMIZATIONS": 1,
     "GLB_RESIZER_DESIGN_OPTIMIZATIONS": 1,
     "GLB_RESIZER_TIMING_OPTIMIZATIONS": 1,
     "PL_RESIZER_BUFFER_INPUT_PORTS": 1,
+    "CTS_TOLERANCE": 50,
     "GPL_CELL_PADDING": 80,
     "DPL_CELL_PADDING": 20,
     "FP_PDN_ENABLE_RAILS": 1,

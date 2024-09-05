@@ -73,9 +73,9 @@ module team_02_WB (
 
 	team_02 instance_to_wrap (
 		`ifdef USE_POWER_PINS
-                .vccd1(vccd1),	// User area 1 1.8V power
-                .vssd1(vssd1),	// User area 1 digital ground
-        `endif
+			.vccd1(vccd1),	// User area 1 1.8V power
+			.vssd1(vssd1),	// User area 1 digital ground
+		`endif
 		.clk(clk),
 		.nrst(nrst),
 		.en(en),

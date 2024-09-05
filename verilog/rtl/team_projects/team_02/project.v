@@ -937,62 +937,62 @@ module t02_pc (
 	end
 	initial _sv2v_0 = 0;
 endmodule
-module t02_ram (
-	clk,
-	nRst,
-	write_enable,
-	read_enable,
-	address_DM,
-	address_IM,
-	data_in,
-	data_out,
-	instr_out,
-	pc_enable
-);
-	reg _sv2v_0;
-	input wire clk;
-	input wire nRst;
-	input wire write_enable;
-	input wire read_enable;
-	input wire [5:0] address_DM;
-	input wire [5:0] address_IM;
-	input wire [31:0] data_in;
-	output reg [31:0] data_out;
-	output reg [31:0] instr_out;
-	output reg pc_enable;
-	reg [31:0] memory [63:0];
-	reg state;
-	reg next_state;
-	initial $readmemh("fill.mem", memory);
-	always @(posedge clk or negedge nRst)
-		if (!nRst)
-			state <= 1'd0;
-		else
-			state <= next_state;
-	always @(*) begin
-		if (_sv2v_0)
-			;
-		pc_enable = 1'b1;
-		next_state = state;
-		case (state)
-			1'd0:
-				if (read_enable | write_enable) begin
-					pc_enable = 1'b0;
-					next_state = 1'd1;
-				end
-			1'd1: next_state = 1'd0;
-			default:
-				;
-		endcase
-	end
-	always @(posedge clk) begin
-		if (write_enable)
-			memory[address_DM >> 2] <= data_in;
-		data_out <= memory[address_DM >> 2];
-		instr_out <= memory[address_IM >> 2];
-	end
-	initial _sv2v_0 = 0;
-endmodule
+// module t02_ram (
+// 	clk,
+// 	nRst,
+// 	write_enable,
+// 	read_enable,
+// 	address_DM,
+// 	address_IM,
+// 	data_in,
+// 	data_out,
+// 	instr_out,
+// 	pc_enable
+// );
+// 	reg _sv2v_0;
+// 	input wire clk;
+// 	input wire nRst;
+// 	input wire write_enable;
+// 	input wire read_enable;
+// 	input wire [5:0] address_DM;
+// 	input wire [5:0] address_IM;
+// 	input wire [31:0] data_in;
+// 	output reg [31:0] data_out;
+// 	output reg [31:0] instr_out;
+// 	output reg pc_enable;
+// 	reg [31:0] memory [63:0];
+// 	reg state;
+// 	reg next_state;
+// 	// initial $readmemh("fill.mem", memory);
+// 	always @(posedge clk or negedge nRst)
+// 		if (!nRst)
+// 			state <= 1'd0;
+// 		else
+// 			state <= next_state;
+// 	always @(*) begin
+// 		if (_sv2v_0)
+// 			;
+// 		pc_enable = 1'b1;
+// 		next_state = state;
+// 		case (state)
+// 			1'd0:
+// 				if (read_enable | write_enable) begin
+// 					pc_enable = 1'b0;
+// 					next_state = 1'd1;
+// 				end
+// 			1'd1: next_state = 1'd0;
+// 			default:
+// 				;
+// 		endcase
+// 	end
+// 	always @(posedge clk) begin
+// 		if (write_enable)
+// 			memory[address_DM >> 2] <= data_in;
+// 		data_out <= memory[address_DM >> 2];
+// 		instr_out <= memory[address_IM >> 2];
+// 	end
+// 	initial _sv2v_0 = 0;
+// endmodule
 module t02_register_file (
 	clk,
 	nRST,
@@ -1699,6 +1699,10 @@ module t02_writeToReg (
 endmodule
 `default_nettype none
 module team_02 (
+`ifdef USE_POWER_PINS
+	vccd1,	// User area 1 1.8V supply
+	vssd1,	// User area 1 digital ground
+`endif
 	clk,
 	nrst,
 	en,
@@ -1717,6 +1721,10 @@ module team_02 (
 	DAT_I,
 	ACK_I
 );
+`ifdef USE_POWER_PINS
+		inout vccd1;	// User area 1 1.8V supply
+		inout vssd1;	// User area 1 digital ground
+`endif
 	input wire clk;
 	input wire nrst;
 	input wire en;

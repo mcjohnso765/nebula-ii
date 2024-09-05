@@ -165,7 +165,7 @@
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/lef/team_10.lef",
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/lef/team_11.lef",
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/lef/team_12.lef",
-        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/lef/SRAM_1024x32_wb_wrapper.lef"
+        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/lef/ffram.lef"
     ],
     "EXTRA_VERILOG_MODELS": [
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/verilog/gl/team_01.v",
@@ -180,7 +180,7 @@
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/verilog/gl/team_10.v",
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/verilog/gl/team_11.v",
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/verilog/gl/team_12.v",
-        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/verilog/gl/SRAM_1024x32_wb_wrapper.v"
+        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/verilog/gl/ffram.v"
     ],
     "EXTRA_SPICE_MODELS": null,
     "EXTRA_LIBS": [
@@ -196,7 +196,7 @@
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/lib/team_10.lib",
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/lib/team_11.lib",
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/lib/team_12.lib",
-        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/lib/SRAM_1024x32_wb_wrapper.lib"
+        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/lib/ffram.lib"
     ],
     "EXTRA_GDS_FILES": [
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/gds/team_01.gds",
@@ -211,7 +211,7 @@
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/gds/team_10.gds",
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/gds/team_11.gds",
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/gds/team_12.gds",
-        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/gds/SRAM_1024x32_wb_wrapper.gds"
+        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/gds/ffram.gds"
     ],
     "FALLBACK_SDC_FILE": "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/openlane/user_project_wrapper/base_user_project_wrapper.sdc",
     "RUN_TAP_ENDCAP_INSERTION": true,
@@ -338,7 +338,7 @@
         "mprj.team_10_Wrapper.team_10_WB.instance_to_wrap vccd1 vssd1 vccd1 vssd1",
         "mprj.team_11_Wrapper.team_11_WB.instance_to_wrap vccd1 vssd1 vccd1 vssd1",
         "mprj.team_12_Wrapper.team_12_WB.instance_to_wrap vccd1 vssd1 vccd1 vssd1",
-        "mprj.sram vccd1 vssd1 VPWR VGND"
+        "mprj.ffram vccd1 vssd1 vccd1 vssd1"
     ],
     "PDN_ENABLE_GLOBAL_CONNECTIONS": true,
     "FP_DEF_TEMPLATE": "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/openlane/user_project_wrapper/fixed_dont_change/user_project_wrapper.def",
@@ -393,10 +393,10 @@
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/spef/multicorner/team_12.min.spef",
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/spef/multicorner/team_12.nom.spef",
         "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/spef/multicorner/team_12.max.spef",
-        "SRAM_1024x32_wb_wrapper",
-        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/spef/multicorner/SRAM_1024x32_wb_wrapper.min.spef",
-        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/spef/multicorner/SRAM_1024x32_wb_wrapper.nom.spef",
-        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/spef/multicorner/SRAM_1024x32_wb_wrapper.max.spef"
+        "ffram",
+        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/spef/multicorner/ffram.min.spef",
+        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/spef/multicorner/ffram.nom.spef",
+        "/mnt/d/Documents/0Purdue/STARS/2planning/STARS_Design_Track_2024/Project_Template/spef/multicorner/ffram.max.spef"
     ],
     "STA_THREADS": null,
     "FP_SIZING": "absolute",
@@ -508,7 +508,7 @@
     ],
     "CTS_MAX_CAP": null,
     "CTS_MAX_SLEW": null,
-    "PL_RESIZER_HOLD_SLACK_MARGIN": 2,
+    "PL_RESIZER_HOLD_SLACK_MARGIN": 1,
     "PL_RESIZER_SETUP_SLACK_MARGIN": 0.05,
     "PL_RESIZER_HOLD_MAX_BUFFER_PCT": 50,
     "PL_RESIZER_SETUP_MAX_BUFFER_PCT": 50,
@@ -519,7 +519,7 @@
     "GRT_DESIGN_REPAIR_MAX_CAP_PCT": 10,
     "DIODE_ON_PORTS": "none",
     "HEURISTIC_ANTENNA_THRESHOLD": 90,
-    "GRT_RESIZER_HOLD_SLACK_MARGIN": 2,
+    "GRT_RESIZER_HOLD_SLACK_MARGIN": 1,
     "GRT_RESIZER_SETUP_SLACK_MARGIN": 0.025,
     "GRT_RESIZER_HOLD_MAX_BUFFER_PCT": 50,
     "GRT_RESIZER_SETUP_MAX_BUFFER_PCT": 50,
