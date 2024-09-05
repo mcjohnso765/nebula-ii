@@ -1,7 +1,7 @@
 // FFRAM Wishbone Wrapper
 
 module ffram_WB_Wrapper #(
-	parameter WORD_NUM = 128,
+	parameter WORD_NUM = 256,
 	parameter WORD_W = 32,
 	parameter AD_WIDTH = $clog2(WORD_NUM)
 )

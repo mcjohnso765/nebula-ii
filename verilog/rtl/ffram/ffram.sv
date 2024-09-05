@@ -1,5 +1,5 @@
 module ffram #(
-    parameter WORD_NUM = 128, //number of words
+    parameter WORD_NUM = 256, //number of words
     parameter WORD_W = 32, //word width in bits
     parameter AD_WIDTH = $clog2(WORD_NUM) //address width (word addressable)
 )

@@ -1706,9 +1706,9 @@ module team_02 (
 	clk,
 	nrst,
 	en,
-	la_data_in,
-	la_data_out,
-	la_oenb,
+	// la_data_in,
+	// la_data_out,
+	// la_oenb,
 	gpio_in,
 	gpio_out,
 	gpio_oeb,
@@ -1728,9 +1728,9 @@ module team_02 (
 	input wire clk;
 	input wire nrst;
 	input wire en;
-	input wire [31:0] la_data_in;
-	output wire [31:0] la_data_out;
-	input wire [31:0] la_oenb;
+	// input wire [31:0] la_data_in;
+	// output wire [31:0] la_data_out;
+	// input wire [31:0] la_oenb;
 	input wire [31:0] gpio_in;
 	output wire [31:0] gpio_out;
 	output wire [31:0] gpio_oeb;
@@ -1743,7 +1743,6 @@ module team_02 (
 	input wire [31:0] DAT_I;
 	input wire ACK_I;
 	wire [3:0] sel_i;
-	assign la_data_out = 32'b00000000000000000000000000000000;
 	wire [31:0] ramstore;
 	wire [31:0] ramaddr;
 	wire [31:0] ramload;
