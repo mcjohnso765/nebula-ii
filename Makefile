@@ -178,8 +178,8 @@ custom_run_verify =\
     export CORE_VERILOG_PATH=$(TARGET_PATH)/mgmt_core_wrapper/verilog &&\
     export CARAVEL_VERILOG_PATH=$(TARGET_PATH)/caravel/verilog &&\
     export MCW_ROOT=$(MCW_ROOT) &&\
-	export GCC_PREFIX=riscv64-unknown-elf &&\
-	export GCC_PATH=/package/riscv-gnu-toolchain/bin/ &&\
+	export GCC_PREFIX=riscv32-unknown-elf &&\
+	export GCC_PATH=/opt/riscv32/bin/ &&\
 	export USER_PROJECT_VERILOG=$(PWD)/verilog &&\
     cd verilog/dv/$* && export SIM=${SIM} && make
 # If you're Aidan, use this:
@@ -551,6 +551,4 @@ sv2v:
 
 congestion_gui:
 	nix-shell --run "openroad -exit -no_splash -gui -metrics $(PWD)/openlane/tmp.json" --pure $(OPENLANE2_ROOT)/shell.nix
-
-lef_test:
-	nix-shell --run "magic -dnull -noconsole -rcfile /root/.volare/volare/sky130/versions/bdc9412b3e468c102d01b7cf6337be06ec6e9c9a/sky130A/libs.tech/magic/sky130A.magicrc /nix/store/m4202q1n7la2bph83v3h11q6mfrcazx4-python3-3.11.9-env/lib/python3.11/site-packages/openlane/scripts/magic/wrapper.tcl" --pure $(OPENLANE2_ROOT)/shell.nix
+	

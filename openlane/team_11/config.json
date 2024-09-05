@@ -1,0 +1,52 @@
+{
+    "DESIGN_NAME": "team_11",
+    "DESIGN_IS_CORE": 0,
+    "VERILOG_FILES": [
+        "dir::../../verilog/rtl/wb_wrapper.vh",
+        "dir::../../verilog/rtl/team_projects/team_11/team_11.sv",
+        "dir::../../verilog/rtl/team_projects/team_11/buffer.sv",
+        "dir::../../verilog/rtl/team_projects/team_11/controls.sv",
+        "dir::../../verilog/rtl/team_projects/team_11/debouncer.sv",
+        "dir::../../verilog/rtl/team_projects/team_11/decoder.sv",
+        "dir::../../verilog/rtl/team_projects/team_11/keyclk_div.sv",
+        "dir::../../verilog/rtl/team_projects/team_11/keypad_control.sv",
+        "dir::../../verilog/rtl/team_projects/team_11/keypad.sv",
+        "dir::../../verilog/rtl/team_projects/team_11/lcd1602.sv"
+    ],
+    "CLOCK_PERIOD": 100,
+    "CLOCK_PORT": "clk",
+    "FP_CORE_UTIL": 8,
+    "PL_TARGET_DENSITY": 0.5,
+    "RUN_HEURISTIC_DIODE_INSERTION": true,
+    "MAX_TRANSITION_CONSTRAINT": 1.5,
+    "VDD_NETS": "vccd1",
+    "GND_NETS": "vssd1",
+    "FP_PDN_CORE_RING": 0,
+    "RT_MAX_LAYER": "met4",
+    "FP_SIZING": "absolute",
+    "DIE_AREA": "0 0 300 200",
+    "pdk::sky130*": {
+        "scl::sky130_fd_sc_hd": {
+            "CLOCK_PERIOD": 100
+        },
+        "scl::sky130_fd_sc_hdll": {
+            "CLOCK_PERIOD": 10
+        },
+        "scl::sky130_fd_sc_hs": {
+            "CLOCK_PERIOD": 8
+        },
+        "scl::sky130_fd_sc_ls": {
+            "CLOCK_PERIOD": 10,
+            "SYNTH_MAX_FANOUT": 5
+        },
+        "scl::sky130_fd_sc_ms": {
+            "CLOCK_PERIOD": 10
+        }
+    },
+    "pdk::gf180mcu*": {
+        "CLOCK_PERIOD": 24.0,
+        "FP_CORE_UTIL": 30,
+        "SYNTH_MAX_FANOUT": 4,
+        "PL_TARGET_DENSITY": 0.5
+    }
+}

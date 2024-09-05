@@ -1,0 +1,45 @@
+{
+    "DESIGN_NAME": "team_04",
+    "DESIGN_IS_CORE": 0,
+    "VERILOG_FILES": [
+        "dir::../../verilog/rtl/wb_wrapper.vh",
+        "dir::../../verilog/rtl/team_projects/team_04/team_04.sv",
+        "dir::../../verilog/rtl/wishbone_manager/wishbone_manager.sv",
+        "dir::../../verilog/rtl/team_projects/team_04/source_v/tippy_top.v"
+    ],
+    "CLOCK_PERIOD": 100,
+    "CLOCK_PORT": "clk",
+    "FP_CORE_UTIL": 7,
+    "PL_TARGET_DENSITY": 0.65,
+    "RUN_HEURISTIC_DIODE_INSERTION": true,
+    "VDD_NETS": "vccd1",
+    "GND_NETS": "vssd1",
+    "FP_PDN_CORE_RING": 0,
+    "RT_MAX_LAYER": "met4",
+    "FP_SIZING": "absolute",
+    "DIE_AREA": "0 0 900 250",
+    "pdk::sky130*": {
+        "scl::sky130_fd_sc_hd": {
+            "CLOCK_PERIOD": 100
+        },
+        "scl::sky130_fd_sc_hdll": {
+            "CLOCK_PERIOD": 10
+        },
+        "scl::sky130_fd_sc_hs": {
+            "CLOCK_PERIOD": 8
+        },
+        "scl::sky130_fd_sc_ls": {
+            "CLOCK_PERIOD": 10,
+            "SYNTH_MAX_FANOUT": 5
+        },
+        "scl::sky130_fd_sc_ms": {
+            "CLOCK_PERIOD": 10
+        }
+    },
+    "pdk::gf180mcu*": {
+        "CLOCK_PERIOD": 24.0,
+        "FP_CORE_UTIL": 30,
+        "SYNTH_MAX_FANOUT": 4,
+        "PL_TARGET_DENSITY": 0.5
+    }
+}

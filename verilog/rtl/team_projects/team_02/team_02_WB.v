@@ -27,13 +27,17 @@
 //`include			"wb_wrapper.vh"
 
 module team_02_WB (
+	`ifdef USE_POWER_PINS
+		inout vccd1,	// User area 1 1.8V supply
+		inout vssd1,	// User area 1 digital ground
+	`endif
 	`WB_SLAVE_PORTS,
-	input	wire	[32-1:0]	la_data_in,
-	output	wire	[32-1:0]	la_data_out,
-	input	wire	[32-1:0]	la_oenb,
+	// input	wire	[32-1:0]	la_data_in,
+	// output	wire	[32-1:0]	la_data_out,
+	// input	wire	[32-1:0]	la_oenb,
 	input	wire	[32-1:0]	gpio_in,
 	output	wire	[32-1:0]	gpio_out,
-	output	wire	[32-1:0]	gpio_oeb,
+	// output	wire	[32-1:0]	gpio_oeb,
 	output	wire	[32-1:0]	ADR_O,
 	output	wire	[32-1:0]	DAT_O,
 	output	wire	[4-1:0]	SEL_O,
@@ -41,13 +45,13 @@ module team_02_WB (
 	output	wire	[1-1:0]	STB_O,
 	output	wire	[1-1:0]	CYC_O,
 	input	wire	[1-1:0]	ACK_I,
-	input	wire	[32-1:0]	DAT_I
+	input	wire	[32-1:0]	DAT_I,
+	input   wire                nrst
 );
 
 	localparam	EN_VAL_REG_OFFSET = `WB_AW'h30020000;
 	localparam	START_ADDR_VAL_REG_OFFSET = `WB_AW'h30020004;
 	wire		clk = clk_i;
-	wire		nrst = (~rst_i);
 
 	assign IRQ = 0;
 
@@ -68,15 +72,19 @@ module team_02_WB (
 	`WB_REG(START_ADDR_VAL_REG, 0, 32)
 
 	team_02 instance_to_wrap (
+		`ifdef USE_POWER_PINS
+			.vccd1(vccd1),	// User area 1 1.8V power
+			.vssd1(vssd1),	// User area 1 digital ground
+		`endif
 		.clk(clk),
 		.nrst(nrst),
 		.en(en),
-		.la_data_in(la_data_in),
-		.la_data_out(la_data_out),
-		.la_oenb(la_oenb),
+		// .la_data_in(la_data_in),
+		// .la_data_out(la_data_out),
+		// .la_oenb(la_oenb),
 		.gpio_in(gpio_in),
 		.gpio_out(gpio_out),
-		.gpio_oeb(gpio_oeb),
+		// .gpio_oeb(gpio_oeb),
 		.ADR_O(ADR_O),
 		.DAT_O(DAT_O),
 		.SEL_O(SEL_O),

@@ -7,20 +7,24 @@
 `default_nettype none
 
 module team_02 (
+    `ifdef USE_POWER_PINS
+        inout vccd1,	// User area 1 1.8V supply
+        inout vssd1,	// User area 1 digital ground
+    `endif
     // HW
     input logic clk, nrst,
     
     input logic en, //This signal is an enable signal for your chip. Your design should disable if this is low.
 
     // Logic Analyzer - Grant access to all 128 LA
-    input wire [31:0] la_data_in,
-    output wire [31:0] la_data_out,
-    input wire [31:0] la_oenb,
+    // input wire [31:0] la_data_in,
+    // output wire [31:0] la_data_out,
+    // input wire [31:0] la_oenb,
 
     // 34 out of 38 GPIOs (Note: if you need up to 38 GPIO, discuss with a TA)
     input  wire [31:0] gpio_in, // Breakout Board Pins
     output wire [31:0] gpio_out, // Breakout Board Pins
-    output wire [31:0] gpio_oeb, // Active Low Output Enable
+    // output wire [31:0] gpio_oeb, // Active Low Output Enable
 
     output wire [31:0] ADR_O,
     output wire [31:0] DAT_O,
@@ -42,7 +46,6 @@ module team_02 (
     logic [3:0] sel_i;
 
     // All outputs must have a value even if not used
-    assign la_data_out = 32'b0;
     //assign gpio_out = 32'b0; //Inputs, but set low anyways
     //assign gpio_oeb = '1;//All 1's inputs
     /*
@@ -63,15 +66,6 @@ module team_02 (
     .ADR_O(ADR_O), .DAT_O(DAT_O), .SEL_O(SEL_O), .WE_O(WE_O), .STB_O(STB_O), .CYC_O(CYC_O),
     .DAT_I(DAT_I), .ACK_I(ACK_I));
 
-    assign gpio_oeb[0] = '0;
-    assign gpio_oeb[4:1] = '1;
-    assign gpio_oeb[5] = '0;
-    assign gpio_oeb[6] = '0;
-    assign gpio_oeb[14:7] = '0;
-    assign gpio_oeb[18:15] = 4'b1111;
-    assign gpio_oeb[22:19] = '0;
-
-    assign gpio_oeb[31:23] = '1;
     assign gpio_out[31:23] = '0;
     assign gpio_out[18:15] = '0;
     assign gpio_out[4:1] = '0;

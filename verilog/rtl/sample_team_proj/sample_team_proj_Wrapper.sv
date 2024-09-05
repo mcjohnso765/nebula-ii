@@ -47,7 +47,9 @@ module sample_team_proj_Wrapper (
     output wire        STB_O,
     output wire        CYC_O,
     input  wire [31:0] DAT_I,
-    input wire         ACK_I
+    input wire         ACK_I,
+    
+    input wire       nrst
 );
     
     //Unused connection to nebula_ii wishbone arbitrator
@@ -64,6 +66,7 @@ module sample_team_proj_Wrapper (
     assign gpio_out[4:1] = 4'b0;  // Doesn't matter since inputs
 
     sample_team_proj_WB sample_team_proj_WB (
+        .nrst(nrst),
         .clk_i(wb_clk_i),
         .rst_i(wb_rst_i),
         .adr_i(wbs_adr_i),

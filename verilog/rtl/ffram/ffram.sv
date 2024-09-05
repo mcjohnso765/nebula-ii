@@ -1,5 +1,5 @@
 module ffram #(
-    parameter WORD_NUM = 256, //number of words
+    parameter WORD_NUM = 128, //number of words
     parameter WORD_W = 32, //word width in bits
     parameter AD_WIDTH = $clog2(WORD_NUM) //address width (word addressable)
 )
@@ -14,14 +14,34 @@ module ffram #(
     output logic [WORD_W-1:0] d_out     //data out
 );
 
-    logic [WORD_NUM-1:0][WORD_W-1:0] mstate, mstate_n;
+    logic [WORD_W-1:0] mstate [WORD_NUM-1:0];
+    logic [WORD_W-1:0] mstate_n [WORD_NUM-1:0];
 
-    always_ff @ (posedge clk) begin
-        mstate <= mstate_n;
-    end
+    integer i2;
+    integer i3;
+
+    // always_ff @ (posedge clk) begin
+    //     for (i1 = 0; i1 < WORD_NUM; i1++)
+    //     begin
+    //         mstate[i1] <= mstate_n[i1];
+    //     end
+    // end
+
+    genvar i;
+    generate
+        for (i = 0; i < WORD_NUM; i = i + 1) begin : assign_loop
+            always_ff @ (posedge clk) begin
+                mstate[i] <= mstate_n[i];
+            end
+        end
+    endgenerate
+
 
     always_comb begin
-        mstate_n = mstate;
+        for(i2 = 0; i2 < WORD_NUM; i2++)
+        begin
+            mstate_n[i2] = mstate[i2];
+        end
         d_out = 0;
 
         if (wb_en) begin
@@ -32,8 +52,14 @@ module ffram #(
             end
         end
 
+        for(i3 = 0; i3 < WORD_NUM; i3++)
+        begin
+            if(rst) begin
+                mstate_n[i3] = '0;
+            end
+        end
+
         if(rst) begin
-            mstate_n = '0;
             d_out = '0;
         end
     end

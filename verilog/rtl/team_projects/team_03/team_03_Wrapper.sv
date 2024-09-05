@@ -53,7 +53,9 @@ module team_03_Wrapper (
     output logic        CYC_O,
 
     input logic [31:0] DAT_I,
-    input logic        ACK_I
+    input logic        ACK_I,
+    
+    input wire       nrst
 
 
 );
@@ -79,8 +81,15 @@ module team_03_Wrapper (
     assign gpio_oeb[4:1] = 4'b1111;//Set all to inputs
     assign gpio_out[4:1] = 4'b0;//Doesn't matter since inputs
 
+    assign la_data_out = 32'b0;
+
     // Instantiate Bus Wrapper module here
     team_03_WB team_03_WB (
+        `ifdef USE_POWER_PINS
+                .vccd1(vccd1),	// User area 1 1.8V power
+                .vssd1(vssd1),	// User area 1 digital ground
+        `endif
+        .nrst(nrst),
         .ext_clk(wb_clk_i),
         .clk_i(wb_clk_i),
         .rst_i(wb_rst_i),
@@ -93,9 +102,9 @@ module team_03_Wrapper (
         .ack_o(wbs_ack_o),
         .we_i(wbs_we_i),
         .IRQ(),//1 bit
-        .la_data_in(la_data_in),
-        .la_data_out(la_data_out),
-        .la_oenb(la_oenb),
+        // .la_data_in(la_data_in),
+        // .la_data_out(la_data_out),
+        // .la_oenb(la_oenb),
         .gpio_in({gpio_in[37:5], gpio_in[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_out({gpio_out[37:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed

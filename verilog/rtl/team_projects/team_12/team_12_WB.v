@@ -27,18 +27,22 @@
 // `include			"wb_wrapper.vh"
 
 module team_12_WB (
+	`ifdef USE_POWER_PINS
+		inout vccd1,	// User area 1 1.8V supply
+		inout vssd1,	// User area 1 digital ground
+	`endif
 	`WB_SLAVE_PORTS,
-	input	wire	[32-1:0]	la_data_in,
-	output	wire	[32-1:0]	la_data_out,
-	input	wire	[32-1:0]	la_oenb,
+	// input	wire	[32-1:0]	la_data_in,
+	// output	wire	[32-1:0]	la_data_out,
+	// input	wire	[32-1:0]	la_oenb,
 	input	wire	[34-1:0]	gpio_in,
 	output	wire	[34-1:0]	gpio_out,
-	output	wire	[34-1:0]	gpio_oeb
+	output	wire	[34-1:0]	gpio_oeb,
+	input   wire                nrst
 );
 
 	localparam	EN_VAL_REG_OFFSET = `WB_AW'h300C0000;
 	wire		clk = clk_i;
-	wire		nrst = (~rst_i);
 
 
 	`WB_CTRL_SIGNALS
@@ -53,12 +57,16 @@ module team_12_WB (
 	assign IRQ = '0;
 
 	team_12 instance_to_wrap (
+		`ifdef USE_POWER_PINS
+                .vccd1(vccd1),	// User area 1 1.8V power
+                .vssd1(vssd1),	// User area 1 digital ground
+        `endif
 		.clk(clk),
 		.nrst(nrst),
 		.en(en),
-		.la_data_in(la_data_in),
-		.la_data_out(la_data_out),
-		.la_oenb(la_oenb),
+		// .la_data_in(la_data_in),
+		// .la_data_out(la_data_out),
+		// .la_oenb(la_oenb),
 		.gpio_in(gpio_in),
 		.gpio_out(gpio_out),
 		.gpio_oeb(gpio_oeb)

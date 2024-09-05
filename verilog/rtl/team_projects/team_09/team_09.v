@@ -3,23 +3,30 @@ module team_09 (
 	clk,
 	nrst,
 	en,
-	la_data_in,
-	la_data_out,
-	la_oenb,
+	// la_data_in,
+	// la_data_out,
+	// la_oenb,
 	gpio_in,
 	gpio_out,
-	gpio_oeb
+	gpio_oeb,
+`ifdef USE_POWER_PINS
+    vccd1,	// User area 1 1.8V supply
+    vssd1	// User area 1 digital ground
+`endif
 );
+`ifdef USE_POWER_PINS
+    inout wire vccd1;	// User area 1 1.8V supply
+    inout wire vssd1;	// User area 1 digital ground
+`endif
 	input wire clk;
 	input wire nrst;
 	input wire en;
-	input wire [31:0] la_data_in;
-	output wire [31:0] la_data_out;
-	input wire [31:0] la_oenb;
+	//input wire [31:0] la_data_in;
+	// output wire [31:0] la_data_out;
+	//input wire [31:0] la_oenb;
 	input wire [33:0] gpio_in;
 	output wire [33:0] gpio_out;
 	output wire [33:0] gpio_oeb;
-	assign la_data_out = 128'b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
 	assign gpio_out[33:25] = 9'b000000000;
 	assign gpio_oeb = 34'b0011111110000000000000000000000000;
 	localparam MAX_LENGTH = 140;

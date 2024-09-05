@@ -1,0 +1,63 @@
+{
+    "DESIGN_NAME": "team_03",
+    "DESIGN_IS_CORE": 0,
+    "VERILOG_FILES": [
+        "dir::../../verilog/rtl/wb_wrapper.vh",
+        "dir::../../verilog/rtl/team_projects/team_03/typedef.sv",
+        "dir::../../verilog/rtl/team_projects/team_03/team_03.sv",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/ALU.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/branch_logic.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/byte_demux.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/clock_controller.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/control_logic_unit.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/core.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/decoder.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/imm_generator.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/IO_mod_enable.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/pc.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/register_file.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/request_unit.v",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/writeback.v",
+        "dir::../../verilog/rtl/wishbone_manager/wishbone_manager.sv",
+        "dir::../../verilog/rtl/team_projects/team_03/sv2v_conv/instruction_check.v"
+
+
+
+
+    ],
+    "CLOCK_PERIOD": 100,
+    "CLOCK_PORT": "clk",
+    "FP_CORE_UTIL": 10,
+    "PL_TARGET_DENSITY": 0.4,
+    "RUN_HEURISTIC_DIODE_INSERTION": true,
+    "VDD_NETS": "vccd1",
+    "GND_NETS": "vssd1",
+    "FP_PDN_CORE_RING": 0,
+    "RT_MAX_LAYER": "met4",
+    "FP_SIZING": "absolute",
+    "DIE_AREA": "0 0 900 300",
+    "pdk::sky130*": {
+        "scl::sky130_fd_sc_hd": {
+            "CLOCK_PERIOD": 100
+        },
+        "scl::sky130_fd_sc_hdll": {
+            "CLOCK_PERIOD": 10
+        },
+        "scl::sky130_fd_sc_hs": {
+            "CLOCK_PERIOD": 8
+        },
+        "scl::sky130_fd_sc_ls": {
+            "CLOCK_PERIOD": 10,
+            "SYNTH_MAX_FANOUT": 5
+        },
+        "scl::sky130_fd_sc_ms": {
+            "CLOCK_PERIOD": 10
+        }
+    },
+    "pdk::gf180mcu*": {
+        "CLOCK_PERIOD": 24.0,
+        "FP_CORE_UTIL": 30,
+        "SYNTH_MAX_FANOUT": 4,
+        "PL_TARGET_DENSITY": 0.5
+    }
+}

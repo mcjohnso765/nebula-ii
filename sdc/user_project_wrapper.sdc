@@ -7,7 +7,7 @@ current_design user_project_wrapper
 ###############################################################################
 create_clock -name clk -period 100.0000 [get_ports {wb_clk_i}]
 set_clock_transition 0.1500 [get_clocks {clk}]
-set_clock_uncertainty 0.2500 clk
+set_clock_uncertainty 0.2000 clk
 set_propagated_clock [get_clocks {clk}]
 set_clock_latency -source -min 4.6500 [get_clocks {clk}]
 set_clock_latency -source -max 5.5700 [get_clocks {clk}]

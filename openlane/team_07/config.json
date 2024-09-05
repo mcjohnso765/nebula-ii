@@ -1,0 +1,105 @@
+{
+    "DESIGN_NAME": "team_07",
+    "DESIGN_IS_CORE": 0,
+    "VERILOG_FILES": [
+        "dir::../../verilog/rtl/wb_wrapper.vh",
+        "dir::../../verilog/rtl/team_projects/team_07/team_07.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/audio_sm.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/bomb_game.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/button_edge_detector.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/fsm_game_control.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/fsm_playing_mod_locator.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/fsm_playing.sv",
+
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_boom.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_border.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_circle.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_defused.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_flag.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_heart.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_mem.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_mod_square.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_play_button.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_player.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_simon.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/generate_wire.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/imageGenerator.sv",
+
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/maze_clear_detector.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/maze_mazer_locator.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/maze_pos_gen.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/maze_wall_detector.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/maze.sv",
+
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/mem_game.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/mem_num_gen.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/mem_select_detector.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/mem_select_locator.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/pll.v",
+
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/random_gen_maze_ms.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/random_gen_maze_pos.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/random_gen_mem_num.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/random_gen_simon.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/random_gen_wire_color.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/random_gen_wire_num.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/rising_edge_detector.sv",
+        
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/simon_game.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/simon_light_control.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/simon_press_detector.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/simon_sequence_gen.sv",
+
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/spi.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/tft_ili9341_spi.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/tft_ili9341.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/timer_counter.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/timer_sec_divider.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/timer_ssdec_decoder.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/timer_ssdec_sck_divider.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/timer_ssdec_spi_master.sv",
+        
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/wire_cut_detector.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/wire_game.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/wire_wire_locator.sv",
+        "dir::../../verilog/rtl/team_projects/team_07/src_Puth/wire_wire_gen.sv"
+
+
+    ],
+    "CLOCK_PERIOD": 100,
+    "CLOCK_PORT": "clk",
+    "FP_CORE_UTIL": 7,
+    "PL_TARGET_DENSITY": 0.45,
+    "MAX_TRANSITION_CONSTRAINT":1.5,
+    "RUN_HEURISTIC_DIODE_INSERTION": true,
+    "VDD_NETS": "vccd1",
+    "GND_NETS": "vssd1",
+    "FP_PDN_CORE_RING": 0,
+    "RT_MAX_LAYER": "met4",
+    "FP_SIZING": "absolute",
+    "DIE_AREA": "0 0 550 400",
+    "pdk::sky130*": {
+        "scl::sky130_fd_sc_hd": {
+            "CLOCK_PERIOD": 100
+        },
+        "scl::sky130_fd_sc_hdll": {
+            "CLOCK_PERIOD": 10
+        },
+        "scl::sky130_fd_sc_hs": {
+            "CLOCK_PERIOD": 8
+        },
+        "scl::sky130_fd_sc_ls": {
+            "CLOCK_PERIOD": 10,
+            "SYNTH_MAX_FANOUT": 5
+        },
+        "scl::sky130_fd_sc_ms": {
+            "CLOCK_PERIOD": 10
+        }
+    },
+    "pdk::gf180mcu*": {
+        "CLOCK_PERIOD": 24.0,
+        "FP_CORE_UTIL": 30,
+        "SYNTH_MAX_FANOUT": 4,
+        "PL_TARGET_DENSITY": 0.5
+    }
+}

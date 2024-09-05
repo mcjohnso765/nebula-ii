@@ -1,11 +1,12 @@
 `default_nettype none
 module team_05 (
+	`ifdef USE_POWER_PINS
+		vccd1,	// User area 1 1.8V supply
+		vssd1,	// User area 1 digital ground
+	`endif
 	clk,
 	nrst,
 	en,
-	la_data_in,
-	la_data_out,
-	la_oenb,
 	gpio_in,
 	gpio_out,
 	gpio_oeb,
@@ -18,12 +19,16 @@ module team_05 (
 	STB_O,
 	CYC_O
 );
+	`ifdef USE_POWER_PINS
+	inout wire vccd1;	// User area 1 1.8V supply
+	inout wire vssd1;	// User area 1 digital ground
+	`endif
 	input wire clk;
 	input wire nrst;
 	input wire en;
-	input wire [127:0] la_data_in;
-	output wire [127:0] la_data_out;
-	input wire [127:0] la_oenb;
+//	input wire [127:0] la_data_in;
+//	output wire [127:0] la_data_out;
+//	input wire [127:0] la_oenb;
 	input wire [33:0] gpio_in;
 	output wire [33:0] gpio_out;
 	output wire [33:0] gpio_oeb;
@@ -35,7 +40,6 @@ module team_05 (
 	output wire WE_O;
 	output wire STB_O;
 	output wire CYC_O;
-	assign la_data_out = 128'b00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
 	wire [3:0] keypad_out;
 	wire [7:0] lcd_data;
 	wire lcd_en;

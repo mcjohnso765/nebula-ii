@@ -173,13 +173,15 @@ module team_02_tb;
 		// end else begin
 		// 	#(1);
 		// end
-		#(mprj_io[22:19] == column);
-		mprj_io_in[18:15] = row;
+		begin
+			#(mprj_io[22:19] == column);
+			mprj_io_in[18:15] = row;
 
-		@(negedge clk);
-		@(negedge clk);
-		@(negedge clk);
-		@(negedge clk);
+			@(negedge clk);
+			@(negedge clk);
+			@(negedge clk);
+			@(negedge clk);
+		end
 		// #(150);
 		// mprj_io_in[18:15] = 4'h0; 
 	endtask
