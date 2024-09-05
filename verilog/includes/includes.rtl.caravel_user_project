@@ -69,25 +69,25 @@
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_01/team_01_shift_reg.sv
 
 # Team 02
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/team_02.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_alu.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_button.v
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_control.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_edgeDetector.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_keypad.v
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_lcd1602.v
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_memory_control.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_new_request_unit.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_pc.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_register_file.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_signExtender.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_top.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_wishbone_manager.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_writeToReg.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_fpgaModule.sv
--v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_mux.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/team_02.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_alu.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_control.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_memory_control.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_mux.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_pc.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_register_file.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_request_unit.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_request.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_signExtender.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_top.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_wishbone_manager.sv
+# -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_writeToReg.sv
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/team_02_WB.v
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/team_02_Wrapper.sv
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_keypad.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_lcd1602.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/t02_button.v
+-v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_02/project.v
 
 # Team_03 project
 -v $(USER_PROJECT_VERILOG)/rtl/team_projects/team_03/team_03.sv

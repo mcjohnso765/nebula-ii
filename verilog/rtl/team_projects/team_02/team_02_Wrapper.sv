@@ -86,17 +86,6 @@ module team_02_Wrapper (
 
     assign la_data_out = 32'b0;
 
-    assign gpio_oeb[0] = '0;
-    assign gpio_oeb[8:5] = '1;
-    assign gpio_oeb[9] = '0;
-    assign gpio_oeb[10] = '0;
-    assign gpio_oeb[18:11] = '0;
-    assign gpio_oeb[22:19] = 4'b1111;
-    assign gpio_oeb[26:23] = '0;
-
-    assign gpio_oeb[35:27] = '1;
-    assign gpio_oeb[37:36] = '1;
-
     //This can't be here. It should be in the team_02.sv file
     // assign {gpio_oeb[18:15]} = '1;//Set all to inputs
     // assign {gpio_out[18:15]} = '0;//Doesn't matter since inputs
@@ -129,7 +118,7 @@ module team_02_Wrapper (
         // .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_in({gpio_in[37:5], gpio_in[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
         .gpio_out({gpio_out[37:5], gpio_out[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
-        // .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
+        .gpio_oeb({gpio_oeb[37:5], gpio_oeb[0]}), //In general, GPIO 4:1 should not be used but can be. Ask a TA if needed
 
         // Add master ports
         .ADR_O(ADR_O),
