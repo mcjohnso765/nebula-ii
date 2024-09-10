@@ -56,7 +56,7 @@ ifeq ($(PDK),sky130A)
 	SKYWATER_COMMIT=f70d8ca46961ff92719d8870a18a076370b85f6c
 	export OPEN_PDKS_COMMIT?=4d5af10bfee4dab799566aaf903bb22aee69bac9
 	export OPENLANE_TAG?=2023.07.19-1
-	MPW_TAG ?= mpw-9a
+	MPW_TAG ?= 2024.09.03-1
 
 ifeq ($(CARAVEL_LITE),1)
 	CARAVEL_NAME := caravel-lite
@@ -146,6 +146,8 @@ dv-targets-gl=$(dv_patterns:%=verify-%-gl)
 purdue-dv-targets-gl=$(dv_patterns:%=purdue-verify-%-gl)
 cocotb-dv-targets-gl=$(cocotb-dv_patterns:%=cocotb-verify-%-gl)
 dv-targets-gl-sdf=$(dv_patterns:%=verify-%-gl-sdf)
+purdue-dv-targets-gl-sdf=$(dv_patterns:%=purdue-verify-%-gl-sdf)
+
 
 TARGET_PATH=$(shell pwd)
 verify_command="source ~/.bashrc && cd ${TARGET_PATH}/verilog/dv/$* && export SIM=${SIM} && make"
@@ -220,6 +222,10 @@ $(purdue-dv-targets-gl): purdue-verify-%-gl: zicsr-fix
 $(dv-targets-gl-sdf): SIM=GL_SDF
 $(dv-targets-gl-sdf): verify-%-gl-sdf: $(dv_base_dependencies)
 	$(docker_run_verify)
+
+$(purdue-dv-targets-gl): SIM=GL_SDF
+$(purdue-dv-targets-gl-sdf): purdue-verify-%-gl-sdf: zicsr-fix
+	$(custom_run_verify)
 
 clean-targets=$(blocks:%=clean-%)
 .PHONY: $(clean-targets)
