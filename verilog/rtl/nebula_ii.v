@@ -109,7 +109,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -148,7 +148,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -187,7 +187,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -227,7 +227,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -266,7 +266,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -305,7 +305,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -344,7 +344,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -383,7 +383,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -422,7 +422,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -461,7 +461,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -500,7 +500,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -540,7 +540,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -579,7 +579,7 @@ module nebula_ii (
             .vccd1(vccd1),	// User area 1 1.8V power
             .vssd1(vssd1),	// User area 1 digital ground
     `endif
-        .nrst(nrst),
+        .nrst(teams_nrst),
         //Wishbone Slave and user clk, rst
         .wb_clk_i(wb_clk_i),
         .wb_rst_i(wb_rst_i),
@@ -821,6 +821,7 @@ module nebula_ii (
         .wbs_dat_o(wbs_dat_i_ram)
     );
 
+    // Synchronizer for reset
     async_reset_sync designs_sync_rst (
     `ifdef USE_POWER_PINS
         .vccd1(vccd1),	// User area 1 1.8V power

@@ -180,8 +180,8 @@ custom_run_verify =\
     export CORE_VERILOG_PATH=$(TARGET_PATH)/mgmt_core_wrapper/verilog &&\
     export CARAVEL_VERILOG_PATH=$(TARGET_PATH)/caravel/verilog &&\
     export MCW_ROOT=$(MCW_ROOT) &&\
-	export GCC_PREFIX=riscv32-unknown-elf &&\
-	export GCC_PATH=/opt/riscv32/bin/ &&\
+	export GCC_PREFIX=riscv64-unknown-elf &&\
+	export GCC_PATH=/package/riscv-gnu-toolchain/bin/ &&\
 	export USER_PROJECT_VERILOG=$(PWD)/verilog &&\
     cd verilog/dv/$* && export SIM=${SIM} && make
 # If you're Aidan, use this:
