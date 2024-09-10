@@ -34,7 +34,7 @@ module team_01_tb;
 	assign check_bits = {mprj_io[37:5], mprj_io[0]};
 	assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 	assign clock_in = clock;
-	assign mprj_io[15:12] = mprj_io_in[15:12];
+	assign mprj_io[19:16] = mprj_io_in[19:16];
 
 	// External clock is used by default.  Make this artificially fast for the
 	// simulation.  Normally this would be a slow clock and the digital PLL
@@ -144,8 +144,8 @@ module team_01_tb;
 
 	task press_button;
 		input reg [3:0] column, row;
-		#(mprj_io[19:16] == column);
-		mprj_io_in[15:12] = row;
+		#(mprj_io[23:20] == column);
+		mprj_io_in[19:16] = row;
 		@(negedge clock);
 		@(negedge clock);
 		@(negedge clock);
@@ -174,18 +174,20 @@ module team_01_tb;
 
 	// Main Test Bench Process
 	initial begin
-	    wait(uut.mprj.mprj.team_01_Wrapper.team_01_WB.instance_to_wrap.\en == 1);
+	    mprj_io_in[19:16] = 4'b0;
+		wait(uut.mprj.mprj.team_01_Wrapper.team_01_WB.instance_to_wrap.\en == 1);
 		press_button(4'he, 4'h1);
-		mprj_io_in[15:12] = 4'b1111;
+		mprj_io_in[19:16] = 4'b0;
 		#(check_bits == {14'b0, 4'h1, 4'hf, 8'd0, 3'b011, 1'b0});
 		@(negedge clock);
 		press_button(4'he, 4'h8);
-		mprj_io_in[15:12] = 4'b1111;
+		mprj_io_in[19:16] = 4'b0;
 		#(check_bits == {14'b0, 4'h1, 4'hf, 8'h31, 3'b111, 1'b0});
 		@(negedge clock);
 		press_button(4'hb, 4'h8);
-		mprj_io_in[15:12] = 4'b1111;
+		mprj_io_in[19:16] = 4'b0;
 		#(check_bits == {14'b0, 4'h1, 4'hf, 8'h39, 3'b111, 1'b0});
+		#(2500);
 
 		
 		`ifdef GL
