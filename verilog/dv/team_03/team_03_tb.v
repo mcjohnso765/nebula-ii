@@ -28,7 +28,6 @@ module team_03_tb;
 
 	wire gpio;
 	wire [37:0] mprj_io;
-	reg [37:0] mprj_io_in = mprj_io; 
 	reg [33:0] expected_io;
 	wire [33:0] checkbits;
 
@@ -39,75 +38,7 @@ module team_03_tb;
 
 	// Clock generation
 	always #12.5 clock <= (clock === 1'b0);
-	task left_button_press;
-    begin
-        @(negedge clock_in);
-        mprj_io_in[29] = 1'b1;
-        @(negedge clock);
-        mprj_io_in[29] = 1'b0;
-        @(posedge clock_in);
-    end
-    endtask
 
-    task right_button_press;
-    begin
-        @(negedge clock_in);
-        mprj_io_in[30] = 1'b1;
-        @(negedge clock_in);
-        mprj_io_in[30] = 1'b0;
-        @(posedge clock_in);
-    end
-    endtask
-
-    task down_button_press;
-    begin
-        @(negedge clock_in);
-        mprj_io_in[31] = 1'b1;
-        @(negedge clock);
-        mprj_io_in[31] = 1'b0;
-        @(posedge clock_in);
-    end
-    endtask
-
-    task up_button_press;
-    begin
-        @(negedge clock_in);
-        mprj_io_in[32] = 1'b1;
-        @(negedge clock_in);
-        mprj_io_in[32] = 1'b0;
-        @(posedge clock);
-    end
-    endtask
-
-	task obstacle_gen_press;
-	begin
-		@(negedge clock_in);
-		mprj_io_in[34] = 1'b1;
-		@(negedge clock_in);
-        mprj_io_in[34] = 1'b0;
-        @(posedge clock_in);
-	end
-	endtask
-	
-	task mode_press;
-	begin
-		@(negedge clock_in);
-		mprj_io_in[33] = 1'b1;
-		@(negedge clock_in);
-        mprj_io_in[33] = 1'b0;
-        @(posedge clock_in);
-	end
-	endtask
-
-	task new_game_press;
-	begin
-		@(negedge clock);
-		mprj_io_in[35] = 1'b1;
-		@(negedge clock_in);
-        mprj_io_in[35] = 1'b0;
-        @(posedge clock_in);
-	end
-	endtask
 	initial begin
 		clock = 0;
 	end
@@ -206,60 +137,12 @@ module team_03_tb;
 			$sdf_annotate("../../../caravel/sdf/gpio_defaults_block.sdf", uut.gpio_defaults_block_36) ;
 			$sdf_annotate("../../../caravel/sdf/gpio_defaults_block.sdf", uut.gpio_defaults_block_37) ;
 		end
-	`endif 
-
-	task button_push_reset;
-		@(negedge clock);
-		mprj_io_in[0] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[0] <= 1'b0;
-		@(posedge clock);
-	endtask
-
-	task button_push_right;
-		@(negedge clock);
-		mprj_io_in[5] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[5] <= 1'b0;
-		@(posedge clock);
-	endtask
-
-	task button_push_left;
-		@(negedge clock);
-		mprj_io_in[6] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[6] <= 1'b0;
-		@(posedge clock);
-	endtask
-
-	task button_push_up;
-		@(negedge clock);
-		mprj_io_in[7] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[7] <= 1'b0;
-		@(posedge clock);
-	endtask
-
-	task button_push_down;
-		@(negedge clock);
-		mprj_io_in[8] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[8] <= 1'b0;
-		@(posedge clock);
-	endtask
-
-	task button_push_start_pause;
-		@(negedge clock);
-		mprj_io_in[9] <= 1'b1;
-		@(negedge clock);
-		mprj_io_in[9] <= 1'b0;
-		@(posedge clock);
-	endtask
+	`endif
 
 	// Signal dump and timeout check
 	initial begin
 		$dumpfile("team_03.vcd");
-		$dumpvars(0, team_03_tb.mprj_io, team_03_tb.uut.mprj);
+		$dumpvars(0, team_03_tb.mprj_io, team_03_tb.uut.chip_core.mprj);
 
 		// Repeat cycles of 1000 clock edges as needed to complete testbench
 		repeat (1000) begin
@@ -280,8 +163,14 @@ module team_03_tb;
 	initial begin
 
 		// Wait for design to be enabled
-		wait(uut.mprj.mprj.team_03_Wrapper.team_03_WB.instance_to_wrap.\en == 1);
-		#300000;
+		// `ifdef GL
+		// 	wait(uut.chip_core.mprj.mprj.team_03_Wrapper.team_03_WB.instance_to_wrap.\en == 1);
+		// `else
+		// 	wait(uut.chip_core.mprj.mprj.team_03_Wrapper.team_03_WB.instance_to_wrap.\en == 1);
+		// `endif
+
+		// Run for a lot of time
+		#1500000;
 
 		// button_push_start_pause;
 		// #3000050;
