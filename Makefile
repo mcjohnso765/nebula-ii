@@ -223,7 +223,7 @@ $(dv-targets-gl-sdf): SIM=GL_SDF
 $(dv-targets-gl-sdf): verify-%-gl-sdf: $(dv_base_dependencies)
 	$(docker_run_verify)
 
-$(purdue-dv-targets-gl): SIM=GL_SDF
+$(purdue-dv-targets-gl-sdf): SIM=GL_SDF
 $(purdue-dv-targets-gl-sdf): purdue-verify-%-gl-sdf: zicsr-fix
 	$(custom_run_verify)
 
