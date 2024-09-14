@@ -180,13 +180,16 @@ custom_run_verify =\
     export CORE_VERILOG_PATH=$(TARGET_PATH)/mgmt_core_wrapper/verilog &&\
     export CARAVEL_VERILOG_PATH=$(TARGET_PATH)/caravel/verilog &&\
     export MCW_ROOT=$(MCW_ROOT) &&\
-	export GCC_PREFIX=riscv64-unknown-elf &&\
-	export GCC_PATH=/package/riscv-gnu-toolchain/bin/ &&\
+	export GCC_PREFIX=riscv32-unknown-elf &&\
+	export GCC_PATH=/opt/riscv32/bin/ &&\
 	export USER_PROJECT_VERILOG=$(PWD)/verilog &&\
     cd verilog/dv/$* && export SIM=${SIM} && make
 # If you're Aidan, use this:
 # export GCC_PREFIX=riscv32-unknown-elf &&\
 # export GCC_PATH=/opt/riscv32/bin/ &&\
+# If you are on thinlink
+# export GCC_PREFIX=riscv64-unknown-elf &&\
+# export GCC_PATH=/package/riscv-gnu-toolchain/bin/ &&\
 
 .PHONY: harden
 harden: $(blocks)
@@ -225,6 +228,7 @@ $(dv-targets-gl-sdf): verify-%-gl-sdf: $(dv_base_dependencies)
 
 $(purdue-dv-targets-gl-sdf): SIM=GL_SDF
 $(purdue-dv-targets-gl-sdf): purdue-verify-%-gl-sdf: zicsr-fix
+	export PROJECTVERILOG=$(PWD)/verilog &&\
 	$(custom_run_verify)
 
 clean-targets=$(blocks:%=clean-%)
@@ -557,4 +561,11 @@ sv2v:
 
 congestion_gui:
 	nix-shell --run "openroad -exit -no_splash -gui -metrics $(PWD)/openlane/tmp.json" --pure $(OPENLANE2_ROOT)/shell.nix
-	
+
+cvc64-install:
+	cd $(CVC_LOCATION)
+	git clone git@github.com:cambridgehackers/open-src-cvc.git
+	cd openlane-src-cvc
+	make -f src/makefile.cvc64
+#   Commented because I don't want to mess with anyone's path accidentally right now. This needs to be run to allow you to call cvc64
+#	export PATH=$PATH:$(CVC_LOCATION)/open-src-cvc/bin
