@@ -10,7 +10,7 @@
 		"*__tapvpwrvgnd_*"
 	],
 	"LVS_FLATTEN": [
-		"$UPRJ_ROOT/spi/lvs/*.spice"
+		"sky130_*"
 	],
 	"LVS_NOFLATTEN": [
 		""
@@ -24,8 +24,6 @@
 		"$UPRJ_ROOT/spi/lvs/*.spice"
 	],
 	"LVS_VERILOG_FILES": [
-		"$UPRJ_ROOT/verilog/gl/user_proj_example.v",
-		"$UPRJ_ROOT/verilog/gl/$TOP_SOURCE.v",
 		"$UPRJ_ROOT/verilog/gl/*.v"
 	],
 	"LAYOUT_FILE": "$UPRJ_ROOT/gds/$TOP_LAYOUT.gds"
